@@ -863,6 +863,7 @@ html.js .rv-d3{transition-delay:.21s}
   border:1px solid rgba(212,175,97,.26);box-shadow:0 30px 70px -34px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.06)}
 .kc-art.hasvid .kc-vid{display:block}
 .kc-art.hasvid>svg{display:none}
+#view-tablolar .k-desc.k-skel{opacity:.45;font-style:italic}
 </style>
 
 <div class="grain" aria-hidden="true"></div>
@@ -2535,7 +2536,7 @@ html.js .rv-d3{transition-delay:.21s}
         if (cat && p.category !== cat) return false;
         if (lo != null && (p.price == null || p.price < lo)) return false;
         if (hi != null && (p.price == null || p.price > hi)) return false;
-        if (q && (norm(p.name) + ' ' + norm(p.code) + ' ' + norm(p.category) + ' ' + norm(p.description)).indexOf(q) === -1) return false;
+        if (q && (norm(p.name) + ' ' + norm(p.code) + ' ' + norm(p.category)).indexOf(q) === -1) return false;
         return true;
       });
 
@@ -2573,14 +2574,43 @@ html.js .rv-d3{transition-delay:.21s}
       });
     }
 
+    /* Ayrıntılar (açıklama, görseller, ölçüler, künye) parça dosyalarında durur;
+       yalnız açılan eserin parçası indirilir. */
+    var SHARDS = 24, shardReq = {};
+    function shardOf(code){
+      var h = 0;
+      for (var i = 0; i < code.length; i++) h = (h * 31 + code.charCodeAt(i)) >>> 0;
+      return h % SHARDS;
+    }
+    function loadDetail(p){
+      if (p.description !== undefined || !p.code) return Promise.resolve(p);
+      var sh = shardOf(p.code);
+      if (!shardReq[sh]) {
+        shardReq[sh] = fetch('data/detay/' + (sh < 10 ? '0' : '') + sh + '.json')
+          .then(function(r){ return r.json(); })
+          .catch(function(){ return {}; });
+      }
+      return shardReq[sh].then(function(m){
+        var d = m && m[p.code];
+        if (d) for (var k in d) if (p[k] === undefined) p[k] = d[k];
+        if (p.description === undefined) p.description = '';
+        return p;
+      });
+    }
+
     var curr = null, currVar = null, lastFocus = null;
     function openSheet(code){
       var p = all.filter(function(x){ return x.code === code; })[0];
       if (!p) return;
-      curr = p; currVar = (p.variants && p.variants.length) ? p.variants[0].name : null;
+      curr = p; currVar = null;
       lastFocus = document.activeElement;
       draw(); sheet.hidden = false; document.body.style.overflow = 'hidden';
       document.getElementById('kx').focus();
+      loadDetail(p).then(function(){
+        if (curr !== p) return;
+        currVar = (p.variants && p.variants.length) ? p.variants[0].name : null;
+        draw();
+      });
     }
     function closeSheet(){
       sheet.hidden = true; document.body.style.overflow = '';
@@ -2615,7 +2645,8 @@ html.js .rv-d3{transition-delay:.21s}
         starsHtml(p) +
         '<div class="k-sheet-price" id="kprice">' + (effPrice(p, currVar) != null ? '<b>' + fmt(effPrice(p, currVar)) + '</b>' : '<b style="font-size:1.2rem">Fiyat için yazın</b>') +
           (p.priceMax && p.variants && p.variants.length > 1 ? '<em>seçili ölçü için</em>' : '') + '</div>' +
-        (p.description ? '<p class="k-desc">' + esc(p.description) + '</p>' : '') + vr + specsHtml(p) +
+        (p.description === undefined ? '<p class="k-desc k-skel">Eser bilgileri yükleniyor…</p>'
+          : (p.description ? '<p class="k-desc">' + esc(p.description) + '</p>' : '')) + vr + specsHtml(p) +
         '<div class="k-sheet-foot">' +
           '<a class="wa-btn" id="korder" href="' + orderHref(p, currVar) + '" target="_blank" rel="noopener">' + WASVG + 'WhatsApp’tan sipariş ver</a>' +
           '<button class="k-ghost" type="button" id="kcopy">Kodu kopyala</button>' +

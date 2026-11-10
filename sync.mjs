@@ -15,6 +15,13 @@ import { SOURCE, CRAWL } from './config.mjs';
 import { parseProduct } from './lib/parse.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'docs', 'data');
+const DETAIL_DIR = path.join(OUT_DIR, 'detay');
+const SHARDS = 24;
+function shardOf(code){
+  let h = 0;
+  for (let i = 0; i < code.length; i++) h = (h * 31 + code.charCodeAt(i)) >>> 0;
+  return h % SHARDS;
+}
 const PRODUCTS = path.join(OUT_DIR, 'products.json');
 const CATEGORIES = path.join(OUT_DIR, 'categories.json');
 
@@ -84,8 +91,16 @@ async function pool(items, worker, size) {
 }
 
 async function readPrevious() {
-  try { return JSON.parse(await fs.readFile(PRODUCTS, 'utf8')); }
-  catch { return { products: [] }; }
+  try {
+    const list = JSON.parse(await fs.readFile(PRODUCTS, 'utf8'));
+    const out = [];
+    for (let i = 0; i < SHARDS; i++) {
+      let m = {};
+      try { m = JSON.parse(await fs.readFile(path.join(DETAIL_DIR, String(i).padStart(2, '0') + '.json'), 'utf8')); } catch {}
+      for (const p of list.products || []) if (m[p.code]) out.push(Object.assign({}, p, m[p.code]));
+    }
+    return { products: out };
+  } catch { return { products: [] }; }
 }
 
 function progress(done, total, label) {
@@ -140,14 +155,33 @@ async function main() {
   // Yayına çıkacak sürümde dahilî alanları at
   const publicProducts = products.map(({ _source, _via, ...rest }) => rest);
 
-  await fs.mkdir(OUT_DIR, { recursive: true });
+  // Liste hafif tutulur; ayrıntılar kod bazlı parçalara yazılır ki
+  // sayfa açılışında 10 MB'lık dosya indirilmesin.
+  const light = publicProducts.map((p) => ({
+    code: p.code, name: p.name, price: p.price, priceMax: p.priceMax,
+    currency: p.currency, cover: p.cover, category: p.category, inStock: p.inStock,
+  }));
+  const shards = Array.from({ length: SHARDS }, () => ({}));
+  for (const p of publicProducts) {
+    shards[shardOf(p.code)][p.code] = {
+      description: p.description, images: p.images, thumbs: p.thumbs,
+      variants: p.variants, attrs: p.attrs, rating: p.rating,
+      reviewCount: p.reviewCount, group: p.group, slug: p.slug, updatedAt: p.updatedAt,
+    };
+  }
+
+  await fs.mkdir(DETAIL_DIR, { recursive: true });
   await fs.writeFile(PRODUCTS, JSON.stringify({
     updatedAt: new Date().toISOString(),
-    count: publicProducts.length,
+    count: light.length,
     partial: Boolean(LIMIT || ONLY),
-    products: publicProducts,
+    shards: SHARDS,
+    products: light,
   }, null, 0));
   await fs.writeFile(CATEGORIES, JSON.stringify({ categories }, null, 0));
+  for (let i = 0; i < SHARDS; i++) {
+    await fs.writeFile(path.join(DETAIL_DIR, String(i).padStart(2, '0') + '.json'), JSON.stringify(shards[i], null, 0));
+  }
 
   const viaNext = products.filter((p) => p._via === 'next-data').length;
   const noPrice = publicProducts.filter((p) => p.price == null).length;
