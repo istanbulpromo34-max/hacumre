@@ -2476,6 +2476,10 @@ html.js .rv-d3{transition-delay:.21s}
 
   var KAT = (function(){
     var PAGE = 24;
+    /* Kaynak fotoğrafların bir bölümünde tedarikçi filigranı var; filigransız
+       görseller gelene kadar fotoğraflar kapalı, yerine çerçeve deseni çıkıyor.
+       Görseller temizlendiğinde bu değeri true yapmak yeterli. */
+    var SHOW_PHOTOS = false;
     var all = [], view = [], shown = 0, cat = '', cats = [], loaded = false, loading = false;
     var grid = document.getElementById('kgrid'), chips = document.getElementById('kchips');
     var qEl = document.getElementById('kq'), sortEl = document.getElementById('ksort'), rangeEl = document.getElementById('krange');
@@ -2536,9 +2540,10 @@ html.js .rv-d3{transition-delay:.21s}
       return '<button class="k-card" type="button" data-code="' + esc(p.code) + '">' +
         '<span class="k-pic">' +
           (p.demo ? '<span class="k-tag demo">Örnek</span>' : '') +
-          (p.cover ? '<img src="' + esc(p.cover) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="' + IMGFB + '">' +
-                     '<span class="k-ph" hidden>' + FRAME + '</span>'
-                   : '<span class="k-ph">' + FRAME + '</span>') +
+          (SHOW_PHOTOS && p.cover
+            ? '<img src="' + esc(p.cover) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="' + IMGFB + '">' +
+              '<span class="k-ph" hidden>' + FRAME + '</span>'
+            : '<span class="k-ph">' + FRAME + '</span>') +
         '</span>' +
         '<span class="k-meta">' +
           '<span class="k-code">' + esc(p.code) + '</span>' +
@@ -2638,7 +2643,7 @@ html.js .rv-d3{transition-delay:.21s}
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
     function draw(){
-      var p = curr, imgs = (p.images && p.images.length) ? p.images : [];
+      var p = curr, imgs = (SHOW_PHOTOS && p.images && p.images.length) ? p.images : [];
       var ths = (p.thumbs && p.thumbs.length) ? p.thumbs : imgs;
       sPic.innerHTML = (imgs.length
           ? '<img id="kmain" src="' + esc(imgs[0]) + '" alt="' + esc(p.name) + '" referrerpolicy="no-referrer" onerror="' + IMGFB + '"><span class="k-ph" hidden>' + FRAME + '</span>'
