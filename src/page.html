@@ -1,0 +1,2726 @@
+<title>İstanbul Hac Umre Hediyelik</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Figtree:wght@300;400;500;600;700;800&display=swap">
+
+<style>
+/* Layout: tek sayfa, tam genişlik lacivert bantlar + 1240px iç kolon.
+   Hazırlık listesi → mağazada ne var → rehber → ikincil ürünler → kafileler → mağaza. */
+:root{
+  /* Renk */
+  --ink:#040B18;
+  --navy:#07152F;
+  --navy-2:#0C1F43;
+  --gold:#D4AF61;
+  --gold-lt:#F3E2B6;
+  --gold-dp:#8E6E2C;
+  --bordo:#8A1F33;
+  --bordo-lt:#B8364E;
+  --cream:#F5EFE4;
+  --muted:#9BACC8;
+  --line:rgba(212,175,97,.20);
+  --ok:#5CC08F;
+  --warn:#D9A24E;
+
+  /* Tipografi */
+  --f-display:'Bodoni Moda','Didot',Georgia,'Times New Roman',serif;
+  --f-ui:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+
+  color-scheme: dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;background:var(--ink);color:var(--cream);
+  font-family:var(--f-ui);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+::selection{background:var(--gold);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:8px}
+
+.wrap{
+  width:100%;max-width:1240px;margin-inline:auto;
+  padding-left:max(20px,env(safe-area-inset-left,0px));
+  padding-right:max(20px,env(safe-area-inset-right,0px));
+}
+section{position:relative}
+.band{padding-block:clamp(66px,8.5vw,118px)}
+
+/* ---------- cam ---------- */
+.glass{
+  position:relative;
+  background:linear-gradient(142deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 48%,rgba(255,255,255,.045));
+  backdrop-filter:blur(26px) saturate(165%);-webkit-backdrop-filter:blur(26px) saturate(165%);
+  border-radius:24px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 -1px 0 rgba(255,255,255,.05),0 30px 70px -34px rgba(0,0,0,.9);
+  isolation:isolate;
+}
+.glass::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;
+  background:linear-gradient(145deg,rgba(243,226,182,.6),rgba(255,255,255,.1) 32%,rgba(255,255,255,0) 58%,rgba(212,175,97,.38));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  pointer-events:none;z-index:2;
+}
+.glass::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,-20%),rgba(255,255,255,.16),rgba(212,175,97,.07) 42%,transparent 68%);
+  opacity:0;transition:opacity .45s ease;
+}
+.glass:hover::after,.glass:focus-within::after{opacity:1}
+
+/* ---------- atmosfer ---------- */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.aurora{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.b1{width:60vw;height:60vw;max-width:760px;max-height:760px;left:-14vw;top:-18vw;
+    background:radial-gradient(circle,rgba(20,48,92,.95),transparent 68%);animation:drift1 26s ease-in-out infinite alternate}
+.b2{width:48vw;height:48vw;max-width:620px;max-height:620px;right:-10vw;top:10vw;
+    background:radial-gradient(circle,rgba(138,31,51,.5),transparent 66%);animation:drift2 32s ease-in-out infinite alternate}
+.b3{width:40vw;height:40vw;max-width:520px;max-height:520px;left:32vw;bottom:-16vw;
+    background:radial-gradient(circle,rgba(212,175,97,.28),transparent 66%);animation:drift3 29s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate3d(8%,6%,0) scale(1.14)}}
+@keyframes drift2{to{transform:translate3d(-9%,8%,0) scale(1.1)}}
+@keyframes drift3{to{transform:translate3d(6%,-9%,0) scale(1.18)}}
+
+/* ---------- navigasyon ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);
+  transition:background .4s ease,backdrop-filter .4s ease,box-shadow .4s ease}
+.nav.stuck{background:rgba(4,11,24,.72);backdrop-filter:blur(22px) saturate(160%);
+  -webkit-backdrop-filter:blur(22px) saturate(160%);box-shadow:0 1px 0 var(--line),0 18px 44px -32px #000}
+.nav-in{display:flex;align-items:center;gap:26px;height:78px;transition:height .4s ease}
+.nav.stuck .nav-in{height:66px}
+.brand{display:flex;align-items:center;flex:0 0 auto}
+.brand img{height:34px;width:auto;filter:brightness(1.12) saturate(1.05);transition:height .4s ease}
+.nav.stuck .brand img{height:30px}
+.nav-links{display:flex;gap:2px;margin-left:auto;align-items:center}
+.nav-links a{position:relative;padding:9px 13px;border-radius:999px;font-size:14.5px;font-weight:500;
+  color:var(--muted);transition:color .25s ease,background .25s ease}
+.nav-links a:hover{color:var(--cream);background:rgba(255,255,255,.06)}
+.nav-links a.active{color:var(--gold-lt)}
+.nav-links a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:3px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.wa-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:999px;
+  font-size:14.5px;font-weight:600;white-space:nowrap;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 52%,var(--gold-dp));
+  color:#21160A;box-shadow:0 10px 30px -12px rgba(212,175,97,.75);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease,filter .3s ease;
+}
+.wa-btn:hover{filter:brightness(1.07);box-shadow:0 16px 38px -14px rgba(212,175,97,.9)}
+.wa-btn svg{width:17px;height:17px;flex:0 0 auto}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:transparent;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:1.5px;background:var(--cream);transition:transform .35s ease,opacity .25s ease}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:28px}
+.nav.open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav.open .burger span:nth-child(2){opacity:0}
+.nav.open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu{display:none}
+@media(max-width:980px){
+  .nav-links,.nav .wa-btn{display:none}
+  .burger{display:block}
+  .mobile-menu{
+    display:block;position:fixed;inset:0;z-index:49;
+    padding-top:calc(86px + env(safe-area-inset-top,0px));
+    padding-bottom:calc(28px + env(safe-area-inset-bottom,0px));
+    padding-left:max(20px,env(safe-area-inset-left,0px));
+    padding-right:max(20px,env(safe-area-inset-right,0px));
+    background:rgba(4,11,24,.93);backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%);
+    opacity:0;visibility:hidden;transform:translateY(-10px);
+    transition:opacity .35s ease,transform .35s ease,visibility .35s;overflow-y:auto;
+  }
+  .nav.open + .mobile-menu{opacity:1;visibility:visible;transform:none}
+  .mobile-menu a{display:block;padding:14px 2px;font-size:20px;font-weight:600;border-bottom:1px solid var(--line)}
+  .mobile-menu .wa-btn{display:inline-flex;margin-top:22px;border-bottom:0;font-size:16px;padding:14px 24px}
+}
+
+/* ---------- tipografi ---------- */
+.eyebrow{display:inline-flex;align-items:center;gap:11px;
+  font-size:11.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.025em;line-height:1.06;text-wrap:balance}
+h1{font-size:clamp(2.45rem,5.6vw,4.5rem)}
+h2{font-size:clamp(1.9rem,3.9vw,3.1rem)}
+h3{font-size:clamp(1.1rem,1.8vw,1.33rem);letter-spacing:-.015em;line-height:1.28}
+.ital{font-family:var(--f-display);font-style:italic;font-weight:500;letter-spacing:-.01em;
+  background:linear-gradient(100deg,var(--gold-lt),var(--gold) 46%,var(--gold-dp));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  padding-right:.1em;margin-right:-.085em}
+p{margin:0}
+.lead{font-size:clamp(1rem,1.3vw,1.12rem);color:var(--muted);max-width:60ch;line-height:1.75}
+.sec-head{display:flex;flex-direction:column;gap:17px;max-width:72ch}
+
+/* ---------- kahraman ---------- */
+.hero{position:relative;overflow:clip;padding-block:clamp(126px,15vw,172px) clamp(56px,7vw,88px)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,rgba(212,175,97,.5) 50%,var(--line) 80%,transparent)}
+.cursor-glow{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(212,175,97,.13),transparent 62%);
+  transform:translate(-50%,-50%);opacity:0;transition:opacity .6s ease;will-change:transform}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(34px,4.5vw,64px);align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero-copy{display:flex;flex-direction:column;gap:24px;align-items:flex-start;min-width:0}
+.hero-cta{display:flex;flex-wrap:wrap;gap:13px;align-items:center}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:13px 23px;border-radius:999px;
+  font-size:15px;font-weight:600;border:1px solid var(--line);color:var(--cream);
+  background:rgba(255,255,255,.04);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:border-color .3s ease,background .3s ease}
+.btn-ghost:hover{border-color:rgba(212,175,97,.6);background:rgba(212,175,97,.1)}
+.btn-ghost .arw{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.btn-ghost:hover .arw{transform:translateX(4px)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;padding-top:2px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  font-size:12.5px;font-weight:500;color:var(--muted);border:1px solid var(--line);background:rgba(255,255,255,.035)}
+.chip i{width:5px;height:5px;border-radius:50%;background:var(--gold);flex:0 0 auto}
+.chip.soon i{background:var(--bordo-lt)}
+
+/* ---------- hazırlık listesi ---------- */
+.checklist{padding:24px 22px 22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.cl-head{display:flex;align-items:center;gap:15px}
+.ring{width:56px;height:56px;flex:0 0 auto;position:relative}
+.ring svg{width:56px;height:56px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4;stroke-linecap:round}
+.ring .bgc{stroke:rgba(255,255,255,.12)}
+.ring .fgc{stroke:var(--gold);stroke-dasharray:157;stroke-dashoffset:157;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1)}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:700;
+  color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.cl-head .t{min-width:0}
+.cl-head h3{margin-bottom:2px}
+.cl-head p{font-size:12.8px;color:var(--muted);line-height:1.5}
+.cl-items{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0;padding:0;list-style:none}
+@media(max-width:480px){.cl-items{grid-template-columns:1fr}}
+.cl-items button{
+  width:100%;display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:13px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);
+  font-size:13.4px;font-weight:500;text-align:left;line-height:1.35;min-width:0;
+  transition:border-color .3s ease,background .3s ease,color .3s ease;
+}
+.cl-items button:hover{border-color:rgba(212,175,97,.45);background:rgba(212,175,97,.08)}
+.cl-box{width:17px;height:17px;flex:0 0 auto;border-radius:6px;border:1.5px solid rgba(255,255,255,.3);
+  display:grid;place-items:center;transition:background .25s ease,border-color .25s ease}
+.cl-box svg{width:11px;height:11px;stroke:var(--ink);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  opacity:0;transform:scale(.5);transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1)}
+.cl-items button[aria-pressed="true"]{color:var(--muted);border-color:rgba(212,175,97,.3)}
+.cl-items button[aria-pressed="true"] .cl-lab{text-decoration:line-through;text-decoration-color:rgba(212,175,97,.6)}
+.cl-items button[aria-pressed="true"] .cl-box{background:var(--gold);border-color:var(--gold)}
+.cl-items button[aria-pressed="true"] .cl-box svg{opacity:1;transform:none}
+.cl-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding-top:14px;border-top:1px solid var(--line)}
+.cl-foot p{font-size:12.6px;color:var(--muted);max-width:30ch}
+.cl-send{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:999px;
+  font-size:13.5px;font-weight:600;background:linear-gradient(135deg,var(--gold-lt),var(--gold) 55%,var(--gold-dp));
+  color:#21160A;white-space:nowrap;transition:filter .3s ease}
+.cl-send:hover{filter:brightness(1.07)}
+.cl-send svg{width:15px;height:15px}
+
+/* giriş animasyonu */
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.hero-copy>*,.hero-media{animation:rise .85s cubic-bezier(.2,.8,.2,1) both}
+.hero-copy>*:nth-child(1){animation-delay:.05s}
+.hero-copy>*:nth-child(2){animation-delay:.12s}
+.hero-copy>*:nth-child(3){animation-delay:.19s}
+.hero-copy>*:nth-child(4){animation-delay:.26s}
+.hero-copy>*:nth-child(5){animation-delay:.33s}
+.hero-media{animation-delay:.2s}
+
+/* ---------- akan şerit ---------- */
+.ticker{border-block:1px solid var(--line);background:rgba(7,21,47,.45);overflow:hidden;padding-block:16px}
+.ticker-row{display:flex;width:max-content;animation:marquee 44s linear infinite}
+.ticker-row span{display:inline-flex;align-items:center;gap:24px;padding-right:24px;white-space:nowrap;
+  font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.ticker-row span::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--bordo-lt)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.ticker:hover .ticker-row{animation-play-state:paused}
+
+/* ---------- kategoriler ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:clamp(34px,4vw,52px)}
+@media(max-width:940px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.cards{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:12px;padding:26px 24px 28px;min-width:0;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease}
+.card:hover{transform:translateY(-6px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 40px 80px -36px rgba(0,0,0,.95)}
+.card .ico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(145deg,rgba(212,175,97,.2),rgba(138,31,51,.18));border:1px solid var(--line);color:var(--gold-lt)}
+.card .ico svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.card p{font-size:14.3px;color:var(--muted);line-height:1.66}
+.card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.card .tags b{font-size:11.5px;font-weight:500;color:var(--gold);opacity:.85;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+
+/* ---------- hazırlık listesi ---------- */
+.cl-sum{display:grid;gap:7px}
+.cl-sum a{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:12px;min-width:0;
+  border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);
+  transition:border-color .3s ease,background .3s ease}
+.cl-sum a:hover{border-color:rgba(212,175,97,.42);background:rgba(212,175,97,.08)}
+.cl-sum .nm{flex:1;min-width:0;font-size:13.2px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-sum .bar{width:44px;height:3px;border-radius:2px;background:rgba(255,255,255,.13);overflow:hidden;flex:0 0 auto}
+.cl-sum .bar i{display:block;height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,var(--gold-dp),var(--gold-lt));transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.cl-sum .ct{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;flex:0 0 auto;min-width:30px;text-align:right}
+
+.cl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:18px 22px;margin-top:clamp(26px,3vw,38px)}
+.cl-bar .txt{flex:1;min-width:160px}
+.cl-bar .txt b{display:block;font-size:15.5px;font-weight:700}
+.cl-bar .txt span{font-size:13px;color:var(--muted)}
+.cl-reset{padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  font-size:12.8px;font-weight:500;color:var(--muted);cursor:pointer;
+  transition:color .3s ease,border-color .3s ease,background .3s ease}
+.cl-reset:hover{color:var(--gold-lt);border-color:rgba(212,175,97,.5);background:rgba(212,175,97,.08)}
+
+.cl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;align-items:start}
+@media(max-width:1000px){.cl-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.cl-grid{grid-template-columns:1fr}}
+.cl-cat{padding:22px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.cl-cat .ch{display:flex;align-items:center;gap:11px;min-width:0}
+.cl-cat .ch .ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,rgba(212,175,97,.2),rgba(138,31,51,.18));border:1px solid var(--line);color:var(--gold-lt)}
+.cl-cat .ch .ico svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cl-cat .ch h4{margin:0;font-size:14.8px;font-weight:700;letter-spacing:-.01em;flex:1;min-width:0}
+.cl-cat .ch .ct{font-size:11.5px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.cl-cat .cl-items{grid-template-columns:1fr;gap:6px}
+.cl-cat .cl-items button{padding:8px 11px;font-size:13px;align-items:flex-start}
+.cl-cat .cl-box{margin-top:1px}
+.cl-note{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:10.5px;font-weight:600;
+  letter-spacing:.03em;color:var(--gold);border:1px solid var(--line);white-space:nowrap;vertical-align:1px}
+
+
+/* ---------- rehber ---------- */
+.r-switch{position:relative;display:inline-flex;padding:5px;border-radius:999px;gap:4px;
+  border:1px solid var(--line);background:rgba(255,255,255,.045);
+  backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
+  margin-top:clamp(26px,3vw,38px);max-width:100%}
+.r-switch button{position:relative;z-index:2;padding:11px 26px;border:0;background:transparent;border-radius:999px;
+  cursor:pointer;font-weight:700;font-size:15px;color:var(--muted);transition:color .35s ease;white-space:nowrap}
+.r-switch button[aria-selected="true"]{color:#21160A}
+.r-thumb{position:absolute;z-index:1;top:5px;bottom:5px;left:0;width:0;border-radius:999px;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 55%,var(--gold-dp));
+  box-shadow:0 10px 26px -12px rgba(212,175,97,.85);
+  transition:transform .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1)}
+
+.r-body{margin-top:clamp(26px,3vw,40px)}
+.r-body.swap{animation:swapin .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes swapin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.r-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:860px){.r-facts{grid-template-columns:repeat(2,1fr)}}
+.r-fact{padding:22px 20px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.r-fact .k{font-family:var(--f-display);font-size:clamp(1.8rem,3vw,2.5rem);font-weight:600;line-height:1;
+  color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.r-fact .l{font-size:13px;color:var(--muted);line-height:1.5}
+
+.r-cols{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(24px,3.4vw,52px);margin-top:18px;align-items:start}
+@media(max-width:900px){.r-cols{grid-template-columns:1fr;gap:28px}}
+.r-sub{display:flex;align-items:center;gap:11px;font-size:12px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.r-sub::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+/* adım adım */
+.r-steps{list-style:none;margin:0;padding:0;position:relative;min-width:0}
+.r-steps::before{content:"";position:absolute;left:15px;top:14px;bottom:14px;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line) 8%,var(--line) 92%,transparent)}
+.r-steps li{position:relative;padding:0 0 22px 48px;min-width:0}
+.r-steps li:last-child{padding-bottom:0}
+.r-steps .n{position:absolute;left:0;top:1px;width:31px;height:31px;border-radius:50%;display:grid;place-items:center;
+  font-size:12px;font-weight:700;color:var(--gold-lt);font-variant-numeric:tabular-nums;
+  background:linear-gradient(145deg,rgba(212,175,97,.25),rgba(138,31,51,.2));
+  border:1px solid rgba(212,175,97,.4);box-shadow:0 0 0 5px var(--ink)}
+.r-steps h4{margin:0 0 4px;font-size:15.6px;font-weight:700;letter-spacing:-.01em}
+.r-steps p{font-size:14.2px;color:var(--muted);line-height:1.68}
+
+/* sss */
+.r-faq{display:flex;flex-direction:column;gap:9px;min-width:0}
+.faq-item{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);overflow:hidden;
+  transition:border-color .35s ease,background .35s ease}
+.faq-item.open{border-color:rgba(212,175,97,.42);background:rgba(212,175,97,.07)}
+.faq-item>button{width:100%;display:flex;align-items:flex-start;gap:13px;padding:15px 17px;border:0;background:transparent;
+  cursor:pointer;text-align:left;font-size:14.8px;font-weight:600;line-height:1.45;color:var(--cream);min-width:0}
+.faq-item>button .q{flex:1;min-width:0}
+.faq-item .chev{flex:0 0 auto;width:16px;height:16px;margin-top:3px;stroke:var(--gold);stroke-width:1.8;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .chev{transform:rotate(180deg)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a>div{overflow:hidden}
+.faq-a p{padding:0 17px 16px;font-size:14px;color:var(--muted);line-height:1.72}
+
+/* pratik bilgiler */
+.r-tips{margin-top:clamp(26px,3vw,36px);padding:24px 22px;min-width:0}
+.r-tips ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.r-tips li{position:relative;padding-left:21px;font-size:14px;color:var(--muted);line-height:1.66}
+.r-tips li::before{content:"";position:absolute;left:0;top:.66em;width:10px;height:1px;background:var(--gold)}
+.r-tips li b{color:var(--cream);font-weight:600}
+.r-tips .tlb{display:block;font-family:var(--f-display);font-style:italic;font-size:15.5px;color:var(--gold-lt);
+  line-height:1.6;margin-top:3px}
+
+/* sözlük */
+.r-terms{margin-top:clamp(34px,4vw,54px)}
+.term-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.term-chips button{padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.035);
+  cursor:pointer;font-size:13.2px;font-weight:600;color:var(--muted);
+  transition:color .3s ease,background .3s ease,border-color .3s ease}
+.term-chips button:hover{color:var(--cream);background:rgba(255,255,255,.07)}
+.term-chips button[aria-pressed="true"]{color:#21160A;border-color:transparent;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 58%,var(--gold-dp))}
+.term-def{padding:22px 22px;min-width:0}
+.term-def h4{margin:0 0 6px;font-family:var(--f-display);font-size:1.35rem;font-weight:600;color:var(--gold-lt);letter-spacing:0}
+.term-def p{font-size:14.6px;color:var(--muted);line-height:1.72;max-width:64ch}
+.term-def.swap{animation:swapin .4s cubic-bezier(.2,.8,.2,1)}
+
+.g-note{display:flex;gap:11px;align-items:flex-start;margin-top:clamp(24px,2.8vw,34px);
+  padding:15px 17px;border-radius:16px;border:1px solid var(--line);background:rgba(138,31,51,.1);max-width:76ch}
+.g-note svg{width:17px;height:17px;flex:0 0 auto;margin-top:3px;stroke:var(--gold);stroke-width:1.6;fill:none;stroke-linecap:round}
+.g-note p{font-size:13.6px;color:var(--muted);line-height:1.65}
+
+.r-switch.sm{margin-top:0;width:100%}
+.r-switch.sm button{flex:1;padding:9px 14px;font-size:13.5px}
+
+/* ---------- yol hazırlığı ---------- */
+.prep-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.prep-grid{grid-template-columns:1fr}}
+.prep-card{padding:24px 22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.prep-head{display:flex;align-items:center;gap:12px;min-width:0}
+.prep-head .ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,rgba(212,175,97,.2),rgba(138,31,51,.18));border:1px solid var(--line);color:var(--gold-lt)}
+.prep-head .ico svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.prep-head h4{margin:0;font-size:15.6px;font-weight:700;letter-spacing:-.01em}
+.prep-card ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.prep-card li{position:relative;padding-left:20px;font-size:13.9px;color:var(--muted);line-height:1.64}
+.prep-card li::before{content:"";position:absolute;left:0;top:.66em;width:9px;height:1px;background:var(--gold)}
+.prep-card li b{color:var(--cream);font-weight:600}
+
+/* ---------- ziyaret yerleri ---------- */
+.zy-group{margin-top:clamp(24px,3vw,36px)}
+.zy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+@media(max-width:940px){.zy-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.zy-grid{grid-template-columns:1fr}}
+.zy-card{padding:22px 20px;display:flex;flex-direction:column;gap:8px;min-width:0;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease}
+.zy-card:hover{transform:translateY(-5px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 38px 76px -36px rgba(0,0,0,.95)}
+.zy-card .tag{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.zy-card .tag svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.zy-card h4{margin:0;font-size:16px;font-weight:700;letter-spacing:-.015em;line-height:1.3}
+.zy-card p{font-size:13.8px;color:var(--muted);line-height:1.66}
+
+/* ---------- ikincil ürünler ---------- */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:clamp(32px,4vw,50px)}
+@media(max-width:860px){.duo{grid-template-columns:1fr}}
+.duo-item{position:relative;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 40px 90px -44px rgba(0,0,0,.95),0 0 0 1px rgba(212,175,97,.2)}
+.duo-pic{position:relative;aspect-ratio:16/10;overflow:hidden}
+.duo-pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.duo-item:hover .duo-pic img{transform:scale(1.05)}
+.duo-pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,11,24,.1),rgba(4,11,24,.72))}
+.duo-txt{padding:24px 24px 28px;display:flex;flex-direction:column;gap:11px;background:rgba(7,21,47,.6);flex:1;min-width:0}
+.duo-txt p{font-size:14.4px;color:var(--muted);line-height:1.68}
+.badge{position:absolute;top:16px;left:16px;z-index:2;display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.04em;
+  background:rgba(4,11,24,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(212,175,97,.45);color:var(--gold-lt)}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--bordo-lt);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* ---------- kafileler ---------- */
+.corp-panel{padding:clamp(28px,3.4vw,44px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,3vw,46px);align-items:center}
+@media(max-width:860px){.corp-panel{grid-template-columns:1fr;gap:26px}}
+.corp-left{display:flex;flex-direction:column;gap:18px;align-items:flex-start;min-width:0}
+.corp-list{display:grid;gap:2px;margin:0;padding:0;list-style:none;min-width:0}
+.corp-list li{display:flex;gap:13px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);min-width:0}
+.corp-list li:last-child{border-bottom:0}
+.corp-list svg{width:18px;height:18px;flex:0 0 auto;margin-top:3px;stroke:var(--gold);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.corp-list b{display:block;font-size:14.8px;font-weight:600;margin-bottom:2px}
+.corp-list span{font-size:13.4px;color:var(--muted);line-height:1.6}
+
+/* ---------- mağaza ---------- */
+.store{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+@media(max-width:900px){.store{grid-template-columns:1fr}}
+.store-card{padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;gap:20px;min-width:0}
+.open-state{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;
+  font-size:13px;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.open-state i{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:0 0 auto}
+.open-state.on i{background:var(--ok);box-shadow:0 0 0 0 rgba(92,192,143,.6);animation:beat 2.4s ease-out infinite}
+.open-state.off i{background:var(--warn)}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(92,192,143,.55)}70%{box-shadow:0 0 0 9px rgba(92,192,143,0)}100%{box-shadow:0 0 0 0 rgba(92,192,143,0)}}
+.ct-rows{display:grid;gap:2px;min-width:0}
+.ct-row{display:flex;gap:13px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line);min-width:0}
+.ct-row:last-child{border-bottom:0}
+.ct-row>svg{width:18px;height:18px;flex:0 0 auto;margin-top:3px;stroke:var(--gold);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ct-row .lab{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.ct-row .val{font-size:15px;font-weight:500;line-height:1.55;word-break:break-word}
+.store-actions{display:flex;flex-wrap:wrap;gap:11px}
+.phone-line{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.phone-num{font-family:var(--f-display);font-size:clamp(1.7rem,3.2vw,2.35rem);font-weight:600;line-height:1.1;
+  color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.copy-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.04);font-size:12.5px;font-weight:500;color:var(--muted);cursor:pointer;
+  transition:border-color .3s ease,color .3s ease,background .3s ease}
+.copy-btn:hover{border-color:rgba(212,175,97,.55);color:var(--gold-lt);background:rgba(212,175,97,.09)}
+.copy-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.6;fill:none}
+.store-side{display:flex;flex-direction:column;gap:18px;min-width:0}
+.rating{padding:26px 24px;display:flex;flex-direction:column;gap:11px;align-items:flex-start}
+.stars{display:flex;gap:3px}
+.stars svg{width:19px;height:19px;fill:var(--gold);stroke:none}
+.rating .sc{font-family:var(--f-display);font-size:2.4rem;font-weight:600;line-height:1;color:var(--gold-lt);font-variant-numeric:tabular-nums}
+.rating .mt{font-size:13px;color:var(--muted)}
+.store-pic{position:relative;border-radius:24px;overflow:hidden;flex:1;min-height:200px;
+  box-shadow:0 0 0 1px rgba(212,175,97,.2)}
+.store-pic img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.store-pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(4,11,24,.6))}
+
+/* ---------- sabit düğmeler ---------- */
+.fab{
+  position:fixed;z-index:56;
+  right:calc(18px + env(safe-area-inset-right,0px));
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(140deg,#2ED06E,#128C45);
+  box-shadow:0 0 0 1px rgba(243,226,182,.55),0 14px 34px -10px rgba(0,0,0,.85),0 0 30px -6px rgba(46,208,110,.5);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+}
+.fab:hover{transform:scale(1.07)}
+.fab svg{width:29px;height:29px;fill:#fff}
+.fab::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(46,208,110,.45);
+  animation:halo 3s ease-out infinite;pointer-events:none}
+@keyframes halo{0%{transform:scale(.92);opacity:.8}70%{transform:scale(1.22);opacity:0}100%{opacity:0}}
+.soon-pill{
+  position:fixed;z-index:55;
+  left:calc(18px + env(safe-area-inset-left,0px));
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  display:inline-flex;align-items:center;gap:9px;padding:10px 16px;border-radius:999px;
+  font-size:12.5px;font-weight:600;color:var(--gold-lt);
+  background:rgba(7,21,47,.62);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid rgba(212,175,97,.4);box-shadow:0 14px 34px -16px #000;
+  transition:opacity .4s ease,transform .4s ease;
+}
+.soon-pill.hide{opacity:0;transform:translateY(12px);pointer-events:none}
+.soon-pill i{width:6px;height:6px;border-radius:50%;background:var(--bordo-lt);animation:pulse 2.4s ease-in-out infinite;flex:0 0 auto}
+@media(max-width:620px){.soon-pill{display:none}}
+
+/* ---------- kontrol robotu ---------- */
+.wiz{
+  position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;
+  padding-top:calc(16px + env(safe-area-inset-top,0px));
+  padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:rgba(2,7,16,.78);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  animation:wizIn .32s cubic-bezier(.2,.8,.2,1);
+}
+.wiz[hidden]{display:none}
+@keyframes wizIn{from{opacity:0}to{opacity:1}}
+.wiz-card{
+  position:relative;width:100%;max-width:620px;max-height:100%;display:flex;flex-direction:column;
+  padding:26px 24px 22px;animation:wizPop .42s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes wizPop{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+.wiz-x{position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--muted);font-size:17px;line-height:1;
+  display:grid;place-items:center;transition:color .3s ease,border-color .3s ease,background .3s ease}
+.wiz-x:hover{color:var(--cream);border-color:rgba(212,175,97,.5);background:rgba(212,175,97,.1)}
+.wiz-dots{display:flex;gap:5px;margin-bottom:18px;padding-right:38px}
+.wiz-dots i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.13);transition:background .4s ease}
+.wiz-dots i.on{background:linear-gradient(90deg,var(--gold-dp),var(--gold-lt))}
+.wiz-dots i.cur{background:var(--gold-lt);box-shadow:0 0 10px -1px rgba(243,226,182,.7)}
+.wiz-t{display:flex;align-items:center;gap:13px;min-width:0}
+.wiz-t .ico{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,rgba(212,175,97,.22),rgba(138,31,51,.2));border:1px solid var(--line);color:var(--gold-lt)}
+.wiz-t .ico svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wiz-t .step{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.wiz-t h3{margin:0;font-size:clamp(1.2rem,2.4vw,1.5rem)}
+.wiz-q{margin-top:13px;font-size:14px;color:var(--muted);line-height:1.6}
+.wiz-body{flex:1;min-height:0;overflow-y:auto;margin:16px -6px 0;padding:0 6px 4px}
+.wiz-list{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.wiz-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding-top:16px;margin-top:14px;border-top:1px solid var(--line)}
+.wiz-foot .left{display:flex;gap:9px;flex-wrap:wrap}
+.wiz-nav{display:inline-flex;align-items:center;gap:8px;padding:11px 19px;border-radius:999px;cursor:pointer;
+  font-size:14px;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--cream);
+  transition:border-color .3s ease,background .3s ease,color .3s ease}
+.wiz-nav:hover{border-color:rgba(212,175,97,.55);background:rgba(212,175,97,.1)}
+.wiz-nav.wiz-next,.wiz-nav.wiz-next:hover{border-color:transparent;color:#21160A;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 55%,var(--gold-dp));
+  box-shadow:0 10px 28px -12px rgba(212,175,97,.8)}
+.wiz-nav.wiz-next:hover{filter:brightness(1.07)}
+.wiz-count{font-size:12.6px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* özet adımı */
+.wiz-done{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.wiz-big{font-family:var(--f-display);font-size:clamp(2.2rem,5vw,3rem);font-weight:600;line-height:1;color:var(--gold-lt);
+  font-variant-numeric:tabular-nums}
+.wiz-sum{display:grid;gap:13px}
+.wiz-sum .grp b{display:block;font-size:11.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px}
+.wiz-sum .grp p{font-size:14px;color:var(--cream);line-height:1.68}
+.wiz-ok{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:16px;
+  border:1px solid rgba(92,192,143,.3);background:rgba(92,192,143,.09)}
+.wiz-ok svg{width:19px;height:19px;flex:0 0 auto;margin-top:2px;stroke:var(--ok);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wiz-ok p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* liste bölümü güncellemeleri */
+.cl-cat.done .ch .ico{background:linear-gradient(145deg,rgba(92,192,143,.26),rgba(212,175,97,.16));
+  border-color:rgba(92,192,143,.45);color:#9FE0C0}
+.cat-foot{margin-top:2px;width:100%;padding:9px 12px;border-radius:12px;cursor:pointer;
+  border:1px dashed var(--line);background:transparent;font-size:12.6px;font-weight:600;color:var(--muted);
+  transition:color .3s ease,border-color .3s ease,background .3s ease}
+.cat-foot:hover{color:var(--gold-lt);border-color:rgba(212,175,97,.5);background:rgba(212,175,97,.07)}
+.cl-cat.done .cat-foot{color:#9FE0C0;border-style:solid;border-color:rgba(92,192,143,.4);background:rgba(92,192,143,.08)}
+.cl-bar .acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.sum-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:14px;border-top:1px solid var(--line)}
+.cl-sum a .ct.need{color:var(--gold-lt);font-weight:700}
+.cl-sum a .tick{width:14px;height:14px;flex:0 0 auto;stroke:var(--ok);stroke-width:2.4;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .3s ease}
+.cl-sum a.done .tick{opacity:1}
+
+@media(max-width:560px){
+  .wiz-card{padding:22px 18px 18px}
+  .wiz-foot{justify-content:stretch}
+  .wiz-foot .left{width:100%}
+  .wiz-foot .wiz-next{width:100%;justify-content:center}
+}
+
+/* ---------- liste düzeni: sıkı yerleşim ---------- */
+.cl-grid{display:block;columns:3;column-gap:16px;margin-top:16px}
+.cl-cat{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 16px}
+.cl-cat>*{position:relative;z-index:3}
+@media(max-width:1000px){.cl-grid{columns:2}}
+@media(max-width:640px){.cl-grid{columns:1}}
+
+/* ---------- hatırlatma kartı ---------- */
+.rem-card{padding:clamp(24px,3vw,34px);margin-top:4px;display:flex;flex-direction:column;gap:8px}
+.rem-card>*{position:relative;z-index:3}
+.rem-head{display:flex;align-items:center;gap:13px;min-width:0}
+.rem-head .ico{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:0 0 auto;
+  background:linear-gradient(145deg,rgba(155,172,200,.2),rgba(212,175,97,.14));border:1px solid var(--line);color:var(--cream)}
+.rem-head .ico svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rem-head h3{margin:0;flex:1;min-width:0}
+.rem-head .ct{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.rem-lead{font-size:14px;color:var(--muted);line-height:1.65;max-width:72ch;margin-bottom:8px}
+.rem-grid{display:block;columns:3;column-gap:22px}
+@media(max-width:1000px){.rem-grid{columns:2}}
+@media(max-width:640px){.rem-grid{columns:1}}
+.rem-grp{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 18px}
+.rem-grp .gh{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.rem-grp .gh svg{width:16px;height:16px;flex:0 0 auto;stroke:var(--gold);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rem-grp .gh b{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.rem-grp ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.rem-grp button{width:100%;display:flex;align-items:flex-start;gap:10px;padding:7px 10px;border-radius:11px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);color:var(--cream);
+  font-size:13px;font-weight:500;text-align:left;line-height:1.4;min-width:0;
+  transition:border-color .3s ease,background .3s ease,color .3s ease}
+.rem-grp button:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.rem-grp .cl-box{margin-top:1px;width:16px;height:16px;border-radius:5px}
+.rem-grp button[aria-pressed="true"]{color:var(--muted);border-color:rgba(92,192,143,.3)}
+.rem-grp button[aria-pressed="true"] .cl-box{background:var(--ok);border-color:var(--ok)}
+.rem-grp button[aria-pressed="true"] .cl-box svg{opacity:1;transform:none}
+.rem-grp button[aria-pressed="true"] .cl-lab{text-decoration:line-through;text-decoration-color:rgba(92,192,143,.55)}
+
+/* robot içindeki hatırlatma adımı */
+.wiz-rem .rem-grp{margin-bottom:16px}
+.wiz-rem{columns:2;column-gap:18px}
+@media(max-width:560px){.wiz-rem{columns:1}}
+
+/* ---------- sekmeli görünümler ---------- */
+.view-page{padding-top:calc(78px + env(safe-area-inset-top,0px))}
+.nav-links a.nav-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;margin-left:8px;
+  color:var(--gold-lt);font-weight:700;border:1px solid rgba(212,175,97,.5);
+  background:linear-gradient(135deg,rgba(212,175,97,.17),rgba(138,31,51,.15));
+  box-shadow:0 8px 22px -14px rgba(212,175,97,.9);
+  transition:color .3s ease,background .3s ease,border-color .3s ease}
+.nav-links a.nav-cta svg{width:15px;height:15px;stroke:currentColor;stroke-width:1.6;fill:none;flex:0 0 auto}
+.nav-links a.nav-cta:hover,.nav-links a.nav-cta.active{color:#21160A;border-color:transparent;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 58%,var(--gold-dp))}
+.nav-links a.nav-cta.active::after{display:none}
+.mobile-menu a.nav-cta{display:flex;align-items:center;gap:10px;color:var(--gold-lt);font-weight:700}
+
+/* ---------- hat tablo kataloğu (ayrı görünüm) ---------- */
+#view-tablolar[hidden]{display:none}
+#view-tablolar{padding-top:calc(80px + env(safe-area-inset-top,0px))}
+#view-tablolar .k-note-bar{background:linear-gradient(90deg,rgba(138,31,51,.35),rgba(138,31,51,.14));
+  border-bottom:1px solid var(--line)}
+#view-tablolar .k-note-bar .wrap{display:flex;gap:11px;align-items:flex-start;padding-block:11px;font-size:13px;line-height:1.55}
+#view-tablolar .k-note-bar b{color:var(--gold-lt)}
+#view-tablolar .k-note-bar svg{width:16px;height:16px;flex:0 0 auto;margin-top:2px;stroke:var(--gold);stroke-width:1.7;fill:none}
+
+#view-tablolar .k-head{position:relative;overflow:clip;padding-block:clamp(34px,4.5vw,58px) clamp(20px,2.6vw,28px)}
+#view-tablolar .k-head .wrap{position:relative;z-index:1}
+
+#view-tablolar .k-bar{position:sticky;top:calc(66px + env(safe-area-inset-top,0px));z-index:30;padding-block:13px;
+  background:rgba(4,11,24,.92);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 1px 0 var(--line)}
+#view-tablolar .k-bar-in{display:flex;flex-wrap:wrap;gap:11px;align-items:center}
+#view-tablolar .k-search{position:relative;flex:1;min-width:210px}
+#view-tablolar .k-search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:17px;height:17px;
+  stroke:var(--muted);stroke-width:1.7;fill:none;pointer-events:none}
+#view-tablolar .k-search input{width:100%;padding:12px 16px 12px 42px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.045);font-size:14.5px;color:var(--cream);
+  transition:border-color .3s ease,background .3s ease}
+#view-tablolar .k-search input::placeholder{color:var(--muted)}
+#view-tablolar .k-search input:focus{border-color:rgba(212,175,97,.5);background:rgba(212,175,97,.07);outline:none}
+#view-tablolar .k-sel{padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.045);
+  font-size:14px;color:var(--cream);cursor:pointer;transition:border-color .3s ease}
+#view-tablolar .k-sel:hover{border-color:rgba(212,175,97,.45)}
+#view-tablolar .k-sel option{background:var(--navy-2);color:var(--cream)}
+#view-tablolar .k-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px;margin-top:11px;scrollbar-width:none}
+#view-tablolar .k-chips::-webkit-scrollbar{display:none}
+#view-tablolar .k-chips button{flex:0 0 auto;padding:8px 15px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(255,255,255,.035);font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;white-space:nowrap;
+  transition:color .3s ease,background .3s ease,border-color .3s ease}
+#view-tablolar .k-chips button:hover{color:var(--cream);background:rgba(255,255,255,.07)}
+#view-tablolar .k-chips button[aria-pressed="true"]{color:#21160A;border-color:transparent;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 58%,var(--gold-dp))}
+#view-tablolar .k-chips button i{font-style:normal;opacity:.6;margin-left:6px;font-size:11.5px}
+
+#view-tablolar .k-count{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;
+  padding-block:18px 4px;font-size:13.5px;color:var(--muted)}
+#view-tablolar .k-count b{color:var(--cream);font-weight:600}
+
+#view-tablolar .k-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:34px}
+@media(max-width:1100px){#view-tablolar .k-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){#view-tablolar .k-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:470px){#view-tablolar .k-grid{grid-template-columns:1fr}}
+#view-tablolar .k-card{display:flex;flex-direction:column;cursor:pointer;min-width:0;text-align:left;border:0;padding:0;
+  background:transparent;color:inherit;font:inherit;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+#view-tablolar .k-card:hover{transform:translateY(-6px)}
+#view-tablolar .k-pic{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:20px;
+  background:linear-gradient(160deg,var(--navy-2),var(--ink));box-shadow:0 0 0 1px rgba(212,175,97,.2)}
+#view-tablolar .k-pic img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+#view-tablolar .k-card:hover .k-pic img{transform:scale(1.05)}
+#view-tablolar .k-ph{position:absolute;inset:0;display:grid;place-items:center;padding:16%}
+#view-tablolar .k-ph svg{width:100%;height:100%;opacity:.5}
+#view-tablolar .k-tag{position:absolute;top:12px;left:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 11px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(4,11,24,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(212,175,97,.45);color:var(--gold-lt)}
+#view-tablolar .k-tag.demo{border-color:rgba(184,54,78,.6);color:#F0B9C4}
+#view-tablolar .k-meta{padding:15px 4px 0;display:flex;flex-direction:column;gap:7px;min-width:0}
+#view-tablolar .k-meta h3{margin:0;font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#view-tablolar .k-code{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+#view-tablolar .k-price{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+#view-tablolar .k-price b{font-family:var(--f-display);font-size:1.3rem;font-weight:600;color:var(--gold-lt);font-variant-numeric:tabular-nums}
+#view-tablolar .k-price s{font-size:12.5px;color:var(--muted);opacity:.75}
+
+#view-tablolar .k-more{display:block;margin:4px auto 70px;padding:14px 30px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:15px;font-weight:600;color:var(--cream);
+  transition:border-color .3s ease,background .3s ease}
+#view-tablolar .k-more:hover{border-color:rgba(212,175,97,.55);background:rgba(212,175,97,.09)}
+#view-tablolar .k-empty{padding:70px 20px;text-align:center;color:var(--muted);grid-column:1/-1}
+#view-tablolar .k-empty b{display:block;font-size:1.3rem;color:var(--cream);margin-bottom:8px;font-weight:600}
+
+#view-tablolar .k-sheet{position:fixed;inset:0;z-index:65;display:flex;align-items:center;justify-content:center;
+  padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:rgba(2,7,16,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:wizIn .3s cubic-bezier(.2,.8,.2,1)}
+#view-tablolar .k-sheet[hidden]{display:none}
+#view-tablolar .k-sheet-card{position:relative;width:100%;max-width:960px;max-height:100%;overflow-y:auto;padding:0;
+  animation:wizPop .42s cubic-bezier(.2,.8,.2,1)}
+#view-tablolar .k-x{position:absolute;top:14px;right:14px;z-index:5;width:36px;height:36px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:rgba(4,11,24,.65);color:var(--muted);font-size:18px;line-height:1;
+  display:grid;place-items:center;transition:color .3s ease,border-color .3s ease}
+#view-tablolar .k-x:hover{color:var(--cream);border-color:rgba(212,175,97,.5)}
+#view-tablolar .k-sheet-grid{display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:3}
+@media(max-width:780px){#view-tablolar .k-sheet-grid{grid-template-columns:1fr}}
+#view-tablolar .k-sheet-pic{position:relative;aspect-ratio:1/1;background:linear-gradient(160deg,var(--navy-2),var(--ink));
+  border-radius:22px 0 0 22px;overflow:hidden}
+@media(max-width:780px){#view-tablolar .k-sheet-pic{border-radius:22px 22px 0 0;aspect-ratio:4/3}}
+#view-tablolar .k-sheet-pic img{width:100%;height:100%;object-fit:cover}
+#view-tablolar .k-thumbs{display:flex;gap:8px;padding:12px;position:absolute;bottom:0;left:0;right:0;overflow-x:auto;scrollbar-width:none}
+#view-tablolar .k-thumbs::-webkit-scrollbar{display:none}
+#view-tablolar .k-thumbs button{flex:0 0 auto;width:52px;height:52px;border-radius:11px;overflow:hidden;cursor:pointer;padding:0;
+  border:1px solid rgba(255,255,255,.2);background:var(--navy-2);transition:border-color .3s ease}
+#view-tablolar .k-thumbs button[aria-pressed="true"]{border-color:var(--gold)}
+#view-tablolar .k-thumbs img{width:100%;height:100%;object-fit:cover}
+#view-tablolar .k-sheet-body{padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:15px;min-width:0}
+#view-tablolar .k-sheet-body h2{margin:0;font-size:clamp(1.3rem,2.4vw,1.75rem);font-weight:700;letter-spacing:-.02em;line-height:1.25;text-wrap:balance}
+#view-tablolar .k-sheet-code{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+#view-tablolar .k-sheet-price{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+#view-tablolar .k-sheet-price b{font-family:var(--f-display);font-size:clamp(1.8rem,3.4vw,2.4rem);font-weight:600;color:var(--gold-lt);
+  font-variant-numeric:tabular-nums;line-height:1}
+#view-tablolar .k-sheet-price s{font-size:14px;color:var(--muted)}
+#view-tablolar .k-desc{font-size:14.5px;color:var(--muted);line-height:1.75;white-space:pre-line}
+#view-tablolar .k-vr{display:flex;flex-direction:column;gap:9px}
+#view-tablolar .k-vr .lab{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#view-tablolar .k-vr-opts{display:flex;flex-wrap:wrap;gap:8px}
+#view-tablolar .k-vr-opts button{padding:9px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+  font-size:13.5px;font-weight:500;color:var(--cream);cursor:pointer;transition:border-color .3s ease,background .3s ease,color .3s ease}
+#view-tablolar .k-vr-opts button[aria-pressed="true"]{color:#21160A;border-color:transparent;
+  background:linear-gradient(135deg,var(--gold-lt),var(--gold) 58%,var(--gold-dp))}
+#view-tablolar .k-sheet-foot{display:flex;flex-wrap:wrap;gap:11px;align-items:center;padding-top:6px}
+#view-tablolar .k-sheet-foot .wa-btn{padding:14px 24px;font-size:15px}
+#view-tablolar .k-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:14px;font-weight:600;color:var(--cream);
+  transition:border-color .3s ease,background .3s ease}
+#view-tablolar .k-ghost:hover{border-color:rgba(212,175,97,.55);background:rgba(212,175,97,.09)}
+#view-tablolar .k-fine{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- alt bilgi ---------- */
+footer{border-top:1px solid var(--line);background:rgba(4,11,24,.7)}
+.foot{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;padding-block:34px}
+.foot img{height:40px;width:auto;filter:brightness(1.12)}
+.foot-links{display:flex;flex-wrap:wrap;gap:18px;font-size:13.5px;color:var(--muted)}
+.foot-links a:hover{color:var(--gold-lt)}
+.foot-note{width:100%;padding-bottom:calc(34px + env(safe-area-inset-bottom,0px));font-size:12.5px;color:var(--muted);opacity:.75}
+
+/* ---------- kaydırma animasyonu ---------- */
+html.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+html.js .rv.in{opacity:1;transform:none}
+html.js .rv-d1{transition-delay:.07s}
+html.js .rv-d2{transition-delay:.14s}
+html.js .rv-d3{transition-delay:.21s}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html.js .rv{opacity:1;transform:none}
+  .cursor-glow{display:none}
+}
+
+/* küçük ekranda sekme düğmeleri */
+@media(max-width:760px){
+  .r-switch button{padding:10px 15px;font-size:13px}
+}
+@media(max-width:440px){
+  .r-switch button{padding:9px 11px;font-size:11.8px}
+}
+/* ---- hazırlık kontrol kartı + valiz animasyonu ---- */
+.kc{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,1fr);gap:clamp(16px,2.4vw,36px);align-items:center;
+  padding:clamp(16px,2.2vw,28px);margin-top:clamp(26px,3vw,38px);position:relative;overflow:hidden}
+.kc::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(120% 84% at 16% 18%,rgba(212,175,97,.10),transparent 62%)}
+.kc-art{position:relative;z-index:1}
+.kc-art svg{display:block;width:100%;height:auto}
+.kc-mono{font-family:var(--f-display);font-size:26px;letter-spacing:.16em;fill:#D4AF61;opacity:.28}
+.kc-body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+.kc-title{font-family:var(--f-display);font-size:clamp(23px,2.5vw,31px);line-height:1.14;letter-spacing:-.01em}
+.kc-hint{font-size:14.5px;color:var(--muted);line-height:1.55;max-width:46ch}
+.kc-cta{margin-top:9px;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border-radius:999px;border:0;cursor:pointer;
+  font:600 16px/1 var(--f-ui);color:#21160A;background:linear-gradient(135deg,var(--gold-lt),var(--gold) 52%,var(--gold-dp));
+  box-shadow:0 18px 40px -16px rgba(212,175,97,.85),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s,filter .22s}
+.kc-cta:hover,.kc-cta:focus-visible{transform:translateY(-2px);filter:brightness(1.06);
+  box-shadow:0 24px 52px -16px rgba(212,175,97,.95),inset 0 1px 0 rgba(255,255,255,.55)}
+.kc-cta:active{transform:translateY(0)}
+.kc-cta svg{width:20px;height:20px}
+.kc-cta-ic{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(33,22,10,.15)}
+.kc-cta-ar{transition:transform .22s}
+.kc-cta:hover .kc-cta-ar{transform:translateX(4px)}
+.kc-foot{margin-top:13px;padding-top:13px;border-top:1px solid var(--line);width:100%;
+  display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.kc-foot-t{flex:1;min-width:168px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.kc-ghost{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);
+  font:500 12.5px var(--f-ui);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.kc-ghost:hover{color:var(--cream);border-color:rgba(212,175,97,.45);background:rgba(212,175,97,.08)}
+.kc-lid{transform-box:fill-box;transform-origin:50% 100%}
+.kc-motes .m{opacity:0}
+
+@media (prefers-reduced-motion:no-preference){
+  .kc-art.go .it{animation:kcDrop .8s cubic-bezier(.22,1.04,.3,1) var(--d,0s) both}
+  .kc-art.go .kc-items{animation:kcFloat 5.4s ease-in-out 1.4s infinite}
+  .kc-art.go .kc-sweep{animation:kcSweep 7s cubic-bezier(.4,0,.6,1) 1.4s infinite}
+  .kc-art.go .kc-lid{animation:kcLid 7.6s ease-in-out .5s infinite}
+  .kc-art.go .m{animation:kcMote 7.4s ease-in-out var(--d,0s) infinite}
+}
+@keyframes kcDrop{0%{transform:translateY(-130px) scale(.84);opacity:0}55%{opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes kcFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes kcSweep{0%{transform:translateX(0)}44%,100%{transform:translateX(660px)}}
+@keyframes kcLid{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(-9deg)}}
+@keyframes kcMote{0%{opacity:0;transform:translateY(8px)}28%{opacity:.8}68%{opacity:.34}100%{opacity:0;transform:translateY(-28px)}}
+
+@media (max-width:860px){
+  .kc{grid-template-columns:1fr;gap:4px}
+  .kc-art{max-width:430px;margin:0 auto}
+  .kc-body{align-items:center;text-align:center}
+  .kc-hint{max-width:40ch}
+  .kc-cta{width:100%;justify-content:center}
+  .kc-foot{justify-content:center;text-align:left}
+}
+@media (max-width:440px){
+  .kc{padding:14px}
+  .kc-cta{padding:14px 16px;font-size:15px;gap:9px}
+  .kc-foot-t{font-size:12px}
+}
+/* ---- katalog: yeni alanlar ---- */
+#view-tablolar .k-price em{font-style:normal;font-size:11.5px;color:var(--muted);margin-left:5px}
+#view-tablolar .k-sheet-price em{font-style:normal;display:block;font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+#view-tablolar .k-stars{display:flex;align-items:center;gap:3px;margin:2px 0 -2px}
+#view-tablolar .k-stars svg{width:14px;height:14px;fill:rgba(212,175,97,.22)}
+#view-tablolar .k-stars svg.on{fill:var(--gold)}
+#view-tablolar .k-stars i{font-style:normal;font-size:11.5px;color:var(--muted);margin-left:7px}
+#view-tablolar .k-vr-opts button i{font-style:normal;display:block;font-size:11px;color:var(--muted);margin-top:3px}
+#view-tablolar .k-vr-opts button[aria-pressed="true"] i{color:rgba(33,22,10,.62)}
+#view-tablolar .k-specs{margin:18px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--line)}
+#view-tablolar .k-specs>div{background:rgba(7,21,47,.72);padding:11px 13px;min-width:0}
+#view-tablolar .k-specs dt{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+#view-tablolar .k-specs dd{margin:4px 0 0;font-size:13.5px;color:var(--cream);line-height:1.35}
+</style>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="İstanbul Hac Umre Hediyelik — ana sayfa">
+      <img src="assets/logo.png" alt="İstanbul Hac Umre Hurma Hediyelik">
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Ana sayfa</a>
+      <a href="#liste">İhtiyaç listesi</a>
+      <a href="#rehber">Rehber</a>
+      <a href="#ziyaret">Ziyaret</a>
+      <a class="nav-cta" href="#tablolar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1.4"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="1"/></svg> Hediyelik Tablolar</a>
+    </nav>
+    <a class="wa-btn magnet" href="https://wa.me/905551044040" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.44-.72-2.9-1.14-4.73-4.1-4.87-4.29-.14-.19-1.16-1.54-1.16-2.94s.74-2.09 1-2.37c.26-.29.57-.36.76-.36l.54.01c.17.01.41-.07.64.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48l-.42.49c-.14.14-.28.29-.12.57.16.29.71 1.17 1.52 1.89 1.04.93 1.92 1.21 2.2 1.36.28.14.44.12.6-.07.17-.19.69-.8.87-1.08.19-.28.37-.23.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.54.33.07.11.07.66-.18 1.35Z"/></svg>
+      WhatsApp
+    </a>
+    <button class="burger" id="burger" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu">
+  <div>
+    <a href="#">Ana sayfa</a>
+    <a href="#liste">Umre ihtiyaç listesi</a>
+    <a href="#rehber">Rehber</a>
+    <a href="#ziyaret">Ziyaret yerleri</a>
+    <a class="nav-cta" href="#tablolar"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1.4"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="1"/></svg> Hediyelik Tablolar</a>
+    <a href="#magaza">Mağaza &amp; iletişim</a>
+    <a href="#magaza">Mağaza &amp; iletişim</a>
+    <a class="wa-btn" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+  </div>
+</nav>
+
+<main id="top">
+
+<div id="view-home" data-view="">
+
+  <!-- ===== KAHRAMAN ===== -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+    <div class="cursor-glow" id="glow" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Ümraniye · Hac &amp; umre malzemeleri</span>
+        <h1>Yola çıkmadan önce<br><span class="ital">eksiğiniz</span> kalmasın.</h1>
+        <p class="lead">İhramdan mestine, kokusuz bakım ürünlerinden tesbihe kadar Mekke ve Medine yolculuğunda lazım olan ne varsa tek bir yerde. Acele ettirmeden, ihtiyacınızı birlikte çıkararak.</p>
+        <div class="hero-cta">
+          <a class="wa-btn magnet" href="https://wa.me/905551044040" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.44-.72-2.9-1.14-4.73-4.1-4.87-4.29-.14-.19-1.16-1.54-1.16-2.94s.74-2.09 1-2.37c.26-.29.57-.36.76-.36l.54.01c.17.01.41-.07.64.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48l-.42.49c-.14.14-.28.29-.12.57.16.29.71 1.17 1.52 1.89 1.04.93 1.92 1.21 2.2 1.36.28.14.44.12.6-.07.17-.19.69-.8.87-1.08.19-.28.37-.23.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.54.33.07.11.07.66-.18 1.35Z"/></svg>
+            Ne lazımsa sorun
+          </a>
+          <a class="btn-ghost" href="#urunler">Mağazada ne var <span class="arw">→</span></a>
+        </div>
+        <div class="chips">
+          <span class="chip"><i></i>Toptan &amp; perakende</span>
+          <span class="chip"><i></i>Her gün 09:00 – 20:00</span>
+          <span class="chip soon"><i></i>Online sipariş çok yakında</span>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <div class="checklist glass">
+          <div class="cl-head">
+            <div class="ring">
+              <svg viewBox="0 0 56 56" aria-hidden="true">
+                <circle class="bgc" cx="28" cy="28" r="25"></circle>
+                <circle class="fgc" id="ringFg" cx="28" cy="28" r="25"></circle>
+              </svg>
+              <b id="ringTxt">0/6</b>
+            </div>
+            <div class="t">
+              <h3>Hazırlık kontrolü</h3>
+              <p id="clHeadSub">Altı başlıkta 38 ürün. Robot sırayla sorsun, ihtiyacınız olanları işaretleyin.</p>
+            </div>
+          </div>
+
+          <div class="cl-sum" id="clSum"></div>
+
+          <div class="cl-foot">
+            <a class="btn-ghost" href="#liste" style="padding:10px 16px;font-size:13.4px">Tüm liste <span class="arw">→</span></a>
+            <button class="cl-send" type="button" id="wizStart">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 13h.01M15 13h.01M9.5 16.5h5"/><path d="M2.5 12v2M21.5 12v2"/></svg>
+              Kontrolü başlat
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AKAN ŞERİT ===== -->
+  <div class="ticker" aria-hidden="true"><div class="ticker-row" id="ticker"></div></div>
+
+  <!-- ===== KATEGORİLER ===== -->
+  <section class="band" id="urunler">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Mağazada ne var</span>
+        <h2>Yolculukta lazım olan<br><span class="ital">her şey</span> bir arada.</h2>
+        <p class="lead">Raflarımız hac ve umre yolculuğunun ihtiyaç listesine göre düzenli. Ne aradığınızı bilmiyorsanız sorun, birlikte çıkaralım.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7.5 8.5 4h7L20 7.5l-2.5 2.6V20h-11V10.1L4 7.5Z"/><path d="M8.5 4c0 1.9 1.6 3.2 3.5 3.2S15.5 5.9 15.5 4"/></svg></div>
+          <h3>İhram &amp; kemer</h3>
+          <p>Dikişsiz iki parça ihram takımları, havlu kalınlıkları ve bel kemeri seçenekleri.</p>
+          <div class="tags"><b>İhram takımı</b><b>Kemer</b><b>Yedek takım</b></div>
+        </article>
+
+        <article class="card glass rv rv-d1">
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="9" width="14" height="12" rx="3"/><path d="M9 9V6.5A3 3 0 0 1 15 6.5V9"/><path d="M9.5 15h5"/></svg></div>
+          <h3>Kokusuz bakım ürünleri</h3>
+          <p>İhramlı iken kullanılabilecek kokusuz sabun, şampuan, sıvı sabun, ıslak mendil ve diş macunu.</p>
+          <div class="tags"><b>Sabun</b><b>Şampuan</b><b>Islak mendil</b><b>Diş macunu</b></div>
+        </article>
+
+        <article class="card glass rv rv-d2">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 16.5c2.5-.6 4-2.4 4-5V7.5a2 2 0 0 1 4 0v4c0 2.6 1.5 4.4 4 5"/><path d="M3.5 19.5h17"/></svg></div>
+          <h3>Mest &amp; terlik</h3>
+          <p>Abdestte kolaylık için deriden imal mestler; uzun yürüyüşe uygun terlikler.</p>
+          <div class="tags"><b>Deri mest</b><b>Terlik</b></div>
+        </article>
+
+        <article class="card glass rv">
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="8.4" r="1.9"/><circle cx="12" cy="5.2" r="1.9"/><circle cx="18" cy="8.4" r="1.9"/><circle cx="18.8" cy="15.2" r="1.9"/><circle cx="12" cy="18.8" r="1.9"/><circle cx="5.2" cy="15.2" r="1.9"/></svg></div>
+          <h3>Tesbih &amp; zikirmatik</h3>
+          <p>Farklı boy ve malzemede tesbihler, parmak ve kol tipi zikirmatikler, tesbih keseleri.</p>
+          <div class="tags"><b>Tesbih</b><b>Zikirmatik</b><b>Kese</b></div>
+        </article>
+
+        <article class="card glass rv rv-d1">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 20.5V8.5a6 6 0 0 1 12 0v12Z"/><path d="M9.5 20.5v-10a2.5 2.5 0 0 1 5 0v10"/></svg></div>
+          <h3>Seccade &amp; kıyafet</h3>
+          <p>Seyahat seccadeleri, hac ve umre kıyafetleri, başörtüsü ve namaz örtüleri.</p>
+          <div class="tags"><b>Seccade</b><b>Kıyafet</b><b>Örtü</b></div>
+        </article>
+
+        <article class="card glass rv rv-d2">
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 19.5 19 5.5"/><path d="M15.5 4.5 19.5 8.5"/><path d="M5.5 19 4 20.5"/><path d="M9 16.5 7 18.5"/></svg></div>
+          <h3>Misvak, çanta &amp; koku</h3>
+          <p>Misvak ve kapları, bel çantası, boyun askısı ve evrak kılıfı. Misk ve esanslar ihramdan çıktıktan sonrası için.</p>
+          <div class="tags"><b>Misvak</b><b>Bel çantası</b><b>Boyun askısı</b><b>Misk</b></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== İKİNCİL ÜRÜNLER ===== -->
+  <section class="band" id="ikincil" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Ayrıca mağazamızda</span>
+        <h2>Dönüşte <span class="ital">hatırlatan</span> şeyler.</h2>
+      </div>
+
+      <div class="duo">
+        <article class="duo-item rv">
+          <div class="duo-pic"><img src="assets/hurma.jpg" alt="Kur'an-ı Kerim, hurma tabağı, zemzem şişesi ve tesbihten oluşan masa düzeni" loading="lazy"></div>
+          <div class="duo-txt">
+            <h3>Hurma &amp; zemzem</h3>
+            <p>İkisi de zaten orada bulunur; biz yalnızca dönüşte ikram etmek isteyenlere ya da gidemeyenlere burada da ulaşabilsin diye bulunduruyoruz. Farklı hurma çeşitleri ve taşımaya uygun zemzem ambalajları mevcut.</p>
+          </div>
+        </article>
+
+        <a class="duo-item rv rv-d1" href="#tablolar">
+          <div class="duo-pic">
+            <span class="badge"><i></i>Katalog açıldı</span>
+            <img src="assets/showroom.jpg" alt="Altın çerçeveli hat tablonun asılı olduğu lacivert duvarlı mağaza içi" loading="lazy">
+          </div>
+          <div class="duo-txt">
+            <h3>Hat tabloları</h3>
+            <p>Binlerce çerçeveli hat eserini ölçüleri, kodları ve güncel fiyatlarıyla katalogdan gezebilirsiniz. Beğendiğiniz eserin kodunu WhatsApp'tan gönderin, gerisini biz hallederiz.</p>
+            <span class="btn-ghost" style="align-self:flex-start;margin-top:6px;padding:10px 18px;font-size:13.5px">Kataloğu aç <span class="arw">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KAFİLELER ===== -->
+  <section class="band" style="padding-top:0">
+    <div class="wrap">
+      <div class="corp-panel glass rv">
+        <div class="corp-left">
+          <span class="eyebrow">Kafileler &amp; organizasyonlar</span>
+          <h2>Toptan da <span class="ital">aynı</span> özenle.</h2>
+          <p class="lead">Hac ve umre kafileleri, vakıflar ve dernekler için toplu hazırlık. Kişi sayısını söyleyin, listeyi birlikte çıkaralım.</p>
+          <a class="btn-ghost" href="https://wa.me/905551044040?text=Merhaba%2C%20kafile%20i%C3%A7in%20toplu%20haz%C4%B1rl%C4%B1k%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">Kafile için yazın <span class="arw">→</span></a>
+        </div>
+        <ul class="corp-list">
+          <li>
+            <svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/><path d="M3 12l9 4.5L21 12M3 16.5 12 21l9-4.5"/></svg>
+            <div><b>Kişi başı liste</b><span>Kafiledeki herkesin aynı eksiksiz seti almasını sağlayacak şekilde planlıyoruz.</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+            <div><b>Çıkış tarihine göre</b><span>Teslimatı kafilenizin çıkış gününe göre ayarlıyoruz, son güne bırakmadan.</span></div>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7.5 9.5h9M7.5 13.5h5.5"/></svg>
+            <div><b>Toptan ve perakende</b><span>İster tek kişilik, ister yüz kişilik. İkisinde de aynı ürün, aynı ilgi.</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAĞAZA ===== -->
+  <section class="band" id="magaza" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv" style="margin-bottom:clamp(30px,3.6vw,46px)">
+        <span class="eyebrow">Mağaza &amp; iletişim</span>
+        <h2>Ümraniye'de <span class="ital">kapımız</span> her gün açık.</h2>
+      </div>
+
+      <div class="store">
+        <div class="store-card glass rv">
+          <div class="open-state" id="openState"><i></i><span id="openTxt">Her gün 09:00 – 20:00</span></div>
+
+          <div class="phone-line">
+            <span class="phone-num" id="phoneNum">0555 104 40 40</span>
+            <button class="copy-btn" id="copyBtn" type="button">
+              <svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              <span id="copyLabel">Numarayı kopyala</span>
+            </button>
+          </div>
+
+          <div class="ct-rows">
+            <div class="ct-row">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <div><div class="lab">Adres</div><div class="val">Atatürk Mah., Sütçü İmam Cad., Cevherağa Camii Sok., Elif İş Merkezi No: 10-A<br>34764 Ümraniye / İstanbul</div></div>
+            </div>
+            <div class="ct-row">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+              <div><div class="lab">Çalışma saatleri</div><div class="val">Pazartesi – Pazar · 09:00 – 20:00</div></div>
+            </div>
+            <div class="ct-row">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+              <div><div class="lab">Instagram</div><div class="val"><a href="https://www.instagram.com/istanbulhacumrehediyelik/" target="_blank" rel="noopener">@istanbulhacumrehediyelik</a></div></div>
+            </div>
+          </div>
+
+          <div class="store-actions">
+            <a class="wa-btn magnet" href="https://www.google.com/maps/dir/?api=1&amp;destination=41.0242974%2C29.0910215&amp;destination_place_id=ChIJ-38qlVLJyhQRIYjjDi1xPUI" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-8-8 18-2-8-8-2Z"/></svg>
+              Yol tarifi al
+            </a>
+            <a class="btn-ghost" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Haritada aç <span class="arw">→</span></a>
+          </div>
+        </div>
+
+        <div class="store-side">
+          <div class="rating glass rv rv-d1">
+            <div class="stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9Z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9Z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9Z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9Z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="m12 2.6 2.9 6 6.6.9-4.8 4.6 1.2 6.5-5.9-3.1-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9Z"/></svg>
+            </div>
+            <span class="sc">5,0</span>
+            <span class="mt">Google üzerinde 115 değerlendirme</span>
+            <a class="btn-ghost" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" style="margin-top:4px">Siz de değerlendirin <span class="arw">→</span></a>
+          </div>
+          <div class="store-pic rv rv-d2">
+            <img src="assets/showroom.jpg" alt="Mağazanın lacivert ve krem renkli iç mekânı" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="view-liste" class="view-page" data-view="liste" hidden>
+  <!-- ===== HAZIRLIK LİSTESİ ===== -->
+  <section class="band" id="hazirlik">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Hazırlık listesi</span>
+        <h2>Valizinizde <span class="ital">eksik</span> kalmasın.</h2>
+        <p class="lead">İhramdan kokusuz bakım ürünlerine, ibadet eşyalarından dönüş hediyeliklerine kadar mağazamızda bulabilecekleriniz. İhtiyacınız olanı işaretleyin, tek dokunuşla bize iletin; hazırlayıp bekletelim. Kendi hazırlayacaklarınız da en altta hatırlatma olarak duruyor.</p>
+      </div>
+
+      <div class="kc glass rv">
+        <div class="kc-art" id="kcArt" aria-hidden="true">
+          <svg viewBox="0 0 480 340" role="img">
+            <defs>
+              <linearGradient id="kcNavy" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#14305F"/><stop offset="55%" stop-color="#0B1E40"/><stop offset="1" stop-color="#061227"/>
+              </linearGradient>
+              <linearGradient id="kcNavy2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#102A54"/><stop offset="1" stop-color="#050F22"/>
+              </linearGradient>
+              <linearGradient id="kcGold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#F3E2B6"/><stop offset="48%" stop-color="#D4AF61"/><stop offset="1" stop-color="#8E6E2C"/>
+              </linearGradient>
+              <radialGradient id="kcGlow" cx="50%" cy="38%" r="58%">
+                <stop offset="0" stop-color="#D4AF61" stop-opacity=".30"/>
+                <stop offset="55%" stop-color="#D4AF61" stop-opacity=".07"/>
+                <stop offset="1" stop-color="#D4AF61" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="kcSweep" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+                <stop offset="45%" stop-color="#fff" stop-opacity=".13"/>
+                <stop offset="55%" stop-color="#F3E2B6" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="kcLidClip"><rect x="104" y="44" width="252" height="146" rx="20"/></clipPath>
+              <filter id="kcSoft" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="7"/>
+              </filter>
+            </defs>
+
+            <ellipse cx="240" cy="150" rx="210" ry="132" fill="url(#kcGlow)"/>
+            <ellipse cx="240" cy="312" rx="150" ry="17" fill="#000" opacity=".45" filter="url(#kcSoft)"/>
+
+            <!-- açık kapak -->
+            <g class="kc-lid" transform="rotate(-7 230 190)">
+              <path d="M196 48q34-26 68 0" fill="none" stroke="url(#kcGold)" stroke-width="7" stroke-linecap="round"/>
+              <path d="M196 48q34-26 68 0" fill="none" stroke="#2A1F0B" stroke-width="2.2" stroke-linecap="round" opacity=".5"/>
+              <rect x="104" y="44" width="252" height="146" rx="20" fill="url(#kcNavy)" stroke="url(#kcGold)" stroke-width="1.6"/>
+              <rect x="114" y="54" width="232" height="126" rx="14" fill="none" stroke="#D4AF61" stroke-width=".9" opacity=".34"/>
+              <g opacity=".92">
+                <path d="M230 94l20 23-20 23-20-23z" fill="none" stroke="url(#kcGold)" stroke-width="1.5"/>
+                <path d="M230 105l9 12-9 12-9-12z" fill="url(#kcGold)" opacity=".8"/>
+              </g>
+              <g clip-path="url(#kcLidClip)"><rect class="kc-sweep" x="-260" y="44" width="200" height="146" fill="url(#kcSweep)"/></g>
+            </g>
+
+            <!-- iç boşluk -->
+            <rect x="96" y="156" width="288" height="52" rx="14" fill="#03091A"/>
+            <rect x="96" y="156" width="288" height="52" rx="14" fill="none" stroke="#D4AF61" stroke-width=".8" opacity=".25"/>
+
+            <!-- valize giren ihtiyaçlar -->
+            <g class="kc-items">
+              <g class="it" style="--d:.10s;--fd:0s"><g class="itf" transform="translate(130,186)">
+                <rect x="-19" y="-3" width="38" height="13" rx="3.5" fill="#F3EFE4" stroke="#8E6E2C" stroke-width=".9"/>
+                <rect x="-15" y="-14" width="30" height="12" rx="3.5" fill="#FFFDF7" stroke="#8E6E2C" stroke-width=".9"/>
+                <path d="M-15-8h30M-19 3h38" stroke="#D4AF61" stroke-width=".7" opacity=".7"/>
+              </g></g>
+              <g class="it" style="--d:.26s;--fd:.6s"><g class="itf" transform="translate(172,184)">
+                <circle cx="0" cy="-2" r="12.5" fill="none" stroke="url(#kcGold)" stroke-width="1.3"/>
+                <g fill="url(#kcGold)">
+                  <circle cx="0" cy="-14.5" r="2.5"/><circle cx="8.8" cy="-10.8" r="2.5"/><circle cx="12.5" cy="-2" r="2.5"/>
+                  <circle cx="8.8" cy="6.8" r="2.5"/><circle cx="0" cy="10.5" r="2.5"/><circle cx="-8.8" cy="6.8" r="2.5"/>
+                  <circle cx="-12.5" cy="-2" r="2.5"/><circle cx="-8.8" cy="-10.8" r="2.5"/>
+                </g>
+                <path d="M0 10.5v7" stroke="url(#kcGold)" stroke-width="1.3"/>
+              </g></g>
+              <g class="it" style="--d:.42s;--fd:1.2s"><g class="itf" transform="translate(216,186)">
+                <rect x="-20" y="-9" width="40" height="19" rx="9.5" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
+                <circle cx="-10.5" cy=".5" r="6" fill="none" stroke="#D4AF61" stroke-width="1"/>
+                <circle cx="-10.5" cy=".5" r="2.4" fill="#D4AF61" opacity=".8"/>
+                <path d="M4-4h12M4 1h12M4 6h9" stroke="#D4AF61" stroke-width=".9" opacity=".6"/>
+              </g></g>
+              <g class="it" style="--d:.58s;--fd:.3s"><g class="itf" transform="translate(258,188)">
+                <path d="M-14 8q-4-11 2-17 7-7 14-2 7 5 4 13-2 6-9 6z" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
+                <path d="M-8-7q7-5 13 1" fill="none" stroke="#D4AF61" stroke-width="1.4" opacity=".9"/>
+              </g></g>
+              <g class="it" style="--d:.74s;--fd:.9s"><g class="itf" transform="translate(298,184)">
+                <rect x="-8" y="-8" width="16" height="20" rx="4" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
+                <rect x="-3.5" y="-14" width="7" height="6" rx="1.6" fill="url(#kcGold)"/>
+                <path d="M-4-2h8M-4 3h8" stroke="#D4AF61" stroke-width=".9" opacity=".6"/>
+              </g></g>
+              <g class="it" style="--d:.90s;--fd:1.6s"><g class="itf" transform="translate(334,186)">
+                <g transform="rotate(-24)">
+                  <rect x="-3" y="-15" width="6" height="28" rx="3" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.1"/>
+                  <path d="M-2.5-15v-5M0-15v-6M2.5-15v-5" stroke="url(#kcGold)" stroke-width="1.1" stroke-linecap="round"/>
+                </g>
+              </g></g>
+              <g class="it" style="--d:1.06s;--fd:.45s"><g class="itf" transform="translate(366,185)">
+                <rect x="-10" y="-13" width="20" height="26" rx="5.5" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
+                <rect x="-6" y="-9" width="12" height="7" rx="2" fill="#D4AF61" opacity=".45"/>
+                <circle cx="0" cy="5" r="3.4" fill="none" stroke="#D4AF61" stroke-width="1.1"/>
+              </g></g>
+            </g>
+
+            <!-- ön gövde -->
+            <g class="kc-case">
+              <rect x="84" y="184" width="312" height="120" rx="20" fill="url(#kcNavy)" stroke="url(#kcGold)" stroke-width="1.6"/>
+              <rect x="94" y="194" width="292" height="100" rx="13" fill="none" stroke="#D4AF61" stroke-width=".9" opacity=".3"/>
+              <g opacity=".95">
+                <rect x="136" y="184" width="13" height="120" fill="#0A1C3C"/>
+                <rect x="136" y="184" width="13" height="120" fill="url(#kcGold)" opacity=".5"/>
+                <rect x="331" y="184" width="13" height="120" fill="#0A1C3C"/>
+                <rect x="331" y="184" width="13" height="120" fill="url(#kcGold)" opacity=".5"/>
+              </g>
+              <g fill="url(#kcGold)">
+                <rect x="128" y="176" width="30" height="17" rx="5"/>
+                <rect x="322" y="176" width="30" height="17" rx="5"/>
+              </g>
+              <g fill="none" stroke="url(#kcGold)" stroke-width="2.4" stroke-linecap="round" opacity=".95">
+                <path d="M92 206v-8a10 10 0 0 1 10-10h8"/>
+                <path d="M388 206v-8a10 10 0 0 0-10-10h-8"/>
+                <path d="M92 282v8a10 10 0 0 0 10 10h8"/>
+                <path d="M388 282v8a10 10 0 0 1-10 10h-8"/>
+              </g>
+              <g fill="url(#kcGold)" opacity=".85">
+                <rect x="112" y="302" width="26" height="7" rx="3.5"/>
+                <rect x="342" y="302" width="26" height="7" rx="3.5"/>
+              </g>
+              <text class="kc-mono" x="240" y="252" text-anchor="middle">İHH</text>
+            </g>
+
+            <!-- altın zerreler -->
+            <g class="kc-motes" fill="#D4AF61">
+              <circle class="m" style="--d:0s"   cx="118" cy="128" r="2.1"/>
+              <circle class="m" style="--d:1.1s" cx="372" cy="104" r="1.7"/>
+              <circle class="m" style="--d:2.2s" cx="156" cy="80"  r="1.5"/>
+              <circle class="m" style="--d:3.1s" cx="326" cy="150" r="2"/>
+              <circle class="m" style="--d:4.0s" cx="252" cy="62"  r="1.6"/>
+              <circle class="m" style="--d:1.7s" cx="94"  cy="188" r="1.5"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="kc-body">
+          <span class="eyebrow">Hazırlık kontrolü</span>
+          <b class="kc-title" id="clBarTitle">Kontrole başlayalım</b>
+          <span class="kc-hint" id="clHint">Altı başlığı tek tek gözden geçirin, ihtiyacınız olanı işaretleyin.</span>
+          <button class="kc-cta" type="button" id="wizStart2">
+            <span class="kc-cta-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 13h.01M15 13h.01M9.5 16.5h5"/><path d="M2.5 12v2M21.5 12v2"/></svg>
+            </span>
+            <span class="kc-cta-t">Hazırlık kontrolünü başlat</span>
+            <svg class="kc-cta-ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 6l6 6-6 6"/></svg>
+          </button>
+          <div class="kc-foot">
+            <div class="ring">
+              <svg viewBox="0 0 56 56" aria-hidden="true">
+                <circle class="bgc" cx="28" cy="28" r="25"></circle>
+                <circle class="fgc" id="ringFg2" cx="28" cy="28" r="25"></circle>
+              </svg>
+              <b id="ringTxt2">0/6</b>
+            </div>
+            <span class="kc-foot-t">Altı başlık, kısa sorular. Sonunda ihtiyaç listenizi WhatsApp'tan gönderebilir ya da kopyalayabilirsiniz.</span>
+            <button class="kc-ghost" type="button" id="clReset">Sıfırla</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cl-grid rv" id="clGrid"></div>
+
+      <section class="rem-card glass rv" id="hatirlatma">
+        <div class="rem-head">
+          <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 9v4.5"/><path d="M12 17v.4"/></svg></span>
+          <h3>Şunları da unutmayın</h3>
+          <span class="ct" id="remCt">0/41 hazır</span>
+        </div>
+        <p class="rem-lead">Bunlar mağazamızda bulunmayan, kendinizin hazırlayacağı şeyler. Teklife dâhil değildir; yanınıza aldıklarınızı işaretleyin, gözden kaçmasın.</p>
+        <div id="remGrid"></div>
+      </section>
+
+      <div class="g-note rv">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.4"/></svg>
+        <p>Liste genel bir rehberdir; kafilenizin verdiği listeyle birlikte değerlendirin. İşaretleriniz yalnızca kendi tarayıcınızda tutulur, bize gönderene kadar hiçbir yere iletilmez.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="view-rehber" class="view-page" data-view="rehber" hidden>
+  <!-- ===== REHBER ===== -->
+  <section class="band" id="rehber">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Kısa rehber</span>
+        <h2>Sormaya çekindiğiniz<br><span class="ital">basit</span> sorular.</h2>
+        <p class="lead">Yolculuğun nasıl yapıldığına dair hap bilgiler, adım adım sıralama, sıkça sorulan sorular ve pratik notlar. Hac ve umre ayrı ayrı.</p>
+      </div>
+
+      <div class="rv">
+        <div class="r-switch" id="rSwitch" role="tablist" aria-label="Rehber bölümü">
+          <span class="r-thumb" id="rThumb"></span>
+          <button type="button" role="tab" aria-selected="true" data-g="umre">Umre</button>
+          <button type="button" role="tab" aria-selected="false" data-g="hac">Hac</button>
+        </div>
+
+        <div class="r-body" id="rBody" role="tabpanel"></div>
+      </div>
+
+      <div class="rv" style="margin-top:clamp(34px,4vw,54px)">
+        <div class="r-sub">Yol hazırlığı ve sağlık</div>
+        <div class="prep-grid" id="prepGrid"></div>
+      </div>
+
+      <div class="r-terms rv">
+        <div class="r-sub">Terimler sözlüğü</div>
+        <div class="term-chips" id="termChips"></div>
+        <div class="term-def glass" id="termDef"></div>
+      </div>
+
+      <div class="g-note rv">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.4"/></svg>
+        <p>Bu bölüm <em>Hac ve Umre Rehberi</em> (Fazilet Neşriyat) esas alınarak, hazırlık tarafına dair pratik notlar hâlinde derlenmiştir. Bagaj sınırı, randevu ve program gibi ayrıntılar kafilenize göre değişebilir. Fıkhî ayrıntılar, mezhep farkları ve size özel durumlar için kafile hocanıza danışmanızı tavsiye ederiz.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="view-ziyaret" class="view-page" data-view="ziyaret" hidden>
+  <!-- ===== ZİYARET YERLERİ ===== -->
+  <section class="band" id="ziyaret">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="eyebrow">Ziyaret yerleri</span>
+        <h2>Gittiğinizde <span class="ital">görmeden</span> dönmeyin.</h2>
+        <p class="lead">Medîne-i Münevvere ve Mekke-i Mükerreme'de kafilelerin uğradığı mübarek mekânlar; yürüyerek gidilenler ve otobüsle gidilenler olarak ayrı ayrı.</p>
+      </div>
+
+      <div class="rv">
+        <div class="r-switch" id="zSwitch" role="tablist" aria-label="Şehir">
+          <span class="r-thumb" id="zThumb"></span>
+          <button type="button" role="tab" aria-selected="true" data-z="medine">Medîne-i Münevvere</button>
+          <button type="button" role="tab" aria-selected="false" data-z="mekke">Mekke-i Mükerreme</button>
+        </div>
+
+        <div class="r-body" id="zBody" role="tabpanel"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</main>
+
+<!-- ===== HAT TABLOLARI KATALOĞU ===== -->
+<section id="view-tablolar" data-view="tablolar" hidden>
+  <div class="k-note-bar" id="kNoteBar" hidden>
+    <div class="wrap">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.4" stroke-linecap="round"/></svg>
+      <span><b>Koleksiyonun bir bölümü.</b> Buradaki eserler, kodları ve fiyatları gerçektir. Koleksiyonun tamamı (2.500’den fazla eser) ve fotoğraflar, senkron bağlandığında bu sayfaya kendiliğinden dolacak.</span>
+    </div>
+  </div>
+
+  <div class="k-head">
+    <div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div></div>
+    <div class="wrap">
+      <span class="eyebrow">Koleksiyon</span>
+      <h2 style="margin:14px 0 12px">Hat sanatının <span class="ital">zarafeti</span>, duvarınıza.</h2>
+      <p class="lead">Çerçeveli hat eserleri, hilye-i şerîfler, lazer kesim levhalar ve tezhipli panolar. Beğendiğiniz eserin kodunu WhatsApp'tan gönderin; ölçü, çerçeve ve teslimat için size dönelim.</p>
+    </div>
+  </div>
+
+  <div class="k-bar">
+    <div class="wrap">
+      <div class="k-bar-in">
+        <label class="k-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
+          <input id="kq" type="search" placeholder="Eser adı veya ürün kodu ile arayın…" autocomplete="off">
+        </label>
+        <select class="k-sel" id="ksort" aria-label="Sıralama">
+          <option value="rel">Önerilen sıralama</option>
+          <option value="asc">Fiyat: önce uygun</option>
+          <option value="desc">Fiyat: önce yüksek</option>
+          <option value="az">İsme göre (A–Z)</option>
+        </select>
+        <select class="k-sel" id="krange" aria-label="Fiyat aralığı">
+          <option value="">Tüm fiyatlar</option>
+          <option value="0-3000">3.000 ₺ altı</option>
+          <option value="3000-6000">3.000 – 6.000 ₺</option>
+          <option value="6000-10000">6.000 – 10.000 ₺</option>
+          <option value="10000-">10.000 ₺ üzeri</option>
+        </select>
+      </div>
+      <div class="k-chips" id="kchips"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="k-count">
+      <span id="kcount">Yükleniyor…</span>
+      <span id="kfresh"></span>
+    </div>
+    <div class="k-grid" id="kgrid"></div>
+    <button class="k-more" id="kmore" type="button" hidden>Daha fazla eser göster</button>
+  </div>
+
+  <div class="k-sheet" id="ksheet" hidden role="dialog" aria-modal="true" aria-labelledby="kname">
+    <div class="k-sheet-card glass">
+      <button class="k-x" type="button" id="kx" aria-label="Kapat">&times;</button>
+      <div class="k-sheet-grid">
+        <div class="k-sheet-pic" id="kpic"></div>
+        <div class="k-sheet-body" id="kbody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <img src="assets/logo.png" alt="İstanbul Hac Umre Hurma Hediyelik">
+      <div class="foot-links">
+        <a href="#liste">İhtiyaç listesi</a>
+        <a href="#urunler">Mağazada</a>
+        <a href="#rehber">Rehber</a>
+        <a href="#magaza">Mağaza</a>
+        <a href="https://www.instagram.com/istanbulhacumrehediyelik/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="foot-note">© <span id="yil">2026</span> İstanbul Hac Umre Hediyelik · Toptan ve perakende · Ümraniye, İstanbul</div>
+  </div>
+</footer>
+
+<span class="soon-pill" aria-live="off"><i></i>Online sipariş · çok yakında</span>
+<a class="fab" href="https://wa.me/905551044040" target="_blank" rel="noopener" aria-label="WhatsApp'tan yazın">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.44-.72-2.9-1.14-4.73-4.1-4.87-4.29-.14-.19-1.16-1.54-1.16-2.94s.74-2.09 1-2.37c.26-.29.57-.36.76-.36l.54.01c.17.01.41-.07.64.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48l-.42.49c-.14.14-.28.29-.12.57.16.29.71 1.17 1.52 1.89 1.04.93 1.92 1.21 2.2 1.36.28.14.44.12.6-.07.17-.19.69-.8.87-1.08.19-.28.37-.23.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.54.33.07.11.07.66-.18 1.35Z"/></svg>
+</a>
+
+<div class="wiz" id="wiz" hidden role="dialog" aria-modal="true" aria-labelledby="wizTitle">
+  <div class="wiz-card glass">
+    <button class="wiz-x" type="button" id="wizClose" aria-label="Kontrolü kapat">&times;</button>
+    <div class="wiz-dots" id="wizDots"></div>
+    <div class="wiz-t">
+      <span class="ico" id="wizIco"></span>
+      <div style="min-width:0">
+        <span class="step" id="wizStep">Kontrol</span>
+        <h3 id="wizTitle">Hazırlık kontrolü</h3>
+      </div>
+    </div>
+    <p class="wiz-q" id="wizQ"></p>
+    <div class="wiz-body" id="wizBody"></div>
+    <div class="wiz-foot" id="wizFoot"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WA = 'https://wa.me/905551044040';
+
+  /* --- akan şerit --- */
+  var words = ['İhram','İhram kemeri','Kokusuz sabun','Kokusuz ıslak mendil','Mest','Terlik','Misvak','Tesbih','Zikirmatik','Seccade','Hac &amp; umre kıyafeti','Bel çantası','Hurma','Zemzem','Hat tablo'];
+  var t = document.getElementById('ticker');
+  if (t) { var h = words.map(function(w){ return '<span>' + w + '</span>'; }).join(''); t.innerHTML = h + h; }
+
+  var y = document.getElementById('yil'); if (y) y.textContent = new Date().getFullYear();
+
+  /* --- navigasyon --- */
+  var nav = document.getElementById('nav'), burger = document.getElementById('burger'), mm = document.getElementById('mobileMenu');
+  function onScroll(){ nav.classList.toggle('stuck', window.scrollY > 24); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  if (burger) burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  if (mm) mm.addEventListener('click', function(e){
+    if (e.target.closest('a')) { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  });
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]'); if (!a) return;
+    var id = a.getAttribute('href');
+    e.preventDefault();
+    if (id === '#' || id === '#top') { goView('', null); return; }
+    var vname = id.slice(1);
+    if (VIEWS.some(function(v){ return v.getAttribute('data-view') === vname; })) { goView(vname, null); return; }
+    var el = document.querySelector(id);
+    if (!el) { goView('', null); return; }
+    if (el.hasAttribute('data-view')) { goView(el.getAttribute('data-view'), null); return; }
+    var host = el.closest('[data-view]');
+    var name = host ? host.getAttribute('data-view') : '';
+    if (host && host.firstElementChild === el) { goView(name, null); return; }
+    if (name !== currentView()) goView(name, id); else scrollToEl(el);
+  });
+
+  /* --- kaydırmayla görünme --- */
+  var rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(en){
+      en.forEach(function(x){ if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    rvs.forEach(function(el){ io.observe(el); });
+  } else { rvs.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* --- kaydırmalı sekme göstergesi --- */
+  function moveThumb(sw, thumb){
+    var on = sw.querySelector('button[aria-selected="true"]');
+    if (!on) return;
+    thumb.style.width = on.offsetWidth + 'px';
+    thumb.style.transform = 'translateX(' + (on.offsetLeft - 5) + 'px)';
+  }
+  var thumbs = [];
+  function syncThumbs(){ thumbs.forEach(function(p){ moveThumb(p[0], p[1]); }); }
+  window.addEventListener('resize', syncThumbs);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncThumbs);
+
+  /* --- hazırlık listesi --- */
+  /* Mağazadan temin edilebilen maddeler: robot bunları sorar, teklif bunlardan çıkar. */
+  var LISTE = [
+    { t:'İhram ve giyim', ico:'<path d="M4 7.5 8.5 4h7L20 7.5l-2.5 2.6V20h-11V10.1L4 7.5Z"/><path d="M8.5 4c0 1.9 1.6 3.2 3.5 3.2S15.5 5.9 15.5 4"/>', i:[
+      { t:'İhram takımı — en az iki adet', n:'erkekler' },
+      { t:'İhram kemeri', n:'erkekler' },
+      { t:'Büyük boy çengelli iğne', n:'erkekler' },
+      { t:'Takke', n:'erkekler' },
+      { t:'Ferace veya bol kesim uzun elbise', n:'hanımlar' },
+      { t:'Başörtüsü ve şal', n:'hanımlar' },
+      { t:'Bone', n:'hanımlar' }
+    ]},
+    { t:'Ayakkabı ve tavaf', ico:'<path d="M4 16.5c2.5-.6 4-2.4 4-5V7.5a2 2 0 0 1 4 0v4c0 2.6 1.5 4.4 4 5"/><path d="M3.5 19.5h17"/>', i:[
+      { t:'Üstü ve topuğu açık terlik', n:'ihram için' },
+      { t:'Mest' },
+      { t:'Tavaf patiği veya kalın çorap' },
+      { t:'Bez ayakkabı torbası' }
+    ]},
+    { t:'Kokusuz bakım', ico:'<rect x="5" y="9" width="14" height="12" rx="3"/><path d="M9 9V6.5A3 3 0 0 1 15 6.5V9"/><path d="M9.5 15h5"/>', i:[
+      { t:'Kokusuz sabun' },
+      { t:'Kokusuz şampuan' },
+      { t:'Kokusuz sıvı sabun' },
+      { t:'Kokusuz ıslak mendil' },
+      { t:'Kokusuz diş macunu ve diş fırçası' },
+      { t:'Misvak' },
+      { t:'Kokusuz pişik kremi' },
+      { t:'Kokusuz nemlendirici ve dudak kremi' }
+    ]},
+    { t:'İbadet', ico:'<path d="M4 4.8A2.5 2.5 0 0 1 6.5 2.3H20v18.4H6.5A2.5 2.5 0 0 0 4 23.2V4.8Z"/><path d="M4 18.8a2.5 2.5 0 0 1 2.5-2.5H20"/>', i:[
+      { t:'Cep boy Kur’ân-ı Kerîm' },
+      { t:'Dua kitabı ve menâsik rehberi' },
+      { t:'Tesbih (yedeğiyle birlikte)' },
+      { t:'Zikirmatik' },
+      { t:'Katlanabilir seyahat seccadesi' },
+      { t:'Kıble pusulası' },
+      { t:'Sefer duası ve günlük evrâd kitapçığı' }
+    ]},
+    { t:'Çanta ve taşıma', ico:'<path d="M5 8h14l.9 11.1a1.8 1.8 0 0 1-1.8 1.9H5.9a1.8 1.8 0 0 1-1.8-1.9L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>', i:[
+      { t:'Boyun ya da bel çantası' },
+      { t:'Su matarası' },
+      { t:'Zemzem kabı' },
+      { t:'Küçük havlu' },
+      { t:'Katlanabilir şemsiye' }
+    ]},
+    { t:'Dönüş ikramı ve hediyelik', ico:'<rect x="3.2" y="9.2" width="17.6" height="12" rx="2"/><path d="M2.2 9.2h19.6M12 9.2v12"/><path d="M12 9.2C9.2 9.2 7.4 7.9 7.4 6.4a2 2 0 0 1 4.6-1 2 2 0 0 1 4.6 1c0 1.5-1.8 2.8-4.6 2.8Z"/>', i:[
+      { t:'Hurma — çeşit ve gramaja göre' },
+      { t:'Zemzem suyu' },
+      { t:'Hazır hediyelik set' },
+      { t:'Hediye tesbihi' },
+      { t:'Misk, esans ve oud' },
+      { t:'Hediyelik seccade' },
+      { t:'Çerçeveli hat tablo' }
+    ]}
+  ];
+
+  /* Mağazamızda bulunmayan, kişinin kendi hazırlayacağı şeyler: sadece hatırlatma. */
+  var HATIRLATMA = [
+    { t:'Belgeler ve para', ico:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/>', i:[
+      'Pasaport ve fotokopisi','Kimlik kartı','Umre kimlik kartı ve vize','Menenjit aşı kartı',
+      'Uçak bileti ve otel bilgisi','Döviz ve bozuk Suudi riyali','Banka veya kredi kartı'
+    ]},
+    { t:'Şahsi giyim', ico:'<path d="M12 6a2 2 0 1 1 2 2c-1 0-2 .6-2 1.6V11"/><path d="m12 11-7.6 5a1 1 0 0 0 .5 1.9h14.2a1 1 0 0 0 .5-1.9L12 11Z"/>', i:[
+      'Yedek iç çamaşırı','Çorap','İnce hırka veya yelek','Rahat, açık renk pamuklu alt-üst',
+      'Pijama veya uyku kıyafeti','Rahat yürüyüş ayakkabısı'
+    ]},
+    { t:'Kişisel bakım', ico:'<circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M20 4 8.1 16.2M20 20 8.1 7.8"/>', i:[
+      'Tarak','Tırnak makası ve küçük makas (valizde)','Hijyen paketi (hanımlar)','Yedek gözlük veya lens solüsyonu'
+    ]},
+    { t:'İlaç ve sağlık', ico:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M12 11v5M9.5 13.5h5"/>', i:[
+      'Sürekli kullandığınız ilaçlar ve reçeteleri','Ağrı kesici ve ateş düşürücü',
+      'Grip, soğuk algınlığı ilacı ve burun spreyi','Boğaz pastili veya spreyi',
+      'İshal önleyici ve bulantı giderici','Elektrolit (oralit) tozu','Yara bandı ve topuk bandı',
+      'Alerji ilacı ve göz damlası','Şeker ve tansiyon aleti, insülin','Güneş kremi','Maske ve peçete'
+    ]},
+    { t:'Elektronik', ico:'<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>', i:[
+      'Telefon ve şarj aleti','Powerbank (el bagajında)','Uzun şarj kablosu',
+      'İngiliz tipi (G) priz adaptörü','Kulaklık','El feneri veya mini lamba'
+    ]},
+    { t:'Yolculukta yanınızda', ico:'<circle cx="12" cy="12" r="9"/><path d="m15.2 8.8-2 5.4-5.4 2 2-5.4 5.4-2Z"/>', i:[
+      'Güneş gözlüğü','Çamaşır torbası ve naylon poşet','İğne-iplik seti',
+      'Hafif kuru yiyecek ve kuruyemiş','Valiz kilidi ve isim etiketi','Kulak tıkacı',
+      'Dua listesi için not defteri ve kalem'
+    ]}
+  ];
+
+  /* --- Türkçe başlık biçimi --- */
+  var TC_SKIP = { 've':1, 'ile':1, 'veya':1, 'için':1, 'ya':1, 'da':1, 'de':1 };
+  function upFirst(w){
+    for (var i = 0; i < w.length; i++) {
+      var ch = w[i];
+      if (/[A-ZÇĞİÖŞÜÂÎÛ]/.test(ch)) return w;
+      if (/[a-zçğıöşüâîû]/.test(ch)) {
+        var up = ch === 'i' ? 'İ' : (ch === 'ı' ? 'I' : ch.toLocaleUpperCase('tr'));
+        return w.slice(0, i) + up + w.slice(i + 1);
+      }
+    }
+    return w;
+  }
+  function tc(s){
+    return s.split(' ').map(function(w, i){
+      var bare = w.replace(/[^a-zçğıöşüâîûA-ZÇĞİÖŞÜÂÎÛ]/g, '').toLocaleLowerCase('tr');
+      return (i > 0 && TC_SKIP[bare]) ? w : upFirst(w);
+    }).join(' ');
+  }
+
+  LISTE.forEach(function(c){
+    c.t = tc(c.t);
+    c.i.forEach(function(it){ it.t = tc(it.t); if (it.n) it.n = upFirst(it.n); });
+  });
+  HATIRLATMA.forEach(function(g){ g.t = tc(g.t); g.i = g.i.map(tc); });
+
+  var clGrid = document.getElementById('clGrid'), clSum = document.getElementById('clSum');
+  var remGrid = document.getElementById('remGrid');
+  var KEY = 'ihh-hazirlik-v5';
+  var NCAT = LISTE.length;
+  var TOTAL = LISTE.reduce(function(a, c){ return a + c.i.length; }, 0);
+  var RTOTAL = HATIRLATMA.reduce(function(a, c){ return a + c.i.length; }, 0);
+  var st = { need:{}, done:{}, rem:{} };
+  try {
+    var raw = JSON.parse(localStorage.getItem(KEY) || '{}');
+    if (raw && typeof raw === 'object') { st.need = raw.need || {}; st.done = raw.done || {}; st.rem = raw.rem || {}; }
+  } catch (e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+  function ky(c, i){ return c + '.' + i; }
+  function need(c, i){ return st.need[ky(c, i)] === 1; }
+  function remOn(g, i){ return st.rem[ky(g, i)] === 1; }
+  function catNeed(c){ var n = 0; LISTE[c].i.forEach(function(_, i){ if (need(c, i)) n++; }); return n; }
+  function isDone(c){ return st.done[c] === 1; }
+  function doneCount(){ var n = 0; for (var c = 0; c < NCAT; c++) if (isDone(c)) n++; return n; }
+  function remCount(){ var n = 0; HATIRLATMA.forEach(function(g, gi){ g.i.forEach(function(_, i){ if (remOn(gi, i)) n++; }); }); return n; }
+  function esc2(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  var CHK = '<span class="cl-box"><svg viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></svg></span>';
+  var TICK = '<svg class="tick" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></svg>';
+
+  function groups(){
+    var out = [];
+    LISTE.forEach(function(c, ci){
+      var items = [];
+      c.i.forEach(function(it, ii){ if (need(ci, ii)) items.push(it.t + (it.n ? ' (' + it.n + ')' : '')); });
+      if (items.length) out.push({ t:c.t, items:items });
+    });
+    return out;
+  }
+  function totalNeed(){ return groups().reduce(function(a, g){ return a + g.items.length; }, 0); }
+  function listText(){
+    return groups().map(function(x){ return x.t + ':\n• ' + x.items.join('\n• '); }).join('\n\n');
+  }
+  function waText(){
+    var n = totalNeed();
+    if (!n) return 'Merhaba, hazırlık kontrolünü baştan sona yaptım; mağazadan ihtiyacım görünmüyor. Yine de sormak istediğim birkaç şey var.';
+    return 'Merhaba, hac/umre hazırlığım için ihtiyacım olan ' + n + ' madde:\n\n' + listText() + '\n\nBunlar için fiyat verebilir misiniz?';
+  }
+  function waHref(){ return WA + '?text=' + encodeURIComponent(waText()); }
+  function copyText(){
+    var parts = [];
+    if (totalNeed()) parts.push('MAĞAZADAN ALACAKLARIM\n\n' + listText());
+    var rem = [];
+    HATIRLATMA.forEach(function(g, gi){
+      var items = g.i.filter(function(_, i){ return !remOn(gi, i); });
+      if (items.length) rem.push(g.t + ':\n• ' + items.join('\n• '));
+    });
+    if (rem.length) parts.push('KENDİM HAZIRLAYACAKLARIM\n\n' + rem.join('\n\n'));
+    return parts.join('\n\n———\n\n') || 'Hazırlık listesinde eksik madde yok.';
+  }
+
+  /* ---- mağaza listesi ---- */
+  if (clGrid) {
+    var gh = '';
+    LISTE.forEach(function(c, ci){
+      gh += '<section class="cl-cat glass" id="cat' + ci + '"><div class="ch"><span class="ico"><svg viewBox="0 0 24 24">' +
+        c.ico + '</svg></span><h4>' + esc2(c.t) + '</h4><span class="ct" data-ct="' + ci + '">—</span></div><ul class="cl-items">';
+      c.i.forEach(function(it, ii){
+        gh += '<li><button type="button" data-c="' + ci + '" data-i="' + ii + '" aria-pressed="false">' + CHK +
+          '<span class="cl-lab">' + esc2(it.t) + (it.n ? '<span class="cl-note">' + esc2(it.n) + '</span>' : '') + '</span></button></li>';
+      });
+      gh += '</ul><button class="cat-foot" type="button" data-done="' + ci + '"></button></section>';
+    });
+    clGrid.innerHTML = gh;
+    clGrid.querySelectorAll('.cl-items button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var ci = +b.getAttribute('data-c'), ii = +b.getAttribute('data-i');
+        st.need[ky(ci, ii)] = need(ci, ii) ? 0 : 1;
+        if (st.need[ky(ci, ii)] === 1) st.done[ci] = 1;
+        sync();
+      });
+    });
+    clGrid.querySelectorAll('.cat-foot').forEach(function(b){
+      b.addEventListener('click', function(){
+        var ci = +b.getAttribute('data-done');
+        st.done[ci] = isDone(ci) ? 0 : 1;
+        sync();
+      });
+    });
+  }
+
+  /* ---- kahraman özeti ---- */
+  if (clSum) {
+    var sh = '';
+    LISTE.forEach(function(c, ci){
+      sh += '<a href="#cat' + ci + '" data-sum="' + ci + '"><span class="nm">' + esc2(c.t) + '</span>' + TICK +
+        '<span class="bar"><i data-bar="' + ci + '"></i></span><span class="ct" data-sct="' + ci + '">—</span></a>';
+    });
+    sh += '<a href="#hatirlatma" class="rem-row"><span class="nm">Şunları da unutmayın</span>' +
+      '<span class="bar"><i data-bar="rem"></i></span><span class="ct" data-sct="rem">0/' + RTOTAL + '</span></a>';
+    clSum.innerHTML = sh;
+  }
+
+  /* ---- hatırlatma listesi ---- */
+  function remMarkup(cls){
+    return '<div class="' + cls + '">' + HATIRLATMA.map(function(g, gi){
+      return '<div class="rem-grp"><div class="gh"><svg viewBox="0 0 24 24">' + g.ico + '</svg><b>' + esc2(g.t) + '</b></div><ul>' +
+        g.i.map(function(it, ii){
+          return '<li><button type="button" data-g="' + gi + '" data-ri="' + ii + '" aria-pressed="false">' + CHK +
+            '<span class="cl-lab">' + esc2(it) + '</span></button></li>';
+        }).join('') + '</ul></div>';
+    }).join('') + '</div>';
+  }
+  function bindRem(root){
+    root.querySelectorAll('button[data-ri]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var gi = +b.getAttribute('data-g'), ii = +b.getAttribute('data-ri');
+        st.rem[ky(gi, ii)] = remOn(gi, ii) ? 0 : 1;
+        sync();
+      });
+    });
+  }
+  if (remGrid) { remGrid.outerHTML = remMarkup('rem-grid'); remGrid = document.querySelector('.rem-grid'); bindRem(remGrid); }
+
+  var ringA = document.getElementById('ringFg'), ringTxtA = document.getElementById('ringTxt');
+  var ringB = document.getElementById('ringFg2'), ringTxtB = document.getElementById('ringTxt2');
+  var sendB = document.getElementById('clSend2');
+  var hint = document.getElementById('clHint'), barTitle = document.getElementById('clBarTitle');
+  var headSub = document.getElementById('clHeadSub'), remCt = document.getElementById('remCt');
+
+  function sync(){
+    var dn = doneCount(), need_ = totalNeed(), rc = remCount();
+
+    LISTE.forEach(function(c, ci){
+      var n = catNeed(ci), d = isDone(ci);
+      c.i.forEach(function(_, ii){
+        var btn = clGrid && clGrid.querySelector('button[data-c="' + ci + '"][data-i="' + ii + '"]');
+        if (btn) btn.setAttribute('aria-pressed', need(ci, ii) ? 'true' : 'false');
+      });
+      var card = clGrid && document.getElementById('cat' + ci);
+      if (card) card.classList.toggle('done', d);
+      var foot = clGrid && clGrid.querySelector('[data-done="' + ci + '"]');
+      if (foot) foot.textContent = d ? (n ? 'Kontrol edildi · ' + n + ' madde lazım' : 'Kontrol edildi · eksiğim yok') : 'Bu başlıkta eksiğim yok';
+      var ct = clGrid && clGrid.querySelector('[data-ct="' + ci + '"]');
+      if (ct) ct.textContent = n ? n + ' lazım' : (d ? 'tamam' : '—');
+      var sct = clSum && clSum.querySelector('[data-sct="' + ci + '"]');
+      if (sct) { sct.textContent = n ? String(n) : '—'; sct.classList.toggle('need', n > 0); }
+      var bar = clSum && clSum.querySelector('[data-bar="' + ci + '"]');
+      if (bar) bar.style.width = (n / c.i.length * 100) + '%';
+      var row = clSum && clSum.querySelector('[data-sum="' + ci + '"]');
+      if (row) row.classList.toggle('done', d);
+    });
+
+    document.querySelectorAll('button[data-ri]').forEach(function(b){
+      b.setAttribute('aria-pressed', remOn(+b.getAttribute('data-g'), +b.getAttribute('data-ri')) ? 'true' : 'false');
+    });
+    if (remCt) remCt.textContent = rc + '/' + RTOTAL + ' hazır';
+    var remRow = clSum && clSum.querySelector('[data-sct="rem"]');
+    if (remRow) remRow.textContent = rc + '/' + RTOTAL;
+    var remBar = clSum && clSum.querySelector('[data-bar="rem"]');
+    if (remBar) remBar.style.width = (rc / RTOTAL * 100) + '%';
+
+    var label = dn + '/' + NCAT;
+    if (ringTxtA) ringTxtA.textContent = label;
+    if (ringTxtB) ringTxtB.textContent = label;
+    var off = String(157 - (157 * dn / NCAT));
+    if (ringA) ringA.style.strokeDashoffset = off;
+    if (ringB) ringB.style.strokeDashoffset = off;
+
+    if (barTitle && hint) {
+      if (dn === 0) {
+        barTitle.textContent = 'Kontrole başlayalım';
+        hint.textContent = 'Altı başlığı tek tek gözden geçirin, ihtiyacınız olanı işaretleyin.';
+      } else if (dn < NCAT) {
+        barTitle.textContent = dn + ' başlık kontrol edildi, ' + (NCAT - dn) + ' başlık kaldı';
+        hint.textContent = need_ ? need_ + ' madde ihtiyaç listenizde.' : 'Şimdiye kadar eksiğiniz çıkmadı.';
+      } else {
+        barTitle.textContent = need_ ? 'Kontrol tamam · ' + need_ + ' madde lazım' : 'Kontrol tamam · eksiğiniz yok';
+        hint.textContent = need_ ? 'Listeyi WhatsApp’tan gönderip fiyat alabilirsiniz.' : 'Mağazadan eksiğiniz çıkmadı. Yolunuz açık olsun.';
+      }
+    }
+    if (headSub) {
+      headSub.textContent = dn === 0
+        ? 'Altı başlıkta ' + TOTAL + ' ürün. Robot sırayla sorsun, ihtiyacınız olanları işaretleyin.'
+        : (dn < NCAT ? dn + '/' + NCAT + ' başlık kontrol edildi' + (need_ ? ' · ' + need_ + ' madde lazım' : '') + '.'
+                     : (need_ ? 'Kontrol tamam. ' + need_ + ' madde ihtiyaç listenizde.' : 'Kontrol tamam, mağazadan eksiğiniz yok.'));
+    }
+    if (sendB) sendB.href = waHref();
+    save();
+  }
+
+  /* ---- kopyalama ---- */
+  function copyList(btn, okLabel){
+    var txt = copyText(), old = btn.textContent;
+    function done(){ btn.textContent = okLabel || 'Kopyalandı'; setTimeout(function(){ btn.textContent = old; }, 1900); }
+    function fail(){ btn.textContent = 'Kopyalanamadı'; setTimeout(function(){ btn.textContent = old; }, 1900); }
+    try { navigator.clipboard.writeText(txt).then(done, fail); } catch (e) { fail(); }
+  }
+  var copyBtn2 = document.getElementById('clCopy');
+  if (copyBtn2) copyBtn2.addEventListener('click', function(){ copyList(copyBtn2); });
+  var resetBtn = document.getElementById('clReset');
+  if (resetBtn) resetBtn.addEventListener('click', function(){ st.need = {}; st.done = {}; st.rem = {}; sync(); });
+
+  /* ---- kontrol robotu ---- */
+  var wiz = document.getElementById('wiz');
+  if (wiz) {
+    var wBody = document.getElementById('wizBody'), wFoot = document.getElementById('wizFoot');
+    var wDots = document.getElementById('wizDots'), wIco = document.getElementById('wizIco');
+    var wStep = document.getElementById('wizStep'), wTitle = document.getElementById('wizTitle'), wQ = document.getElementById('wizQ');
+    var REM_STEP = NCAT, SUM_STEP = NCAT + 1, step = 0, lastFocus = null;
+
+    wDots.innerHTML = new Array(SUM_STEP + 1).join('<i></i>') + '<i></i>';
+
+    function paintDots(){
+      wDots.querySelectorAll('i').forEach(function(d, idx){
+        d.classList.toggle('on', idx < step);
+        d.classList.toggle('cur', idx === step);
+      });
+    }
+
+    function render(){
+      paintDots();
+      if (step < NCAT) {
+        var c = LISTE[step];
+        wIco.innerHTML = '<svg viewBox="0 0 24 24">' + c.ico + '</svg>';
+        wStep.textContent = 'Kontrol ' + (step + 1) + '/' + NCAT;
+        wTitle.textContent = c.t;
+        wQ.textContent = 'Bu başlıkta eksiğiniz var mı? Mağazamızdan almak istediklerinize dokunun; işaretledikleriniz ihtiyaç listenize eklenir.';
+        wBody.innerHTML = '<ul class="cl-items wiz-list">' + c.i.map(function(it, ii){
+          return '<li><button type="button" data-w="' + ii + '" aria-pressed="' + (need(step, ii) ? 'true' : 'false') + '">' + CHK +
+            '<span class="cl-lab">' + esc2(it.t) + (it.n ? '<span class="cl-note">' + esc2(it.n) + '</span>' : '') + '</span></button></li>';
+        }).join('') + '</ul>';
+        wBody.querySelectorAll('button[data-w]').forEach(function(b){
+          b.addEventListener('click', function(){
+            var ii = +b.getAttribute('data-w');
+            st.need[ky(step, ii)] = need(step, ii) ? 0 : 1;
+            b.setAttribute('aria-pressed', need(step, ii) ? 'true' : 'false');
+            st.done[step] = 1; sync(); refreshFoot();
+          });
+        });
+        wFoot.innerHTML = '<div class="left">' +
+          (step > 0 ? '<button class="wiz-nav" type="button" data-nav="back">← Geri</button>' : '') +
+          '<span class="wiz-count" id="wizCount"></span></div>' +
+          '<button class="wiz-nav wiz-next" type="button" data-nav="next">Devam →</button>';
+        refreshFoot();
+      } else if (step === REM_STEP) {
+        wIco.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 9v4.5"/><path d="M12 17v.4"/><circle cx="12" cy="12" r="9"/></svg>';
+        wStep.textContent = 'Son hatırlatma';
+        wTitle.textContent = 'Şunları da unutmayın';
+        wQ.textContent = 'Bunlar mağazamızda bulunmayan, kendinizin hazırlayacağı şeyler. Teklife dâhil değildir; yanınıza aldıklarınızı işaretleyin, içiniz rahat etsin.';
+        wBody.innerHTML = remMarkup('wiz-rem');
+        bindRem(wBody);
+        document.querySelectorAll('button[data-ri]').forEach(function(b){
+          b.setAttribute('aria-pressed', remOn(+b.getAttribute('data-g'), +b.getAttribute('data-ri')) ? 'true' : 'false');
+        });
+        wFoot.innerHTML = '<div class="left"><button class="wiz-nav" type="button" data-nav="back">← Geri</button>' +
+          '<span class="wiz-count">' + remCount() + '/' + RTOTAL + ' hazır</span></div>' +
+          '<button class="wiz-nav wiz-next" type="button" data-nav="next">Kontrolü bitir →</button>';
+      } else {
+        var g = groups(), n2 = totalNeed(), rc = remCount();
+        wIco.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></svg>';
+        wStep.textContent = 'Kontrol tamamlandı';
+        wTitle.textContent = n2 ? 'İhtiyaç listeniz hazır' : 'Mağazadan eksiğiniz yok';
+        wQ.textContent = n2
+          ? 'Altı başlığın tamamını gözden geçirdiniz. Mağazamızdan istedikleriniz aşağıda.'
+          : 'Altı başlığın tamamını gözden geçirdiniz ve mağazamızdan bir şey işaretlemediniz.';
+        var body = '';
+        if (n2) {
+          body += '<div class="wiz-done"><span class="wiz-big">' + n2 + '</span><span class="wiz-count">madde ihtiyaç listenizde</span></div>' +
+            '<div class="wiz-sum" style="margin-top:18px">' + g.map(function(x){
+              return '<div class="grp"><b>' + esc2(x.t) + '</b><p>' + x.items.map(esc2).join(' · ') + '</p></div>';
+            }).join('') + '</div>';
+        } else {
+          body += '<div class="wiz-ok"><svg viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></svg>' +
+            '<p>Mağazamızdan eksiğiniz çıkmadı. Aklınıza takılan bir şey olursa WhatsApp’tan yazmanız yeterli; birlikte bakalım.</p></div>';
+        }
+        body += '<div class="wiz-ok" style="margin-top:16px;border-color:var(--line);background:rgba(255,255,255,.035)">' +
+          '<svg viewBox="0 0 24 24" style="stroke:var(--gold)"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.4"/></svg>' +
+          '<p>Kendi hazırlayacağınız ' + RTOTAL + ' maddenin ' + rc + ' tanesini işaretlediniz. ' +
+          (rc < RTOTAL ? 'Kalanları “Şunları da unutmayın” bölümünden gözden geçirebilirsiniz.' : 'Hepsi tamam görünüyor.') + '</p></div>';
+        wBody.innerHTML = body;
+        wFoot.innerHTML = '<div class="left">' +
+          '<button class="wiz-nav" type="button" data-nav="restart">Baştan</button>' +
+          '<button class="wiz-nav" type="button" data-nav="copy">Listemi kopyala</button>' +
+          '</div><a class="wiz-nav wiz-next" href="' + waHref() + '" target="_blank" rel="noopener">' +
+          (n2 ? 'WhatsApp’tan teklif al' : 'WhatsApp’tan sor') + ' →</a>';
+      }
+      wBody.scrollTop = 0;
+      wFoot.querySelectorAll('[data-nav]').forEach(function(b){
+        b.addEventListener('click', function(){
+          var a = b.getAttribute('data-nav');
+          if (a === 'back') { step = Math.max(0, step - 1); render(); }
+          else if (a === 'next') { if (step < NCAT) { st.done[step] = 1; sync(); } step++; render(); }
+          else if (a === 'restart') { step = 0; render(); }
+          else if (a === 'copy') { copyList(b, 'Kopyalandı ✓'); }
+        });
+      });
+    }
+
+    function refreshFoot(){
+      var el = document.getElementById('wizCount');
+      if (!el) return;
+      var n = catNeed(step);
+      el.textContent = n ? n + ' madde seçildi' : 'Henüz seçim yok';
+      var nx = wFoot.querySelector('[data-nav="next"]');
+      if (nx) nx.textContent = (n ? 'Devam' : 'Eksiğim yok, devam') + ' →';
+    }
+
+    function openWiz(){
+      lastFocus = document.activeElement;
+      step = 0;
+      for (var c = 0; c < NCAT; c++) { if (!isDone(c)) { step = c; break; } if (c === NCAT - 1) step = REM_STEP; }
+      render();
+      wiz.hidden = false;
+      document.body.style.overflow = 'hidden';
+      var f = wiz.querySelector('.wiz-x'); if (f) f.focus();
+    }
+    function closeWiz(){
+      wiz.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.getElementById('wizClose').addEventListener('click', closeWiz);
+    wiz.addEventListener('click', function(e){ if (e.target === wiz) closeWiz(); });
+    document.addEventListener('keydown', function(e){
+      if (wiz.hidden) return;
+      if (e.key === 'Escape') closeWiz();
+      else if (e.key === 'ArrowRight' && step < SUM_STEP) { if (step < NCAT) { st.done[step] = 1; sync(); } step++; render(); }
+      else if (e.key === 'ArrowLeft' && step > 0) { step--; render(); }
+    });
+    ['wizStart', 'wizStart2'].forEach(function(id){
+      var b = document.getElementById(id);
+      if (b) b.addEventListener('click', openWiz);
+    });
+  }
+
+  sync();
+
+  /* --- rehber: hac ve umre --- */
+  var REHBER = {
+    umre: {
+      facts: [
+        { k:'2',     l:'Farzı: ihrâm ve tavâf' },
+        { k:'2',     l:'Vâcibi: sa’y ve traş' },
+        { k:'7',     l:'Tavâf ve sa’yde şavt sayısı' },
+        { k:'5 gün', l:'Umre yapılmayan günler' }
+      ],
+      steps: [
+        { t:'Yola çıkmadan hazırlık', d:'Tırnaklar kesilir, koltuk altı ve kasık temizlenir, gerekiyorsa saç, sakal ve bıyık düzeltilir. Mümkünse gusül, değilse abdest alınır ve güzel koku sürünülür. Koku, ihrâma girmeden önce sürülür.' },
+        { t:'İhrâma girmek', d:'Erkekler izâr ve ridâ denilen iki parça örtüye bürünür; kadınların ihrâmı kendi normal elbiseleridir. Kerâhet vakti değilse iki rekât ihrâm namazı kılınır, umreye niyet edilir ve ardından üç kere telbiye getirilir.' },
+        { t:'Mîkatı geçmeden', d:'Türkiye’den gidenlerin mîkatı Cuhfe’dir. Önce Medîne’ye gidenler, ziyaretlerden sonra Zülhuleyfe’de (Ebyâr-ı Ali) ihrâma girer. Doğrudan Mekke’ye uçanlar, mîkat hizasını geçmeden ihrâmlı olmalıdır.' },
+        { t:'Umre tavâfı', d:'Kâbe sola alınarak Hacer-i Esved hizasından başlanır ve yedi şavt tamamlanır. Tavâf, Hatîm’in dışından döner. Erkekler ızdıbâ yapar; ilk üç şavtta remel ile yürür.' },
+        { t:'Tavâf namazı ve zemzem', d:'Mümkünse Makâm-ı İbrâhîm’de, değilse Harem’in herhangi bir yerinde iki rekât tavâf namazı kılınır. Ardından bolca zemzem içilir.' },
+        { t:'Sa’y', d:'Safâ’dan Merve’ye dört gidiş, Merve’den Safâ’ya üç gelişle yedi şavt tamamlanır. İki yeşil direk arasında erkekler hervele yapar.' },
+        { t:'Traş ve ihrâmdan çıkış', d:'Erkekler traş olur veya saçını en az parmak ucu kadar (1,5–2 cm) kısaltır; kadınlar saçlarının ucundan kısaltır. İhrâm yasakları sona erer ve umre tamamlanmış olur.' }
+      ],
+      faq: [
+        { q:'Umre ne zaman yapılabilir?', a:'Belirli bir vakte bağlı değildir. Arefe günü ve kurban bayramının günleri olmak üzere beş gün dışında yılın her zamanı yapılabilir. Hatta bir günde birden fazla umre yapmak da câizdir; çok umre yapmak müstehaptır.' },
+        { q:'Kadınlar ihrâmda ne giyer?', a:'Kadınların ihrâmı kendi normal elbiseleridir. Dikişli elbise, çorap, eldiven ve mest giyebilirler; başlarını örter, yüzlerini açık bulundururlar. Telbiyede seslerini yükseltmezler, tavâfta remel ve sa’yde hervele yapmazlar, traş yerine saç uçlarından kısaltırlar.' },
+        { q:'İhrâmlıyken sabun kullanılır mı?', a:'Yıkanmak ve kokusuz sabun kullanmak mubahtır. Yasak olan, koku sürünmek ve kokulu sabun kullanmaktır. Kokusuz şampuan, sıvı sabun, ıslak mendil ve diş macunu da bu yüzden ayrı tutulur.' },
+        { q:'İhrâmlıyken neler serbesttir?', a:'Yıkanmak ve kokusuz sabun kullanmak, kemer takmak, saat ve yüzük takmak, kokusuz sürme çekmek, başa değdirmeden şemsiye taşımak, topukları ve üzeri açık ayakkabı giymek, diş çektirmek ve iğne vurdurmak mubahtır.' },
+        { q:'Mîkatı ihrâmsız geçersem ne olur?', a:'Ya geri dönülüp mîkattan ihrâma girilir, ya da cezâ olarak bir kurban (dem) kesmek gerekir.' },
+        { q:'Umrenin hükmü nedir?', a:'Hanefî ve Mâlikî mezhebinde ömürde bir defa umre yapmak müekked sünnet, Şâfiî ve Hanbelî mezhebinde ise farz sayılmıştır.' },
+        { q:'Hayız hâlinde umre yapılır mı?', a:'Umre tavâfını yapmadan hayız gören kadın Harem-i Şerîf\u2019e giremez, namaz kılamaz, Kur\u2019ân-ı Kerîm okuyamaz; otelinde zikir ve istiğfarla temizlenmeyi bekler. Temizlenmeden memleketine dönmesi gerekirse gusleder, tavâf ve sa\u2019yini yapar, saçından biraz kısaltıp ihrâmdan çıkar. Bu durumda bir dem kesmesi ve tevbe-istiğfar etmesi gerekir.' },
+        { q:'Tavâf abdestsiz yapılırsa ne olur?', a:'Hanefî mezhebinde tavâfın abdestli yapılması vâcibtir; umre tavâfı abdestsiz yapılırsa dem ve tevbe gerekir. Diğer üç mezhepte taharet tavâfın sıhhat şartıdır, abdestsiz tavâf geçersizdir. Hangi mezhepte olursa olsun tavâf abdestli olarak yeniden yapılırsa cezâlar düşer.' },
+        { q:'Mekke\u2019deyken ikinci umre için nereden ihrâma girilir?', a:'Harem dışına çıkılır. Hanefî mezhebinde en faziletli yer Ten\u2019îm\u2019deki Mescid-i Âişe\u2019dir; Şâfiî mezhebinde sırasıyla Ci\u2019râne, Ten\u2019îm ve Hudeybiye.' },
+        { q:'Umrede vedâ tavâfı var mı?', a:'Hanefî mezhebinde umre yapanların vedâ tavâfı yapması gerekmez. Şâfiî mezhebinde ise umre için gelenlerin de Mekke\u2019den ayrılırken vedâ tavâfı yapması vâcibtir.' }
+      ],
+      tips: [
+        { b:'Telbiye', t:'', q:'Lebbeyk, Allâhümme lebbeyk. Lebbeyke lâ şerîke leke lebbeyk. İnne’l-hamde ve’n-ni’mete leke ve’l-mülk. Lâ şerîke lek.' },
+        { b:'Tavâf ve şavt', t:'Kâbe’nin etrafını bir kez dolaşmaya şavt denir; yedi şavt bir tavâftır.' },
+        { b:'Safâ – Merve', t:'Mescid-i Harâm’ın doğusunda, aralarında yaklaşık 350 metre bulunan iki tepedir.' },
+        { b:'İhrâm yasakları', t:'Koku ve kokulu sabun, traş olmak, tırnak kesmek, erkekler için dikişli elbise, başı ve yüzü örtmek, çorap ve kapalı ayakkabı; ayrıca kavga, münakaşa, Harem’in otunu koparmak ve kara avı.' },
+        { b:'Mekke’de olanlar', t:'Umre için Harem dışına çıkılır; en yakın yer Ten’im’deki Mescid-i Âişe’dir.' },
+        { b:'Zemzem âdâbı', t:'Kıbleye dönerek, sağ el ile ve üç nefeste içilir.' }
+      ]
+    },
+    hac: {
+      facts: [
+        { k:'3',     l:'Farzı: ihrâm, Arafât vakfesi, ziyâret tavâfı' },
+        { k:'3',     l:'Nev’i: ifrâd, temettü, kırân' },
+        { k:'70',    l:'Müzdelife’de toplanan taş' },
+        { k:'25 km', l:'Mekke – Arafât arası' }
+      ],
+      steps: [
+        { t:'Mîkatta ihrâm ve umreye niyet', d:'Temettü haccına niyet eden kimse, mîkatı geçmeden ihrâma girer ve önce umreye niyet eder. Türkiye’den gidenlerin mîkatı Cuhfe, Medîne üzerinden gelenlerinki Zülhuleyfe’dir.' },
+        { t:'Umrenin tavâfı ve sa’yi', d:'Yedi şavt umre tavâfı, iki rekât tavâf namazı, ardından Safâ ile Merve arasında yedi şavt sa’y yapılır.' },
+        { t:'Traş ve ihrâmdan çıkış', d:'Sa’y bitince traş olunup ihrâmdan çıkılır. Zilhicce’nin 8. gününe kadar Mekke’de ihrâmsız kalınır; dilenirse tekrar umre veya nâfile tavâf yapılır.' },
+        { t:'Zilhicce 8 – Terviye günü', d:'Yeniden ihrâma girilir ve bu defa hacca niyet edilir. Güneş doğduktan sonra Minâ’ya gidilir, gece Minâ’da geçirilir; burada beş vakit namaz kılmak sünnettir.' },
+        { t:'Zilhicce 9 – Arafât vakfesi', d:'Sabah namazı Minâ’da kılınır, güneş doğunca Arafât’a çıkılır. Öğle ve ikindi cem-i takdimle kılınır; güneş batana kadar vakfe yapılır. Akşam namazı kılınmadan Müzdelife’ye inilir.' },
+        { t:'Müzdelife gecesi', d:'Akşam ve yatsı cem-i tehirle birlikte kılınır. Nohuttan büyük, fındıktan küçük yetmiş taş toplanır. Sabah namazından sonra vâcib olan vakfe yapılır, güneş doğmadan Minâ’ya hareket edilir.' },
+        { t:'Zilhicce 10 – Taş, baş, traş', d:'Cemre-i Akabe’ye yedi taş atılır, sonra kurban kesilir, sonra traş olunup ihrâmdan çıkılır. Bu sıraya uymak önemlidir. Sünnet olan taşlama vakti güneşin doğuşu ile öğle arasıdır.' },
+        { t:'Ziyâret tavâfı ve sa’y', d:'Bayramın ilk üç gününde, farz olan ziyâret tavâfı yapılır; birinci gün yapılması efdaldir. Daha önce yapılmamışsa vâcib olan sa’y de bu tavâftan sonra yapılır.' },
+        { t:'Zilhicce 11 – 12 – Cemreler', d:'Her gün sırasıyla küçük, orta ve büyük cemrelere yedişer taş atılır. Üçüncü gün güneş batmadan Minâ’dan ayrılmayanların dördüncü gün de taşlaması vâcib olur.' },
+        { t:'Vedâ tavâfı', d:'Mekke-i Mükerreme’den ayrılmadan önce yapılan vâcib tavâftır. Hac fiilleri bununla tamamlanır.' }
+      ],
+      faq: [
+        { q:'Hac kime farz olur?', a:'Müslüman, âkıl, bâliğ ve hür olmak; yol ve vasıta masrafını karşılayacak, dönünceye kadar bakmakla yükümlü olduğu kimselerin geçimini sağlayacak imkâna sahip olmak gerekir. Zekâtta olduğu gibi belirli bir nisâb yoktur.' },
+        { q:'Hangi hac çeşidi yapılıyor?', a:'Türkiye’den gidenlerin çoğu hacc-ı temettü yapar: aynı yılın hac aylarında önce umre, sonra ayrı bir ihrâmla hac. İfrâd umresiz, kırân ise tek ihrâmla ikisi birden yapılan hacdır. Temettü ve kırân, mîkat dışından gelenler (âfâkîler) içindir ve her ikisinde de şükür kurbanı kesmek vâcibtir.' },
+        { q:'Kadınlar yalnız gidebilir mi?', a:'Yanlarında eşlerinin veya güvenilir bir mahremlerinin bulunması şarttır. Ayrıca iddet bekleyen bir kadın, iddeti bitmeden hacca gidemez.' },
+        { q:'Sağlığım elvermiyorsa?', a:'Mâlî durumu yerinde olduğu hâlde ömrünün sonuna kadar sağlığı elvermeyen kimse, yerine vekil gönderir; gönderilmesini vasiyet etmesi de îcâbeder.' },
+        { q:'Hac ne zaman yapılır?', a:'Hac ayları Şevvâl, Zilkâde ve Zilhicce’nin ilk on günüdür. Haccın menâsiki Zilhicce’nin 8–13. günleri arasında edâ edilir.' },
+        { q:'Bir vâcibi atlarsam ne gerekir?', a:'Meşru bir özür yoksa haccın vâciblerinden birinin terk edilmesi veya geciktirilmesi cezâ gerektirir; çoğunlukla bir dem (koyun veya keçi) kesmek lâzım gelir. Hastalık ve yaşlılık gibi semâvî mazeretlerde cezâ gerekmez.' },
+        { q:'Taş, baş, traş sırası bozulursa?', a:'İmam-ı Âzam Hazretlerine göre bayramın birinci günü taş atma, kurban kesme ve traş olma arasındaki tertibe uymak vâcibtir; bozulursa dem gerekir. İmameyn\u2019e ve diğer üç mezhebe göre bu tertip sünnettir, terkinde cezâ gerekmez ama mazeretsiz uyulmaması mekruh olur.' },
+        { q:'Arafât\u2019tan güneş batmadan ayrılırsam?', a:'Hanefî mezhebinde arefe günü güneş batıncaya kadar Arafât\u2019ta kalmak vâcibtir; akşam girmeden ayrılana dem vâcib olur. Güneş batmadan geri dönerse cezâ düşer. Şâfiî mezhebinde dem gerekmez, ihtilâftan kurtulmak için müstehap sayılır.' },
+        { q:'Temettü kurbanının etinden yenir mi?', a:'Hanefî mezhebinde bu bir şükür kurbanıdır, etinden yenebilir. Şâfiî mezhebinde ise cezâ kurbanı hükmündedir ve sahibi etinden yiyemez. Her iki mezhepte de kurbanın Harem bölgesinde kesilmesi gerekir.' },
+        { q:'Traş nerede ve ne zaman olunur?', a:'Hacda traş vakti bayramın ilk günü fecr-i sâdıkla başlar. İmam-ı Âzam\u2019a göre bayramın üçüncü günü güneş batıncaya kadar traş olmak vâcibtir. Traş yeri Harem bölgesidir; dışarıda traş olan ihrâmdan çıkar, fakat dem gerekir. Traş olunmadıkça ihrâm yasakları devam eder.' },
+        { q:'Şeytan taşlamanın vakti nedir?', a:'Bayramın birinci günü vakit fecr-i sâdıkla başlar. Güneş doğmadan atmak mekruh, güneşin doğuşundan zevâle kadar atmak sünnet, zevâlden ertesi günün fecrine kadar atmak ise mekruhtur. İkinci ve üçüncü günlerde vakit zevâlden sonra başlar; bu hususta dört mezhep imamı ittifak hâlindedir.' },
+        { q:'Kendi haccını yapmamış kimse vekil olabilir mi?', a:'Hanefî mezhebinde kerâhetle câizdir. Şâfiî mezhebinde ise kendi yerine hac yapmamış kimsenin başkası adına vekil olarak gitmesi câiz değildir.' }
+      ],
+      tips: [
+        { b:'Mîkat mahalleri', t:'Zülhuleyfe (Ebyâr-ı Ali) 426 km · Cuhfe 187 km · Karnü’l-Menâzil 94 km · Zâtü Irk 94 km · Yelemlem 54 km. Mesafeler Mekke-i Mükerreme’ye göredir.' },
+        { b:'Harem hudutları', t:'Ten’im 7 km · Üdatü’l-İbn 12 km · Tepeler 14 km · Hudeybiye 15 km · Ci’râne 16 km.' },
+        { b:'Mesafeler', t:'Arafât Mekke’ye yaklaşık 25 km, Minâ ise Mescid-i Harâm’a 6,5 km uzaklıktadır.' },
+        { b:'Eyyâm-ı teşrîk', t:'Zilhicce’nin 11, 12 ve 13. günleridir; bu günlerde teşrîk tekbîrleri getirilir.' },
+        { b:'Yola çıkmadan önce', t:'Varsa borçları ödemek, dargın olunan kimselerle helâlleşmek, kazâ namaz ve oruçlarını tamamlamak, samimi bir tevbe etmek haccın âdâbındandır.' },
+        { b:'Cemreler', t:'Cemre-i Ulâ (küçük), Cemre-i Vustâ (orta) ve Cemre-i Akabe (büyük) olmak üzere üçtür ve Minâ’dadır.' }
+      ]
+    }
+  };
+
+  var TERIMLER = [
+    { t:'İhrâm', d:'Niyet ve telbiye ile harâma dâhil olmaktır. Erkeklerin büründüğü izâr ve ridâ denilen iki parça örtüye de halk arasında ihrâm denir; kadınların ihrâmı normal elbiseleridir.' },
+    { t:'İzâr', d:'Peştamal gibi belden aşağıya tutulan örtü.' },
+    { t:'Ridâ', d:'Peştamal gibi omuzdan örtülen havlu veya benzeri örtü.' },
+    { t:'Telbiye', d:'İhrâmlı iken söylenen “Lebbeyk Allâhümme lebbeyk…” duâsıdır. Erkeklerin yüksek sesle söylemesi müstehap, kadınların sesini yükseltmemesi esastır.' },
+    { t:'Mîkat', d:'İhrâm için belirlenmiş yerlerdir; ihrâmsız geçmek câiz değildir.' },
+    { t:'Harem', d:'Kâbe merkez olmak üzere yaklaşık 7–16 km mesafeyle çevrili, sınırları işaretlenmiş mukaddes bölge.' },
+    { t:'Hıll', d:'Harem ile mîkat sınırları arasında kalan bölge.' },
+    { t:'Âfâkî', d:'Mîkat hâricinden Mekke’ye gelen kimse. Mîkat dâhilinde oturanlara ise Mekkî denir.' },
+    { t:'Tavâf', d:'Kâbe-i Muazzama’nın etrafında yedi defa dönmektir.' },
+    { t:'Şavt', d:'Kâbe’nin etrafını bir defa dolaşmak. Yedi şavt bir tavâf eder.' },
+    { t:'İstilâm', d:'Hacer-i Esved hizasına gelindiğinde iki eli kulak hizasına kaldırıp tekbîr getirerek selâmlamak; mümkünse öpmek, değilse el işaretiyle selâmlayıp sağ elin içini öpmek.' },
+    { t:'Remel', d:'Erkeklerin, sa’y yapılacak tavâfın ilk üç şavtında adımları kısaltıp omuzları silkeleyerek çalımlı ve süratli yürümesi.' },
+    { t:'Izdıbâ', d:'Sonunda sa’y olan tavâfa başlamadan ridânın bir ucunu sağ koltuk altından geçirip sol omuza atmak; sağ omuz açıkta kalır. Erkeklere sünnettir.' },
+    { t:'Sa’y', d:'Safâ’dan Merve’ye dört gidiş, Merve’den Safâ’ya üç geliş olmak üzere yedi şavttır. Haccın ve umrenin vâciblerindendir.' },
+    { t:'Hervele', d:'Erkeklerin Safâ ile Merve arasındaki iki yeşil direk arasında koşmaları.' },
+    { t:'Vakfe', d:'Arefe günü öğleden bayram sabahına kadar bir an da olsa Arafât’ta bulunmak. Ayrıca bayramın birinci günü imsak ile güneşin doğuşu arasında Müzdelife’de bulunmak da bir vakfedir.' },
+    { t:'Cemre', d:'Ufak taş veya taş yığını. Minâ’daki üç cemreye halk arasında küçük, orta ve büyük şeytan denir.' },
+    { t:'Hedy', d:'Harem bölgesinde, hac ile alâkalı olarak kesilen kurban. Minâ’da kesilmesi sünnettir.' },
+    { t:'Dem', d:'Koyun veya keçi cinsinden kurban. Bedene ise deve veya sığır cinsinden olanıdır.' },
+    { t:'Hatîm', d:'Kâbe’nin kuzeyindeki yarım dâire şeklindeki duvar. Hıcr, Kâbe’den sayıldığı için tavâf Hatîm’in dışından yapılır.' },
+    { t:'Mültezem', d:'Hacer-i Esved’in köşesi ile Kâbe’nin kapısı arası. Duâların makbûl olduğu yerlerdendir.' }
+  ];
+
+  /* --- rehber render --- */
+  var rSwitch = document.getElementById('rSwitch'), rBody = document.getElementById('rBody');
+  if (rSwitch && rBody) {
+    var rThumb = document.getElementById('rThumb');
+
+    function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+    function renderGuide(key){
+      var d = REHBER[key];
+      var html = '<div class="r-facts">';
+      d.facts.forEach(function(f){
+        html += '<div class="r-fact glass"><span class="k">' + esc(f.k) + '</span><span class="l">' + esc(f.l) + '</span></div>';
+      });
+      html += '</div><div class="r-cols"><div><div class="r-sub">Adım adım</div><ol class="r-steps">';
+      d.steps.forEach(function(s, i){
+        html += '<li><span class="n">' + (i + 1) + '</span><h4>' + esc(s.t) + '</h4><p>' + esc(s.d) + '</p></li>';
+      });
+      html += '</ol></div><div><div class="r-sub">Sıkça sorulan sorular</div><div class="r-faq">';
+      d.faq.forEach(function(f, i){
+        html += '<div class="faq-item' + (i === 0 ? ' open' : '') + '">' +
+          '<button type="button" aria-expanded="' + (i === 0 ? 'true' : 'false') + '"><span class="q">' + esc(f.q) + '</span>' +
+          '<svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>' +
+          '<div class="faq-a"><div><p>' + esc(f.a) + '</p></div></div></div>';
+      });
+      html += '</div><div class="r-tips glass"><div class="r-sub">Pratik bilgiler</div><ul>';
+      d.tips.forEach(function(t){
+        html += '<li><b>' + esc(t.b) + '</b>' + (t.t ? ' — ' + esc(t.t) : '') +
+          (t.q ? '<span class="tlb">' + esc(t.q) + '</span>' : '') + '</li>';
+      });
+      html += '</ul></div></div></div>';
+
+      rBody.innerHTML = html;
+      rBody.querySelectorAll('.faq-item').forEach(function(item){
+        item.querySelector('button').addEventListener('click', function(){
+          var open = item.classList.toggle('open');
+          item.querySelector('button').setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      });
+      rBody.querySelectorAll('.glass').forEach(function(el){
+        el.addEventListener('pointermove', function(e){
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+      rBody.classList.remove('swap'); void rBody.offsetWidth; rBody.classList.add('swap');
+    }
+
+    rSwitch.querySelectorAll('button').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        rSwitch.querySelectorAll('button').forEach(function(o){ o.setAttribute('aria-selected', o === tab ? 'true' : 'false'); });
+        moveThumb(rSwitch, rThumb);
+        renderGuide(tab.getAttribute('data-g'));
+      });
+    });
+    thumbs.push([rSwitch, rThumb]);
+    renderGuide('umre');
+    moveThumb(rSwitch, rThumb);
+  }
+
+  /* --- yol hazırlığı --- */
+  var HAZIRLIK = [
+    { ico:'<path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><path d="M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>',
+      t:'Manevi hazırlık', items:[
+      'Kayıt yaptırdığınız andan itibaren tevbe ve istiğfara başlayın.',
+      '<b>Kul hakkı</b> varsa ödeyin; haklı bile olsanız dargın olduğunuz kimselerle barışın.',
+      'Varsa kazâ namaz ve oruçlarınızı tamamlamaya başlayın.',
+      'Nafile ibadetleri artırın: duhâ, evvâbîn, teheccüd ve tesbih namazı.',
+      'Kur\u2019ân-ı Kerîm okumayı bilmiyorsanız gitmeden öğrenmeye başlayın.',
+      'Günlük 100 istiğfar, 100 salevât, 100 kelime-i tevhîd ve 100 İhlâs-ı Şerîf\u2019i ihmal etmeyin.'
+    ]},
+    { ico:'<path d="M12 3v3M12 18v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M3 12h3M18 12h3M4.9 19.1 7 17M17 7l2.1-2.1"/><circle cx="12" cy="12" r="3.4"/>',
+      t:'Yolda sabır ve edeb', items:[
+      'Bu bir ticarî ya da turistik seyahat değil, bir ibadet ve meşakkat yolculuğudur.',
+      'Sıcak, kalabalık, açlık, uykusuzluk ve gecikmeler olacaktır; her birinde yapılacak iş <b>sabır</b>dır.',
+      'Sebebi ne olursa olsun kimsenin kalbini kırmayın.',
+      'Lüzumsuz konuşmayı bırakın, tesbihi elden düşürmeyin.',
+      'Helal lokmaya dikkat edin; duanın kabulü buna bağlıdır.',
+      'Yolda yetecek kadar para alın, kimseye yük olmayın, elinizden geldiğince sadaka verin.'
+    ]},
+    { ico:'<path d="m3 11 18-8-8 18-2-8-8-2Z"/>',
+      t:'Yola çıkış âdâbı', items:[
+      'Mübarek beldelere dinç varmak için yolculuktan önce iyi dinlenin.',
+      'Abdesti muhafaza için bir gün öncesinden sıvı tüketiminizi azaltın.',
+      'Evden çıkarken iki rekât <b>sefer namazı</b> kılın.',
+      'Vasıtaya binince bir Fâtiha, üç İhlâs ve sefer duasını okuyun.',
+      'Uçaktan ve otobüsten inerken besmele ve salevâtla, sağ ayakla inin.',
+      'Mescid-i Harâm\u2019a sağ ayakla girin; Kâbe ilk görüldüğünde yapılan dua makbuldür.',
+      'Yola çıktığınız andan döndükten üç gün sonrasına kadar duanız makbuldür; bu fırsatı değerlendirin.'
+    ]},
+    { ico:'<path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>',
+      t:'Yola çıkmadan', items:[
+      '<b>Menenjit aşınızı</b> yaptırın ve aşı kartınızı havalimanına yanınızda getirin.',
+      'Tavâf, sa’y ve ziyaretlerin çoğu yürüyerek yapılır; haftalar öncesinden bol bol yürüyüş yapın.',
+      'Türkiye’deki son geceyi mutlaka dinlenerek geçirin.',
+      'Valiz ve çanta etiketlerine isim, adres ve telefonunuzu yazın.',
+      'Yolculuktan 24 saat önce sıvı tüketiminizi azaltın.'
+    ]},
+    { ico:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8.5 7V5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/>',
+      t:'Valiz ve el çantası', items:[
+      'Umre uçuşlarında valiz genellikle <b>30 kg</b>, el çantası <b>8 kg</b> ile sınırlıdır. Kesin sınırı kafilenizden öğrenin.',
+      '<b>Tırnak makası, makas, iğne</b> gibi kesici aletler valizde gider; el çantasına kesinlikle alınmaz.',
+      'El çantasında: pasaport, kimlik, ilaçlar, küçük boy Kur’ân-ı Kerîm, dua kitabı, takke, tesbih, seccade.',
+      'Şeker ve tansiyon aletinizi, insülininizi el çantanıza alın.',
+      'Bebek ve çocuk için puset götürebilirsiniz; tavâf alanı dışında çok işinize yarar.'
+    ]},
+    { ico:'<path d="M10.5 3.5h3v3l3 3.5v10a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-10l3-3.5v-3Z"/><path d="M8.5 13h7"/>',
+      t:'İlaç çantası', items:[
+      'Burun spreyi, grip ve soğuk algınlığı ilacı, boğaz pastili veya spreyi.',
+      'İshal önleyici ve bulantı giderici.',
+      '<b>Kokusuz</b> pişik kremi — ihrâmlıyken kokulu olanı kullanılmaz.',
+      'Kronik ilaçlarınızın yedeğiyle birlikte tamamı.',
+      'Ihlamur, adaçayı, kekik gibi bitki çayları işinizi kolaylaştırır.'
+    ]},
+    { ico:'<path d="m3 11 18-8-8 18-2-8-8-2Z"/>',
+      t:'Uçakta ve havalimanında', items:[
+      'İhrâmlıysanız ikramla gelen <b>kolonyalı mendilleri</b> ve tuvaletteki kokulu sabunları kullanmayın.',
+      'Pasaport, biniş kartı ve bagaj fişini el çantanızda tutun; koltuk cebine koymayın.',
+      'Umre kimlik kartınızı dönünceye kadar boynunuzdan çıkarmayın.',
+      'Havalimanında beklemeler olabilir; yanınıza hafif kuru yiyecek ve kuruyemiş alın.',
+      'Tekerlekli sandalye gerekiyorsa havalimanına girmeden kafile görevlinize bildirin.'
+    ]},
+    { ico:'<path d="M3 20V9l9-5 9 5v11"/><path d="M3 20h18"/><path d="M10 20v-5h4v5"/>',
+      t:'Otelde', items:[
+      'Odada elektrik, kart yuvaya takılınca gelir; kartınız şarjını yitirirse resepsiyonda yenilenir.',
+      'Prizler <b>İngiliz tipidir</b>; yanınıza dönüştürücü alın.',
+      'Kıble yönü genellikle tavanda veya çekmecede işaretlidir.',
+      'Yemek salonundan odaya yiyecek ve meyve çıkarmak yasaktır.',
+      'Otelinizin Kâbe’ye göre hangi yönde kaldığını, servisten nerede inip nereden bineceğinizi ilk gün öğrenin.'
+    ]},
+    { ico:'<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/>',
+      t:'Telefon, para ve harç', items:[
+      'Türkiye’den yurt dışı paketi alabilirsiniz, ancak Suudi Arabistan’da yerel hat almak daha rahat olur.',
+      '<b>WhatsApp görüntülü görüşme</b> Suudi Arabistan’da çalışmaz; otel wifi’si üzerinden başka uygulamalarla görüşebilirsiniz.',
+      'Türkiye’yi ararken numaranın başına <b>+90</b> eklemeniz gerekir.',
+      'Yanınızda bir miktar döviz bulundurun; ilk gün için bozuk 50–100 Suudi riyali işinizi görür.',
+      'Yurt dışı çıkış harcı ödenir. Yedi yaşından küçük çocuklar ve yurt dışında oturma izni olanlar muaftır.'
+    ]},
+    { ico:'<path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><path d="M9.5 10h5M12 7.5v5"/>',
+      t:'Sağlık', items:[
+      '<b>Soğutulmamış zemzem</b> için; buzlu su boğazı kolay bozar.',
+      'Gün boyu bol su için, normal içme suyunu ihmal etmeyin.',
+      'Toplu alanlarda bulunduğunuz için ellerinizi sık sık sabunla yıkayın, çantanızda peçete bulundurun.',
+      'Güneş gözlüğü ve şemsiye yanınızda olsun; sabahlar serin olduğundan bir hırka alın.',
+      'En az iki ihrâm takımı ve yedek iç çamaşırı götürün.',
+      'Rahatsızlandığınızı hissettiğiniz anda odaya çekilmeden kafile görevlinize haber verin.'
+    ]},
+    { ico:'<path d="M12 3 4 7v5.5c0 4.6 3.4 7.8 8 8.5 4.6-.7 8-3.9 8-8.5V7l-8-4Z"/>',
+      t:'Edeb ve hürmet', items:[
+      'Kâbe-i Muazzama’ya ve Mescid-i Nebevî’de Efendimizin (s.a.v.) huzuruna <b>sırtınızı dönerek fotoğraf çekilmeyin</b>.',
+      'Hanımlar Mescid-i Harâm’da kendilerine ayrılan bölümlerde namaz kılar; ezan okunmadan önce yerlerini almaları rahat eder.',
+      'Toplu hareket edilen programlarda söylenen yerde ve saatte bulunun, kimseyi bekletmeyin.',
+      'Ravza-i Mutahhara’ya giriş randevu ile olur; nasıl alınacağını kafile görevlinizden öğrenin.',
+      'Yemekleri israf etmeyin.'
+    ]}
+  ];
+
+  var prepWrap = document.getElementById('prepGrid');
+  if (prepWrap) {
+    var ph = '';
+    HAZIRLIK.forEach(function(c){
+      ph += '<div class="prep-card glass"><div class="prep-head"><span class="ico"><svg viewBox="0 0 24 24">' +
+        c.ico + '</svg></span><h4>' + c.t + '</h4></div><ul>' +
+        c.items.map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul></div>';
+    });
+    prepWrap.innerHTML = ph;
+  }
+
+  /* --- ziyaret yerleri --- */
+  var ZIYARET = {
+    medine: {
+      yuru: [
+        { t:'Mescid-i Nebevî', d:'Resûlullah Efendimizin (s.a.v.) mescid-i şerîfi. Mübarek kabr-i şerîflerinin bulunduğu Hücre-i Saadet ve Ravza-i Mutahhara buradadır.' },
+        { t:'Cennetü’l-Bakî Kabristanı', d:'Efendimizin (s.a.v.) Ehl-i Beyt’inden ve Ashâb’ından binlercesinin, Hz. Osman (r.a.) dâhil, defnedildiği kabristan.' },
+        { t:'Mescid-i Ğamâme', d:'Efendimizin (s.a.v.) bayram namazı kıldığı ve yağmur duası yaptığı yer. O çıktığında bir bulut kendisini gölgelediği için “Bulut Mescidi” adıyla anılır.' },
+        { t:'Hz. Ebûbekir (r.a.) Mescidi', d:'Efendimizin (s.a.v.) ve Hz. Ebûbekir’in (r.a.) Medîne musallâsında bayram namazı kıldırdığı yerde inşa edilmiştir.' },
+        { t:'Hz. Ömer (r.a.) Mescidi', d:'Hz. Ömer’in (r.a.) halifeliği sırasında bayram namazı kıldırdığı yere hatıra olarak yapılan mescid.' },
+        { t:'Hz. Ali (r.a.) Mescidi', d:'Efendimizin (s.a.v.) ve Hz. Ali’nin (r.a.) bayram namazı kıldırdığı yerde inşa edilmiş mescid.' }
+      ],
+      otobus: [
+        { t:'Uhud Dağı ve Şehitliği', d:'Müslümanlarla Mekkeli müşrikler arasındaki ikinci büyük savaşın yapıldığı yer. Okçular (Ayneyn) Tepesi de buradadır.' },
+        { t:'Mescid-i Kıbleteyn', d:'Namaz kılınırken âyet nâzil olup kıblenin Mescid-i Aksâ’dan Kâbe-i Muazzama’ya çevrildiği mescid. Bu yüzden “İki Kıbleli Mescid” denir.' },
+        { t:'Yedi Mescidler', d:'Hendek Harbi’nin yapıldığı yerde bulunan mescidler.' },
+        { t:'Mescid-i Kubâ', d:'Efendimizin (s.a.v.) eliyle yapılan ilk mescid; İslâm’ın ilk mescididir.' }
+      ]
+    },
+    mekke: {
+      yuru: [
+        { t:'Mescid-i Harâm ve Kâbe-i Muazzama', d:'Tavâfın ve sa’yin yapıldığı, Mekke-i Mükerreme’nin ortasındaki Mescid-i Şerîf. Hacer-i Esved, Makâm-ı İbrâhîm, Hatîm ve zemzem buradadır.' },
+        { t:'Efendimizin (s.a.v.) doğduğu ev', d:'Milâdî 571 yılında, Rebîulevvel ayının 12. gecesi dünyayı şereflendirdiği evin bulunduğu yer; bugün kütüphane olarak kullanılıyor.' },
+        { t:'Cennetü’l-Muallâ Kabristanı', d:'Hz. Hatice (r.anhâ) validemizin de defnedildiği kabristan.' },
+        { t:'Mescid-i Şecere', d:'Efendimizin (s.a.v.) peygamberliğine şahitlik eden ağacın bulunduğu yere yapılan mescid.' },
+        { t:'Mescid-i Cin', d:'Cinlerden bir topluluğun Kur’ân-ı Kerîm’i dinleyip iman ettikleri yer.' }
+      ],
+      otobus: [
+        { t:'Cebel-i Nûr (Hira Mağarası)', d:'İlk vahyin indiği Hira Mağarası’nın bulunduğu mübarek dağ.' },
+        { t:'Cebel-i Sevr (Sevr Mağarası)', d:'Efendimizin (s.a.v.) Mekke’den Medîne’ye hicret ederken sığındığı mağaranın bulunduğu dağ.' },
+        { t:'Arafât ve Cebel-i Rahme', d:'Haccın rüknü olan vakfenin yapıldığı yer. Hz. Âdem ile Hz. Havvâ’nın kavuştuğu rivayet edilen Cebel-i Rahme de buradadır.' },
+        { t:'Müzdelife', d:'Arafât ile Minâ arasında, Harem sınırları içinde, ikinci vakfenin yapıldığı mukaddes yer.' },
+        { t:'Minâ ve Cemerât', d:'Hacda şeytan taşlamanın yapıldığı yer. Mescid-i Hayf da buradadır.' },
+        { t:'Mescid-i Âişe (Ten’îm)', d:'Mekke’de bulunanların umre için ihrâma girdiği en yakın mîkat. Hz. Âişe (r.anhâ) validemiz buradan umreye niyet etmiştir.' },
+        { t:'Hudeybiye', d:'Hudeybiye Musâlahasının yapıldığı yer. Umre için ihrâma girilen mîkat mahallerindendir.' },
+        { t:'Ci’râne', d:'Efendimizin (s.a.v.) Tâif dönüşü umre için ihrâma girdiği yer. Yetmiş peygamberin burada ihrâma girdiği rivayet edilir.' }
+      ]
+    }
+  };
+
+  var zSwitch = document.getElementById('zSwitch'), zBody = document.getElementById('zBody');
+  if (zSwitch && zBody) {
+    var zThumb = document.getElementById('zThumb');
+    var WALK = '<svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="1.6"/><path d="m9 21 2.2-5.6L9 12.5V8.8l4-1.3 3 3.2 2.6 1"/><path d="m9 12.5-3 2.2"/><path d="m14.4 15.4 1.6 5.6"/></svg>';
+    var BUS = '<svg viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="13" rx="2.5"/><path d="M4 9.5h16"/><circle cx="8" cy="19" r="1.4"/><circle cx="16" cy="19" r="1.4"/><path d="M7.5 13h1M15.5 13h1"/></svg>';
+
+    function cards(list, label, icon){
+      var h = '<div class="zy-group"><div class="r-sub">' + label + '</div><div class="zy-grid">';
+      list.forEach(function(p){
+        h += '<article class="zy-card glass"><span class="tag">' + icon + label.split(' ')[0] + '</span>' +
+             '<h4>' + p.t + '</h4><p>' + p.d + '</p></article>';
+      });
+      return h + '</div></div>';
+    }
+
+    function renderZiyaret(key){
+      var d = ZIYARET[key];
+      zBody.innerHTML = cards(d.yuru, 'Yürüyerek gidilenler', WALK) + cards(d.otobus, 'Otobüsle gidilenler', BUS);
+      zBody.querySelectorAll('.glass').forEach(function(el){
+        el.addEventListener('pointermove', function(e){
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+          el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+        });
+      });
+      zBody.classList.remove('swap'); void zBody.offsetWidth; zBody.classList.add('swap');
+    }
+
+    zSwitch.querySelectorAll('button').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        zSwitch.querySelectorAll('button').forEach(function(o){ o.setAttribute('aria-selected', o === tab ? 'true' : 'false'); });
+        moveThumb(zSwitch, zThumb);
+        renderZiyaret(tab.getAttribute('data-z'));
+      });
+    });
+    thumbs.push([zSwitch, zThumb]);
+    renderZiyaret('medine');
+    moveThumb(zSwitch, zThumb);
+  }
+
+  /* --- terimler sözlüğü --- */
+  var chipWrap = document.getElementById('termChips'), defBox = document.getElementById('termDef');
+  if (chipWrap && defBox) {
+    function showTerm(i){
+      var t = TERIMLER[i];
+      defBox.innerHTML = '<h4></h4><p></p>';
+      defBox.querySelector('h4').textContent = t.t;
+      defBox.querySelector('p').textContent = t.d;
+      defBox.classList.remove('swap'); void defBox.offsetWidth; defBox.classList.add('swap');
+    }
+    TERIMLER.forEach(function(t, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = t.t;
+      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function(){
+        chipWrap.querySelectorAll('button').forEach(function(o){ o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        showTerm(i);
+      });
+      chipWrap.appendChild(b);
+    });
+    showTerm(0);
+  }
+
+  /* --- açık / kapalı durumu --- */
+  var stateEl = document.getElementById('openState'), stateTxt = document.getElementById('openTxt');
+  if (stateEl) {
+    try {
+      var parts = new Intl.DateTimeFormat('tr-TR', { timeZone:'Europe/Istanbul', hour:'2-digit', minute:'2-digit', hour12:false }).format(new Date()).split(':');
+      var mins = parseInt(parts[0],10) * 60 + parseInt(parts[1],10);
+      if (mins >= 540 && mins < 1200) {
+        stateEl.classList.add('on'); stateTxt.textContent = 'Şu an açık · 20:00’a kadar';
+      } else {
+        stateEl.classList.add('off');
+        stateTxt.textContent = mins < 540 ? 'Şu an kapalı · 09:00’da açılıyor' : 'Şu an kapalı · yarın 09:00’da açılıyor';
+      }
+    } catch (e) {}
+  }
+
+  /* --- cam parlaması --- */
+  document.querySelectorAll('.glass').forEach(function(el){
+    el.addEventListener('pointermove', function(e){
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  /* --- kahraman imleç ışığı --- */
+  var hero = document.querySelector('.hero'), glow = document.getElementById('glow');
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  if (hero && glow && fine && !reduce) {
+    hero.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect();
+      glow.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px) translate(-50%,-50%)';
+      glow.style.opacity = '1';
+    });
+    hero.addEventListener('pointerleave', function(){ glow.style.opacity = '0'; });
+  }
+
+  /* --- mıknatıs butonlar --- */
+  if (fine && !reduce) {
+    document.querySelectorAll('.magnet').forEach(function(btn){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        btn.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.16) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.28) + 'px)';
+      });
+      btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+    });
+  }
+
+  /* --- alt bilgiye gelince köşedeki rozeti gizle --- */
+  var pill = document.querySelector('.soon-pill'), footEl = document.querySelector('footer');
+  if (pill && footEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function(en){
+      en.forEach(function(x){ pill.classList.toggle('hide', x.isIntersecting); });
+    }, { threshold:0.02 }).observe(footEl);
+  }
+
+  /* --- numarayı kopyala --- */
+  var copyBtn = document.getElementById('copyBtn'), copyLabel = document.getElementById('copyLabel');
+  if (copyBtn) copyBtn.addEventListener('click', function(){
+    var txt = document.getElementById('phoneNum').textContent.trim();
+    function done(){ copyLabel.textContent = 'Kopyalandı'; setTimeout(function(){ copyLabel.textContent = 'Numarayı kopyala'; }, 1800); }
+    try {
+      navigator.clipboard.writeText(txt).then(done, function(){
+        var r = document.createRange(); r.selectNodeContents(document.getElementById('phoneNum'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        copyLabel.textContent = 'Seçildi, kopyalayın';
+        setTimeout(function(){ copyLabel.textContent = 'Numarayı kopyala'; }, 2400);
+      });
+    } catch (err) { copyLabel.textContent = 'Seçip kopyalayın'; }
+  });
+  /* --- hat tablo kataloğu --- */
+  var WASVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.17c-.25.69-1.44 1.32-1.99 1.36-.53.04-1.02.23-3.44-.72-2.9-1.14-4.73-4.1-4.87-4.29-.14-.19-1.16-1.54-1.16-2.94s.74-2.09 1-2.37c.26-.29.57-.36.76-.36l.54.01c.17.01.41-.07.64.49.25.6.83 2.07.9 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48l-.42.49c-.14.14-.28.29-.12.57.16.29.71 1.17 1.52 1.89 1.04.93 1.92 1.21 2.2 1.36.28.14.44.12.6-.07.17-.19.69-.8.87-1.08.19-.28.37-.23.63-.14.26.1 1.63.77 1.91.91.28.14.47.21.54.33.07.11.07.66-.18 1.35Z"/></svg>';
+
+  var KAT = (function(){
+    var PAGE = 24;
+    var all = [], view = [], shown = 0, cat = '', cats = [], loaded = false, loading = false;
+    var grid = document.getElementById('kgrid'), chips = document.getElementById('kchips');
+    var qEl = document.getElementById('kq'), sortEl = document.getElementById('ksort'), rangeEl = document.getElementById('krange');
+    var countEl = document.getElementById('kcount'), freshEl = document.getElementById('kfresh');
+    var moreBtn = document.getElementById('kmore');
+    var sheet = document.getElementById('ksheet'), sPic = document.getElementById('kpic'), sBody = document.getElementById('kbody');
+    if (!grid) return { open: function(){} };
+
+    var FRAME = '<svg viewBox="0 0 100 125" fill="none" aria-hidden="true">' +
+      '<rect x="6" y="6" width="88" height="113" rx="3" stroke="rgba(212,175,97,.55)" stroke-width="1.6"/>' +
+      '<rect x="13" y="13" width="74" height="99" rx="2" stroke="rgba(212,175,97,.3)" stroke-width="1"/>' +
+      '<path d="M28 74c6-4 9-12 13-20 3-6 6-11 10-11 5 0 7 5 5 10-2 6-7 9-12 9-7 0-11-3-16-3" stroke="rgba(243,226,182,.6)" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M44 83h24" stroke="rgba(243,226,182,.45)" stroke-width="2" stroke-linecap="round"/>' +
+      '<circle cx="50" cy="38" r="3" fill="rgba(212,175,97,.45)"/></svg>';
+
+    function fmt(n){
+      if (n == null) return null;
+      return new Intl.NumberFormat('tr-TR', { maximumFractionDigits:0 }).format(n) + ' ₺';
+    }
+    function esc(s){ var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+    function norm(s){ return (s || '').toLocaleLowerCase('tr').replace(/[ıİ]/g, 'i'); }
+    var IMGFB = "this.onerror=null;this.style.display='none';var s=this.parentNode.querySelector('.k-ph');if(s)s.hidden=false;";
+    function varObj(p, name){
+      var vs = p.variants || [];
+      for (var i = 0; i < vs.length; i++) if (vs[i].name === name) return vs[i];
+      return null;
+    }
+    function effPrice(p, name){
+      var v = varObj(p, name);
+      return (v && v.price != null) ? v.price : p.price;
+    }
+    function starsHtml(p){
+      if (!p.rating) return '';
+      var full = Math.round(p.rating), out = '';
+      for (var i = 1; i <= 5; i++) out += '<svg viewBox="0 0 24 24" class="' + (i <= full ? 'on' : '') + '"><path d="m12 3.6 2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.9l6-.8z"/></svg>';
+      return '<span class="k-stars">' + out + (p.reviewCount ? '<i>' + p.reviewCount + ' değerlendirme</i>' : '') + '</span>';
+    }
+    function specsHtml(p){
+      var a = (p.attrs || []).filter(function(x){
+        return x && x.k && x.v && x.v.indexOf('[') === -1 && !/ödeme|taksit|kargo/i.test(x.k);
+      });
+      if (!a.length) return '';
+      return '<dl class="k-specs">' + a.map(function(x){
+        return '<div><dt>' + esc(x.k) + '</dt><dd>' + esc(x.v) + '</dd></div>';
+      }).join('') + '</dl>';
+    }
+
+    function orderHref(p, variant){
+      var l = ['Merhaba, şu eseri sipariş etmek istiyorum:', '', p.name, 'Ürün kodu: ' + p.code];
+      if (variant) l.push('Ölçü: ' + variant);
+      var pr = effPrice(p, variant);
+      if (pr != null) l.push('Fiyat: ' + fmt(pr));
+      l.push('', 'Bilgi verebilir misiniz?');
+      return WA + '?text=' + encodeURIComponent(l.join('\n'));
+    }
+
+    function cardHtml(p){
+      return '<button class="k-card" type="button" data-code="' + esc(p.code) + '">' +
+        '<span class="k-pic">' +
+          (p.demo ? '<span class="k-tag demo">Örnek</span>' : '') +
+          (p.cover ? '<img src="' + esc(p.cover) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="' + IMGFB + '">' +
+                     '<span class="k-ph" hidden>' + FRAME + '</span>'
+                   : '<span class="k-ph">' + FRAME + '</span>') +
+        '</span>' +
+        '<span class="k-meta">' +
+          '<span class="k-code">' + esc(p.code) + '</span>' +
+          '<h3>' + esc(p.name) + '</h3>' +
+          '<span class="k-price">' + (p.price != null ? '<b>' + fmt(p.price) + '</b>' : '<b style="font-size:1rem">Fiyat için sorun</b>') +
+            (p.price != null && p.priceMax ? '<em>’den başlayan</em>' : '') + '</span>' +
+        '</span></button>';
+    }
+
+    function apply(){
+      var q = norm(qEl.value.trim());
+      var r = rangeEl.value.split('-');
+      var lo = r[0] ? Number(r[0]) : null, hi = r[1] ? Number(r[1]) : null;
+
+      view = all.filter(function(p){
+        if (cat && p.category !== cat) return false;
+        if (lo != null && (p.price == null || p.price < lo)) return false;
+        if (hi != null && (p.price == null || p.price > hi)) return false;
+        if (q && (norm(p.name) + ' ' + norm(p.code) + ' ' + norm(p.category) + ' ' + norm(p.description)).indexOf(q) === -1) return false;
+        return true;
+      });
+
+      var s = sortEl.value;
+      if (s === 'asc') view.sort(function(a, b){ return (a.price == null ? 1e9 : a.price) - (b.price == null ? 1e9 : b.price); });
+      else if (s === 'desc') view.sort(function(a, b){ return (b.price == null ? -1 : b.price) - (a.price == null ? -1 : a.price); });
+      else if (s === 'az') view.sort(function(a, b){ return a.name.localeCompare(b.name, 'tr'); });
+
+      shown = 0; grid.innerHTML = '';
+      countEl.innerHTML = view.length ? '<b>' + view.length.toLocaleString('tr-TR') + '</b> eser listeleniyor' : '';
+      if (!view.length) {
+        grid.innerHTML = '<div class="k-empty"><b>Aradığınız eseri bulamadık</b>Farklı bir kelime deneyin ya da WhatsApp’tan yazın, elimizdekilere birlikte bakalım.</div>';
+        moreBtn.hidden = true; return;
+      }
+      page();
+    }
+
+    function page(){
+      var next = view.slice(shown, shown + PAGE);
+      grid.insertAdjacentHTML('beforeend', next.map(cardHtml).join(''));
+      shown += next.length;
+      moreBtn.hidden = shown >= view.length;
+      moreBtn.textContent = 'Daha fazla eser göster (' + (view.length - shown).toLocaleString('tr-TR') + ')';
+    }
+
+    function drawChips(){
+      chips.innerHTML = '<button type="button" data-cat="" aria-pressed="true">Tümü</button>' +
+        cats.map(function(c){ return '<button type="button" data-cat="' + esc(c.name) + '" aria-pressed="false">' + esc(c.name) + '<i>' + c.count + '</i></button>'; }).join('');
+      chips.querySelectorAll('button').forEach(function(b){
+        b.addEventListener('click', function(){
+          cat = b.getAttribute('data-cat');
+          chips.querySelectorAll('button').forEach(function(o){ o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+          apply();
+        });
+      });
+    }
+
+    var curr = null, currVar = null, lastFocus = null;
+    function openSheet(code){
+      var p = all.filter(function(x){ return x.code === code; })[0];
+      if (!p) return;
+      curr = p; currVar = (p.variants && p.variants.length) ? p.variants[0].name : null;
+      lastFocus = document.activeElement;
+      draw(); sheet.hidden = false; document.body.style.overflow = 'hidden';
+      document.getElementById('kx').focus();
+    }
+    function closeSheet(){
+      sheet.hidden = true; document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function draw(){
+      var p = curr, imgs = (p.images && p.images.length) ? p.images : [];
+      var ths = (p.thumbs && p.thumbs.length) ? p.thumbs : imgs;
+      sPic.innerHTML = (imgs.length
+          ? '<img id="kmain" src="' + esc(imgs[0]) + '" alt="' + esc(p.name) + '" referrerpolicy="no-referrer" onerror="' + IMGFB + '"><span class="k-ph" hidden>' + FRAME + '</span>'
+          : '<span class="k-ph">' + FRAME + '</span>') +
+        (imgs.length > 1 ? '<div class="k-thumbs">' + imgs.map(function(u, i){
+          return '<button type="button" data-i="' + i + '" aria-pressed="' + (i === 0) + '"><img src="' + esc(ths[i] || u) + '" alt="" loading="lazy" referrerpolicy="no-referrer"></button>';
+        }).join('') + '</div>' : '');
+      sPic.querySelectorAll('.k-thumbs button').forEach(function(b){
+        b.addEventListener('click', function(){
+          document.getElementById('kmain').src = imgs[+b.getAttribute('data-i')];
+          sPic.querySelectorAll('.k-thumbs button').forEach(function(o){ o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        });
+      });
+
+      var vr = (p.variants && p.variants.length)
+        ? '<div class="k-vr"><span class="lab">Ölçü ve seçenekler</span><div class="k-vr-opts">' +
+          p.variants.map(function(v){
+            return '<button type="button" data-v="' + esc(v.name) + '" aria-pressed="' + (v.name === currVar) + '">' + esc(v.name) +
+              (v.price != null ? '<i>' + fmt(v.price) + '</i>' : '') + '</button>';
+          }).join('') + '</div></div>' : '';
+
+      sBody.innerHTML =
+        '<span class="k-sheet-code">' + esc(p.code) + (p.category ? ' · ' + esc(p.category) : '') + '</span>' +
+        '<h2 id="kname">' + esc(p.name) + '</h2>' +
+        starsHtml(p) +
+        '<div class="k-sheet-price" id="kprice">' + (effPrice(p, currVar) != null ? '<b>' + fmt(effPrice(p, currVar)) + '</b>' : '<b style="font-size:1.2rem">Fiyat için yazın</b>') +
+          (p.priceMax && p.variants && p.variants.length > 1 ? '<em>seçili ölçü için</em>' : '') + '</div>' +
+        (p.description ? '<p class="k-desc">' + esc(p.description) + '</p>' : '') + vr + specsHtml(p) +
+        '<div class="k-sheet-foot">' +
+          '<a class="wa-btn" id="korder" href="' + orderHref(p, currVar) + '" target="_blank" rel="noopener">' + WASVG + 'WhatsApp’tan sipariş ver</a>' +
+          '<button class="k-ghost" type="button" id="kcopy">Kodu kopyala</button>' +
+        '</div>' +
+        '<p class="k-fine">Sipariş ve ödeme WhatsApp üzerinden ilerler; sitede sepet ve kart ödemesi bulunmaz. Ölçü, çerçeve seçenekleri ve kargo için yazdığınızda bilgi veriyoruz.</p>';
+
+      sBody.querySelectorAll('.k-vr-opts button').forEach(function(b){
+        b.addEventListener('click', function(){
+          currVar = b.getAttribute('data-v');
+          sBody.querySelectorAll('.k-vr-opts button').forEach(function(o){ o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+          document.getElementById('korder').href = orderHref(curr, currVar);
+          var pe = document.getElementById('kprice'), pv = effPrice(curr, currVar);
+          if (pe) pe.innerHTML = (pv != null ? '<b>' + fmt(pv) + '</b>' : '<b style="font-size:1.2rem">Fiyat için yazın</b>') +
+            (curr.priceMax && curr.variants && curr.variants.length > 1 ? '<em>seçili ölçü için</em>' : '');
+        });
+      });
+      var cc = document.getElementById('kcopy');
+      cc.addEventListener('click', function(){
+        var old = cc.textContent;
+        function back(txt){ cc.textContent = txt; setTimeout(function(){ cc.textContent = old; }, 1800); }
+        try { navigator.clipboard.writeText(curr.code).then(function(){ back('Kopyalandı ✓'); }, function(){ back('Kopyalanamadı'); }); }
+        catch (e) { back('Kopyalanamadı'); }
+      });
+    }
+
+    grid.addEventListener('click', function(e){
+      var c = e.target.closest('.k-card');
+      if (c) openSheet(c.getAttribute('data-code'));
+    });
+    document.getElementById('kx').addEventListener('click', closeSheet);
+    sheet.addEventListener('click', function(e){ if (e.target === sheet) closeSheet(); });
+    document.addEventListener('keydown', function(e){ if (!sheet.hidden && e.key === 'Escape') closeSheet(); });
+    moreBtn.addEventListener('click', page);
+    var t;
+    qEl.addEventListener('input', function(){ clearTimeout(t); t = setTimeout(apply, 180); });
+    sortEl.addEventListener('change', apply);
+    rangeEl.addEventListener('change', apply);
+
+    function load(){
+      if (loaded || loading) return;
+      loading = true;
+      Promise.all([
+        fetch('data/products.json').then(function(r){ return r.json(); }),
+        fetch('data/categories.json').then(function(r){ return r.json(); }).catch(function(){ return { categories: [] }; })
+      ]).then(function(res){
+        var d = res[0];
+        all = d.products || [];
+        cats = (res[1].categories || []).filter(function(c){ return c.name; });
+        if (!cats.length) {
+          var m = {};
+          all.forEach(function(p){ if (p.category) m[p.category] = (m[p.category] || 0) + 1; });
+          cats = Object.keys(m).map(function(k){ return { name:k, count:m[k] }; }).sort(function(a, b){ return b.count - a.count; });
+        }
+        if (d.demo || d.partial || all.some(function(p){ return p.demo; })) document.getElementById('kNoteBar').hidden = false;
+        if (d.updatedAt) {
+          var dt = new Date(d.updatedAt);
+          freshEl.textContent = 'Fiyatlar ' + dt.toLocaleDateString('tr-TR', { day:'numeric', month:'long' }) + ' ' +
+            dt.toLocaleTimeString('tr-TR', { hour:'2-digit', minute:'2-digit' }) + ' itibarıyla';
+        }
+        loaded = true; loading = false;
+        drawChips(); apply();
+      }).catch(function(){
+        loading = false;
+        countEl.textContent = '';
+        grid.innerHTML = '<div class="k-empty"><b>Katalog şu an yüklenemedi</b>Birkaç dakika sonra tekrar deneyin ya da WhatsApp’tan yazın, aradığınız eseri birlikte bulalım.</div>';
+      });
+    }
+
+    return { open: load };
+  })();
+
+  /* --- görünüm yönlendirmesi --- */
+  var VIEWS = [].slice.call(document.querySelectorAll('[data-view]'));
+  var pendingScroll = null;
+  function currentView(){
+    var h = (location.hash || '').replace('#', '');
+    return VIEWS.some(function(v){ return v.getAttribute('data-view') === h; }) ? h : '';
+  }
+  function scrollToEl(el){
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 84, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  function goView(name, scrollId){
+    pendingScroll = scrollId || null;
+    var h = (location.hash || '').replace('#', '');
+    if (h === name) { route(); return; }
+    if (name) { location.hash = name; }
+    else { history.replaceState(null, '', location.pathname + location.search); route(); }
+  }
+  function route(){
+    var name = currentView();
+    VIEWS.forEach(function(v){ v.hidden = v.getAttribute('data-view') !== name; });
+    document.querySelectorAll('#navLinks a, #mobileMenu a').forEach(function(a){
+      var href = a.getAttribute('href') || '';
+      var t = href === '#' ? '' : href.slice(1);
+      var isView = href === '#' || VIEWS.some(function(v){ return v.getAttribute('data-view') === t; });
+      a.classList.toggle('active', isView && t === name);
+    });
+    if (name === 'liste') {
+      var art = document.getElementById('kcArt');
+      if (art) { art.classList.remove('go'); void art.offsetWidth; art.classList.add('go'); }
+    }
+    if (name === 'tablolar') KAT.open();
+    if (pendingScroll) {
+      var el = document.querySelector(pendingScroll); pendingScroll = null;
+      if (el) { setTimeout(function(){ scrollToEl(el); }, 24); return; }
+    }
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+
+})();
+</script>
