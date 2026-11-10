@@ -859,6 +859,10 @@ html.js .rv-d3{transition-delay:.21s}
 #view-tablolar .k-specs>div{background:rgba(7,21,47,.72);padding:11px 13px;min-width:0}
 #view-tablolar .k-specs dt{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 #view-tablolar .k-specs dd{margin:4px 0 0;font-size:13.5px;color:var(--cream);line-height:1.35}
+.kc-vid{display:none;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:20px;
+  border:1px solid rgba(212,175,97,.26);box-shadow:0 30px 70px -34px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.06)}
+.kc-art.hasvid .kc-vid{display:block}
+.kc-art.hasvid>svg{display:none}
 </style>
 
 <div class="grain" aria-hidden="true"></div>
@@ -1148,6 +1152,7 @@ html.js .rv-d3{transition-delay:.21s}
 
       <div class="kc glass rv">
         <div class="kc-art" id="kcArt" aria-hidden="true">
+          <video class="kc-vid" id="kcVid" muted loop playsinline preload="none" poster="assets/valiz.jpg"></video>
           <svg viewBox="0 0 480 340" role="img">
             <defs>
               <linearGradient id="kcNavy" x1="0" y1="0" x2="0" y2="1">
@@ -1198,12 +1203,12 @@ html.js .rv-d3{transition-delay:.21s}
 
             <!-- valize giren ihtiyaçlar -->
             <g class="kc-items">
-              <g class="it" style="--d:.10s;--fd:0s"><g class="itf" transform="translate(130,186)">
+              <g class="it" style="--d:.10s;--fd:0s"><g class="itf" transform="translate(130,177) scale(1.12)">
                 <rect x="-19" y="-3" width="38" height="13" rx="3.5" fill="#F3EFE4" stroke="#8E6E2C" stroke-width=".9"/>
                 <rect x="-15" y="-14" width="30" height="12" rx="3.5" fill="#FFFDF7" stroke="#8E6E2C" stroke-width=".9"/>
                 <path d="M-15-8h30M-19 3h38" stroke="#D4AF61" stroke-width=".7" opacity=".7"/>
               </g></g>
-              <g class="it" style="--d:.26s;--fd:.6s"><g class="itf" transform="translate(172,184)">
+              <g class="it" style="--d:.26s;--fd:.6s"><g class="itf" transform="translate(172,175) scale(1.12)">
                 <circle cx="0" cy="-2" r="12.5" fill="none" stroke="url(#kcGold)" stroke-width="1.3"/>
                 <g fill="url(#kcGold)">
                   <circle cx="0" cy="-14.5" r="2.5"/><circle cx="8.8" cy="-10.8" r="2.5"/><circle cx="12.5" cy="-2" r="2.5"/>
@@ -1212,28 +1217,28 @@ html.js .rv-d3{transition-delay:.21s}
                 </g>
                 <path d="M0 10.5v7" stroke="url(#kcGold)" stroke-width="1.3"/>
               </g></g>
-              <g class="it" style="--d:.42s;--fd:1.2s"><g class="itf" transform="translate(216,186)">
+              <g class="it" style="--d:.42s;--fd:1.2s"><g class="itf" transform="translate(216,177) scale(1.12)">
                 <rect x="-20" y="-9" width="40" height="19" rx="9.5" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
                 <circle cx="-10.5" cy=".5" r="6" fill="none" stroke="#D4AF61" stroke-width="1"/>
                 <circle cx="-10.5" cy=".5" r="2.4" fill="#D4AF61" opacity=".8"/>
                 <path d="M4-4h12M4 1h12M4 6h9" stroke="#D4AF61" stroke-width=".9" opacity=".6"/>
               </g></g>
-              <g class="it" style="--d:.58s;--fd:.3s"><g class="itf" transform="translate(258,188)">
+              <g class="it" style="--d:.58s;--fd:.3s"><g class="itf" transform="translate(258,179) scale(1.12)">
                 <path d="M-14 8q-4-11 2-17 7-7 14-2 7 5 4 13-2 6-9 6z" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
                 <path d="M-8-7q7-5 13 1" fill="none" stroke="#D4AF61" stroke-width="1.4" opacity=".9"/>
               </g></g>
-              <g class="it" style="--d:.74s;--fd:.9s"><g class="itf" transform="translate(298,184)">
+              <g class="it" style="--d:.74s;--fd:.9s"><g class="itf" transform="translate(298,175) scale(1.12)">
                 <rect x="-8" y="-8" width="16" height="20" rx="4" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
                 <rect x="-3.5" y="-14" width="7" height="6" rx="1.6" fill="url(#kcGold)"/>
                 <path d="M-4-2h8M-4 3h8" stroke="#D4AF61" stroke-width=".9" opacity=".6"/>
               </g></g>
-              <g class="it" style="--d:.90s;--fd:1.6s"><g class="itf" transform="translate(334,186)">
+              <g class="it" style="--d:.90s;--fd:1.6s"><g class="itf" transform="translate(334,177) scale(1.12)">
                 <g transform="rotate(-24)">
                   <rect x="-3" y="-15" width="6" height="28" rx="3" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.1"/>
                   <path d="M-2.5-15v-5M0-15v-6M2.5-15v-5" stroke="url(#kcGold)" stroke-width="1.1" stroke-linecap="round"/>
                 </g>
               </g></g>
-              <g class="it" style="--d:1.06s;--fd:.45s"><g class="itf" transform="translate(366,185)">
+              <g class="it" style="--d:1.06s;--fd:.45s"><g class="itf" transform="translate(366,176) scale(1.12)">
                 <rect x="-10" y="-13" width="20" height="26" rx="5.5" fill="url(#kcNavy2)" stroke="url(#kcGold)" stroke-width="1.2"/>
                 <rect x="-6" y="-9" width="12" height="7" rx="2" fill="#D4AF61" opacity=".45"/>
                 <circle cx="0" cy="5" r="3.4" fill="none" stroke="#D4AF61" stroke-width="1.1"/>
@@ -2711,6 +2716,19 @@ html.js .rv-d3{transition-delay:.21s}
     if (name === 'liste') {
       var art = document.getElementById('kcArt');
       if (art) { art.classList.remove('go'); void art.offsetWidth; art.classList.add('go'); }
+      var vid = document.getElementById('kcVid');
+      if (vid && !vid.getAttribute('src') && !vid.dataset.tried) {
+        vid.dataset.tried = '1';
+        vid.addEventListener('loadeddata', function(){
+          art.classList.add('hasvid');
+          if (!reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function(){}); }
+        });
+        vid.addEventListener('error', function(){ /* dosya yoksa çizim kalır */ });
+        vid.src = 'assets/valiz.mp4';
+        vid.load();
+      } else if (vid && art.classList.contains('hasvid') && !reduce) {
+        var pr2 = vid.play(); if (pr2 && pr2.catch) pr2.catch(function(){});
+      }
     }
     if (name === 'tablolar') KAT.open();
     if (pendingScroll) {

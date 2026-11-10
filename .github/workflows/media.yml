@@ -1,0 +1,63 @@
+name: Medya indir
+
+# Üretilen görsel/videoyu siteye alır: indirir, web için sıkıştırır,
+# kapak karesini çıkarır ve docs/assets altına yazar.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Medya adresi'
+        required: true
+      path:
+        description: 'docs içindeki hedef yol (örn. assets/valiz.mp4)'
+        required: true
+        default: 'assets/valiz.mp4'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: İndir ve hazırla
+        env:
+          URL: ${{ inputs.url }}
+          DEST: ${{ inputs.path }}
+        run: |
+          set -euo pipefail
+          case "$DEST" in *..*|/*) echo "gecersiz yol"; exit 1;; esac
+          mkdir -p "docs/$(dirname "$DEST")"
+          curl -fsSL --max-time 300 -o "/tmp/indirilen" "$URL"
+          ls -l /tmp/indirilen
+          case "$DEST" in
+            *.mp4)
+              ffmpeg -y -loglevel error -i /tmp/indirilen \
+                -an -movflags +faststart -pix_fmt yuv420p \
+                -vf "scale='min(1280,iw)':-2" -c:v libx264 -preset slow -crf 26 \
+                "docs/$DEST"
+              POSTER="docs/${DEST%.mp4}.jpg"
+              ffmpeg -y -loglevel error -i "docs/$DEST" -frames:v 1 -q:v 4 "$POSTER"
+              ls -l "docs/$DEST" "$POSTER"
+              ;;
+            *)
+              cp /tmp/indirilen "docs/$DEST"
+              ls -l "docs/$DEST"
+              ;;
+          esac
+
+      - name: Depoya yaz
+        run: |
+          if [ -n "$(git status --porcelain docs/assets)" ]; then
+            git config user.name "katalog-bot"
+            git config user.email "katalog-bot@users.noreply.github.com"
+            git add docs/assets
+            git commit -m "Medya eklendi: ${{ inputs.path }}"
+            git pull --rebase --autostash
+            git push
+          else
+            echo "Değişiklik yok."
+          fi
