@@ -1,0 +1,16 @@
+{
+  "name": "istanbul-hat-tablo-katalog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "sync": "node sync.mjs",
+    "sync:deneme": "node sync.mjs --limit 30",
+    "dev": "node --watch server.mjs",
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0"
+  }
+}
