@@ -1,0 +1,23 @@
+name: Ornek kapaklar
+on:
+  workflow_dispatch:
+    inputs:
+      n: { description: 'Kaç görsel', required: false, default: '64' }
+      seed: { description: 'Rastgelelik tohumu', required: false, default: '7' }
+permissions:
+  contents: write
+jobs:
+  sheet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install --quiet pillow
+      - run: python tools/ornek.py "${{ inputs.n }}" "${{ inputs.seed }}"
+      - run: |
+          git config user.name "katalog-bot"
+          git config user.email "katalog-bot@users.noreply.github.com"
+          git add docs/_ornek.jpg
+          git commit -m "Ornek kapak sayfasi" || echo "degisiklik yok"
+          git pull --rebase --autostash
+          git push
