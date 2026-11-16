@@ -82,8 +82,8 @@
  let g={w:0,h:0,l:0,t:0},pS=0,son=-1;
  function yerlestir(){const vw=Y.clientWidth,vh=Y.clientHeight;let w,h;
   const yatay=vw/vh>=1;
-  if(yatay){h=vh*1.02;w=h*OR;if(w<vw*.74){w=vw*.74;h=w/OR}}else{w=vw*1.3;h=w/OR}
-  g={w,h,l:(vw-w)/2,t:yatay?(vh-h)*.4:vh*.44-h*.5,vw,vh};
+  if(yatay){h=vh*.96;w=h*OR;if(w>vw){w=vw;h=w/OR}}else{w=vw*1.3;h=w/OR}
+  g={w,h,l:(vw-w)/2,t:yatay?vh-h:Math.max(vh*.44-h*.5,vh*.08),vw,vh};
   Object.assign(C.style,{width:w+'px',height:h+'px',left:g.l+'px',top:g.t+'px'});son=-1}
  function ciz(){
   const r=K.getBoundingClientRect(),hedef=az?1:kis(-r.top/(r.height-g.vh));
