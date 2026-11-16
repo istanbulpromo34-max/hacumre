@@ -19,7 +19,7 @@ border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255
 .sepetbtn{position:relative;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;cursor:pointer;border:0;background:rgba(255,255,255,.08);color:#fff}
 .sepetbtn b{position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;border-radius:9px;background:var(--bordo);font-size:11px;display:grid;place-items:center;padding:0 4px;transform:scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
 .sepetbtn b.var{transform:scale(1)}
-@media(max-width:720px){.nav{top:auto;bottom:14px;gap:2px;padding:6px}.nav .logo{display:none}.nav a{padding:10px 12px;font-size:13px}}
+@media(max-width:720px){.nav{top:auto;bottom:max(14px,env(safe-area-inset-bottom));gap:0;padding:5px;max-width:calc(100vw - 16px)}.nav .logo{display:none}.nav a{padding:10px 9px;font-size:12.5px;letter-spacing:.01em}.sepetbtn{width:38px;height:38px;flex:none}}
 /* Sepet çekmecesi */
 .cekmece{position:fixed;inset:0;z-index:80;pointer-events:none}
 .cekmece .perde{position:absolute;inset:0;background:rgba(3,7,18,.6);opacity:0;transition:opacity .4s}
