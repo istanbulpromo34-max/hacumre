@@ -1,0 +1,38 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ürünlerimiz · İstanbul Hac Umre Hediyelik</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css"><script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script></head><body>
+<style>
+.ust{padding:20vh 6vw 6vh}.ust h1{font-size:clamp(46px,7vw,110px);line-height:1}
+.filtre{display:flex;gap:10px;flex-wrap:wrap;padding:0 6vw 40px;position:sticky;top:84px;z-index:20}
+.filtre button{padding:11px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(11,22,48,.6);backdrop-filter:blur(14px);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:all .35s}
+.filtre button.on{background:var(--altin);color:#1a1205;border-color:transparent}
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;padding:0 6vw 14vh}
+.kart{border-radius:var(--r);background:linear-gradient(180deg,var(--lac2),var(--lac));border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s}
+.kart:hover{transform:translateY(-6px);border-color:rgba(201,162,75,.35)}
+.kart .g{aspect-ratio:1;background:radial-gradient(circle at 50% 40%,#1f3466,#0d1a38);display:grid;place-items:center;overflow:hidden}
+.kart .g img{width:100%;height:100%;object-fit:cover;transition:transform 1s}.kart:hover .g img{transform:scale(1.06)}
+.kart .g .yer{font:400 64px 'Amiri';opacity:.25}
+.kart .b{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.kart h3{font-size:21px}.kart p{font-size:14px;opacity:.65;line-height:1.55;flex:1}
+.kart .f{font:400 24px 'Marcellus'}
+.kart .d{display:flex;gap:8px;margin-top:8px}.kart .d .btn{padding:12px 14px;font-size:13px;flex:1}
+@media(max-width:720px){.filtre{top:0;padding-top:14px}}
+</style>
+<section class="ust"><small style="letter-spacing:.3em;color:var(--altin2)" data-gel>KATALOG</small>
+<h1 data-gel>Ürünlerimiz</h1><p data-gel style="opacity:.7;margin-top:16px;max-width:520px;line-height:1.7">Ürünleri sepete ekleyin, tamamını tek mesajla WhatsApp'tan gönderin. Hemen dönüş yapalım.</p></section>
+<div class="filtre"></div><div class="izgara"></div>
+<footer class="sf"><span>© 2026 İstanbul Hac Umre Hediyelik · Ümraniye, İstanbul</span><span><a href="https://wa.me/905551044040">WhatsApp</a> · <a href="tel:+905551044040">0555 104 40 40</a></span></footer><script src="site.js"></script><script>
+kabuk('urun');
+const kats=['Tümü',...new Set(URUNLER.map(u=>u.kat))];const F=document.querySelector('.filtre'),I=document.querySelector('.izgara');
+let sec=decodeURIComponent(location.hash.slice(1))||'Tümü';if(!kats.includes(sec))sec='Tümü';
+function ciz(){F.innerHTML=kats.map(k=>`<button class="${k==sec?'on':''}">${k}</button>`).join('');
+ F.querySelectorAll('button').forEach(b=>b.onclick=()=>{sec=b.textContent;history.replaceState(0,'','#'+sec);ciz()});
+ I.innerHTML=URUNLER.filter(u=>sec=='Tümü'||u.kat==sec).map(u=>`<article class="kart" data-gel><div class="g">${u.gorsel?`<img src="${u.gorsel}" alt="${u.ad}" loading="lazy">`:'<span class="yer">✦</span>'}</div>
+ <div class="b"><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
+ <div class="d"><button class="btn cam" onclick="Sepet.ekle('${u.id}');toast('Sepete eklendi')">Sepete ekle</button>
+ <button class="btn wa" onclick="window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Merhaba, ${u.ad} (${TL(u.fiyat)}) için sipariş vermek istiyorum.'),'_blank')">WhatsApp</button></div></div></article>`).join('');
+ yumusakGel()}
+function yumusakGel(){requestAnimationFrame(()=>I.querySelectorAll('[data-gel]').forEach((e,i)=>setTimeout(()=>e.classList.add('gel'),i*60)))}
+ciz();akisKur();
+</script></body></html>
