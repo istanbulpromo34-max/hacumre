@@ -261,7 +261,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .zemzem{padding:18vh 0;background:var(--fildisi)}
 .ikili{display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:center}
 .cerceve{border-radius:220px 220px 28px 28px;overflow:hidden;aspect-ratio:4/5;position:relative}
-.cerceve img{width:100%;height:100%;object-fit:cover;transform:scale(var(--olcek,1.08))}
+.cerceve picture{display:contents}.cerceve img{width:100%;height:100%;object-fit:cover;transform:scale(var(--olcek,1.08))}
 @media (max-width:900px){.ikili{grid-template-columns:1fr}}
 
 /* ===== Sa'y ===== */
@@ -768,10 +768,10 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   <div class="yapis">
     <div class="tavaf-baslik" id="tavaf-baslik"><span class="durak-no">Durak 5</span><h2 style="margin-top:14px">Harem'e giriş<br>ve tavaf</h2></div>
     <div class="lebbeyk" id="lebbeyk" aria-hidden="true"><span lang="ar">لَبَّيْكَ</span></div>
-    <div class="kare" data-kare="0"><picture><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe1M.jpg"><img src="assets/g/kabe1.jpg" alt="Mescid-i Haram avlusu ve Kâbe, gündüz geniş açı"></picture></div>
-    <div class="kare" data-kare="1"><picture><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe2M.jpg"><img src="assets/g/kabe2.jpg" alt="Tavaf eden kalabalık ve Kâbe, yukarıdan"></picture></div>
-    <div class="kare" data-kare="2"><picture><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe3M.jpg"><img src="assets/g/kabe3.jpg" alt="Kâbe-i Muazzama yakından, revaklar önünde"></picture></div>
-    <div class="kare" data-kare="3"><picture><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe4M.jpg"><img src="assets/g/kabe4.jpg" alt="Kâbe kapısının örtüsü ve hat işlemeleri"></picture></div>
+    <div class="kare" data-kare="0"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe1M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe1M.jpg"><source type="image/webp" srcset="assets/g/kabe1.webp"><img src="assets/g/kabe1.jpg" alt="Mescid-i Haram avlusu ve Kâbe, gündüz geniş açı"></picture></div>
+    <div class="kare" data-kare="1"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe2M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe2M.jpg"><source type="image/webp" srcset="assets/g/kabe2.webp"><img src="assets/g/kabe2.jpg" alt="Tavaf eden kalabalık ve Kâbe, yukarıdan"></picture></div>
+    <div class="kare" data-kare="2"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe3M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe3M.jpg"><source type="image/webp" srcset="assets/g/kabe3.webp"><img src="assets/g/kabe3.jpg" alt="Kâbe-i Muazzama yakından, revaklar önünde"></picture></div>
+    <div class="kare" data-kare="3"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe4M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe4M.jpg"><source type="image/webp" srcset="assets/g/kabe4.webp"><img src="assets/g/kabe4.jpg" alt="Kâbe kapısının örtüsü ve hat işlemeleri"></picture></div>
     <div class="savtlar" id="savtlar"><small>Şavt</small><ol><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ol></div>
     <div class="tavaf-yazi">
       <article data-yazi="0"><h3>Mescid-i Haram'a giriş</h3><p>Ayakkabılarınızı bir torbaya koyun, besmele çekip itikâfa niyet ederek sağ ayakla girin. Kâbe'yi ilk gördüğünüz yerde durup tekbir getirin ve dua edin; Kâbe ilk görüldüğünde yapılan dua kabul olunur.</p></article>
@@ -862,7 +862,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 <!-- 9 MEKKE'DEKİ GÜNLER -->
 <section class="durak mekke-gun" id="mekke" data-durak="9" data-ad="Mekke'deki günler" data-ton="acik">
   <div class="icerik ziyaret">
-    <div class="cerceve"><img src="assets/g/kabeSaat.jpg" alt="Kâbe ve arkasında saat kulesi, alttan bakış" loading="lazy"></div>
+    <div class="cerceve"><picture><source type="image/webp" srcset="assets/g/kabeSaat.webp"><img src="assets/g/kabeSaat.jpg" alt="Kâbe ve arkasında saat kulesi, alttan bakış" loading="lazy"></picture></div>
     <div>
       <div class="durak-bas" style="grid-template-columns:1fr;gap:16px;margin-bottom:24px"><span class="durak-no">Durak 9</span><h2>Mekke'deki günler</h2></div>
       <p class="giris">Umreyi tamamladıktan sonra Mekke'de kaldığınız günleri ibadetle değerlendirin. Rehberimiz farz namazları Mescid-i Haram'da cemaatle kılmayı, bol bol nafile tavaf yapmayı ve Kur'an okumayı tavsiye eder.</p>
@@ -939,13 +939,14 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 kabuk('tur');
 /* Görseller sitenin kendi assets/g klasöründen sunulur; telefonda dikey (M) sürümü olanlar */
 const DIKEY=new Set(['masa','ucak','hurma','hurmaB','giyim','giyimB','mikat','havalimani','medine','say']);
-const gorselUrl=k=>'assets/g/'+k+'.jpg';
+const gorselUrl=k=>'assets/g/'+k+'.webp';
 const dikeyEkran=matchMedia('(max-width: 760px) and (orientation: portrait)');
 function gorselleriYukle(){
   const dik=dikeyEkran.matches;
   document.querySelectorAll('img[data-g]').forEach(im=>{
     const k=dik&&DIKEY.has(im.dataset.g)&&!im.closest('.kumas')?im.dataset.g+'M':im.dataset.g;
     if(im.dataset.yuklu===k)return;im.dataset.yuklu=k;
+    im.onerror=()=>{im.onerror=null;im.src='assets/g/'+k+'.jpg'};
     im.src=gorselUrl(k);
   });
 }

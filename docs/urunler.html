@@ -138,7 +138,7 @@ function izgaraCiz(){
  const liste=URUNLER.filter(u=>sec==='Tümü'||u.kat===sec);
  SON.textContent=sec==='Tümü'?`${liste.length} ürün gösteriliyor`:`${sec}: ${liste.length} ürün`;
  I.innerHTML=liste.map(u=>`<article class="kart" data-id="${u.id}">
-  <div class="g"><img src="${u.gorsel}" alt="${u.ad}" loading="lazy" width="800" height="800"${u.kadraj?` style="object-position:${u.kadraj}"`:''}${u.yedek?` onerror="this.onerror=null;this.src='${u.yedek}'"`:''}><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
+  <div class="g"><img src="${resim(u.gorsel)}" alt="${u.ad}" loading="lazy" width="800" height="800"${u.kadraj?` style="object-position:${u.kadraj}"`:''} ${u.yedek?`onerror="this.onerror=null;this.src='${u.yedek}'"`:RESIM_YEDEK}><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
   <div class="eylem"><button class="btn altin ekle" type="button" aria-label="${u.ad}, çantaya ekle">Çantaya ekle</button>
   <div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`).join('');

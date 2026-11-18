@@ -35,6 +35,9 @@ const URUNLER=window.URUNLER||[
  {id:'zemzem',ad:'Zemzem 5 L',fiyat:400,kat:'Hurma ve Zemzem',gorsel:'assets/u/zemzem.jpg',acik:'Dönüş ikramları için zemzem.'}
 ];
 const TL=n=>n.toLocaleString('tr-TR')+' ₺';
+/* Görseller WebP olarak sunulur; açılamazsa aynı adlı JPG'ye düşülür */
+const resim=y=>/^assets\/(u|g)\/[^/]+\.jpg$/.test(y||'')?y.replace(/\.jpg$/,'.webp'):y;
+const RESIM_YEDEK=`onerror="this.onerror=null;this.src=this.src.replace(/\\.webp$/,'.jpg')"`;
 const depo={al(k,v){try{return JSON.parse(localStorage.getItem(k)||v)}catch(e){return JSON.parse(v)}},yaz(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const WA_SVG='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.6.7.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5l-.2-.3z"/></svg>';
 /* Sepet */
@@ -61,7 +64,7 @@ const Sepet={
   if(!k.length){
    const urunSayfasi=/urunler\.html/.test(location.pathname);
    L.innerHTML=`<div class="bos"><p>Çantanız henüz boş.</p><a class="btn cam" href="urunler.html" ${urunSayfasi?'data-kapat':''}>Ürünlere göz atın</a></div>`;return}
-  L.innerHTML=k.map(({u,n})=>`<div class="satir"><img src="${u.gorsel}" alt="" style="object-position:${u.kadraj||'50% 50%'}"${u.yedek?` onerror="this.onerror=null;this.src='${u.yedek}'"`:''}><div class="s-bilgi"><div class="ad">${u.ad}</div><small>${TL(u.fiyat)}</small>
+  L.innerHTML=k.map(({u,n})=>`<div class="satir"><img src="${resim(u.gorsel)}" alt="" style="object-position:${u.kadraj||'50% 50%'}" ${u.yedek?`onerror="this.onerror=null;this.src='${u.yedek}'"`:RESIM_YEDEK}><div class="s-bilgi"><div class="ad">${u.ad}</div><small>${TL(u.fiyat)}</small>
   <button type="button" class="kaldir" data-kaldir="${u.id}">Kaldır</button></div>
   <div class="adet"><button type="button" aria-label="${u.ad} adedini azalt" data-adet="${u.id}" data-d="-1">−</button><b aria-live="polite">${n}</b><button type="button" aria-label="${u.ad} adedini artır" data-adet="${u.id}" data-d="1">+</button></div></div>`).join('');
   document.querySelector('.cekmece .toplam b').textContent=TL(Sepet.toplam());
