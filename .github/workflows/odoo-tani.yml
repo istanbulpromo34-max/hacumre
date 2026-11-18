@@ -1,0 +1,41 @@
+name: Odoo tani
+
+# Veritabani adini ve baglanti durumunu ogrenir. Hicbir sey yazmaz, anahtar istemez.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'Odoo adresi'
+        required: false
+        default: 'https://isthac.istanbulpromo.com'
+
+permissions:
+  contents: read
+
+jobs:
+  tani:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Sor
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          set -u
+          U="${URL%/}"
+          echo "== 1) jsonrpc db.list =="
+          curl -sS -m 25 -X POST "$U/jsonrpc" -H 'Content-Type: application/json' \
+            -d '{"jsonrpc":"2.0","method":"call","params":{"service":"db","method":"list","args":[]},"id":1}' \
+            | head -c 600; echo
+          echo
+          echo "== 2) /web/database/list =="
+          curl -sS -m 25 -X POST "$U/web/database/list" -H 'Content-Type: application/json' \
+            -d '{"jsonrpc":"2.0","method":"call","params":{}}' | head -c 600; echo
+          echo
+          echo "== 3) giris sayfasinda gizli db alani =="
+          curl -sS -m 25 "$U/web/login" | grep -io 'name="db"[^>]*' | head -5 || echo "(yok)"
+          echo
+          echo "== 4) surum bilgisi =="
+          curl -sS -m 25 -X POST "$U/jsonrpc" -H 'Content-Type: application/json' \
+            -d '{"jsonrpc":"2.0","method":"call","params":{"service":"common","method":"version","args":[]},"id":2}' \
+            | head -c 400; echo
