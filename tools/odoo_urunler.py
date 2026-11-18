@@ -11,8 +11,8 @@ import sys
 import xmlrpc.client
 from datetime import datetime, timezone
 
-URL = os.environ.get("ODOO_URL", "").rstrip("/")
-DB = os.environ.get("ODOO_DB", "")
+URL = os.environ.get("ODOO_URL", "https://isthac.istanbulpromo.com").rstrip("/")
+DB = os.environ.get("ODOO_DB", "isthac")
 LOGIN = os.environ.get("ODOO_LOGIN", "")
 KEY = os.environ.get("ODOO_KEY", "")
 KATEGORI = os.environ.get("ODOO_KATEGORI", "İSTANBUL HAC UMRE")

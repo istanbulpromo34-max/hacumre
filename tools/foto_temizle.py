@@ -27,7 +27,8 @@ OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 # "kesme"  : ürünün kendi pikselleri korunur, yalnız arkaplan değişir (varsayılan)
 # "openai" : OpenAI görseli yeniden çizer — daha parlak ama ürünü birebir korumaz
 YONTEM = os.environ.get("TEMIZLEME", "kesme").strip().lower()
-ODOO = {k: os.environ.get(f"ODOO_{k.upper()}", "").strip() for k in ("url", "db", "login", "key")}
+ODOO_VARSAYILAN = {"url": "https://isthac.istanbulpromo.com", "db": "isthac", "login": "", "key": ""}
+ODOO = {k: (os.environ.get(f"ODOO_{k.upper()}", "").strip() or v) for k, v in ODOO_VARSAYILAN.items()}
 
 
 # ---------- arkaplan temizleme ----------
