@@ -27,7 +27,7 @@ oku = lambda m, a, *x, **k: model.execute_kw(DB, uid, KEY, a, m, *x, **k)
 kat = [k["id"] for k in oku("search_read", "product.category",
                             [[["complete_name", "ilike", "İSTANBUL HAC UMRE"]]], {"fields": ["id"]})]
 ids = oku("search", "product.template",
-          [[["categ_id", "child_of", kat], ["image_1920", "!=", False]]], {"limit": 60})
+          [[["categ_id", "child_of", kat], ["image_1920", "!=", False]]], {"limit": 200})
 kayit = oku("read", "product.template", [ids], {"fields": ["name", "default_code", "image_1920"]})
 
 # çeşitlilik: yazılı/ciltli bir ürün, kumaş, küçük obje...
