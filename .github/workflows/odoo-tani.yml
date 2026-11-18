@@ -17,6 +17,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+
+      - name: Aday veritabani adlarini dene
+        env:
+          URL: ${{ inputs.url }}
+        run: |
+          python - <<'PYEOF'
+          import os, xmlrpc.client
+          u = os.environ["URL"].rstrip("/")
+          ortak = xmlrpc.client.ServerProxy(u + "/xmlrpc/2/common", allow_none=True)
+          adaylar = ["isthac", "isthac.istanbulpromo.com", "istanbulpromo", "isthac_odoo",
+                     "isthacdb", "odoo", "isthac18", "isthac-18", "hacumre", "istanbulhacumre"]
+          for d in adaylar:
+              try:
+                  sonuc = ortak.authenticate(d, "deneme@yok.invalid", "yanlis", {})
+                  print(f"  VAR    {d!r:34s} -> veritabani mevcut (kimlik yanlis: {sonuc})")
+              except Exception as e:
+                  m = str(e).replace("\n", " ")[:120]
+                  isaret = "YOK   " if "does not exist" in m or "veritaban" in m.lower() else "?     "
+                  print(f"  {isaret} {d!r:34s} -> {m}")
+          PYEOF
+
       - name: Sor
         env:
           URL: ${{ inputs.url }}
