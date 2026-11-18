@@ -1,0 +1,31 @@
+name: Foto deneme
+on:
+  workflow_dispatch:
+    inputs:
+      adet: { description: 'Kaç ürün', required: false, default: '4' }
+permissions:
+  contents: write
+jobs:
+  dene:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/cache@v4
+        with: { path: ~/.u2net, key: rembg-isnet-general-use }
+      - run: pip install --quiet pillow "rembg[cpu]==2.0.59" onnxruntime
+      - name: Dene
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ODOO_LOGIN: ${{ secrets.ODOO_LOGIN }}
+          ODOO_KEY: ${{ secrets.ODOO_KEY }}
+          DENEME_ADET: ${{ inputs.adet }}
+        run: python tools/foto_deneme.py
+      - name: Yaz
+        run: |
+          git config user.name "foto-bot"; git config user.email "foto-bot@users.noreply.github.com"
+          git add docs/_deneme.jpg
+          git commit -m "Foto deneme sayfasi" || echo "degisiklik yok"
+          git pull --rebase --autostash; git push
