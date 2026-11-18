@@ -40,7 +40,7 @@
 body{margin:0;background:var(--fildisi);color:var(--murekkep);font-family:var(--govde);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--altin);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:2px solid var(--altin);outline-offset:3px}
 .ar{font-family:var(--arapca);direction:rtl;font-weight:400}
 h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing:-.005em;margin:0}
 p{margin:0 0 1em}
@@ -57,7 +57,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 @media (max-width:480px){.rota-gosterge{font-size:13px;padding:7px 12px 7px 8px}.rota-gosterge svg{width:26px;height:26px}}
 
 /* Rota göstergesi */
-.rota-gosterge{position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:12px;
+.rota-gosterge{white-space:nowrap;position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:12px;
   padding:10px 16px 10px 12px;border-radius:999px;background:var(--cam);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
   border:1px solid rgba(255,255,255,.55);font-size:14px;transition:opacity .4s,transform .4s,background .5s,color .5s;opacity:0;transform:translateY(10px);pointer-events:none}
 .rota-gosterge.gorunur{opacity:1;transform:none}
@@ -87,7 +87,8 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .acilis{height:240vh;position:relative;background:var(--fildisi)}
 .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .acilis-metin{position:absolute;left:max(24px,5vw);top:50%;transform:translateY(-46%);max-width:min(560px,37vw);z-index:2;will-change:opacity,transform}
-.besmele{font-size:clamp(22px,2.4vw,30px);color:var(--altin);margin-bottom:22px;display:block;text-align:left}
+.besmele{font-size:clamp(22px,2.4vw,30px);color:var(--altin);margin-bottom:18px;display:none;text-align:left}
+@media (prefers-reduced-motion:reduce){.besmele{display:block}}
 .acilis h1{font-size:clamp(44px,5.2vw,88px)}
 .acilis h1 .satir{display:block}
 .acilis-alt{margin-top:26px;font-size:18px;color:var(--soluk);max-width:42ch}
@@ -102,10 +103,15 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .acilis-son{position:absolute;inset:auto 0 12vh;text-align:center;z-index:3;color:var(--fildisi);opacity:0;pointer-events:none}
 .acilis-son p{font-family:var(--display);font-size:clamp(26px,3.4vw,44px);margin:0;text-shadow:0 2px 30px rgba(14,23,41,.5)}
 @media (max-width:760px){
-  .acilis-metin{max-width:none;right:24px;top:auto;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:none}
-  .acilis h1{font-size:clamp(34px,10vw,44px)}
-  .acilis-alt{margin-top:16px;font-size:16px}
-  .ipucu{margin-top:18px}
+  .acilis-metin{max-width:none;right:24px;top:calc(72px + env(safe-area-inset-top,0px));bottom:auto;transform:none}
+  .acilis h1{font-size:clamp(32px,9.4vw,42px)}
+  .acilis-alt{margin-top:14px;font-size:15.5px}
+  .ipucu{margin-top:14px}
+  .acilis-son{padding:0 72px 0 20px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+}
+@media (min-width:761px) and (max-width:1024px) and (orientation:portrait){
+  .acilis-metin{max-width:none;left:6vw;right:6vw;top:120px;transform:none}
+  .yolculuk-on{right:6vw;max-width:none}
 }
 @media (max-width:760px) and (max-height:700px){.ipucu{display:none}}
 
@@ -173,6 +179,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .yolculuk-metin h3{font-size:clamp(34px,5vw,70px);color:var(--fildisi);text-shadow:0 2px 40px rgba(14,23,41,.45)}
 .yolculuk-metin p{color:var(--fildisi);max-width:52ch;margin:16px auto 0;text-shadow:0 1px 20px rgba(14,23,41,.6)}
 .yolculuk-on{position:absolute;left:max(24px,6vw);top:18vh;max-width:30ch;z-index:2;will-change:opacity}
+@media (max-width:760px){.yolculuk-on{right:24px;max-width:none;top:calc(64px + env(safe-area-inset-top,0px))}.yolculuk-metin{padding:0 72px 0 24px}}
 .yolculuk-on h2{font-size:clamp(30px,3.6vw,50px)}
 
 /* ===== Medine ===== */
@@ -194,7 +201,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .hurmalar{padding:14vh 0 16vh}
 .hurmalar-bas{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:5vh}
 .hurmalar-bas h3{font-size:clamp(30px,3.4vw,48px)}
-.serit{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px max(24px,calc((100vw - 1180px)/2)) 24px;scrollbar-width:none;cursor:grab}
+.serit{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px max(24px,calc((100vw - 1180px)/2)) 24px;scroll-padding-inline:max(24px,calc((100vw - 1180px)/2));scrollbar-width:none;cursor:grab}
 .serit::-webkit-scrollbar{display:none}
 .hurma{flex:none;width:min(300px,74vw);scroll-snap-align:start;border-radius:24px;padding:26px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;
   background:linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
@@ -240,16 +247,16 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .kare{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
 .kare picture,.kare img{width:100%;height:100%;object-fit:cover;display:block}
 .kare::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 40%,transparent 40%,rgba(14,23,41,.55))}
-.tavaf-yazi{position:absolute;z-index:4;right:max(24px,5vw);bottom:10vh;width:min(420px,calc(100% - 48px));color:var(--fildisi)}
+.tavaf-yazi{position:absolute;z-index:4;right:max(96px,5vw);bottom:max(96px,10vh);width:min(420px,calc(100% - 48px));color:var(--fildisi)}
 .tavaf-yazi article{position:absolute;bottom:0;left:0;right:0;padding:26px 28px;border-radius:26px;background:rgba(14,23,41,.45);border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(22px) saturate(1.4);-webkit-backdrop-filter:blur(22px) saturate(1.4);opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
 .tavaf-yazi article.aktif{opacity:1;transform:none}
 .tavaf-yazi h3{font-size:30px;margin-bottom:10px;color:var(--altin-acik)}
 .tavaf-yazi p{font-size:16px;color:rgba(239,231,216,.88);margin:0}
-.savtlar{position:absolute;z-index:4;left:max(24px,5vw);bottom:10vh;display:flex;flex-direction:column;gap:10px;color:var(--fildisi);opacity:0;transition:opacity .6s}
+.savtlar{position:absolute;z-index:4;left:max(24px,5vw);bottom:max(96px,10vh);display:flex;flex-direction:column;gap:8px;padding:10px 14px 12px;border-radius:22px;background:rgba(14,23,41,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);color:var(--fildisi);opacity:0;transition:opacity .6s}
 .savtlar.gorunur{opacity:1}
 .savtlar ol{list-style:none;margin:0;padding:0;display:flex;gap:8px}
-.savtlar li{width:34px;height:34px;border-radius:50%;border:1px solid rgba(220,192,138,.5);display:grid;place-items:center;font-size:13px;transition:background .4s,color .4s}
+.savtlar li{width:34px;height:34px;border-radius:50%;border:1px solid rgba(220,192,138,.75);display:grid;place-items:center;font-size:13px;transition:background .4s,color .4s}
 .savtlar li.dolu{background:var(--altin);color:var(--gece);border-color:var(--altin)}
 .savtlar small{font-size:13px;opacity:.75}
 .tavaf-baslik{position:absolute;z-index:3;left:max(24px,6vw);top:16vh;color:var(--fildisi);will-change:opacity}
@@ -271,7 +278,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .say-arka img{width:100%;height:100%;object-fit:cover;opacity:.55;will-change:transform}
 .say-arka::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--tas) 0%,rgba(227,215,194,.55) 40%,rgba(227,215,194,.2))}
 .say-ray{position:relative;z-index:2;display:flex;gap:4vw;padding-left:max(24px,6vw);will-change:transform}
-.say-giris{flex:none;width:min(520px,80vw)}
+.say-giris{flex:none;width:min(520px,80vw);align-self:center;padding:28px;border-radius:28px;background:rgba(239,231,216,.8);border:1px solid rgba(255,255,255,.7);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3)}
 .say-giris h2{font-size:clamp(40px,6vw,88px)}
 .savt{flex:none;width:min(380px,76vw);min-height:340px;border-radius:30px;padding:30px;background:rgba(239,231,216,.55);border:1px solid rgba(255,255,255,.7);
   backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);display:flex;flex-direction:column;gap:14px;align-self:center}
@@ -287,7 +294,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .tiras-arka{position:absolute;inset:0;opacity:.9}
 .tiras-arka img{width:100%;height:100%;object-fit:cover}
 .tiras-arka img{object-position:right center}
-.tiras-arka::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--fildisi) 40%,rgba(239,231,216,.6) 62%,rgba(239,231,216,.08))}
+.tiras-arka::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--fildisi) 52%,rgba(239,231,216,.78) 70%,rgba(239,231,216,.12))}
 .tiras .icerik{position:relative}
 
 /* ===== Mekke günleri ===== */
@@ -299,7 +306,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .yerler h3{font-size:30px}
 .yerler .ar{font-size:24px;color:var(--altin)}
 .yerler p{grid-column:1/-1;margin:0;color:var(--soluk);font-size:16px}
-@media (max-width:900px){.ziyaret{grid-template-columns:1fr}.ziyaret .cerceve{position:relative;top:0}}
+@media (max-width:900px){.ziyaret{grid-template-columns:1fr}.ziyaret .cerceve{position:relative;top:0;order:2}}
 
 /* ===== Dönüş ===== */
 .donus{padding:18vh 0 0;background:var(--fildisi)}
@@ -331,7 +338,8 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .giris{font-size:clamp(18px,1.45vw,21px);line-height:1.7}
 .ders{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(32px,5vw,84px);align-items:start}
 .ders h3,.hazirlik-metin h3,.ara-baslik{font-size:clamp(26px,2.4vw,34px);margin:0 0 18px}
-.ara-baslik{margin-top:7vh}
+.ara-baslik,.ders h3.ara-baslik{margin-top:7vh}
+.hazirlik-metin h3{margin-top:7vh}.hazirlik-metin .giris+h3{margin-top:4vh}
 .adim-liste{list-style:none;margin:0;padding:0;counter-reset:s}
 .adim-liste li{counter-increment:s;display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding:18px 0;border-top:1px solid var(--cizgi)}
 .adim-liste li:last-child{border-bottom:1px solid var(--cizgi)}
@@ -431,7 +439,9 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   .mikat-bant{height:72svh}
   .donus-gorsel{height:78svh}
   .odak-yazi{bottom:calc(150px + env(safe-area-inset-bottom,0px));right:24px}
-  .tavaf-yazi{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+  .tavaf-yazi{bottom:calc(150px + env(safe-area-inset-bottom,0px));right:24px}
+  .odak .yapis::after{background:linear-gradient(0deg,rgba(14,23,41,.88),rgba(14,23,41,.55) 45%,transparent 75%)}
+  .say-giris{padding:22px}
   .tavaf-yazi article{padding:20px 22px}
   .tavaf-yazi h3{font-size:24px}
   .say-arka img{opacity:.45}
@@ -461,6 +471,8 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   .ipucu i{animation:none}
   .kumas-ic{transition:none}
 }
+@media (min-width:721px) and (max-width:1100px){.icerik{width:calc(100% - 160px)}}
+@media (max-width:480px){.rota-gosterge{font-size:12px;background:rgba(239,231,216,.94)}.rota-gosterge.koyu{background:rgba(14,23,41,.9)}}
 @media(max-width:720px){
   .rota-gosterge{left:50%;bottom:auto;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,-12px);padding:6px 14px 6px 8px;font-size:13px;gap:8px}
   .rota-gosterge.gorunur{transform:translate(-50%,0)}
@@ -488,9 +500,10 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 <section class="acilis" id="acilis" data-ton="acik" aria-label="Giriş">
   <div class="yapis">
     <div class="acilis-metin" id="acilis-metin">
+      <span class="besmele ar" lang="ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
       <span class="tur-etiket">Dijital Umre Turu</span>
       <h1><span class="satir">Umre, evden</span><span class="satir">çıkmadan başlar.</span></h1>
-      <p class="acilis-alt">Hazırlıktan dönüşe kadar umrenin her adımını; neyin, nasıl yapıldığını ve ne okunduğunu sırasıyla anlatan rehberimize hoş geldiniz.</p>
+      <p class="acilis-alt">Hazırlıktan dönüşe kadar umrenin her adımını, neyin nasıl yapıldığını ve ne okunduğunu sırasıyla anlatan rehberimize hoş geldiniz.</p>
       <div class="ipucu"><i></i>Başlamak için aşağı kaydırın</div>
     </div>
     <svg class="kemer-cizgi" id="kemer-cizgi" aria-hidden="true" style="display:none"><path id="kemer-yol"/></svg>
@@ -505,7 +518,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
     <div class="rota-giris">
       <h2>On durakta umre</h2>
       <div>
-        <p>Umre; ihrama girip Kâbe'yi tavaf etmek, Safa ile Merve arasında sa'y yapmak ve tıraş olup ihramdan çıkmaktan oluşan bir ibadettir. Hanefî mezhebine göre ömürde bir kez umre yapmak sünnet-i müekkededir.</p>
+        <p>Umre; ihrama girip Kâbe'yi tavaf etmekten, Safa ile Merve arasında sa'y yapmaktan ve tıraş olup ihramdan çıkmaktan oluşan bir ibadettir. Hanefî mezhebine göre ömürde bir kez umre yapmak sünnet-i müekkededir.</p>
         <p>Bu rehberde, Türkiye'den yola çıkan bir kafilenin izlediği sırayı takip ediyoruz. Kafilelerin çoğu önce Medine'ye gider; ihrama, Medine'den Mekke'ye giderken mîkatta girilir. Her durakta o adımın nasıl yapıldığını, ne okunduğunu ve nelere dikkat edildiğini bulacaksınız.</p>
       </div>
     </div>
@@ -537,7 +550,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
     <div class="durak-bas"><span class="durak-no">Durak 1</span><div><h2>Hazırlık</h2></div></div>
     <div class="hazirlik-izgara">
       <div class="hazirlik-metin">
-        <p class="giris">Umreye hazırlık, kaydınızı yaptırdığınız gün başlar. Rehberimizin ilk tavsiyesi, bu yolculuğun turistik bir gezi değil; bir ibadet ve sabır yolculuğu olduğunu bilerek yola çıkmaktır.</p>
+        <p class="giris">Umreye hazırlık, kaydınızı yaptırdığınız gün başlar. Rehberimizin ilk tavsiyesi, bu yolculuğun turistik bir gezi değil, bir ibadet ve sabır yolculuğu olduğunu bilerek yola çıkmaktır.</p>
         <h3>Manevi hazırlık</h3>
         <ol class="adim-liste">
           <li><strong>Tövbe ve istiğfar</strong><p>Geçmiş hatalarınız için kalben pişman olun, tövbe edin ve o hataları bırakmaya niyet edin.</p></li>
@@ -563,7 +576,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
           <button aria-pressed="true" data-liste="erkek" type="button">Erkekler için</button>
           <button aria-pressed="false" data-liste="kadin" type="button">Hanımlar için</button>
         </div>
-        <p class="liste-ust">Bavulunuzu hazırlarken hazır olanları işaretleyin; işaretleriniz bu cihazda saklanır.</p>
+        <p class="liste-ust">Valizinizi hazırlarken tamamladıklarınızı işaretleyin; işaretleriniz bu cihazda saklanır.</p>
         <ul class="kontrol" id="kontrol"></ul>
         <div class="liste-alt"><div class="ilerleme"><i id="ilerleme"></i></div><span id="sayac">0/0</span></div>
         <p class="liste-not" id="liste-not"></p>
@@ -594,7 +607,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <h3>Evden havalimanına</h3>
       <ol class="adim-liste">
         <li><strong>Dinlenin</strong><p>Yola çıkmadan önceki gece iyi dinlenin; mübarek beldelere uykusuz değil, dinç bir hâlde varın.</p></li>
-        <li><strong>Sefer namazı ve dua</strong><p>Evden çıkarken iki rekât sefer namazı kılın. Araca bindiğinizde Fâtiha, üç İhlâs ve sefer duasını okuyun. Rehberimize göre evden çıktığınız andan eve döndükten sonraki üç güne kadar yaptığınız meşru dualar kabul olunur; bu fırsatı iyi değerlendirin.</p></li>
+        <li><strong>Sefer namazı ve dua</strong><p>Evden çıkarken iki rekât sefer namazı kılın. Araca bindiğinizde Fâtiha, üç İhlâs ve sefer duasını okuyun. Rehberimize göre evden çıktığınız andan eve dönüp üç gün geçinceye kadar yaptığınız meşru dualar kabul olunur; bu fırsatı iyi değerlendirin.</p></li>
         <li><strong>Erken hazır olun</strong><p>Medine'ye uçacaksanız kalkıştan üç saat, Cidde'ye uçacaksanız dört saat önce havalimanında olun.</p></li>
         <li><strong>Kimlik kartı</strong><p>Kafile görevlinizin dağıttığı kimlik kartını boynunuza takın ve Türkiye'ye dönünceye kadar çıkarmayın.</p></li>
         <li><strong>Bagaj ve pasaport</strong><p>Bagajınızı teslim edip biniş kartınızı alın; pasaport kontrolünden geçerek kafilenizle birlikte uçağın kapısına gidin.</p></li>
@@ -619,7 +632,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
     <div class="ders-ana">
       <h3>İlk selam</h3>
       <ol class="adim-liste">
-        <li><strong>Hazırlanın</strong><p>Abdestli ve temiz kıyafetlerle, salavat okuyarak Mescid-i Nebevî'ye gidin.</p></li>
+        <li><strong>Hazırlanın</strong><p>Abdestli olarak, temiz kıyafetlerle ve salavat okuyarak Mescid-i Nebevî'ye gidin.</p></li>
         <li><strong>Yeşil Kubbe'nin karşısında durun</strong><p>Yeşil Kubbe'nin karşısına geldiğinizde ellerinizi açmadan, edeple durun ve Peygamber Efendimiz'e selam verin.</p></li>
         <li><strong>Emanetleri iletin</strong><p>Size emanet edilen selamları iletin; Efendimiz'in şefaatini dileyerek dua edin.</p></li>
         <li><strong>İki halifeyi selamlayın</strong><p>Ardından Hz. Ebû Bekir'e ve Hz. Ömer'e selam verip dua edin.</p></li>
@@ -653,19 +666,19 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <div class="odak-kat"><img data-g="hurmaB" data-w="2000" alt="Hurma bahçesinin derinliği, önde salkımlar bulanık" loading="lazy"></div>
       <div class="odak-yazi">
         <div class="birinci"><h3>Hurmalar şehri</h3><p>Medine, eskiden beri hurma bahçeleriyle bilinen bir vaha şehridir. Peygamber Efendimiz orucun hurmayla açılmasını tavsiye etmiştir.</p></div>
-        <div class="ikinci"><h3>Hurmanın çeşitleri</h3><p>Medine hurmaları renk, doku ve tatlılık bakımından birbirinden ayrılır. Aşağıda en bilinen altı çeşidi tanıyabilirsiniz.</p></div>
+        <div class="ikinci"><h3>Hurmanın çeşitleri</h3><p>Hurmalar renk, doku ve tatlılık bakımından birbirinden ayrılır. Aşağıda Medine'de en çok bulunan altı çeşidi tanıyabilirsiniz.</p></div>
       </div>
     </div>
   </div>
-  <div class="hurmalar">
+  <div class="hurmalar" id="hurmalar">
     <div class="icerik hurmalar-bas">
-      <h3>Hurma çeşitleri</h3>
+      <h3>En bilinen altı çeşit</h3>
       <div class="oklar"><button type="button" id="hurma-geri" aria-label="Önceki çeşit">‹</button><button type="button" id="hurma-ileri" aria-label="Sonraki çeşit">›</button></div>
     </div>
     <div class="serit" id="serit">
       <div class="hurma"><span class="ar" lang="ar">عجوة</span><div><h4>Acve</h4><p>Medine'nin en bilinen hurmasıdır. Koyu renkli, yumuşak ve hafif tatlıdır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">صفاوي</span><div><h4>Safavi</h4><p>İri, koyu renkli ve etli bir çeşittir; günlük tüketimde çok sevilir.</p></div></div>
-      <div class="hurma"><span class="ar" lang="ar">صقعي</span><div><h4>Sugay</h4><p>Ucu açık, gövdesi koyu renkli iki tonlu kabuğuyla tanınır. Dokusu daha kuru ve kıtırdır, tatlılığı azdır.</p></div></div>
+      <div class="hurma"><span class="ar" lang="ar">صقعي</span><div><h4>Sugay</h4><p>Ucu açık renkli, gövdesi koyudur; iki tonlu kabuğuyla tanınır. Dokusu daha kuru ve kıtırdır, tatlılığı azdır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">مبروم</span><div><h4>Mebrum</h4><p>Uzun ve ince yapılıdır; sıkı dokulu ve orta tatlılıktadır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">خضري</span><div><h4>Hudri</h4><p>Koyu kahverengi, orta boylu ve dengeli tatlılıktadır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">سكري</span><div><h4>Sukkari</h4><p>Adı “şekerli” anlamına gelir. Açık renkli, yumuşak ve çok tatlıdır; Kasîm bölgesinin meşhur çeşididir.</p></div></div>
@@ -684,11 +697,11 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
     <div class="ders-ana">
       <h3>İhrama giriş, adım adım</h3>
       <ol class="adim-liste">
-        <li><strong>Temizlik</strong><p>Medine'den Mekke'ye hareket edeceğiniz gün otelde tırnaklarınızı kesin, saç ve sakalınızı düzeltin, koltuk altı ve etek temizliğini yapın. Ardından gusül alın; mümkün değilse abdest alın. İhrama girmeden önce bedene, iz bırakmayan bir koku sürmek müstehaptır; ihram örtüsüne ise koku sürülmez.</p></li>
+        <li><strong>Temizlik</strong><p>Medine'den Mekke'ye hareket günü otelde tırnaklar kesilir, saç ve sakal düzeltilir, koltuk altı ve etek temizliği yapılır. Ardından gusül alınır; mümkün değilse abdest alınır. İhrama girmeden önce bedene, iz bırakmayan bir koku sürmek müstehaptır; ihram örtüsüne ise koku sürülmez.</p></li>
         <li><strong>İhramı giyme</strong><p>İhram da otelde giyilir. Erkekler iç çamaşırı dahil bütün dikişli giysilerini çıkarır, beline izârı sarar ve iki omzunu örtecek şekilde ridâyı alır. Ayağa, topuğu ve ayak üstündeki kemiği açıkta bırakan terlik giyilir. Hanımlar tesettüre uygun normal kıyafetleriyle kalır; yüzleri açık olur. Ardından otobüsle mîkata gidilir.</p></li>
         <li><strong>İhram namazı</strong><p>Mîkata, Zülhuleyfe'deki mescide varınca, kerahet vakti değilse iki rekât ihram namazı kılınır.</p></li>
         <li><strong>Niyet</strong><p>Namazın selamından sonra umreye niyet edilir. Niyetin Arapçası, okunuşu ve anlamı yandaki kartta yer alır.</p></li>
-        <li><strong>Telbiye</strong><p>Niyetin hemen ardından telbiye üç kez söylenir ve ihram bu niyet ile telbiyeyle başlar. Ardından tekbir ve salavat getirilip dua edilir. Erkekler telbiyeyi yüksek sesle, hanımlar sessizce söyler.</p></li>
+        <li><strong>Telbiye</strong><p>Niyetin hemen ardından telbiye üç kez söylenir; ihram, bu niyet ve telbiyeyle başlar. Ardından tekbir ve salavat getirilip dua edilir. Erkekler telbiyeyi yüksek sesle, hanımlar sessizce söyler.</p></li>
       </ol>
     </div>
     <aside class="ders-yan">
@@ -701,7 +714,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <span class="tur-etiket">Telbiye</span>
       <span class="ar" lang="ar" id="telbiye-ar"><span>لَبَّيْكَ</span> <span>اللَّهُمَّ</span> <span>لَبَّيْكَ،</span> <span>لَبَّيْكَ</span> <span>لَا</span> <span>شَرِيكَ</span> <span>لَكَ</span> <span>لَبَّيْكَ،</span> <span>إِنَّ</span> <span>الْحَمْدَ</span> <span>وَالنِّعْمَةَ</span> <span>لَكَ</span> <span>وَالْمُلْكَ،</span> <span>لَا</span> <span>شَرِيكَ</span> <span>لَكَ</span></span>
       <p class="okunus">Lebbeyk, Allâhümme lebbeyk. Lebbeyke lâ şerîke leke lebbeyk. İnne'l-hamde ve'n-ni'mete leke ve'l-mülk, lâ şerîke lek.</p>
-      <p class="anlam">Buyur Allah'ım, buyur! Buyur, senin hiçbir ortağın yoktur, buyur! Hamd sana, nimet senindir, mülk de senindir. Senin hiçbir ortağın yoktur.</p>
+      <p class="anlam">Buyur Allah'ım, buyur! Buyur, senin hiçbir ortağın yoktur, buyur! Şüphesiz hamd sana mahsustur; nimet de mülk de senindir. Senin hiçbir ortağın yoktur.</p>
       <p class="telbiye-not">“Lebbeyk”, “emrine hazırım” demektir. Telbiye, Hz. İbrahim'in Kâbe'yi ziyarete çağıran davetine verilen cevaptır; ihramlı kişi onu Mescid-i Haram'a varıncaya kadar sık sık tekrarlar.</p>
     </div>
   </div>
@@ -711,26 +724,26 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <div class="odak-kat"><img data-g="giyimB" data-w="2000" alt="Aynı sahnede netlik ileriye, Mekke'ye uzanan yola geçmiş; öndeki ihramlı yolcu bulanık" loading="lazy"></div>
       <div class="odak-yazi">
         <div class="birinci"><h3>İhram: izâr ve ridâ</h3><p>Erkeklerin ihramı dikişsiz iki parça beyaz örtüden oluşur: Belden aşağıya sarılan izâr ve iki omzu örten ridâ. Zengini ve fakiri aynı kılan bu sade kıyafet, kefeni hatırlatır.</p></div>
-        <div class="ikinci"><h3>Telbiyeyle Mekke yoluna</h3><p>İhrama giren kişi yol boyunca telbiye, tekbir ve salavat getirir. Rehberimiz Mekke'ye uyumadan ve abdestli girmeyi tavsiye eder.</p></div>
+        <div class="ikinci"><h3>Telbiyeyle Mekke yolunda</h3><p>İhrama giren kişi yol boyunca telbiye, tekbir ve salavat getirir. Rehberimiz Mekke'ye uyumadan ve abdestli girmeyi tavsiye eder.</p></div>
       </div>
     </div>
   </div>
-  <div class="kumaslar">
+  <div class="kumaslar" id="kumaslar">
     <div class="icerik">
-      <h3 class="kumas-baslik">Hangi ihram?</h3>
-      <p class="soluk dar" style="margin-top:12px">Pamuk, bambu ve müslin ihramların üçü de aynı ihramdır; aralarındaki fark yalnızca kumaştadır. Her kartı çevirerek kumaşın özelliğini okuyun.</p>
+      <h3 class="kumas-baslik">İhram kumaşları</h3>
+      <p class="soluk dar" style="margin-top:12px">Pamuk, bambu ve müslin ihramlar şekil olarak aynıdır; aralarındaki fark yalnızca kumaştadır. Her kartı çevirerek kumaşın özelliğini okuyun.</p>
       <div class="kumas-izgara">
         <button class="kumas" type="button" aria-pressed="false"><div class="kumas-ic">
           <div class="yuz"><img data-g="ihram" data-w="900" alt="Pamuk havlu ihram dokusu" loading="lazy"><h4>Pamuk</h4><small>Klasik</small></div>
-          <div class="arka"><div><h4>Pamuk</h4><p>Klasik havlu kumaştır. Kalın ve sağlam dokusuyla yıllardır en çok tercih edilen ihramdır.</p></div><p class="geri">Kartı çevirmek için tekrar dokunun</p></div>
+          <div class="arka"><div><h4>Pamuk</h4><p>Klasik havlu kumaştır; kalın ve sağlam bir dokusu vardır.</p></div><p class="geri">Kartı çevirmek için tekrar dokunun</p></div>
         </div></button>
         <button class="kumas" type="button" aria-pressed="false"><div class="kumas-ic">
-          <div class="yuz"><img data-g="masa" data-w="900" alt="Katlanmış bambu ihram" loading="lazy" style="object-position:24% 50%"><h4>Bambu</h4><small>Daha yumuşak</small></div>
+          <div class="yuz"><img data-g="bambu" data-w="900" alt="Bambu havlu ihram kumaşı" loading="lazy"><h4>Bambu</h4><small>Daha yumuşak</small></div>
           <div class="arka"><div><h4>Bambu</h4><p>Bu da havlu kumaştır; bambu ipliği sayesinde daha yumuşak ve biraz daha hafiftir.</p></div><p class="geri">Kartı çevirmek için tekrar dokunun</p></div>
         </div></button>
         <button class="kumas" type="button" aria-pressed="false"><div class="kumas-ic">
           <div class="yuz"><img data-g="muslin" data-w="900" alt="Işık geçiren ince müslin kumaş" loading="lazy"><h4>Müslin</h4><small>Daha serin</small></div>
-          <div class="arka"><div><h4>Müslin</h4><p>Daha ince ve nefes alan bir dokumadır. Sıcakta teri daha iyi emer.</p></div><p class="geri">Kartı çevirmek için tekrar dokunun</p></div>
+          <div class="arka"><div><h4>Müslin</h4><p>Daha ince ve nefes alan bir dokumadır; sıcakta teri daha iyi emer.</p></div><p class="geri">Kartı çevirmek için tekrar dokunun</p></div>
         </div></button>
       </div>
       <div class="yasaklar" id="yasaklar">
@@ -768,10 +781,10 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   <div class="yapis">
     <div class="tavaf-baslik" id="tavaf-baslik"><span class="durak-no">Durak 5</span><h2 style="margin-top:14px">Harem'e giriş<br>ve tavaf</h2></div>
     <div class="lebbeyk" id="lebbeyk" aria-hidden="true"><span lang="ar">لَبَّيْكَ</span></div>
-    <div class="kare" data-kare="0"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe1M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe1M.jpg"><source type="image/webp" srcset="assets/g/kabe1.webp"><img src="assets/g/kabe1.jpg" alt="Mescid-i Haram avlusu ve Kâbe, gündüz geniş açı"></picture></div>
-    <div class="kare" data-kare="1"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe2M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe2M.jpg"><source type="image/webp" srcset="assets/g/kabe2.webp"><img src="assets/g/kabe2.jpg" alt="Tavaf eden kalabalık ve Kâbe, yukarıdan"></picture></div>
-    <div class="kare" data-kare="2"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe3M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe3M.jpg"><source type="image/webp" srcset="assets/g/kabe3.webp"><img src="assets/g/kabe3.jpg" alt="Kâbe-i Muazzama yakından, revaklar önünde"></picture></div>
-    <div class="kare" data-kare="3"><picture><source type="image/webp" media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe4M.webp"><source media="(max-width: 760px) and (orientation: portrait)" srcset="assets/g/kabe4M.jpg"><source type="image/webp" srcset="assets/g/kabe4.webp"><img src="assets/g/kabe4.jpg" alt="Kâbe kapısının örtüsü ve hat işlemeleri"></picture></div>
+    <div class="kare" data-kare="0"><picture><source type="image/webp" media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe1M.webp"><source media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe1M.jpg"><source type="image/webp" srcset="assets/g/kabe1.webp"><img src="assets/g/kabe1.jpg" alt="Mescid-i Haram avlusu ve Kâbe, gündüz geniş açı"></picture></div>
+    <div class="kare" data-kare="1"><picture><source type="image/webp" media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe2M.webp"><source media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe2M.jpg"><source type="image/webp" srcset="assets/g/kabe2.webp"><img src="assets/g/kabe2.jpg" alt="Tavaf eden kalabalık ve Kâbe, yukarıdan"></picture></div>
+    <div class="kare" data-kare="2"><picture><source type="image/webp" media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe3M.webp"><source media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe3M.jpg"><source type="image/webp" srcset="assets/g/kabe3.webp"><img src="assets/g/kabe3.jpg" alt="Kâbe-i Muazzama yakından, revaklar önünde"></picture></div>
+    <div class="kare" data-kare="3"><picture><source type="image/webp" media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe4M.webp"><source media="(max-width: 1024px) and (orientation: portrait)" srcset="assets/g/kabe4M.jpg"><source type="image/webp" srcset="assets/g/kabe4.webp"><img src="assets/g/kabe4.jpg" alt="Kâbe kapısının örtüsü ve hat işlemeleri"></picture></div>
     <div class="savtlar" id="savtlar"><small>Şavt</small><ol><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ol></div>
     <div class="tavaf-yazi">
       <article data-yazi="0"><h3>Mescid-i Haram'a giriş</h3><p>Ayakkabılarınızı bir torbaya koyun, besmele çekip itikâfa niyet ederek sağ ayakla girin. Kâbe'yi ilk gördüğünüz yerde durup tekbir getirin ve dua edin; Kâbe ilk görüldüğünde yapılan dua kabul olunur.</p></article>
@@ -831,11 +844,11 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
         <span class="durak-no">Durak 7</span>
         <h2 style="margin:14px 0 18px">Sa'y</h2>
         <p>Sa'y, Hz. Hâcer'in oğlu İsmâil için su ararken Safa ile Merve tepeleri arasında gidip gelişinin hatırasıdır. Safa'dan başlar, Merve'de biter: Dört kez Safa'dan Merve'ye, üç kez Merve'den Safa'ya gidilir ve her gidiş bir şavttır.</p>
-        <p class="soluk">Sa'y Hanefî mezhebine göre vaciptir ve tavaftan sonra yapılır; tavaftan önce yapılan sa'y geçerli değildir. Yandaki kartlarda her şavtta yapılanları sırasıyla bulacaksınız.</p>
+        <p class="soluk">Sa'y Hanefî mezhebine göre vaciptir ve tavaftan sonra yapılır; tavaftan önce yapılan sa'y geçerli değildir. Kartlarda, şavtları sayarken sa'y boyunca bilinmesi gerekenleri bulacaksınız.</p>
       </div>
-      <div class="savt"><div class="yon"><b>1</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Safa'dan Merve'ye</div><p>Safa'ya çıkınca Kâbe'ye dönün ve sa'ye niyet edin: “Allah'ım, rızan için umrenin sa'yine niyet ettim; bana kolaylaştır ve kabul eyle.” Ellerinizi kaldırarak aşağıdaki âyeti okuyun, tekbir ve salavat getirip dua edin.</p><p class="ar" lang="ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ</p><p class="anlam-kucuk">“Şüphesiz Safa ile Merve, Allah'ın nişanelerindendir.” (Bakara, 158)</p></div>
+      <div class="savt"><div class="yon"><b>1</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Safa'dan Merve'ye</div><p>Safa'ya çıkınca Kâbe'ye dönün ve sa'ye niyet edin: “Allah'ım, rızan için umrenin sa'yine niyet ettim; bana kolaylaştır ve kabul eyle.” Ellerinizi kaldırarak aşağıdaki âyeti okuyun; tekbir, tehlil ve salavat getirip dua edin.</p><p class="ar" lang="ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ</p><p class="anlam-kucuk">“Şüphesiz Safa ile Merve, Allah'ın nişanelerindendir.” (Bakara, 158)</p></div>
       <div class="savt"><div class="yon"><b>2</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M44 6H2M8 1 2 6l6 5"/></svg>Merve'den Safa'ya</div><p>Merve'ye varınca, Kâbe görünmese de ona doğru dönün; tekbir, tehlil ve salavat getirip dua edin. Bu, her tepeye varışta tekrarlanır.</p></div>
-      <div class="savt"><div class="yon"><b>3</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Safa'dan Merve'ye</div><p>Yeşil ışıklarla işaretlenmiş bölümde erkekler hervele yapar, yani koşar adımlarla yürür. Hanımlar normal yürüyüşleriyle devam eder.</p></div>
+      <div class="savt"><div class="yon"><b>3</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Safa'dan Merve'ye</div><p>Her şavtta, yeşil ışıklarla işaretlenmiş bölümde erkekler hervele yapar, yani koşar adımlarla yürür. Hanımlar normal yürüyüşleriyle devam eder.</p></div>
       <div class="savt"><div class="yon"><b>4</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M44 6H2M8 1 2 6l6 5"/></svg>Merve'den Safa'ya</div><p>Sa'y için abdest şart değildir, ancak abdestli olmak daha faziletlidir. Tavafı abdestli yapan kişinin abdesti bozulursa sa'yini abdestsiz tamamlayabilir.</p></div>
       <div class="savt"><div class="yon"><b>5</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M0 6h42M36 1l6 5-6 5"/></svg>Safa'dan Merve'ye</div><p>Sa'yde belirli bir dua okumak şart değildir. Bildiğiniz dua ve zikirleri okuyabilir, kendi dilinizde dua edebilirsiniz.</p></div>
       <div class="savt"><div class="yon"><b>6</b></div><div class="yon"><svg viewBox="0 0 44 12"><path d="M44 6H2M8 1 2 6l6 5"/></svg>Merve'den Safa'ya</div><p>Yorulursanız durup dinlenebilirsiniz; ara vermek sa'yi bozmaz. Hanefî mezhebine göre yürümeye gücü yeten kişi sa'yi tekerlekli sandalyeyle yapamaz.</p></div>
@@ -855,7 +868,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <div class="dikkat"><h4>Erkekler</h4><p>Başın tamamını ustura ile kazıtmak (halk) en faziletlisidir. Kazıtmak istemeyen kişi saçlarının tamamını parmak ucu kadar, yani 1,5–2 santim kısaltır (taksir). Başın en az dörtte birini kazıtmak ya da kısaltmak vacibi yerine getirir, ancak sünnet terk edilmiş olur. Hanefî mezhebine göre birkaç tel saç kestirmek yeterli değildir. Başında saç bulunmayan kişi usturayı başında gezdirir.</p></div>
       <div class="hanim"><h4>Hanımlar</h4><p>Hanımlar saçlarını toplayıp uçlarından bir tutam, yaklaşık 1–2 santim keser. Bu işlem otel odasında, mahremiyete dikkat edilerek yapılır.</p></div>
     </div>
-    <p class="dar tiras-not">İmam-ı Âzam Ebû Hanîfe'ye göre tıraş Harem bölgesi içinde olunmalıdır; Harem dışında tıraş olan kişiye dem gerekir. Henüz ihramdan çıkmamış biri bir başkasını tıraş edemez. Tıraşla birlikte ihramdan çıkılır ve umre tamamlanmış olur; artık normal kıyafetler giyilebilir.</p>
+    <p class="dar tiras-not">İmam-ı Âzam Ebû Hanîfe'ye göre tıraş Harem bölgesi içinde olunmalıdır; Harem dışında tıraş olan kişiye dem gerekir. Sa'yini tamamlamamış, yani tıraş aşamasına gelmemiş bir ihramlı başkasını tıraş edemez; sa'yini tamamlamış olanlar ise birbirini tıraş edebilir. Tıraşla birlikte ihramdan çıkılır ve umre tamamlanmış olur; artık normal kıyafetler giyilebilir.</p>
   </div>
 </section>
 
@@ -913,12 +926,12 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
       <p class="magaza-alt">Rehberle ilgili sorularınızı bize sorabilir, hazırlık listenizi Ümraniye'deki mağazamızda birlikte tamamlayabilirsiniz.</p>
       <div class="puan"><b>5,0</b><div><div class="yildiz" aria-label="5 üzerinden 5 yıldız">★★★★★</div><span style="font-size:14px;opacity:.75">Google'da 120'den fazla yorum</span></div></div>
       <dl class="bilgi">
-        <dt>Adres</dt><dd>Sütçü İmam Caddesi, Cevherağa Camii Sokak No:10-A, Ümraniye / İstanbul</dd>
+        <dt>Adres</dt><dd>Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul</dd>
         <dt>Saatler</dt><dd>Her gün 09:00–20:00</dd>
         <dt>Telefon</dt><dd><a href="tel:+905551044040" style="text-decoration:none">0555 104 40 40</a></dd>
       </dl>
       <div class="dugmeler">
-        <a class="dugme dolu" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi al</a>
+        <a class="dugme dolu" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a>
         <a class="dugme" href="https://wa.me/905551044040?text=Merhaba%2C%20Dijital%20Umre%20Turu%27ndan%20yaz%C4%B1yorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
         <a class="dugme" href="index.html">Ana sayfaya dön</a>
       </div>
@@ -939,8 +952,9 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 kabuk('tur');
 /* Görseller sitenin kendi assets/g klasöründen sunulur; telefonda dikey (M) sürümü olanlar */
 const DIKEY=new Set(['masa','ucak','hurma','hurmaB','giyim','giyimB','mikat','havalimani','medine','say']);
+const dikeyMi=()=>innerWidth<760||(innerWidth<=1024&&innerHeight>innerWidth);
 const gorselUrl=k=>'assets/g/'+k+'.webp';
-const dikeyEkran=matchMedia('(max-width: 760px) and (orientation: portrait)');
+const dikeyEkran=matchMedia('(max-width: 1024px) and (orientation: portrait)');
 function gorselleriYukle(){
   const dik=dikeyEkran.matches;
   document.querySelectorAll('img[data-g]').forEach(im=>{
@@ -972,7 +986,7 @@ const LISTE={
   erkek:[['İki takım ihram','ihram-havlu',2],['İhram kemeri','ihram-kemer'],['İhram terliği','terlik'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']],
   kadin:[['Umre feracesi ya da bol, tesettürlü kıyafet','ferace'],['Pamuklu eşarp ve bone','esarp'],['Rahat, kapalı ayakkabı ya da terlik',null],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']]
 };
-const NOT={erkek:'İhramın yedeğini bavulda değil el çantanızda taşıyın. Kafileniz doğrudan Cidde\'ye uçuyorsa ihrama Türkiye\'deki havalimanında girersiniz.',kadin:'Hanımlar için özel bir ihram kıyafeti yoktur; tesettüre uygun, bol ve rahat kıyafetlerle ihrama girilir.'};
+const NOT={erkek:'İhramın yedeğini valizde değil el çantanızda taşıyın. Kafileniz doğrudan Cidde\'ye uçuyorsa ihrama Türkiye\'deki havalimanında girersiniz.',kadin:'Hanımlar için özel bir ihram kıyafeti yoktur; tesettüre uygun, bol ve rahat kıyafetlerle ihrama girilir.'};
 let secili='erkek';try{if(localStorage.getItem('hu-liste-sekme')==='kadin')secili='kadin'}catch(e){}
 const kayit=()=>{try{return JSON.parse(localStorage.getItem('hu-liste')||'{}')}catch(e){return{}}};
 const kaydet=v=>{try{localStorage.setItem('hu-liste',JSON.stringify(v))}catch(e){}};
@@ -998,7 +1012,9 @@ document.querySelectorAll('#sekmeler button').forEach(b=>b.addEventListener('cli
 }));
 listeCiz();
 const listeKart=document.getElementById('liste-kart');
-function listeYapis(){if(innerWidth<=900){listeKart.style.top='';return}listeKart.style.top=Math.min(110,innerHeight-listeKart.offsetHeight-24)+'px'}
+function listeYapis(){/* kart ekrana sığmıyorsa yapışmaz; başlığı menünün altında kalmasın */
+  if(innerWidth<=900){listeKart.style.position='';listeKart.style.top='';return}
+  const sigar=listeKart.offsetHeight<=innerHeight-110-24;listeKart.style.position=sigar?'':'relative';listeKart.style.top=sigar?'110px':'0'}
 listeYapis();addEventListener('resize',listeYapis);
 document.getElementById('eksik-btn').addEventListener('click',()=>{
   const isaretsiz=[...document.querySelectorAll('#kontrol input:not(:checked)')];
@@ -1008,10 +1024,13 @@ document.getElementById('eksik-btn').addEventListener('click',()=>{
     /* katalogda karşılığı olmayan maddeler için mağazaya WhatsApp'tan sorulur */
     const adlar=isaretsiz.map(x=>x.nextElementSibling.textContent).join(', ');
     const metin='Merhaba, umre hazırlık listemde eksik olanlar: '+adlar+'. Mağazanızda bulunuyor mu?';
-    toast("Eksiklerinizi WhatsApp'tan sorabilirsiniz.",['WhatsApp',()=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener')]);return}
+    toast("Eksikleri WhatsApp'tan sorun",['WhatsApp',()=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener')]);return}
   const s=Sepet.al();let yeni=0;eslesen.forEach(x=>{const id=x.dataset.urun;if(!s[id]){s[id]=+x.dataset.adet||1;yeni++}});
   if(yeni)Sepet.yaz(s);cekmeceAc();
-  if(!yeni)toast('Eksikleriniz zaten çantanızda.');
+  const yok=isaretsiz.filter(x=>!URUNLER.some(u=>u.id===x.dataset.urun)).map(x=>x.nextElementSibling.textContent);
+  if(yok.length){const metin='Merhaba, umre hazırlık listemde eksik olanlar: '+yok.join(', ')+'. Mağazanızda bulunuyor mu?';
+    toast((yok.length===1?yok[0]:yok.length+' madde')+' katalogda yok',['Sor',()=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener')])}
+  else if(!yeni)toast('Eksikleriniz zaten çantanızda.');
 });
 
 /* ===== Kumaş kartları ===== */
@@ -1038,15 +1057,16 @@ const kareler=[...document.querySelectorAll('.kare')],yazilar=[...document.query
 let kemerUzunluk=0,sonSavt=0;
 
 function acilisSahne(){
-  const el=$('acilis'),p=azHareket?0:yapisIlerleme(el),W=innerWidth,H=VH,mobil=W<760;
-  const y0m=Math.max(64,H*.075),metinUst=mobil?acilisMetin.offsetTop:0;
-  const w0=mobil?W-32:Math.min(W*.52,880),h0=mobil?Math.max(150,Math.min(H*.42,w0*1.05,metinUst-y0m-18)):Math.min(H*.66,w0*.72),x0=mobil?16:W-w0-Math.max(24,W*.05),y0=mobil?y0m:(H-h0)/2+30;
+  const el=$('acilis'),p=azHareket?0:yapisIlerleme(el),W=innerWidth,H=VH,mobil=dikeyMi(),telefon=W<760;
+  /* telefonda ve dikey tablette metin üstte, görsel kalan boşlukta */
+  const metinAlt=mobil?acilisMetin.offsetTop+acilisMetin.offsetHeight+18:0,altPay=telefon?92:40;
+  const w0=mobil?W-(telefon?32:W*.12):Math.min(W*.52,880),h0=mobil?Math.max(150,Math.min(H*.56,w0*1.1,H-altPay-metinAlt)):Math.min(H*.66,w0*.72),x0=mobil?(W-w0)/2:W-w0-Math.max(24,W*.05),y0=mobil?metinAlt:(H-h0)/2+30;
   const t=yumusak(aralik(p,.08,.82));
   const w=ara(w0,W,t),h=ara(h0,H,t),x=ara(x0,0,t),y=ara(y0,0,t),r=ara(26,0,t);
   Object.assign(kemer.style,{width:w+'px',height:h+'px',left:x+'px',top:y+'px',borderRadius:r+'px'});
   kemerImg.style.transform='scale('+ara(1.06,1,t)+')';
   acilisMetin.style.opacity=1-aralik(p,.05,.4);
-  acilisMetin.style.transform=(mobil?'':'translateY(-46%) ')+'translateX('+(-aralik(p,0,.4)*60)+'px)';
+  acilisMetin.style.transform=mobil?'none':'translateY(-46%) translateX('+(-aralik(p,0,.4)*60)+'px)';
   acilisSon.style.opacity=aralik(p,.74,.88)*(1-aralik(p,.98,1));
   kemer.style.setProperty('--karart',aralik(p,.55,.8));
   // altın kemer çizgisi: kemerin dışında, kendini çizen hat
@@ -1060,7 +1080,12 @@ function acilisSahne(){
 function yolculukSahne(){
   const el=$('yolculuk'),p=azHareket?1:yapisIlerleme(el),W=innerWidth,H=VH;
   const t=yumusak(aralik(p,.12,.75));
-  const mob=W<760,w0=mob?Math.min(W*.62,H*.36):Math.min(W*.34,H*.48,520),h0=Math.min(w0*1.42,H*.74),kay=mob?ara(H*.14,0,t):0;
+  const mob=dikeyMi();let w0,h0,kay0=0;
+  if(mob){/* pencere, giriş metninin altındaki boşluğa sığdırılır */
+    const on=$('yolculuk-on'),onAlt=on.offsetTop+on.offsetHeight+20,bos=H-onAlt-(W<760?96:40);
+    h0=Math.max(170,Math.min(H*.62,bos));w0=Math.min(W*.66,h0/1.42);h0=Math.min(h0,w0*1.42);kay0=onAlt+h0/2-H/2}
+  else{w0=Math.min(W*.34,H*.48,520);h0=Math.min(w0*1.42,H*.74)}
+  const kay=ara(kay0,0,t);
   const w=ara(w0,W,t),h=ara(h0,H,t),r=ara(w0*.46,0,t);
   Object.assign(pencere.style,{width:w+'px',height:h+'px',marginLeft:(-w/2)+'px',marginTop:(-h/2+kay)+'px',borderRadius:r+'px',boxShadow:'0 0 0 '+ara(14,0,t)+'px rgba(255,255,255,.6),0 40px 80px -30px rgba(30,27,22,'+ara(.5,0,t)+')'});
   pencereImg.style.transform='scale('+ara(1.35,1.02,t)+') translateY('+ara(-4,2,p)+'%)';
@@ -1073,16 +1098,16 @@ function odakSahne(id){
   const bl=hafifCihaz?0:8;
   kat[0].style.filter=bl?'blur('+(t*bl)+'px)':'';kat[0].style.opacity=1;kat[0].style.transform='scale('+ara(1.05,1.12,p)+')';
   kat[1].style.filter=bl?'blur('+((1-t)*bl)+'px)':'';kat[1].style.opacity=t;kat[1].style.transform='scale('+ara(1.12,1.05,p)+')';
-  el.querySelector('.birinci').style.opacity=1-aralik(p,.3,.5);
-  el.querySelector('.ikinci').style.opacity=aralik(p,.55,.75);
+  el.querySelector('.birinci').style.opacity=1-aralik(p,.28,.42);
+  el.querySelector('.ikinci').style.opacity=aralik(p,.46,.6);
 }
 function tavafSahne(){
   const el=$('tavaf'),p=yapisIlerleme(el);
   // başlık önce çekilir; ardından "Lebbeyk" büyüyerek kaybolur ve ilk fotoğraf belirir
-  $('tavaf-baslik').style.opacity=1-aralik(p,.02,.08);
+  $('tavaf-baslik').style.opacity=1-aralik(p,.01,.05);
   const l=aralik(p,.07,.24);
   $('lebbeyk').style.transform=azHareket?'none':'scale('+ara(1,5.5,Math.pow(l,2))+')';
-  $('lebbeyk').style.opacity=aralik(p,.03,.08)*(1-aralik(p,.17,.24));
+  $('lebbeyk').style.opacity=aralik(p,.05,.09)*(1-aralik(p,.17,.24));
   // .2-1: dört fotoğraf arasında yaklaşma
   const n=kareler.length,bas=.2,adim=(1-bas)/n;
   kareler.forEach((k,i)=>{

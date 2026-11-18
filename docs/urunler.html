@@ -72,12 +72,12 @@
  background:rgba(10,20,44,.9);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(201,162,75,.5);box-shadow:0 20px 50px rgba(0,0,0,.45);
  transform:translate(-50%,180%);transition:transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s}
 .canta-cubuk.on{visibility:visible;transform:translate(-50%,0);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.canta-cubuk.on.altta{transform:translate(-50%,180%)}
+.canta-cubuk.on.altta{transform:translate(-50%,calc(100% + 140px));visibility:hidden;transition:transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s}
 .canta-cubuk .ozet{display:flex;align-items:baseline;gap:10px;white-space:nowrap;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:none;color:#fff;font:500 14px 'Hanken Grotesk';cursor:pointer;text-align:left}
 .canta-cubuk .ozet:hover{background:rgba(255,255,255,.06)}
 .canta-cubuk .ozet b{font-family:'Marcellus';font-weight:400;font-size:19px;color:var(--altin2)}
 .canta-cubuk .ozet u{text-decoration:underline;text-underline-offset:4px;opacity:.8;font-size:13px}
-.canta-cubuk .mesaj{color:var(--altin2)}
+.canta-cubuk .mesaj{color:var(--altin2);display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .canta-cubuk .btn{min-height:44px;padding:11px 18px;font-size:14px}
 @media(max-width:820px){
  .adim3{grid-template-columns:1fr}.adim3 li+li{border-left:0;border-top:1px solid rgba(201,162,75,.2)}.adim3 li{padding:16px 18px}
@@ -95,7 +95,7 @@
  .canta-cubuk .ozet u{display:none}
  .canta-cubuk .btn{padding:11px 14px;font-size:13.5px}
 }
-@media(max-width:370px){.canta-cubuk .btn span{display:none}}
+@media(max-width:370px){.canta-cubuk .btn .uzun{display:none}}
 @media(prefers-reduced-motion:reduce){.canta-cubuk,.canta-cubuk.on{transition:none}}
 </style>
 </head>
@@ -114,13 +114,14 @@
 <div class="filtre-dis" id="filtre-dis"><div class="kap"><div class="filtre" role="group" aria-label="Ürün grupları"></div></div></div>
 <div class="kap"><p class="sonuc" id="sonuc" aria-live="polite"></p><div class="izgara"></div></div>
 </main>
-<div class="canta-cubuk" id="cubuk"><button class="ozet" type="button" aria-label="Çantayı aç"></button><button class="btn wa" type="button" onclick="Sepet.gonder()"><span>WhatsApp'tan&nbsp;</span>gönder</button></div>
+<div class="canta-cubuk" id="cubuk"><button class="ozet" type="button" aria-label="Çantayı aç"></button><button class="btn wa" id="cubuk-wa" type="button" onclick="Sepet.gonder()"><span><span class="uzun">WhatsApp'tan </span>gönder</span></button></div>
 <p class="sr" id="duyuru" aria-live="polite"></p>
 <footer class="sf"></footer>
 <script src="urunler-veri.js"></script>
 <script src="site.js"></script>
 <script>
 kabuk('urun');
+document.getElementById('cubuk-wa').insertAdjacentHTML('afterbegin',WA_SVG);
 const say=k=>k==='Tümü'?URUNLER.length:URUNLER.filter(u=>u.kat===k).length;
 /* Odoo'dan gelen ürünlerin grupları da eklenir; ürünü olmayan grup gösterilmez */
 const kats=['Tümü',...new Set([...KATEGORILER.map(k=>k.ad),...URUNLER.map(u=>u.kat)])].filter(k=>k==='Tümü'||say(k)>0);
@@ -151,7 +152,7 @@ function cubukMesaj(m){OZ.innerHTML=`<span class="mesaj">✓ ${m}</span>`;DUY.te
 OZ.addEventListener('click',cekmeceAc);
 I.addEventListener('click',e=>{
  const k=e.target.closest('.kart');if(!k)return;const id=k.dataset.id,u=URUNLER.find(x=>x.id===id);
- if(e.target.closest('.ekle')){Sepet.ekle(id,1);sepeteUcur(k.querySelector('.g img'));cubukMesaj(`${u.ad} çantanıza eklendi`);
+ if(e.target.closest('.ekle')){Sepet.ekle(id,1);sepeteUcur(k.querySelector('.g img'));cubukMesaj(`Eklendi: ${u.ad}`);
   setTimeout(()=>{const s=k.querySelector('.stepper button[data-d="1"]');if(s&&document.activeElement===document.body)s.focus()},0);return}
  const d=e.target.closest('.stepper button');if(d){const n=+d.dataset.d;Sepet.ekle(id,n);
   if(n>0){sepeteUcur(k.querySelector('.g img'));cubukMesaj(`${u.ad}: ${Sepet.adet(id)} adet`)}

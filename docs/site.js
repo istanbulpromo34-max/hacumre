@@ -13,8 +13,8 @@ const MAGAZA={
  instagram:'https://www.instagram.com/istanbulhacumrehediyelik/'
 };
 const KATEGORILER=[
- {ad:'Hac Umre Malzemeleri',gorsel:'assets/g/masa.jpg',acik:'İhram, kemer, terlik, bel çantası ve yolculukta gereken her şey.'},
- {ad:'Hac Umre Kıyafetleri',gorsel:'assets/g/kiyafet.jpg',acik:'Erkek ve kadın için rahat, nefes alan, tesettüre uygun kıyafetler.'},
+ {ad:'Hac Umre Malzemeleri',gorsel:'assets/g/masa.jpg',acik:'İhram kemeri, terlik, boyun çantası, kokusuz bakım ürünleri ve misvak.'},
+ {ad:'Hac Umre Kıyafetleri',gorsel:'assets/g/kiyafet.jpg',acik:'İhram, umre feracesi, eşarp ve bone; rahat ve tesettüre uygun kıyafetler.'},
  {ad:'İslami Hediyelik',gorsel:'assets/g/donus.jpg',acik:'Tesbih, seccade, esans ve özenle hazırlanmış hediye paketleri.'},
  {ad:'Hurma ve Zemzem',gorsel:'assets/g/hurma.jpg',acik:'Seçme Medine hurmaları ve dönüş ikramları için zemzem.'}
 ];
@@ -125,8 +125,11 @@ function kabuk(aktif){
  bos.onclick=()=>{if(bos.classList.contains('emin')){bos.classList.remove('emin');bos.textContent='Çantayı boşalt';Sepet.bosalt();c.querySelector('.kapat').focus();return}
   bos.classList.add('emin');bos.textContent='Emin misiniz? Evet, boşalt';clearTimeout(bos._z);bos._z=setTimeout(()=>{bos.classList.remove('emin');bos.textContent='Çantayı boşalt'},4000)};
  c.addEventListener('click',e=>{
-  const a=e.target.closest('[data-adet]');if(a){Sepet.ekle(a.dataset.adet,+a.dataset.d);return}
-  const k=e.target.closest('[data-kaldir]');if(k){Sepet.kaldir(k.dataset.kaldir);return}
+  const a=e.target.closest('[data-adet]');
+  if(a){const id=a.dataset.adet,d=a.dataset.d;Sepet.ekle(id,+d);
+   const ayni=c.querySelector(`[data-adet="${id}"][data-d="${d}"]`)||c.querySelector('[data-adet]')||c.querySelector('.kapat');ayni&&ayni.focus();return}
+  const k=e.target.closest('[data-kaldir]');
+  if(k){Sepet.kaldir(k.dataset.kaldir);const s=c.querySelector('[data-kaldir]')||c.querySelector('.bos a')||c.querySelector('.kapat');s&&s.focus();return}
   if(e.target.closest('[data-kapat]')){e.preventDefault();cekmeceKapat()}
  });
  addEventListener('keydown',e=>{
