@@ -4,6 +4,7 @@ on:
     inputs:
       adet: { description: 'Kaç ürün', required: false, default: '4' }
       ara: { description: 'Ad içinde ara (virgülle)', required: false, default: '' }
+      liste: { description: 'Sadece adları listele (1)', required: false, default: '' }
 permissions:
   contents: write
 jobs:
@@ -24,6 +25,7 @@ jobs:
           ODOO_KEY: ${{ secrets.ODOO_KEY }}
           DENEME_ADET: ${{ inputs.adet }}
           DENEME_ARA: ${{ inputs.ara }}
+          DENEME_LISTE: ${{ inputs.liste }}
         run: python tools/foto_deneme.py
       - name: Yaz
         run: |

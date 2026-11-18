@@ -38,6 +38,12 @@ def puan(k):
         if a in d:
             return i
     return len(oncelik)
+if os.environ.get("DENEME_LISTE"):
+    print("Fotoğrafı olan ürünler (%d):" % len(kayit))
+    for k in sorted(kayit, key=lambda x: x["name"]):
+        print("  -", k["name"])
+    raise SystemExit
+
 ARA = os.environ.get("DENEME_ARA", "").strip().lower()
 if ARA:
     sec = [k for k in kayit if any(a in (k["name"] or "").lower() for a in ARA.split(","))]
