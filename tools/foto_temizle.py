@@ -24,6 +24,9 @@ CIKTI = Path("docs/assets/u")
 BOYUT = 2048
 KENAR = 0.06          # kenar boşluğu oranı
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+# "kesme"  : ürünün kendi pikselleri korunur, yalnız arkaplan değişir (varsayılan)
+# "openai" : OpenAI görseli yeniden çizer — daha parlak ama ürünü birebir korumaz
+YONTEM = os.environ.get("TEMIZLEME", "kesme").strip().lower()
 ODOO = {k: os.environ.get(f"ODOO_{k.upper()}", "").strip() for k in ("url", "db", "login", "key")}
 
 
@@ -70,8 +73,20 @@ def _openai(ham: bytes, ad: str) -> Image.Image:
 
 # ---------- yerleştirme ----------
 
+def golge(maske: Image.Image, kutu_boy: int) -> Image.Image:
+    """Ürünün altına stüdyo çekimlerindeki gibi yumuşak bir temas gölgesi üretir."""
+    g, y = maske.size
+    yassi = max(6, int(y * 0.11))
+    s = maske.resize((max(1, int(g * 0.92)), yassi), Image.LANCZOS)
+    g = s.width
+    tuval = Image.new("L", (kutu_boy, kutu_boy), 0)
+    tuval.paste(s, ((kutu_boy - g) // 2, min(kutu_boy - yassi, (kutu_boy + y) // 2 - yassi // 2)))
+    tuval = tuval.filter(ImageFilter.GaussianBlur(max(8, kutu_boy // 46)))
+    return tuval.point(lambda v: int(v * 0.24))
+
+
 def beyaza_otur(im: Image.Image) -> Image.Image:
-    """Şeffaf kesiği kare beyaz zemine ortalar, 2K'ya büyütür."""
+    """Şeffaf kesiği kare beyaz zemine ortalar, gölgesini ekler, 2K'ya getirir."""
     if im.mode != "RGBA":
         im = im.convert("RGBA")
     kutu = im.getbbox() if im.getchannel("A").getextrema()[0] < 255 else None
@@ -86,6 +101,9 @@ def beyaza_otur(im: Image.Image) -> Image.Image:
         im = im.filter(ImageFilter.UnsharpMask(radius=2, percent=55, threshold=3))
 
     zemin = Image.new("RGBA", (BOYUT, BOYUT), (255, 255, 255, 255))
+    if im.getchannel("A").getextrema()[0] < 250:        # kesilmiş ürün: gölgesini de koy
+        gri = Image.new("RGBA", (BOYUT, BOYUT), (28, 32, 40, 255))
+        zemin.paste(gri, (0, 0), golge(im.getchannel("A"), BOYUT))
     zemin.alpha_composite(im, ((BOYUT - im.width) // 2, (BOYUT - im.height) // 2))
     return zemin.convert("RGB")
 
@@ -127,7 +145,8 @@ def main():
         liste = {u["id"]: u for u in json.loads(yol.read_text(encoding="utf-8"))["urunler"]}
 
     CIKTI.mkdir(parents=True, exist_ok=True)
-    yontem = "OpenAI" if OPENAI_KEY else "rembg"
+    openai_kullan = bool(OPENAI_KEY) and YONTEM == "openai"
+    yontem = "OpenAI (yeniden çizim)" if openai_kullan else "kesme (ürün birebir korunur)"
     print(f"{len(kareler)} fotoğraf, yöntem: {yontem}")
     odoo_esleme, basarili, hatali = {}, [], []
 
@@ -139,7 +158,7 @@ def main():
             if len(ham) > 18 * 1024 * 1024:
                 im0 = Image.open(io.BytesIO(ham)); im0.thumbnail((2400, 2400), Image.LANCZOS)
                 t = io.BytesIO(); im0.convert("RGB").save(t, "PNG"); ham = t.getvalue()
-            kesik = _openai(ham, ad) if OPENAI_KEY else _rembg(ham)
+            kesik = _openai(ham, ad) if openai_kullan else _rembg(ham)
             son = beyaza_otur(kesik)
             son.save(CIKTI / f"{urun_id}.webp", "WEBP", quality=88, method=6)
             basarili.append(urun_id)
