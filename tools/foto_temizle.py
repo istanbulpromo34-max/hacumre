@@ -40,7 +40,30 @@ def _rembg(ham: bytes) -> Image.Image:
     return Image.open(io.BytesIO(kesik)).convert("RGBA")
 
 
-def _openai(ham: bytes, ad: str) -> Image.Image:
+OPENAI_MODELLER = [m.strip() for m in os.environ.get(
+    "OPENAI_MODEL",
+    "gpt-image-2.6-sunburst,gpt-image-2.5-sunburst,gpt-image-2,gpt-image-1.5,gpt-image-1-mini"
+).split(",") if m.strip()]
+
+STUDYO_PROMPT = (
+    "Reshoot this exact product as a professional catalogue studio photograph. "
+    "CRITICAL: the product itself must stay identical to the source — same shape, proportions, "
+    "colour, material, surface, pattern, printed text, calligraphy, logos and every small detail. "
+    "Do not redesign, restyle, re-letter, beautify, add or remove anything, and do not change the "
+    "product's angle. Only the background, the lighting and the image quality may change. "
+    "Place the product centred on a seamless soft cream backdrop, warm off-white close to #EFE7D8, "
+    "with a barely perceptible fine woven fabric texture that reads as a calm background rather than "
+    "as a piece of cloth. Lighting: one large soft key light from the upper left, gentle fill from the "
+    "right, and a soft natural contact shadow directly under the product; no harsh highlights, no colour cast. "
+    "Rendering: tack-sharp focus across the whole product, crisp clean edges, true-to-life colour, high "
+    "micro-detail, the look of a manufacturer's catalogue render. Framing: square, the product fully inside "
+    "the frame with even margins, filling about 82 percent of it, so a viewer understands at a glance what "
+    "the product is and what it is made of. No props, no hands, no people, no text overlay, no watermark, "
+    "no border, no second object. Product: "
+)
+
+
+def _openai_istek(png: bytes, ad: str, model: str, boy: str):
     import urllib.request, urllib.error
     sinir = "----katalog" + base64.b16encode(os.urandom(8)).decode()
     parcalar = []
@@ -48,47 +71,48 @@ def _openai(ham: bytes, ad: str) -> Image.Image:
     def alan(ad_, deger):
         parcalar.append(f"--{sinir}\r\nContent-Disposition: form-data; name=\"{ad_}\"\r\n\r\n{deger}\r\n".encode())
 
-    alan("model", "gpt-image-1")
-    alan("size", "1024x1024")
+    alan("model", model)
+    alan("size", boy)
     alan("background", "opaque")
     alan("quality", "high")
-    alan("prompt",
-         "Reshoot this exact product as a professional catalogue studio photograph. "
-         "CRITICAL: the product itself must stay identical to the source — same shape, proportions, "
-         "colour, material, surface, pattern, printed text, calligraphy, logos and every small detail. "
-         "Do not redesign, restyle, re-letter, beautify, add or remove anything, and do not change the "
-         "product's angle. Only the background, the lighting and the image quality may change. "
-         "Place the product centred on a seamless soft cream backdrop, warm off-white close to #EFE7D8, "
-         "with a barely perceptible fine woven fabric texture that reads as a calm background rather than "
-         "as a piece of cloth. Lighting: one large soft key light from the upper left, gentle fill from the "
-         "right, and a soft natural contact shadow directly under the product; no harsh highlights, no colour cast. "
-         "Rendering: tack-sharp focus across the whole product, crisp clean edges, true-to-life colour, high "
-         "micro-detail, the look of a manufacturer's catalogue render. Framing: square, the product fully inside "
-         "the frame with even margins, filling about 82 percent of it, so a viewer understands at a glance what "
-         "the product is and what it is made of. No props, no hands, no people, no text overlay, no watermark, "
-         "no border, no second object. Product: " + ad)
-    # OpenAI dosya türünü başlıkla değil içerikle doğruluyor: gerçekten PNG gönder
-    tampon = io.BytesIO()
-    Image.open(io.BytesIO(ham)).convert("RGB").save(tampon, "PNG", optimize=True)
-    png = tampon.getvalue()
+    alan("prompt", STUDYO_PROMPT + ad)
     parcalar.append(
         f"--{sinir}\r\nContent-Disposition: form-data; name=\"image\"; filename=\"urun.png\"\r\n"
         f"Content-Type: image/png\r\n\r\n".encode() + png + b"\r\n")
     parcalar.append(f"--{sinir}--\r\n".encode())
-    govde = b"".join(parcalar)
 
     istek = urllib.request.Request(
-        "https://api.openai.com/v1/images/edits", data=govde,
+        "https://api.openai.com/v1/images/edits", data=b"".join(parcalar),
         headers={"Authorization": f"Bearer {OPENAI_KEY}",
                  "Content-Type": f"multipart/form-data; boundary={sinir}"})
     try:
         with urllib.request.urlopen(istek, timeout=300) as c:
             veri = json.loads(c.read())
     except urllib.error.HTTPError as e:
-        govde = e.read().decode("utf-8", "replace")[:600]
-        raise RuntimeError(f"OpenAI {e.code}: {govde}") from None
+        raise RuntimeError(f"{e.code}: {e.read().decode('utf-8', 'replace')[:400]}") from None
     return Image.open(io.BytesIO(base64.b64decode(veri["data"][0]["b64_json"]))).convert("RGBA")
 
+
+def _openai(ham: bytes, ad: str) -> Image.Image:
+    """Ürünü stüdyo karesi olarak yeniden çektirir; model ve boy için sırayla dener."""
+    tampon = io.BytesIO()
+    Image.open(io.BytesIO(ham)).convert("RGB").save(tampon, "PNG", optimize=True)
+    png = tampon.getvalue()
+
+    hatalar = []
+    for model in OPENAI_MODELLER:
+        for boy in (f"{BOYUT}x{BOYUT}", "1536x1536", "1024x1024"):
+            try:
+                im = _openai_istek(png, ad, model, boy)
+                if im.width != BOYUT:
+                    print(f"    ({model} {boy} -> {BOYUT} büyütüldü)")
+                return im
+            except RuntimeError as e:
+                m = str(e)
+                hatalar.append(f"{model} {boy}: {m[:90]}")
+                if "does not exist" in m or "model" in m and "invalid_value" in m:
+                    break          # bu model yok, boy denemeye gerek yok
+    raise RuntimeError("OpenAI isteği kabul edilmedi -> " + " | ".join(hatalar[:4]))
 
 
 # ---------- krem stüdyo zemini ----------
