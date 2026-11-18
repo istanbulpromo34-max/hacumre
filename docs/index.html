@@ -1,99 +1,238 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>İstanbul Hac Umre Hediyelik</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>İstanbul Hac Umre Hediyelik · Ümraniye</title>
+<meta name="description" content="Ümraniye'de hac ve umre malzemeleri, umre kıyafetleri, İslami hediyelik, Medine hurması ve zemzem. Yola çıkandan dönene kadar yanınızdayız.">
+<link rel="icon" href="assets/lale.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css"><script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script></head><body>
+<link rel="preload" as="image" href="assets/magaza-giris.jpg" imagesrcset="assets/magaza-giris-m.jpg 1200w, assets/magaza-giris.jpg 2200w" imagesizes="(max-width:820px) 100vw, 55vw">
+<link rel="stylesheet" href="site.css">
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <style>
-.kapi{position:relative;height:340vh}
-.kapi-yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:linear-gradient(180deg,#3f444d 0%,#2a3140 55%,#19223a 100%)}
-.cephe{position:absolute;max-width:none;will-change:transform;backface-visibility:hidden}
-.lv{position:absolute;inset:0;opacity:0;pointer-events:none}
-.lv-tabela{background:#1a346b}
-.lv-site{background:radial-gradient(120% 80% at 50% 30%,#13265a 0%,var(--lac) 55%,var(--gece) 100%)}
-.tabela{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:0 6vw;pointer-events:none}
-.tabela .ic{opacity:0;max-width:980px}
-.tabela h1{font-size:clamp(44px,8vw,118px);line-height:.98;margin:0 0 26px}
-.tabela p{font-size:18px;max-width:540px;margin:0 auto 32px;opacity:.85;line-height:1.65}
-.tabela .dugmeler{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.karsilama{position:absolute;left:0;right:0;bottom:6vh;text-align:center;z-index:3;pointer-events:none}
-.karsilama p{display:inline-block;font-family:'Marcellus';font-size:clamp(17px,2vw,24px);color:#f4efe4;padding:12px 26px;border-radius:999px;background:rgba(12,22,48,.42);backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 34px rgba(0,0,0,.35)}
-@media(prefers-reduced-motion:reduce){.kapi{height:auto}.kapi-yapis{position:relative}}
-@media(max-width:720px){.karsilama{bottom:96px}}
-.bant{padding:26px 0;white-space:nowrap;overflow:hidden}
-.bant div{display:inline-block;font-family:'Marcellus';font-size:clamp(28px,4vw,56px);color:#1d1405;transform:translateX(calc(var(--sy)*-.25px))}
-.bant span{margin:0 34px;opacity:.85}
-.bolum{padding:16vh 6vw;position:relative}
-.hak{display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:center}
-.hak h2{font-size:clamp(38px,5.5vw,84px);line-height:1}
-.hak p{font-size:18px;line-height:1.75;opacity:.8;margin:24px 0}
-.hak .foto{border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;position:relative}
-.hak .foto img{width:100%;height:120%;object-fit:cover;transform:translateY(calc(var(--sy)*-.04px))}
-.sayilar{display:flex;gap:46px;margin-top:30px}.sayilar b{display:block;font:400 48px 'Marcellus'}.sayilar small{opacity:.6}
-.kats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:50px}
-.kat{position:relative;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;background:var(--lac2);display:flex;align-items:flex-end;padding:22px;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
-.kat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:transform 1.2s,filter .6s}
-.kat:hover img{transform:scale(1.07);filter:brightness(.8)}
-.kat h3{position:relative;font-size:26px}.kat:hover{transform:translateY(-6px)}
-.turcag{margin:0 4vw;border-radius:36px;padding:14vh 6vw;text-align:center;background:radial-gradient(120% 90% at 50% 0%,#1b2f5e,var(--lac) 60%,var(--gece));border:1px solid rgba(201,162,75,.25);overflow:hidden}
-.turcag .ar{font-size:clamp(60px,10vw,150px);line-height:1.2}
-.turcag h2{font-size:clamp(34px,4.5vw,64px);margin:10px 0 18px}.turcag p{max-width:560px;margin:0 auto 34px;opacity:.8;line-height:1.7}
-.yorum{display:flex;gap:40px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.yorum .puan{font:400 120px 'Marcellus';line-height:1}
-@media(max-width:820px){.hak{grid-template-columns:1fr}.kats{grid-template-columns:1fr 1fr}.tabela .ic{padding-bottom:16vh}.kapi{height:300vh}}
+.kap{padding-inline:max(20px,5vw)}
+.ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
+/* ===== Açılış ===== */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(28px,4vw,72px);align-items:center;padding-top:112px;padding-bottom:56px;overflow:hidden;
+ background:radial-gradient(70% 60% at 85% 30%,rgba(201,162,75,.10),transparent 60%),radial-gradient(60% 70% at 0% 100%,rgba(122,31,43,.18),transparent 60%),var(--gece)}
+.hero h1{font-size:clamp(44px,5.4vw,88px);line-height:1.02;margin:22px 0 24px}
+.hero .giris{font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:rgba(234,230,220,.8);max-width:46ch}
+.hero .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.guven{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:44px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1);font-size:14px;color:rgba(234,230,220,.72)}
+.guven b{font-family:'Marcellus';font-weight:400;font-size:22px;color:var(--altin2);margin-right:6px}
+.guven span{display:flex;align-items:baseline}
+.cerceve{position:relative;height:min(calc(100svh - 170px),780px);min-height:440px}
+.cerceve .foto{position:absolute;inset:0;border-radius:28px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.8)}
+.cerceve .foto img{width:100%;height:100%;object-fit:cover;object-position:52% 42%;transform:scale(calc(1.04 + var(--sy,0)*.00008)) translateY(calc(var(--sy,0)*.03px));will-change:transform}
+.cerceve .foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(6,13,31,.55));pointer-events:none}
+.cerceve::before{content:"";position:absolute;inset:-14px 14px 14px -14px;border:1px solid rgba(201,162,75,.45);border-radius:34px;transform:translate(calc(var(--sy,0)*-.02px),calc(var(--sy,0)*.02px))}
+.adres-kart{position:absolute;left:22px;bottom:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 14px 14px 20px;border-radius:20px;
+ background:rgba(12,22,48,.5);backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.adres-kart small{display:block;font-size:11px;letter-spacing:.24em;color:var(--altin2);margin-bottom:4px}
+.adres-kart span{font-size:15px}
+.adres-kart .btn{padding:12px 18px;font-size:14px;flex:none}
+/* giriş animasyonu (içeriği bekletmez, sadece kısa bir süzülme) */
+.sz{opacity:0;transform:translateY(22px);animation:sz .9s cubic-bezier(.2,.7,.2,1) forwards}
+.sz:nth-child(2){animation-delay:.08s}.sz:nth-child(3){animation-delay:.16s}.sz:nth-child(4){animation-delay:.24s}.sz:nth-child(5){animation-delay:.32s}
+.cerceve.sz{animation-delay:.1s;transform:translateY(0) scale(.97)}
+@keyframes sz{to{opacity:1;transform:none}}
+/* ===== Hakkımızda ===== */
+.hak{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:center;padding-block:clamp(90px,14vh,160px)}
+.hak .foto{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:4/5;max-height:82vh}
+.hak .foto img{width:100%;height:115%;object-fit:cover;transform:translateY(calc((var(--sy,0)*-.05px) + 4%))}
+.hak h2{font-size:clamp(36px,4.4vw,68px);line-height:1.05;margin:18px 0 22px}
+.hak .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.78);max-width:52ch}
+.ayaklar{display:grid;gap:0;margin-top:36px;border-top:1px solid rgba(255,255,255,.1)}
+.ayak{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.ayak strong{font-family:'Marcellus';font-weight:400;font-size:20px;color:var(--altin2)}
+.ayak span{color:rgba(234,230,220,.75);line-height:1.6}
+/* ===== Altın geçiş ===== */
+.gecis{position:relative;height:260vh;background:var(--gece)}
+.gecis .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
+.serit{position:absolute;left:50%;top:50%;width:150vw;height:56px;transform:translate(-50%,-50%) rotate(-7deg);display:flex;align-items:center;overflow:hidden;will-change:transform,height}
+.serit .akis{display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform}
+.serit .akis span{font-family:'Marcellus';font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#20170a}
+.serit .akis img{width:13px;height:auto;opacity:.85;filter:sepia(1) saturate(.3) brightness(.35)}
+.altin-zemin{position:absolute;inset:0;opacity:0;background-position:0 0,60% 0}
+.gecis-baslik{position:relative;z-index:2;text-align:center;color:var(--lac);opacity:0;padding:0 24px}
+.gecis-baslik h2{font-size:clamp(42px,6vw,96px);line-height:1}
+.gecis-baslik p{margin-top:16px;font-size:17px;opacity:.75}
+/* ===== Ürün grupları (altın zemin) ===== */
+.gruplar{padding-top:8px;padding-bottom:clamp(90px,14vh,150px);color:var(--lac);background-position:0 0,60% 0}
+.grup-izgara{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.grup{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4;border-radius:22px;overflow:hidden;color:var(--fil);background:var(--lac);box-shadow:0 30px 60px -30px rgba(40,25,5,.6);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.grup img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.grup::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,13,31,0) 30%,rgba(6,13,31,.92));}
+.grup .ic{position:relative;z-index:1;padding:22px}
+.grup .no{font-size:12px;letter-spacing:.2em;color:var(--altin2)}
+.grup h3{font-size:clamp(22px,1.8vw,28px);line-height:1.15;margin:8px 0 8px}
+.grup p{font-size:14px;line-height:1.55;opacity:.78}
+.grup .ok{display:inline-flex;margin-top:14px;font-size:14px;color:var(--altin2);gap:8px;transition:gap .3s}
+.grup:hover{transform:translateY(-8px)}.grup:hover img{transform:scale(1.07)}.grup:hover .ok{gap:14px}
+/* ===== Dijital tur ===== */
+.tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(90px,14vh,160px)}
+.tur-bolum h2{font-size:clamp(36px,4.4vw,66px);line-height:1.05;margin:18px 0 22px}
+.tur-bolum .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.78);max-width:50ch}
+.tur-bolum .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.telbiye{border-radius:28px;padding:clamp(28px,4vw,48px);background:radial-gradient(120% 90% at 50% 0%,#1b2f5e,var(--lac) 60%,#081127);border:1px solid rgba(201,162,75,.28)}
+.telbiye .ar{display:block;direction:rtl;text-align:center;font-family:'Amiri',serif;font-weight:700;font-size:clamp(40px,4.6vw,68px);line-height:1.7;color:var(--altin2);letter-spacing:0}
+.telbiye .anlam{text-align:center;font-size:15px;opacity:.7;margin-top:2px}
+.adimlar{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:28px;counter-reset:a}
+.adimlar a{display:block;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:14px;transition:background .3s,border-color .3s}
+.adimlar a::before{counter-increment:a;content:counter(a);display:block;font-family:'Marcellus';font-size:13px;color:var(--altin2);margin-bottom:2px}
+.adimlar a:hover{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.4)}
+/* ===== Ziyaret ===== */
+.ziyaret{display:flex;flex-wrap:wrap;gap:30px 60px;align-items:center;justify-content:space-between;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+.puan{display:flex;align-items:center;gap:22px}
+.puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(70px,8vw,120px);line-height:1}
+.puan .yildiz{color:var(--altin2);letter-spacing:4px;font-size:18px}
+.puan p{opacity:.7;margin-top:6px}
+.ziyaret .dugmeler{display:flex;gap:10px;flex-wrap:wrap}
+@media(max-width:980px){
+ .grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .adimlar{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:820px){
+ .hero{grid-template-columns:1fr;padding-top:72px;padding-bottom:40px;min-height:auto;gap:30px}
+ .cerceve{order:-1;height:46svh;min-height:300px;margin-top:6px}
+ .cerceve .foto img{object-position:50% 38%}
+ .hero h1{margin-top:14px}
+ .cerceve::before{inset:-10px 10px 10px -10px}
+ .hak,.tur-bolum{grid-template-columns:1fr}
+ .hak .foto{aspect-ratio:4/4.4}
+ .ayak{grid-template-columns:1fr;gap:6px}
+ .gecis{height:220vh}
+ .serit{height:44px}.serit .akis span{font-size:13px}
+ .adres-kart{left:10px;right:10px;bottom:10px;padding:8px 8px 8px 14px;border-radius:16px}
+ .adres-kart small{display:none}.adres-kart span{font-size:13px}
+ .adres-kart .btn{padding:9px 14px;font-size:13px}
+ .ziyaret{padding-bottom:130px}
+}
+@media(max-width:520px){.grup-izgara{grid-template-columns:1fr 1fr;gap:10px}.grup .ic{padding:14px}.grup p{display:none}.adimlar{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){.sz{animation:none;opacity:1;transform:none}.gecis{height:auto}.gecis .yapis{position:relative;height:60vh}}
 </style>
-<section class="kapi" id="kapi" aria-label="Mağazamız">
- <div class="kapi-yapis">
-  <img class="cephe" src="assets/magaza-giris.jpg" srcset="assets/magaza-giris-m.jpg 1200w, assets/magaza-giris.jpg 2200w" sizes="(max-width:820px) 100vw, 80vw" alt="İstanbul Hac Umre Hediyelik mağaza cephesi, Cevherağa Camii Sokak No:10, Ümraniye" fetchpriority="high">
-  <div class="lv lv-tabela"></div><div class="lv lv-site"></div>
-  <div class="tabela"><div class="ic">
-   <h1>Mübarek yolculuğun<br><span class="metal metal-yazi" data-isik>her ihtiyacı</span> burada.</h1>
-   <p>İhramdan seccadeye, hurmadan zemzeme kadar hac ve umre için gereken her şey, hediyelikleriyle birlikte Ümraniye'deki mağazamızda.</p>
-   <div class="dugmeler"><a class="btn altin" href="urunler.html">Ürünleri incele</a><a class="btn cam" href="tur.html">Dijital tura katıl</a></div></div></div>
-  <div class="karsilama"><p>Cevherağa Camii Sokak No:10, Ümraniye</p></div>
+</head>
+<body>
+<main>
+<!-- AÇILIŞ -->
+<section class="hero kap" aria-label="İstanbul Hac Umre Hediyelik">
+ <div class="metin">
+  <div class="ust-yazi sz">Hac · Umre · Hurma · Hediyelik</div>
+  <h1 class="sz">Mübarek yolculuğun<br><span class="metal metal-yazi" data-isik>her ihtiyacı</span> burada.</h1>
+  <p class="giris sz">İhramdan seccadeye, umre kıyafetlerinden Medine hurmasına kadar hac ve umre için gereken her şey; dönüşte sevdiklerinize götüreceğiniz hediyelerle birlikte Ümraniye'deki mağazamızda.</p>
+  <div class="dugmeler sz"><a class="btn altin" href="urunler.html">Ürünlerimizi inceleyin</a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
+  <div class="guven sz">
+   <span><b>5,0</b>Google puanı</span>
+   <span><b>120+</b>müşteri yorumu</span>
+   <span><b>4</b>ürün grubu</span>
+  </div>
+ </div>
+ <div class="cerceve sz">
+  <div class="foto"><img src="assets/magaza-giris.jpg" srcset="assets/magaza-giris-m.jpg 1200w, assets/magaza-giris.jpg 2200w" sizes="(max-width:820px) 100vw, 55vw" alt="İstanbul Hac Umre Hediyelik mağazasının cephesi ve vitrini" fetchpriority="high"></div>
+  <div class="adres-kart"><div><small>MAĞAZAMIZ</small><span>Cevherağa Camii Sk. No:10, Ümraniye</span></div><a class="btn altin" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi</a></div>
  </div>
 </section>
-<div class="bant metal metal-bant" data-isik><div><span>İhram</span>✦<span>Seccade</span>✦<span>Tesbih</span>✦<span>Medine Hurması</span>✦<span>Zemzem</span>✦<span>Ferace</span>✦<span>Hediyelik</span>✦<span>İhram</span>✦<span>Seccade</span>✦<span>Tesbih</span>✦<span>Medine Hurması</span>✦<span>Zemzem</span></div></div>
-<section class="bolum hak">
- <div><small style="letter-spacing:.3em;color:var(--altin2)" data-gel>HAKKIMIZDA</small>
- <h2 data-gel>Yola çıkandan<br><span class="metal metal-yazi" data-isik>dönene</span> kadar yanınızdayız.</h2>
- <p data-gel>İstanbul Hac Umre Hediyelik olarak hac ve umreye hazırlanan misafirlerimize ihtiyaç duydukları ürünleri seçerek sunuyor, dönüşte sevdiklerinize götüreceğiniz hediyelikleri özenle hazırlıyoruz.</p>
- <div class="sayilar" data-gel><div><b class="metal metal-yazi" data-isik>5,0</b><small>Google puanı</small></div><div><b class="metal metal-yazi" data-isik>115+</b><small>yorum</small></div></div></div>
- <div class="foto" data-gel><img src="assets/showroom.jpg" alt="Mağazamız"></div>
+
+<!-- HAKKIMIZDA -->
+<section class="hak kap" id="hakkimizda">
+ <div class="foto" data-gel><img src="assets/yolcular.jpg" alt="Havalimanında kapıya doğru yürüyen ihramlı umre yolcuları ve valizleriyle hanımlar" loading="lazy"></div>
+ <div class="metin">
+  <div class="ust-yazi" data-gel>Hakkımızda</div>
+  <h2 data-gel>Yola çıkandan dönene kadar <span class="metal metal-yazi" data-isik>yanınızdayız.</span></h2>
+  <p data-gel>İstanbul Hac Umre Hediyelik olarak hac ve umreye hazırlanan misafirlerimize ihtiyaç duydukları ürünleri seçerek sunuyor, dönüşte sevdiklerinize götüreceğiniz hediyelikleri özenle hazırlıyoruz. Ne alacağınızdan emin değilseniz mağazamızda sizinle birlikte bavulunuzu düşünür, eksiklerinizi tamamlarız.</p>
+  <div class="ayaklar" data-gel>
+   <div class="ayak"><strong>Yola çıkmadan</strong><span>İhram, kemer, terlik, bel çantası ve kokusuz bakım ürünleri.</span></div>
+   <div class="ayak"><strong>Kutsal topraklarda</strong><span>Rahat, nefes alan ve tesettüre uygun erkek ve kadın umre kıyafetleri.</span></div>
+   <div class="ayak"><strong>Dönüşte</strong><span>Medine hurması, zemzem, tesbih, seccade ve hediye paketleri.</span></div>
+  </div>
+ </div>
 </section>
-<section class="bolum" style="padding-top:0"><h2 style="font-size:clamp(34px,4.5vw,64px)" data-gel>Ürün gruplarımız</h2>
- <div class="kats">
- <a class="kat" href="urunler.html#İhram" data-gel><img src="assets/valiz.jpg" alt=""><h3>İhram & Yolculuk</h3></a>
- <a class="kat" href="urunler.html#Kadın" data-gel><img src="assets/showroom.jpg" alt=""><h3>Kadın</h3></a>
- <a class="kat" href="urunler.html#İbadet" data-gel><img src="assets/valiz.jpg" alt=""><h3>İbadet</h3></a>
- <a class="kat" href="urunler.html#Hediyelik" data-gel><img src="assets/hurma.jpg" alt=""><h3>Hediyelik</h3></a></div></section>
-<section class="turcag" data-gel><div class="ar metal metal-yazi" data-isik>لَبَّيْكَ</div>
- <h2>Dijital Umre Turu</h2><p>Hazırlıktan dönüşe kadar umrenin her adımını sahne sahne yaşayın. Yolda ihtiyacınız olanları işaretleyin, turun sonunda size özel teklifinizi hazırlayalım.</p>
- <a class="btn altin" href="tur.html">Tura katıl</a></section>
-<section class="bolum yorum"><div data-gel><div class="puan metal metal-yazi" data-isik>5,0</div><p style="opacity:.7">115'ten fazla Google yorumu</p></div>
- <div data-gel style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank">Yorum yap</a><a class="btn wa" href="https://wa.me/905551044040" target="_blank">WhatsApp</a></div></section>
-<footer class="sf"><span>© 2026 İstanbul Hac Umre Hediyelik · Ümraniye, İstanbul</span><span><a href="https://wa.me/905551044040">WhatsApp</a> · <a href="tel:+905551044040">0555 104 40 40</a></span></footer><script src="site.js"></script><script>kabuk('ana');akisKur()</script><script>
+
+<!-- ALTIN GEÇİŞ -->
+<section class="gecis" id="gecis" aria-hidden="true">
+ <div class="yapis">
+  <div class="serit metal metal-bant" id="serit"><div class="akis" id="akis"></div></div>
+  <div class="altin-zemin metal"></div>
+  <div class="gecis-baslik" id="gecis-baslik"><div class="ust-yazi" style="color:#5a4316">Ne arıyorsanız</div><h2>Ürün gruplarımız</h2><p>Hazırlıktan dönüşe, yolculuğun her adımı için.</p></div>
+ </div>
+</section>
+
+<!-- ÜRÜN GRUPLARI -->
+<section class="gruplar kap metal" id="gruplar" aria-label="Ürün gruplarımız">
+ <div class="grup-izgara" id="grup-izgara"></div>
+</section>
+
+<!-- DİJİTAL TUR -->
+<section class="tur-bolum kap" id="tur">
+ <div class="metin">
+  <div class="ust-yazi" data-gel>Ücretsiz rehber</div>
+  <h2 data-gel>Umre nasıl yapılır? <span class="metal metal-yazi" data-isik>Adım adım</span> dijital tur.</h2>
+  <p data-gel>Hazırlıktan dönüşe kadar umrenin dokuz adımını, Diyanet'in umre programındaki sırayla anlatan rehberimizi gezin. Her durakta o adımın nasıl yapıldığını fotoğraflar ve kısa açıklamalarla görürsünüz. Kayıt gerekmez, telefondan da rahatça izlenir.</p>
+  <div class="dugmeler" data-gel><a class="btn altin" href="tur.html">Tura başlayın</a><a class="btn cam" href="tur.html#hazirlik">Hazırlık listesine git</a></div>
+ </div>
+ <div class="telbiye" data-gel>
+  <span class="ar" lang="ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</span>
+  <p class="anlam">“Buyur Allah'ım, buyur.” Umrenin her adımında dile gelen telbiye</p>
+  <ol class="adimlar">
+   <li><a href="tur.html#hazirlik">Hazırlık</a></li>
+   <li><a href="tur.html#yolculuk">Yola çıkış</a></li>
+   <li><a href="tur.html#medine">Medine</a></li>
+   <li><a href="tur.html#mikat">Mîkat ve ihram</a></li>
+   <li><a href="tur.html#tavaf">Tavaf</a></li>
+   <li><a href="tur.html#zemzem">Namaz ve zemzem</a></li>
+   <li><a href="tur.html#say">Sa'y</a></li>
+   <li><a href="tur.html#tiras">Tıraş</a></li>
+   <li><a href="tur.html#donus">Dönüş</a></li>
+  </ol>
+ </div>
+</section>
+
+<!-- ZİYARET -->
+<section class="ziyaret kap">
+ <div class="puan" data-gel><b class="metal metal-yazi" data-isik>5,0</b><div><div class="yildiz" aria-hidden="true">★★★★★</div><p>Google'da 120'den fazla yorum</p></div></div>
+ <div class="dugmeler" data-gel>
+  <a class="btn altin" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi al</a>
+  <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener">Yorum yapın</a>
+  <a class="btn cam" href="tel:+905551044040">Arayın</a>
+  <a class="btn wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp</a>
+ </div>
+</section>
+</main>
+
+<footer class="sf"><div class="f-ic"><a class="f-logo" href="index.html"><img src="assets/logo-acik.png" alt="İstanbul Hac Umre Hurma Hediyelik" loading="lazy"></a><span>Cevherağa Camii Sokak No:10, Ümraniye, İstanbul</span></div><div class="f-ic" style="text-align:right"><a href="tel:+905551044040">0555 104 40 40</a><a href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp</a><span>© 2026 İstanbul Hac Umre Hediyelik</span></div></footer>
+
+<script src="site.js"></script>
+<script>
+kabuk('ana');
+addEventListener('load',()=>akisKur());
+/* Ürün grupları */
+document.getElementById('grup-izgara').innerHTML=KATEGORILER.map((k,i)=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><img src="${k.gorsel}" alt="" loading="lazy"><div class="ic"><span class="no">0${i+1}</span><h3>${k.ad}</h3><p>${k.acik}</p><span class="ok">İncele <span aria-hidden="true">→</span></span></div></a>`).join('');
+document.querySelectorAll('#grup-izgara [data-gel]').forEach((e,i)=>e.style.transitionDelay=(i*.08)+'s');
+/* Altın şerit: kaydırdıkça döner, büyür ve sayfa altına dönüşür */
 (function(){
- const K=document.getElementById('kapi'),Y=K.querySelector('.kapi-yapis'),C=K.querySelector('.cephe'),
-  L1=K.querySelector('.lv-tabela'),L2=K.querySelector('.lv-site'),T=K.querySelector('.tabela .ic'),TW=K.querySelector('.tabela'),H=K.querySelector('.karsilama');
- const OR=4337/3467,DX=.798,DY=.153,SMAX=34,az=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const kis=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),yum=t=>t*t*(3-2*t);
- let g={},pS=0,son=-1;
- function yerlestir(){const vw=Y.clientWidth,vh=Y.clientHeight,yatay=vw/vh>=1;let w,h;
-  if(yatay){h=vh*.9;w=h*OR;if(w>vw*.94){w=vw*.94;h=w/OR}}else{w=vw;h=w/OR}
-  g={w,h,l:(vw-w)/2,t:yatay?(vh-h)*.45:vh*.42-h*.5,vw,vh};
-  Object.assign(C.style,{width:w+'px',height:h+'px',left:g.l+'px',top:g.t+'px',transformOrigin:(DX*100)+'% '+(DY*100)+'%'});son=-1}
+ const urunler=['İhram','İhram kemeri','Seccade','Tesbih','Zikirmatik','Umre feracesi','Eşarp','Takke','Bel çantası','Medine hurması','Acve hurması','Zemzem','Esans','Kur\'an-ı Kerim','Hediye paketi'];
+ const akis=document.getElementById('akis'),parca=urunler.map(u=>`<span>${u}</span><img src="assets/lale.png" alt="">`).join('');
+ akis.innerHTML=parca+parca+parca;
+ const Z=document.querySelector('.altin-zemin'),G=document.getElementById('gecis'),S=document.getElementById('serit'),B=document.getElementById('gecis-baslik');
+ const az=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const k=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),yum=t=>t*t*(3-2*t);
+ let p0=0;
  function ciz(){
-  const r=K.getBoundingClientRect(),hedef=az?1:kis(-r.top/(r.height-g.vh));
-  pS+=(hedef-pS)*.12;if(Math.abs(hedef-pS)<.0004)pS=hedef;
-  if(Math.abs(pS-son)>.0002){son=pS;
-   const z=kis((pS-.04)/.6),s=Math.exp(Math.pow(z,1.35)*Math.log(SMAX)),m=yum(kis(z*1.5));
-   const tx=(g.vw/2-(g.l+DX*g.w))*m,ty=(g.vh/2-(g.t+DY*g.h))*m;
-   C.style.transform=`translate3d(${tx}px,${ty}px,0) scale(${s})`;
-   L1.style.opacity=yum(kis((z-.62)/.3));
-   L2.style.opacity=yum(kis((pS-.62)/.18));
-   const yz=yum(kis((pS-.74)/.16));T.style.opacity=yz;T.style.transform=`translateY(${(1-yz)*28}px)`;
-   TW.style.pointerEvents=yz>.5?'auto':'none';
-   H.style.opacity=1-kis(pS/.1);H.style.transform=`translateY(${pS*40}px)`}
+  const r=G.getBoundingClientRect(),H=innerHeight,top=r.height-H;
+  const hedef=az?1:k(-r.top/top);p0+=(hedef-p0)*.14;const p=p0;
+  const t=yum(k((p-.12)/.6));
+  const h0=innerWidth<820?44:56;
+  S.style.height=(h0+(H*1.25-h0)*t)+'px';
+  S.style.transform=`translate(-50%,-50%) rotate(${-7*(1-t)}deg)`;
+  akis.style.transform=`translateX(${-(r.top*-.35+400)%(akis.scrollWidth/3)}px)`;
+  akis.style.opacity=1-k((t-.25)/.3);
+  Z.style.opacity=k((t-.7)/.15);
+  const yb=yum(k((p-.68)/.2));B.style.opacity=yb;B.style.transform=`translateY(${(1-yb)*30}px)`;
   requestAnimationFrame(ciz)}
- addEventListener('resize',yerlestir);yerlestir();ciz();
+ ciz();
 })();
-</script></body></html>
+</script>
+</body>
+</html>

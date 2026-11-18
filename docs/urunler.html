@@ -1,38 +1,119 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ürünlerimiz · İstanbul Hac Umre Hediyelik</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ürünlerimiz · İstanbul Hac Umre Hediyelik</title>
+<meta name="description" content="Hac umre malzemeleri, umre kıyafetleri, İslami hediyelik, hurma ve zemzem. Ürünleri çantanıza ekleyin, WhatsApp'tan gönderin, çantanızı hazırlayalım.">
+<link rel="icon" href="assets/lale.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css"><script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script></head><body>
+<link rel="stylesheet" href="site.css">
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <style>
-.ust{padding:20vh 6vw 6vh}.ust h1{font-size:clamp(46px,7vw,110px);line-height:1}
-.filtre{display:flex;gap:10px;flex-wrap:wrap;padding:0 6vw 40px;position:sticky;top:84px;z-index:20}
-.filtre button{padding:11px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(11,22,48,.6);backdrop-filter:blur(14px);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:all .35s}
+.kap{padding-inline:max(20px,5vw)}
+.ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
+.bas{padding-top:clamp(120px,18vh,170px);padding-bottom:40px;background:radial-gradient(60% 80% at 90% 0%,rgba(201,162,75,.12),transparent 60%),var(--gece)}
+.bas h1{font-size:clamp(42px,6vw,96px);line-height:1;margin:18px 0 0;max-width:14ch}
+.adim3{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:44px;border:1px solid rgba(201,162,75,.3);border-radius:22px;overflow:hidden;background:rgba(255,255,255,.02)}
+.adim3 li{display:flex;gap:16px;align-items:flex-start;padding:22px 24px}
+.adim3 li+li{border-left:1px solid rgba(201,162,75,.2)}
+.adim3 i{font-style:normal;flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;font-family:'Marcellus';font-size:18px;color:#1a1205}
+.adim3 b{display:block;font-family:'Marcellus';font-weight:400;font-size:20px;margin-bottom:4px}
+.adim3 span{font-size:14px;line-height:1.55;color:rgba(234,230,220,.7)}
+.filtre{position:sticky;top:84px;z-index:20;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:14px 18px}
+.filtre::-webkit-scrollbar{display:none}
+.filtre button{flex:none;padding:11px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(11,22,48,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:all .35s}
+.filtre button:hover{border-color:rgba(201,162,75,.5)}
 .filtre button.on{background:var(--altin);color:#1a1205;border-color:transparent}
-.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;padding:0 6vw 14vh}
-.kart{border-radius:var(--r);background:linear-gradient(180deg,var(--lac2),var(--lac));border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s}
+.filtre button small{opacity:.6;margin-left:6px}
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;padding-bottom:160px}
+.kart{position:relative;border-radius:22px;background:linear-gradient(180deg,var(--lac2),var(--lac));border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;transition:transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s,box-shadow .4s}
 .kart:hover{transform:translateY(-6px);border-color:rgba(201,162,75,.35)}
-.kart .g{aspect-ratio:1;background:radial-gradient(circle at 50% 40%,#1f3466,#0d1a38);display:grid;place-items:center;overflow:hidden}
+.kart.sepette{border-color:rgba(201,162,75,.7);box-shadow:0 0 0 1px rgba(201,162,75,.35),0 24px 50px -30px rgba(201,162,75,.5)}
+.kart .g{position:relative;aspect-ratio:1;overflow:hidden;background:#0d1a38}
 .kart .g img{width:100%;height:100%;object-fit:cover;transition:transform 1s}.kart:hover .g img{transform:scale(1.06)}
-.kart .g .yer{font:400 64px 'Amiri';opacity:.25}
-.kart .b{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
-.kart h3{font-size:21px}.kart p{font-size:14px;opacity:.65;line-height:1.55;flex:1}
-.kart .f{font:400 24px 'Marcellus'}
-.kart .d{display:flex;gap:8px;margin-top:8px}.kart .d .btn{padding:12px 14px;font-size:13px;flex:1}
-@media(max-width:720px){.filtre{top:0;padding-top:14px}}
+.kart .rozet{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--altin);color:#1a1205;font-size:12px;font-weight:600;transform:scale(.6);opacity:0;transition:all .45s cubic-bezier(.3,1.6,.5,1)}
+.kart.sepette .rozet{transform:none;opacity:1}
+.kart .b{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.kart .kat{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--altin2);opacity:.85}
+.kart h3{font-size:21px;line-height:1.2}
+.kart p{font-size:14px;opacity:.65;line-height:1.55;flex:1}
+.kart .f{font:400 24px 'Marcellus';margin:6px 0 10px}
+.kart .eylem{height:48px;position:relative}
+.kart .ekle{width:100%;height:48px;padding:0}
+.kart .stepper{position:absolute;inset:0;display:none;align-items:center;justify-content:space-between;border-radius:999px;border:1px solid var(--altin);padding:4px}
+.kart .stepper button{width:40px;height:40px;border-radius:50%;border:0;background:rgba(201,162,75,.16);color:var(--altin2);font-size:20px;cursor:pointer;transition:background .25s}
+.kart .stepper button:hover{background:rgba(201,162,75,.32)}
+.kart .stepper output{font:600 15px 'Hanken Grotesk'}
+.kart.sepette .ekle{display:none}.kart.sepette .stepper{display:flex}
+.kart .stepper output.vur{animation:vur .4s}
+@keyframes vur{40%{transform:scale(1.35);color:var(--altin2)}}
+/* alt çanta çubuğu */
+.canta-cubuk{position:fixed;left:50%;bottom:24px;z-index:45;display:flex;align-items:center;gap:18px;padding:8px 8px 8px 22px;border-radius:999px;
+ background:rgba(12,22,48,.72);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(201,162,75,.45);box-shadow:0 20px 50px rgba(0,0,0,.45);
+ transform:translate(-50%,140%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.canta-cubuk.on{transform:translate(-50%,0)}
+.canta-cubuk .ozet{white-space:nowrap;font-size:14px}.canta-cubuk .ozet b{font-family:'Marcellus';font-weight:400;font-size:19px;color:var(--altin2);margin-left:6px}
+.canta-cubuk .btn{padding:12px 18px;font-size:14px}
+.canta-cubuk .ac{background:none;border:0;color:#fff;text-decoration:underline;text-underline-offset:4px;font:500 14px 'Hanken Grotesk';cursor:pointer;opacity:.8}
+.not-alt{font-size:13px;opacity:.5;margin-top:18px}
+@media(max-width:820px){
+ .adim3{grid-template-columns:1fr}.adim3 li+li{border-left:0;border-top:1px solid rgba(201,162,75,.2)}.adim3 li{padding:16px 18px}
+ .filtre{top:0;padding-top:64px;margin-top:-50px}
+ .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .kart .b{padding:14px}.kart h3{font-size:17px}.kart p{display:none}.kart .f{font-size:19px}
+ .kart .ekle{font-size:13px}
+ .canta-cubuk{bottom:88px;width:calc(100vw - 20px);justify-content:space-between;padding-left:16px}.canta-cubuk .ac{display:none}
+}
 </style>
-<section class="ust"><small style="letter-spacing:.3em;color:var(--altin2)" data-gel>KATALOG</small>
-<h1 data-gel>Ürünlerimiz</h1><p data-gel style="opacity:.7;margin-top:16px;max-width:520px;line-height:1.7">Ürünleri sepete ekleyin, tamamını tek mesajla WhatsApp'tan gönderin. Hemen dönüş yapalım.</p></section>
-<div class="filtre"></div><div class="izgara"></div>
-<footer class="sf"><span>© 2026 İstanbul Hac Umre Hediyelik · Ümraniye, İstanbul</span><span><a href="https://wa.me/905551044040">WhatsApp</a> · <a href="tel:+905551044040">0555 104 40 40</a></span></footer><script src="site.js"></script><script>
-kabuk('urun');
-const kats=['Tümü',...new Set(URUNLER.map(u=>u.kat))];const F=document.querySelector('.filtre'),I=document.querySelector('.izgara');
+</head>
+<body>
+<main>
+<section class="bas kap">
+ <div class="ust-yazi">Katalog</div>
+ <h1>Umre çantanızı <span class="metal metal-yazi" data-isik>birlikte</span> hazırlayalım.</h1>
+ <ol class="adim3">
+  <li><i class="metal">1</i><div><b>Çantanıza ekleyin</b><span>İhtiyacınız olan ürünleri ve adetlerini seçin.</span></div></li>
+  <li><i class="metal">2</i><div><b>WhatsApp'tan gönderin</b><span>Çantanız tek mesajla, liste halinde bize ulaşır.</span></div></li>
+  <li><i class="metal">3</i><div><b>Biz hazırlayalım</b><span>Stok ve fiyatı teyit eder, çantanızı mağazada hazır ederiz.</span></div></li>
+ </ol>
+ <p class="not-alt">Kataloğumuz güncelleniyor; fiyatları sipariş sırasında WhatsApp'tan teyit ediyoruz.</p>
+</section>
+<div class="kap"><div class="filtre" role="tablist" aria-label="Ürün grupları"></div><div class="izgara"></div></div>
+</main>
+<div class="canta-cubuk" id="cubuk" aria-live="polite"><span class="ozet"></span><button class="ac" type="button" onclick="cekmeceAc()">Çantayı gör</button><button class="btn wa" type="button" onclick="Sepet.gonder()">WhatsApp'tan gönder</button></div>
+<footer class="sf"><div class="f-ic"><a class="f-logo" href="index.html"><img src="assets/logo-acik.png" alt="İstanbul Hac Umre Hurma Hediyelik" loading="lazy"></a><span>Cevherağa Camii Sokak No:10, Ümraniye, İstanbul</span></div><div class="f-ic" style="text-align:right"><a href="tel:+905551044040">0555 104 40 40</a><a href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp</a><span>© 2026 İstanbul Hac Umre Hediyelik</span></div></footer>
+<script src="site.js"></script>
+<script>
+kabuk('urun');addEventListener('load',()=>akisKur());
+const kats=['Tümü',...KATEGORILER.map(k=>k.ad)];const F=document.querySelector('.filtre'),I=document.querySelector('.izgara');
 let sec=decodeURIComponent(location.hash.slice(1))||'Tümü';if(!kats.includes(sec))sec='Tümü';
-function ciz(){F.innerHTML=kats.map(k=>`<button class="${k==sec?'on':''}">${k}</button>`).join('');
- F.querySelectorAll('button').forEach(b=>b.onclick=()=>{sec=b.textContent;history.replaceState(0,'','#'+sec);ciz()});
- I.innerHTML=URUNLER.filter(u=>sec=='Tümü'||u.kat==sec).map(u=>`<article class="kart" data-gel><div class="g">${u.gorsel?`<img src="${u.gorsel}" alt="${u.ad}" loading="lazy">`:'<span class="yer">✦</span>'}</div>
- <div class="b"><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
- <div class="d"><button class="btn cam" onclick="Sepet.ekle('${u.id}');toast('Sepete eklendi')">Sepete ekle</button>
- <button class="btn wa" onclick="window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Merhaba, ${u.ad} (${TL(u.fiyat)}) için sipariş vermek istiyorum.'),'_blank')">WhatsApp</button></div></div></article>`).join('');
- yumusakGel()}
-function yumusakGel(){requestAnimationFrame(()=>I.querySelectorAll('[data-gel]').forEach((e,i)=>setTimeout(()=>e.classList.add('gel'),i*60)))}
-ciz();akisKur();
-</script></body></html>
+const say=k=>k==='Tümü'?URUNLER.length:URUNLER.filter(u=>u.kat===k).length;
+function filtreCiz(){F.innerHTML=kats.map(k=>`<button type="button" role="tab" aria-selected="${k==sec}" class="${k==sec?'on':''}" data-k="${k}">${k}<small>${say(k)}</small></button>`).join('');
+ F.querySelectorAll('button').forEach(b=>b.onclick=()=>{sec=b.dataset.k;history.replaceState(0,'','#'+encodeURIComponent(sec));filtreCiz();izgaraCiz()})}
+function izgaraCiz(){
+ I.innerHTML=URUNLER.filter(u=>sec=='Tümü'||u.kat==sec).map(u=>`<article class="kart" data-id="${u.id}">
+  <div class="g"><img src="${u.gorsel}" alt="${u.ad}" loading="lazy"><span class="rozet">✓ Çantada</span></div>
+  <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
+  <div class="eylem"><button class="btn altin ekle" type="button">Çantaya ekle</button>
+  <div class="stepper"><button type="button" data-d="-1" aria-label="Azalt">−</button><output>1</output><button type="button" data-d="1" aria-label="Artır">+</button></div></div></div></article>`).join('');
+ durum();
+ I.querySelectorAll('.kart').forEach((k,i)=>{k.animate([{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'none'}],{duration:600,delay:i*45,easing:'cubic-bezier(.2,.7,.2,1)',fill:'backwards'})});
+}
+I.addEventListener('click',e=>{
+ const k=e.target.closest('.kart');if(!k)return;const id=k.dataset.id,u=URUNLER.find(x=>x.id===id);
+ if(e.target.closest('.ekle')){Sepet.ekle(id,1);sepeteUcur(k.querySelector('.g img'));toast(`<b>${u.ad}</b> çantanıza eklendi`,['Çantayı aç',cekmeceAc])}
+ const d=e.target.closest('.stepper button');if(d){Sepet.ekle(id,+d.dataset.d);if(+d.dataset.d>0)sepeteUcur(k.querySelector('.g img'))}
+});
+function durum(){
+ I.querySelectorAll('.kart').forEach(k=>{const n=Sepet.adet(k.dataset.id),o=k.querySelector('output');k.classList.toggle('sepette',n>0);
+  if(n>0&&o.textContent!=n){o.textContent=n;o.classList.remove('vur');void o.offsetWidth;o.classList.add('vur')}});
+ const n=Sepet.sayi(),c=document.getElementById('cubuk');c.classList.toggle('on',n>0);
+ c.querySelector('.ozet').innerHTML=`Çantanızda ${n} ürün<b>${TL(Sepet.toplam())}</b>`;
+}
+document.addEventListener('sepet',durum);
+filtreCiz();izgaraCiz();
+</script>
+</body>
+</html>
