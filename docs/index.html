@@ -20,7 +20,8 @@
 <link rel="apple-touch-icon" href="assets/ikon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" type="image/webp" href="assets/magaza-giris.webp" imagesrcset="assets/magaza-giris-m.webp 1200w, assets/magaza-giris.webp 2000w" imagesizes="(max-width:820px) 100vw, 55vw">
+<link rel="preload" as="image" type="image/webp" href="assets/hero/magaza.webp" media="(min-width: 601px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="assets/hero/magaza-m.webp" media="(max-width: 600px)" fetchpriority="high">
 <link rel="stylesheet" href="site.css">
 <script src="assets/js/lenis.min.js" defer></script>
 <script type="application/ld+json">
@@ -33,29 +34,27 @@
 <style>
 .kap{padding-inline:max(20px,5vw)}
 .ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
-/* ===== Açılış ===== */
-.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(28px,4vw,72px);align-items:center;padding-top:112px;padding-bottom:56px;overflow:hidden;
- background:radial-gradient(70% 60% at 85% 30%,rgba(201,162,75,.10),transparent 60%),radial-gradient(60% 70% at 0% 100%,rgba(122,31,43,.18),transparent 60%),var(--gece)}
-.hero h1{font-size:clamp(44px,5.4vw,88px);line-height:1.02;margin:22px 0 24px}
-.hero .giris{font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:rgba(234,230,220,.82);max-width:46ch}
-.hero .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
-.guven{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:44px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1);font-size:14px;color:rgba(234,230,220,.75)}
+/* ===== Açılış: canlı mağaza görüntüsü; solda buğulu alan, yazılar buğunun üstünde ===== */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:var(--gece);isolation:isolate}
+.hero-medya{position:absolute;inset:0;z-index:-2;transform:translate3d(0,calc(var(--sy,0)*.22px),0)}
+.hero-medya video,.hero-medya img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 50%;display:block}
+.hero-bugu{position:absolute;inset:0;z-index:-1;pointer-events:none;background:
+ linear-gradient(90deg,rgba(6,13,31,.88) 0%,rgba(6,13,31,.78) 22%,rgba(6,13,31,.42) 34%,rgba(6,13,31,0) 46%),
+ linear-gradient(0deg,var(--gece) 0%,rgba(6,13,31,.55) 12%,transparent 30%),
+ linear-gradient(180deg,rgba(6,13,31,.5),transparent 16%)}
+.hero .metin{position:relative;width:min(520px,calc(34vw - max(20px,5vw)));padding:clamp(110px,14vh,150px) 0 clamp(48px,8vh,80px)}
+.hero h1{font-size:clamp(38px,3.9vw,76px);line-height:1.03;margin:22px 0 22px;text-shadow:0 2px 34px rgba(6,13,31,.55)}
+.hero .giris{font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:rgba(234,230,220,.86);max-width:44ch;text-shadow:0 1px 18px rgba(6,13,31,.6)}
+.hero .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.guven{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:14px;color:rgba(234,230,220,.8)}
 .guven b{font-family:'Marcellus';font-weight:400;font-size:22px;color:var(--altin2);margin-right:7px}
 .guven span{display:flex;align-items:baseline}
-.cerceve{position:relative;height:min(calc(100svh - 170px),780px);min-height:440px}
-.cerceve .foto{position:absolute;inset:0;border-radius:28px;overflow:hidden;box-shadow:0 50px 100px -40px rgba(0,0,0,.8)}
-.cerceve .foto picture{display:contents}.cerceve .foto img{width:100%;height:100%;object-fit:cover;object-position:46% 42%;transform:scale(calc(1.04 + var(--sy,0)*.00008)) translateY(calc(var(--sy,0)*.03px));will-change:transform}
-.cerceve .foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(6,13,31,.55));pointer-events:none}
-.cerceve::before{content:"";position:absolute;inset:-14px 14px 14px -14px;border:1px solid rgba(201,162,75,.45);border-radius:34px;transform:translate(calc(var(--sy,0)*-.02px),calc(var(--sy,0)*.02px))}
-.adres-kart{position:absolute;left:22px;bottom:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 14px 14px 20px;border-radius:20px;
- background:rgba(10,20,44,.62);backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
-.adres-kart small{display:block;font-size:11px;letter-spacing:.24em;color:var(--altin2);margin-bottom:4px}
-.adres-kart span{font-size:15px}
-.adres-kart .btn{min-height:44px;padding:11px 18px;font-size:14px;flex:none}
+.hero-adres{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:18px;font-size:14px;color:rgba(234,230,220,.78)}
+.hero-adres a{color:var(--altin2);text-decoration:underline;text-decoration-color:rgba(230,199,122,.45);text-underline-offset:4px}
+.hero-adres a:hover{color:#fff}
 /* giriş animasyonu (içeriği bekletmez, sadece kısa bir süzülme) */
 .sz{opacity:0;transform:translateY(22px);animation:sz .9s cubic-bezier(.2,.7,.2,1) forwards}
 .sz:nth-child(2){animation-delay:.08s}.sz:nth-child(3){animation-delay:.16s}.sz:nth-child(4){animation-delay:.24s}.sz:nth-child(5){animation-delay:.32s}
-.cerceve.sz{animation-delay:.1s;transform:translateY(0) scale(.97)}
 @keyframes sz{to{opacity:1;transform:none}}
 /* ===== Hakkımızda ===== */
 .hak{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:center;padding-block:clamp(90px,14vh,160px)}
@@ -119,46 +118,55 @@
 .ziyaret .adres span{color:var(--altin2)}
 .ziyaret .dugmeler{display:flex;gap:10px;flex-wrap:wrap}
 @media(max-width:1100px){.grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}.grup{aspect-ratio:4/3.6}}
+@media (max-width:820px),(max-aspect-ratio:1/1){
+ .hero{display:block;min-height:auto}
+ .hero-medya{position:relative;inset:auto;height:clamp(320px,56svh,640px);transform:none;margin-inline:calc(max(20px,5vw)*-1);margin-top:72px}
+ .hero-medya video,.hero-medya img{object-position:72% 50%}
+ .hero-bugu{top:72px;bottom:auto;height:clamp(320px,56svh,640px);background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 8%,transparent 52%,rgba(6,13,31,.82) 82%,var(--gece) 100%)}
+ .hero .metin{width:auto;max-width:640px;padding:0 0 44px;margin-top:calc(clamp(320px,56svh,640px)*-.2)}
+ .hero h1{margin-top:12px;font-size:clamp(38px,9vw,64px)}
+}
+@media (max-width:600px){
+ .hero-medya{height:auto;aspect-ratio:1080/1066;margin-top:40px}
+ .hero-medya video,.hero-medya img{object-position:50% 50%}
+ .hero-bugu{top:40px;height:auto;aspect-ratio:1080/1066;background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 6%,transparent 50%,rgba(6,13,31,.82) 80%,var(--gece) 100%)}
+ .hero .metin{margin-top:-21vw}
+}
 @media(max-width:820px){
- .hero{grid-template-columns:1fr;padding-top:96px;padding-bottom:40px;min-height:auto;gap:30px}
- .cerceve{order:-1;height:46svh;min-height:300px;margin-top:6px}
- .cerceve .foto img{object-position:50% 38%}
- .hero h1{margin-top:14px}
- .cerceve::before{inset:-10px 10px 10px -10px}
  .hak,.tur-bolum{grid-template-columns:1fr}
  .hak .foto{aspect-ratio:4/4.4}
  .ayak{grid-template-columns:1fr;gap:6px}
  .gecis{height:140vh}
  .serit{height:44px}.serit .akis span{font-size:13px}
- .adres-kart{left:10px;right:10px;bottom:10px;padding:8px 8px 8px 14px;border-radius:16px}
- .adres-kart small{display:none}.adres-kart span{font-size:13px}
- .adres-kart .btn{padding:9px 14px;font-size:13px}
 }
-@media(max-width:720px){.hero{padding-top:72px}}
 @media(max-width:560px){.grup-izgara{grid-template-columns:1fr 1fr;gap:10px}.grup{aspect-ratio:3/4.2}.grup .ic{padding:14px}.grup h3{font-size:19px}.grup p,.grup .ok{display:none}
  .guven{gap:10px 20px}.guven b{font-size:20px}.ziyaret .dugmeler .btn{flex:1 1 auto}}
 @media(max-width:380px){.adimlar{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.sz{animation:none;opacity:1;transform:none}.gecis{display:none}.gruplar-bas{padding-top:clamp(60px,10vh,110px)}}
+@media(prefers-reduced-motion:reduce){.hero-medya{transform:none}.sz{animation:none;opacity:1;transform:none}.gecis{display:none}.gruplar-bas{padding-top:clamp(60px,10vh,110px)}}
 </style>
 </head>
 <body>
 <main id="icerik">
 <!-- AÇILIŞ -->
 <section class="hero kap" aria-label="İstanbul Hac Umre Hediyelik">
+ <div class="hero-medya" aria-hidden="true">
+  <video id="hero-video" muted loop playsinline preload="auto" poster="assets/hero/magaza.webp" disablepictureinpicture>
+   <source src="assets/hero/magaza-m.mp4" type="video/mp4" media="(max-width: 600px)">
+   <source src="assets/hero/magaza.mp4" type="video/mp4">
+  </video>
+ </div>
+ <div class="hero-bugu" aria-hidden="true"></div>
  <div class="metin">
   <div class="ust-yazi sz">Hac · Umre · Hurma · Hediyelik</div>
-  <h1 class="sz">Mübarek yolculuğun<br><span class="metal metal-yazi" data-isik>her ihtiyacı</span> burada.</h1>
-  <p class="giris sz">İhramdan seccadeye, umre kıyafetlerinden Medine hurmasına kadar hac ve umre için gereken her şeyi, dönüşte sevdiklerinize götüreceğiniz hediyelerle birlikte Ümraniye'deki mağazamızda bulabilirsiniz.</p>
+  <h1 class="sz">Mübarek<br>yolculuğun<br><span class="metal metal-yazi" data-isik>her ihtiyacı</span><br>burada.</h1>
+  <p class="giris sz">İhramdan seccadeye, umre kıyafetlerinden Medine hurmasına kadar hac ve umre için gereken her şey, dönüşte götüreceğiniz hediyelerle birlikte Ümraniye'deki mağazamızda.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html">Ürünlerimizi inceleyin</a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
   <div class="guven sz">
    <span><b>5,0</b>Google puanı</span>
    <span><b>120+</b>Google yorumu</span>
    <span><b>Her gün</b>09:00–20:00</span>
   </div>
- </div>
- <div class="cerceve sz">
-  <div class="foto"><picture><source type="image/webp" srcset="assets/magaza-giris-m.webp 1200w, assets/magaza-giris.webp 2000w" sizes="(max-width:820px) 100vw, 55vw"><img src="assets/magaza-giris.jpg" srcset="assets/magaza-giris-m.jpg 1200w, assets/magaza-giris.jpg 2000w" sizes="(max-width:820px) 100vw, 55vw" alt="İstanbul Hac Umre Hediyelik mağazasının cephesi ve vitrini" fetchpriority="high"></picture></div>
-  <div class="adres-kart"><div><small>MAĞAZAMIZ</small><span>Cevherağa Camii Sk. No:10-A, Ümraniye</span></div><a class="btn altin" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a></div>
+  <p class="hero-adres sz"><span>Cevherağa Camii Sk. No:10-A, Ümraniye</span><a href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a></p>
  </div>
 </section>
 
@@ -242,6 +250,18 @@
 <script src="site.js"></script>
 <script>
 kabuk('ana');
+/* Açılış videosu: telefonda dikey kırpım, ekrandan çıkınca ve sekme gizlenince durur */
+(function(){
+ const v=document.getElementById('hero-video');if(!v)return;
+ if(matchMedia('(max-width: 600px)').matches)v.poster='assets/hero/magaza-m.webp';
+ const dur=matchMedia('(prefers-reduced-motion: reduce)').matches||(navigator.connection&&navigator.connection.saveData);
+ if(dur){v.removeAttribute('autoplay');v.preload='none';return}
+ const oynat=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};
+ let gorunur=true;
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;gorunur&&!document.hidden?oynat():v.pause()}).observe(v);
+ document.addEventListener('visibilitychange',()=>{document.hidden?v.pause():gorunur&&oynat()});
+ oynat();
+})();
 document.getElementById('ziyaret-wa').insertAdjacentHTML('afterbegin',WA_SVG);
 /* Ürün grupları */
 document.getElementById('grup-izgara').innerHTML=KATEGORILER.map((k,i)=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><img src="${resim(k.gorsel)}" alt="" loading="lazy" ${RESIM_YEDEK}><div class="ic"><span class="no">0${i+1}</span><h3>${k.ad}</h3><p>${k.acik}</p><span class="ok">İncele <span aria-hidden="true">→</span></span></div></a>`).join('');
