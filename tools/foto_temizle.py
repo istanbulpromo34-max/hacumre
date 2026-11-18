@@ -48,9 +48,12 @@ OPENAI_MODELLER = [m.strip() for m in os.environ.get(
 STUDYO_PROMPT = (
     "Reshoot this exact product as a professional catalogue studio photograph. "
     "CRITICAL: the product itself must stay identical to the source — same shape, proportions, "
-    "colour, material, surface, pattern, printed text, calligraphy, logos and every small detail. "
-    "Do not redesign, restyle, re-letter, beautify, add or remove anything, and do not change the "
-    "product's angle. Only the background, the lighting and the image quality may change. "
+    "colour, material, surface and pattern. "
+    "Every logo, brand mark, label, sticker, barcode, printed text and calligraphy that is ON the product "
+    "must stay exactly where it is, with the same wording, lettering, size and placement — never remove, "
+    "hide, blur, clean away, re-letter, translate or replace them, and never invent new ones. "
+    "Do not redesign, restyle, beautify, add or remove any part of the product, and do not change its angle. "
+    "Only the background, the lighting and the image quality may change. "
     "Place the product centred on a seamless soft cream backdrop, warm off-white close to #EFE7D8, "
     "with a barely perceptible fine woven fabric texture that reads as a calm background rather than "
     "as a piece of cloth. Lighting: one large soft key light from the upper left, gentle fill from the "
@@ -58,8 +61,10 @@ STUDYO_PROMPT = (
     "Rendering: tack-sharp focus across the whole product, crisp clean edges, true-to-life colour, high "
     "micro-detail, the look of a manufacturer's catalogue render. Framing: square, the product fully inside "
     "the frame with even margins, filling about 82 percent of it, so a viewer understands at a glance what "
-    "the product is and what it is made of. No props, no hands, no people, no text overlay, no watermark, "
-    "no border, no second object. Product: "
+    "the product is and what it is made of. Do not add anything that is not in the source photo: no props, "
+    "no hands, no people, no second object, no border, and no caption, label, watermark or graphic laid over "
+    "the picture — this applies only to new additions, never to the markings already printed on the product. "
+    "Product: "
 )
 
 

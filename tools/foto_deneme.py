@@ -38,7 +38,12 @@ def puan(k):
         if a in d:
             return i
     return len(oncelik)
-secim = sorted(kayit, key=puan)[:ADET]
+ARA = os.environ.get("DENEME_ARA", "").strip().lower()
+if ARA:
+    sec = [k for k in kayit if any(a in (k["name"] or "").lower() for a in ARA.split(","))]
+    secim = sec[:ADET] or sorted(kayit, key=puan)[:ADET]
+else:
+    secim = sorted(kayit, key=puan)[:ADET]
 print("Denenecek ürünler:", ", ".join(k["name"][:40] for k in secim))
 
 BOY = 760

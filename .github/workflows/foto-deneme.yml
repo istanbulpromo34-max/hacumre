@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       adet: { description: 'Kaç ürün', required: false, default: '4' }
+      ara: { description: 'Ad içinde ara (virgülle)', required: false, default: '' }
 permissions:
   contents: write
 jobs:
@@ -22,6 +23,7 @@ jobs:
           ODOO_LOGIN: ${{ secrets.ODOO_LOGIN }}
           ODOO_KEY: ${{ secrets.ODOO_KEY }}
           DENEME_ADET: ${{ inputs.adet }}
+          DENEME_ARA: ${{ inputs.ara }}
         run: python tools/foto_deneme.py
       - name: Yaz
         run: |
