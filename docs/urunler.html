@@ -84,17 +84,18 @@
 </main>
 <div class="canta-cubuk" id="cubuk" aria-live="polite"><span class="ozet"></span><button class="ac" type="button" onclick="cekmeceAc()">Çantayı gör</button><button class="btn wa" type="button" onclick="Sepet.gonder()">WhatsApp'tan gönder</button></div>
 <footer class="sf"><div class="f-ic"><a class="f-logo" href="index.html"><img src="assets/logo-acik.png" alt="İstanbul Hac Umre Hurma Hediyelik" loading="lazy"></a><span>Cevherağa Camii Sokak No:10, Ümraniye, İstanbul</span></div><div class="f-ic" style="text-align:right"><a href="tel:+905551044040">0555 104 40 40</a><a href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp</a><span>© 2026 İstanbul Hac Umre Hediyelik</span></div></footer>
+<script src="urunler-veri.js"></script>
 <script src="site.js"></script>
 <script>
 kabuk('urun');addEventListener('load',()=>akisKur());
-const kats=['Tümü',...KATEGORILER.map(k=>k.ad)];const F=document.querySelector('.filtre'),I=document.querySelector('.izgara');
-let sec=decodeURIComponent(location.hash.slice(1))||'Tümü';if(!kats.includes(sec))sec='Tümü';
 const say=k=>k==='Tümü'?URUNLER.length:URUNLER.filter(u=>u.kat===k).length;
+const kats=['Tümü',...new Set([...KATEGORILER.map(k=>k.ad),...URUNLER.map(u=>u.kat)])].filter(k=>k==='Tümü'||say(k)>0);const F=document.querySelector('.filtre'),I=document.querySelector('.izgara');
+let sec=decodeURIComponent(location.hash.slice(1))||'Tümü';if(!kats.includes(sec))sec='Tümü';
 function filtreCiz(){F.innerHTML=kats.map(k=>`<button type="button" role="tab" aria-selected="${k==sec}" class="${k==sec?'on':''}" data-k="${k}">${k}<small>${say(k)}</small></button>`).join('');
  F.querySelectorAll('button').forEach(b=>b.onclick=()=>{sec=b.dataset.k;history.replaceState(0,'','#'+encodeURIComponent(sec));filtreCiz();izgaraCiz()})}
 function izgaraCiz(){
  I.innerHTML=URUNLER.filter(u=>sec=='Tümü'||u.kat==sec).map(u=>`<article class="kart" data-id="${u.id}">
-  <div class="g"><img src="${u.gorsel}" alt="${u.ad}" loading="lazy"><span class="rozet">✓ Çantada</span></div>
+  <div class="g"><img src="${u.gorsel}" alt="${u.ad}" loading="lazy"${u.yedek?` onerror="this.onerror=null;this.src='${u.yedek}'"`:''}><span class="rozet">✓ Çantada</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
   <div class="eylem"><button class="btn altin ekle" type="button">Çantaya ekle</button>
   <div class="stepper"><button type="button" data-d="-1" aria-label="Azalt">−</button><output>1</output><button type="button" data-d="1" aria-label="Artır">+</button></div></div></div></article>`).join('');

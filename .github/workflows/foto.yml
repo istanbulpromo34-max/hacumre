@@ -1,0 +1,55 @@
+name: Foto temizle
+
+# gelen/ klasörüne ham fotoğraf düştüğünde arkaplanı temizler,
+# 2K beyaz zeminli görsele çevirir, siteye ve Odoo ürün kartına yazar.
+on:
+  push:
+    paths: ['gelen/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: foto
+  cancel-in-progress: false
+
+jobs:
+  temizle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+
+      - name: Model önbelleği
+        uses: actions/cache@v4
+        with:
+          path: ~/.u2net
+          key: rembg-isnet-general-use
+
+      - name: Kurulum
+        run: pip install --quiet pillow "rembg[cpu]==2.0.59" onnxruntime
+
+      - name: Temizle
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_LOGIN: ${{ secrets.ODOO_LOGIN }}
+          ODOO_KEY: ${{ secrets.ODOO_KEY }}
+        run: python tools/foto_temizle.py
+
+      - name: Depoya yaz
+        run: |
+          git config user.name "foto-bot"
+          git config user.email "foto-bot@users.noreply.github.com"
+          git add -A docs/assets/u gelen
+          if [ -n "$(git status --porcelain docs/assets/u gelen)" ]; then
+            git commit -m "Ürün fotoğrafları temizlendi"
+            git pull --rebase --autostash
+            git push
+          else
+            echo "Değişiklik yok."
+          fi

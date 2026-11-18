@@ -1,0 +1,41 @@
+name: Odoo urunleri
+
+# Hac umre ürünlerini Odoo'dan çeker ve siteye yazar.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 4 * * *'   # her gün 07:20 (İstanbul)
+
+permissions:
+  contents: write
+
+jobs:
+  cek:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+
+      - name: Odoo'dan çek
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_LOGIN: ${{ secrets.ODOO_LOGIN }}
+          ODOO_KEY: ${{ secrets.ODOO_KEY }}
+          ODOO_KATEGORI: ${{ vars.ODOO_KATEGORI }}
+        run: python tools/odoo_urunler.py
+
+      - name: Depoya yaz
+        run: |
+          if [ -n "$(git status --porcelain docs/data/urunler.json)" ]; then
+            git config user.name "katalog-bot"
+            git config user.email "katalog-bot@users.noreply.github.com"
+            git add docs/data/urunler.json
+            git commit -m "Odoo ürün listesi güncellendi"
+            git pull --rebase --autostash
+            git push
+          else
+            echo "Değişiklik yok."
+          fi
