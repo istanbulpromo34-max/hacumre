@@ -41,7 +41,7 @@ def _rembg(ham: bytes) -> Image.Image:
 
 
 def _openai(ham: bytes, ad: str) -> Image.Image:
-    import urllib.request
+    import urllib.request, urllib.error
     sinir = "----katalog" + base64.b16encode(os.urandom(8)).decode()
     parcalar = []
 
@@ -67,9 +67,13 @@ def _openai(ham: bytes, ad: str) -> Image.Image:
          "the frame with even margins, filling about 82 percent of it, so a viewer understands at a glance what "
          "the product is and what it is made of. No props, no hands, no people, no text overlay, no watermark, "
          "no border, no second object. Product: " + ad)
+    # OpenAI dosya türünü başlıkla değil içerikle doğruluyor: gerçekten PNG gönder
+    tampon = io.BytesIO()
+    Image.open(io.BytesIO(ham)).convert("RGB").save(tampon, "PNG", optimize=True)
+    png = tampon.getvalue()
     parcalar.append(
         f"--{sinir}\r\nContent-Disposition: form-data; name=\"image\"; filename=\"urun.png\"\r\n"
-        f"Content-Type: image/png\r\n\r\n".encode() + ham + b"\r\n")
+        f"Content-Type: image/png\r\n\r\n".encode() + png + b"\r\n")
     parcalar.append(f"--{sinir}--\r\n".encode())
     govde = b"".join(parcalar)
 
@@ -77,8 +81,12 @@ def _openai(ham: bytes, ad: str) -> Image.Image:
         "https://api.openai.com/v1/images/edits", data=govde,
         headers={"Authorization": f"Bearer {OPENAI_KEY}",
                  "Content-Type": f"multipart/form-data; boundary={sinir}"})
-    with urllib.request.urlopen(istek, timeout=180) as c:
-        veri = json.loads(c.read())
+    try:
+        with urllib.request.urlopen(istek, timeout=300) as c:
+            veri = json.loads(c.read())
+    except urllib.error.HTTPError as e:
+        govde = e.read().decode("utf-8", "replace")[:600]
+        raise RuntimeError(f"OpenAI {e.code}: {govde}") from None
     return Image.open(io.BytesIO(base64.b64decode(veri["data"][0]["b64_json"]))).convert("RGBA")
 
 
