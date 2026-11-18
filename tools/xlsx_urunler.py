@@ -23,15 +23,21 @@ OUT_JS = os.path.join("docs", "urunler-veri.js")
 
 # Sıra önemli: ilk uyan başlık kazanır, hiçbiri uymazsa son satır geçerli olur.
 KURALLAR = [
-    ("Hurma ve Zemzem", ("hurma", "zemzem", "lokum", "kahve", "bal ", "çay")),
-    ("Hac Umre Kıyafetleri", ("ihram", "ferace", "elbise", "etek", "gömlek", "shirt", "eşarp",
-                              "yazma", "başörtü", "basörtü", "takke", "çorap", "bone", "tesettür",
-                              "kıyafet", "giyim", "abaya", "atlet", "pantolon", "tunik", "hırka")),
-    ("Hac Umre Malzemeleri", ("terlik", "mest", "kemer", "çanta", "cüzdan", "valiz", "misvak",
-                              "sabun", "mendil", "krem", "şampuan", "diş ", "ayna", "makas",
-                              "tırnak", "matara", "boyunluk", "kilit", "seyahat", "yastık",
-                              "kulaklık", "maske", "sırt")),
-    ("İslami Hediyelik", ()),          # kalan her şey
+    ("Hurma ve Zemzem", ("hurma", "zemzem", "lokum", "kahve", "biskuvi", "cikolata", "kuruyemis",
+                         "fistik", "bal ", "recel", "kurabiye", "helva", "sakiz")),
+    ("Hac Umre Kiyafetleri", ("ihram", "ferace", "elbise", "etek", "gomlek", "shirt", "esarp",
+                              "yazma", "basortu", "takke", "corap", "corab", "bone", "tesettur",
+                              "kiyafet", "giyim", "abaya", "atlet", "pantolon", "tunik", "hirka",
+                              "salvar", "sal", "sali", "tulum", "yelek", "kaftan", "entari",
+                              "bornoz", "sapka", "kemer", "bluz", "cubbe", "sarik", "muslin",
+                              "takim", "bluzu", "sal")),
+    ("Hac Umre Malzemeleri", ("mest", "canta", "cuzdan", "valiz", "bavul", "misvak", "sabun",
+                              "mendil", "krem", "sampuan", "dis", "dismacunu", "ayna", "makas",
+                              "tirnak", "matara", "termos", "boyunluk", "kilit", "seyahat",
+                              "yastik", "kulaklik", "maske", "sirt", "tarak", "poset", "etiket",
+                              "terlik", "patik", "ayakkabi", "ayakkabisi", "tavaf", "pusula",
+                              "kablo", "bellek", "sarj", "sarz", "powerbank", "pedometre")),
+    ("Islami Hediyelik", ()),          # kalan her sey
 ]
 KAT_GORSEL = {
     "Hac Umre Malzemeleri": "assets/g/masa.jpg",
@@ -41,12 +47,44 @@ KAT_GORSEL = {
 }
 
 
+def sadelestir(s):
+    """Turkce harfleri ASCII karsiligina indirir; 'İ' -> 'i' sorununu da cozer."""
+    for a, b in (("ı", "i"), ("İ", "i"), ("I", "i"), ("ş", "s"), ("Ş", "s"), ("ğ", "g"),
+                 ("Ğ", "g"), ("ü", "u"), ("Ü", "u"), ("ö", "o"), ("Ö", "o"), ("ç", "c"), ("Ç", "c")):
+        s = (s or "").replace(a, b)
+    s = unicodedata.normalize("NFKD", s)
+    return "".join(c for c in s if not unicodedata.combining(c)).lower()
+
+
+KAT_ADI = {
+    "Hac Umre Kiyafetleri": "Hac Umre Kıyafetleri",
+    "Hac Umre Malzemeleri": "Hac Umre Malzemeleri",
+    "Islami Hediyelik": "İslami Hediyelik",
+    "Hurma ve Zemzem": "Hurma ve Zemzem",
+}
+
+
 def kategori(ad):
-    d = (ad or "").lower()
+    kelimeler = set(re.findall(r"[a-z0-9]+", sadelestir(ad)))
+    metin = sadelestir(ad)
     for baslik, anahtarlar in KURALLAR:
-        if not anahtarlar or any(a in d for a in anahtarlar):
-            return baslik
+        if not anahtarlar:
+            return KAT_ADI[baslik]
+        for a in anahtarlar:
+            # kısa anahtarlar tam kelime arar, uzunlar metnin içinde geçebilir
+            if (a in kelimeler) or (len(a) >= 5 and a in metin):
+                return KAT_ADI[baslik]
     return "İslami Hediyelik"
+
+
+# Satışa konu olmayan iç kayıtlar (peşinat, promosyon fişi gibi) listeye girmez.
+ELEME = ("pesinat", "promosyon", "showroom", "iade", "kargo ucreti",
+         "indirim", "avans", "test urun", "hizmet bedeli")
+
+
+def elenecek(ad):
+    d = sadelestir(ad)
+    return any(e in d for e in ELEME) or d.strip() == "hediyelik"
 
 
 BIRIM = {"ML", "CC", "GR", "KG", "LT", "MT", "CM", "MM", "TL", "DNC", "XL", "XXL", "3D", "USB", "LED", "CD"}
@@ -84,13 +122,7 @@ def basliklandir(ad):
 
 
 def slug(s):
-    s = (s or "")
-    for a, b in (("ı", "i"), ("İ", "i"), ("I", "i"), ("ş", "s"), ("Ş", "s"), ("ğ", "g"),
-                 ("Ğ", "g"), ("ü", "u"), ("Ü", "u"), ("ö", "o"), ("Ö", "o"), ("ç", "c"), ("Ç", "c")):
-        s = s.replace(a, b)
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c)).lower()
-    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")[:48] or "urun"
+    return re.sub(r"[^a-z0-9]+", "-", sadelestir(s)).strip("-")[:48] or "urun"
 
 
 def main():
@@ -114,10 +146,13 @@ def main():
     if i_ad is None:
         sys.exit("Tabloda 'Adı' sütunu bulunamadı. Başlıklar: " + ", ".join(basliklar))
 
-    urunler, kullanilan = [], set()
+    urunler, kullanilan, elenen = [], set(), []
     for r in satirlar:
         ham_ad = (r[i_ad] or "").strip() if i_ad is not None and r[i_ad] else ""
         if not ham_ad:
+            continue
+        if elenecek(ham_ad):
+            elenen.append(ham_ad)
             continue
         kod = str(r[i_kod]).strip() if i_kod is not None and r[i_kod] else ""
         anahtar = slug(kod) if kod else slug(ham_ad)
@@ -161,6 +196,8 @@ def main():
     sayim = {}
     for u in urunler:
         sayim[u["kat"]] = sayim.get(u["kat"], 0) + 1
+    if elenen:
+        print("Listeye alınmayan iç kayıtlar:", ", ".join(elenen))
     print(f"{len(urunler)} ürün yazıldı ({sum(1 for u in urunler if not u['fotoVar'])} tanesi fotoğrafsız)")
     for k, v in sorted(sayim.items(), key=lambda x: -x[1]):
         print(f"  {k}: {v}")
