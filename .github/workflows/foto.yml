@@ -7,11 +7,12 @@ name: Foto temizle
 # GitHub tarafından iptal edilebildiği için, iş bitiminde gelen/ hâlâ doluysa
 # kendini yeniden tetikler; ayrıca 15 dakikada bir kuyruğa bakar. Böylece
 # yüklenen hiçbir kare kuyrukta unutulmaz.
+# ARTIK YEDEK YOL. Ham kareler saatlik "Higgsfield stüdyo fotoğrafları"
+# görevine bırakılır; o kareyi Higgsfield'da yeniden çizdirir ve higgs.yml
+# siteye işler. Bu akış kareyi kesme yöntemiyle işlerdi, sonucu daha zayıftı
+# ve ham kareyi silerek Higgsfield'a sıra bırakmıyordu. Gerektiğinde elle
+# çalıştırılır (Actions > Foto temizle > Run workflow).
 on:
-  push:
-    paths: ['gelen/**', '!gelen/higgs.json']   # higgs.json'u higgs.yml işler
-  schedule:
-    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:

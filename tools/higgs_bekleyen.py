@@ -7,8 +7,9 @@ Depoyu klonlamaya gerek yok; her şey GitHub API üzerinden okunur.
   ad  : ürünün adı (istemde kullanılır)
   url : ham karenin herkese açık adresi (Higgsfield buradan indirir)
 
-Zaten stüdyodan geçmiş (docs/assets/u/<id>.webp) ve halihazırda
-gelen/higgs.json kuyruğunda olan kareler listelenmez.
+Halihazırda gelen/higgs.json kuyruğunda olan kareler listelenmez; ham karesi
+gelen/ içinde duran her ürün işlenir (eski görseli olsa da, yeniden çekilmiş
+olabilir).
 """
 import json
 import os
@@ -42,9 +43,6 @@ def main():
         print("# kuyruk boş", file=sys.stderr)
         return
 
-    bitmis = {f["name"][:-5] for f in (api(f"contents/docs/assets/u?ref={DAL}", []) or [])
-              if isinstance(f, dict) and f.get("name", "").endswith(".webp")}
-
     sirada = set()
     kuyruk = api(f"contents/gelen/higgs.json?ref={DAL}")
     if isinstance(kuyruk, dict) and kuyruk.get("content"):
@@ -67,7 +65,8 @@ def main():
     n = 0
     for dosya in kareler:
         urun_id = dosya.rsplit(".", 1)[0]
-        if urun_id in bitmis or urun_id in sirada:
+        if urun_id in sirada:   # gelen/ içinde duran kare her hâlükârda işlenir
+                                 # (eski görseli olan ürün yeniden çekilmiş olabilir)
             continue
         print(json.dumps({"id": urun_id, "ad": adlar.get(urun_id, urun_id),
                           "url": HAM + dosya}, ensure_ascii=False))
