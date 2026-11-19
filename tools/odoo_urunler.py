@@ -110,7 +110,7 @@ def main():
     # Site doğrudan bu betiği okuyor: window.URUNLER dolunca örnek liste devre dışı kalır.
     satilan = [u for u in cikti if u["aktif"] and u["satilir"]]
     js = [{
-        "id": u["id"], "ad": u["ad"], "fiyat": u["fiyat"], "kat": u["kat"],
+        "id": u["id"], "ad": u["ad"], "kod": u["kod"], "fiyat": u["fiyat"], "kat": u["kat"],
         "acik": u["acik"] or u["altkat"] or "",
         "gorsel": f"assets/u/{u['id']}.webp",
         "odooFoto": u["odooFoto"],

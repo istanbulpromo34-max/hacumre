@@ -87,7 +87,7 @@ def main():
         }, f, ensure_ascii=False, separators=(",", ":"))
 
     js = [{
-        "id": u["id"], "ad": u["ad"], "fiyat": u["fiyat"], "kat": u["kat"],
+        "id": u["id"], "ad": u["ad"], "kod": u["kod"], "fiyat": u["fiyat"], "kat": u["kat"],
         "acik": "", "gorsel": f"assets/u/{u['id']}.webp",
         "yedek": KAT_GORSEL.get(u["kat"], "assets/g/masa.jpg"),
     } for u in urunler if u["fiyat"] > 0]

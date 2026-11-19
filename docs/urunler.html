@@ -97,6 +97,60 @@
 }
 @media(max-width:370px){.canta-cubuk .btn .uzun{display:none}}
 @media(prefers-reduced-motion:reduce){.canta-cubuk,.canta-cubuk.on{transition:none}}
+/* ---- arama ---- */
+.filtre-satir{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.filtre-satir .filtre{flex:1;min-width:0}
+.arama{flex:none;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+  border:1px solid rgba(201,162,75,.28);background:rgba(255,255,255,.05);width:min(260px,38vw)}
+.arama svg{width:16px;height:16px;flex:none;fill:none;stroke:rgba(230,199,122,.9);stroke-width:1.8}
+.arama input{flex:1;min-width:0;border:0;background:none;color:inherit;font:inherit;font-size:14px;outline:none}
+.arama input::-webkit-search-cancel-button{display:none}
+.arama input::placeholder{color:rgba(234,230,220,.42)}
+.arama button{flex:none;border:0;background:none;color:rgba(234,230,220,.6);font-size:19px;line-height:1;cursor:pointer;padding:0 2px}
+.arama button:hover{color:#eae6dc}
+@media(max-width:720px){
+  .filtre-satir{flex-wrap:wrap;gap:9px}
+  .arama{width:100%;order:-1}
+}
+
+/* ---- büyük görünüm ---- */
+[hidden]{display:none !important}
+.buyut{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:clamp(10px,2vw,28px);
+  background:rgba(4,9,20,.86);backdrop-filter:blur(18px) saturate(130%);-webkit-backdrop-filter:blur(18px) saturate(130%)}
+.buyut-ic{position:relative;width:min(1080px,100%);max-height:calc(100svh - 24px);overflow:auto;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:0;border-radius:24px;
+  background:linear-gradient(180deg,rgba(18,35,71,.96),rgba(11,22,48,.98));
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 50px 110px -46px #000}
+.buyut-gor{position:relative;background:#efe7d8;min-height:260px;display:grid;place-items:center}
+.buyut-gor img{width:100%;height:100%;object-fit:contain;display:block;aspect-ratio:1}
+.buyut-b{padding:clamp(18px,2.4vw,30px);display:flex;flex-direction:column;gap:10px;min-width:0}
+.buyut-b .kat{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--altin2,#e6c77a);opacity:.95}
+.buyut-b h3{font-size:clamp(20px,2.4vw,27px);line-height:1.2;margin:0}
+.buyut-b .kod{font-size:12.5px;color:rgba(234,230,220,.55);font-variant-numeric:tabular-nums}
+.buyut-b .acik{font-size:14.5px;line-height:1.65;color:rgba(234,230,220,.72)}
+.buyut-b .fi{font-size:clamp(23px,2.6vw,30px);margin-top:4px}
+.buyut-b .dug{margin-top:auto;padding-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.buyut-b .dug .btn{flex:1;min-width:150px;justify-content:center}
+.buyut-x{position:absolute;top:10px;right:10px;z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
+  background:rgba(6,13,31,.72);color:#eae6dc;font-size:22px;line-height:1;backdrop-filter:blur(10px);cursor:pointer}
+.buyut-ok{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);background:rgba(6,13,31,.6);color:#eae6dc;font-size:22px;line-height:1;
+  backdrop-filter:blur(10px);cursor:pointer}
+.buyut-ok.geri{left:10px}.buyut-ok.ileri{right:10px}
+.buyut-ok:hover,.buyut-x:hover{background:rgba(201,162,75,.9);color:#21160a;border-color:transparent}
+.kart .g{cursor:zoom-in}
+@media(max-width:860px){
+  .buyut-ic{grid-template-columns:1fr}
+  .buyut-gor{border-radius:24px 24px 0 0}
+  .buyut-ok{width:40px;height:40px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .buyut{animation:buyutAc .22s ease-out}
+  .buyut-ic{animation:buyutKalk .32s cubic-bezier(.2,.8,.2,1)}
+}
+@keyframes buyutAc{from{opacity:0}to{opacity:1}}
+@keyframes buyutKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+
 </style>
 </head>
 <body>
@@ -111,10 +165,36 @@
  </ol>
  <p class="not-alt">Kataloğumuz güncelleniyor; fiyatları siparişiniz sırasında WhatsApp'tan teyit ediyoruz.</p>
 </section>
-<div class="filtre-dis" id="filtre-dis"><div class="kap"><div class="filtre" role="group" aria-label="Ürün grupları"></div></div></div>
+<div class="filtre-dis" id="filtre-dis"><div class="kap">
+ <div class="filtre-satir">
+  <div class="filtre" role="group" aria-label="Ürün grupları"></div>
+  <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
+   <input id="ara" type="search" placeholder="Ürün ara…" autocomplete="off" aria-label="Ürün ara">
+   <button type="button" id="araSil" aria-label="Aramayı temizle" hidden>&times;</button></label>
+ </div>
+</div></div>
 <div class="kap"><p class="sonuc" id="sonuc" aria-live="polite"></p><div class="izgara"></div></div>
 </main>
 <div class="canta-cubuk" id="cubuk"><button class="ozet" type="button" aria-label="Çantayı aç"></button><button class="btn wa" id="cubuk-wa" type="button" onclick="Sepet.gonder()"><span><span class="uzun">WhatsApp'tan </span>gönder</span></button></div>
+<div class="buyut" id="buyut" hidden role="dialog" aria-modal="true" aria-labelledby="buyutAd">
+ <div class="buyut-ic">
+  <button class="buyut-x" type="button" id="buyutKapat" aria-label="Kapat">&times;</button>
+  <button class="buyut-ok geri" type="button" id="buyutGeri" aria-label="Önceki ürün">‹</button>
+  <button class="buyut-ok ileri" type="button" id="buyutIleri" aria-label="Sonraki ürün">›</button>
+  <div class="buyut-gor"><img id="buyutGorsel" alt=""></div>
+  <div class="buyut-b">
+   <span class="kat" id="buyutKat"></span>
+   <h3 id="buyutAd"></h3>
+   <span class="kod" id="buyutKod"></span>
+   <p class="acik" id="buyutAcik"></p>
+   <div class="fi metal metal-yazi" data-isik id="buyutFiyat"></div>
+   <div class="dug">
+    <button class="btn altin" type="button" id="buyutEkle">Çantaya ekle</button>
+    <button class="btn wa" type="button" id="buyutSor">WhatsApp'tan sor</button>
+   </div>
+  </div>
+ </div>
+</div>
 <p class="sr" id="duyuru" aria-live="polite"></p>
 <footer class="sf"></footer>
 <script src="urunler-veri.js"></script>
@@ -135,9 +215,20 @@ F.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.datas
  if(FD.classList.contains('yapisti'))filtreyeGit()});
 function filtreyeGit(){const hedef=document.querySelector('.bas').offsetHeight+(innerWidth>720?-82:0);
  if(lenis)lenis.scrollTo(hedef,{immediate:azHareketU});else scrollTo(0,hedef)}
+let ara='';
+const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i');
+function suzulmus(){
+ return URUNLER.filter(u=>{
+  if(sec!=='Tümü'&&u.kat!==sec)return false;
+  if(ara&&sade(u.ad+' '+(u.kod||'')+' '+u.kat).indexOf(ara)===-1)return false;
+  return true;
+ });
+}
 function izgaraCiz(){
- const liste=URUNLER.filter(u=>sec==='Tümü'||u.kat===sec);
- SON.textContent=sec==='Tümü'?`${liste.length} ürün gösteriliyor`:`${sec}: ${liste.length} ürün`;
+ const liste=suzulmus();
+ SON.textContent=ara
+  ? (liste.length?`"${document.getElementById('ara').value.trim()}" için ${liste.length} ürün`:`"${document.getElementById('ara').value.trim()}" için sonuç yok`)
+  : (sec==='Tümü'?`${liste.length} ürün gösteriliyor`:`${sec}: ${liste.length} ürün`);
  I.innerHTML=liste.map(u=>`<article class="kart" data-id="${u.id}">
   <div class="g"><img src="${resim(u.gorsel)}" alt="${u.ad}" loading="lazy" width="800" height="800"${u.kadraj?` style="object-position:${u.kadraj}"`:''} ${u.yedek?`onerror="this.onerror=null;this.src='${u.yedek}'"`:RESIM_YEDEK}><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
@@ -146,6 +237,15 @@ function izgaraCiz(){
  durum();
  if(!azHareketU)I.querySelectorAll('.kart').forEach((k,i)=>{k.animate([{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'none'}],{duration:600,delay:Math.min(i,8)*45,easing:'cubic-bezier(.2,.7,.2,1)',fill:'backwards'})});
 }
+const ARA=document.getElementById('ara'),ARASIL=document.getElementById('araSil');
+let araZ=0;
+ARA.addEventListener('input',function(){
+ clearTimeout(araZ);
+ ARASIL.hidden=!this.value;
+ araZ=setTimeout(()=>{ara=sade(this.value.trim());izgaraCiz()},140);
+});
+ARASIL.addEventListener('click',function(){ARA.value='';ARASIL.hidden=true;ara='';izgaraCiz();ARA.focus()});
+
 const C=document.getElementById('cubuk'),OZ=C.querySelector('.ozet'),DUY=document.getElementById('duyuru');
 let mesajZ=0;
 function cubukMesaj(m){OZ.innerHTML=`<span class="mesaj">✓ ${m}</span>`;DUY.textContent=m;clearTimeout(mesajZ);mesajZ=setTimeout(()=>{mesajZ=0;durum()},2200)}
@@ -154,11 +254,57 @@ I.addEventListener('click',e=>{
  const k=e.target.closest('.kart');if(!k)return;const id=k.dataset.id,u=URUNLER.find(x=>x.id===id);
  if(e.target.closest('.ekle')){Sepet.ekle(id,1);sepeteUcur(k.querySelector('.g img'));cubukMesaj(`Eklendi: ${u.ad}`);
   setTimeout(()=>{const s=k.querySelector('.stepper button[data-d="1"]');if(s&&document.activeElement===document.body)s.focus()},0);return}
+ if(e.target.closest('.g')||e.target.closest('h3')){byAc(id);return}
  const d=e.target.closest('.stepper button');if(d){const n=+d.dataset.d;Sepet.ekle(id,n);
   if(n>0){sepeteUcur(k.querySelector('.g img'));cubukMesaj(`${u.ad}: ${Sepet.adet(id)} adet`)}
   else if(Sepet.adet(id)===0){cubukMesaj(`${u.ad} çantadan çıkarıldı`);k.querySelector('.ekle').focus()}
   else cubukMesaj(`${u.ad}: ${Sepet.adet(id)} adet`)}
 });
+/* ---- büyük görünüm ---- */
+const BY=document.getElementById('buyut');
+let byListe=[],bySira=-1;
+function byCiz(){
+ const u=byListe[bySira]; if(!u)return;
+ const g=document.getElementById('buyutGorsel');
+ g.src=resim(u.gorsel); g.alt=u.ad;
+ g.onerror=function(){ this.onerror=null; if(u.yedek) this.src=u.yedek; };
+ document.getElementById('buyutKat').textContent=u.kat||'';
+ document.getElementById('buyutAd').textContent=u.ad;
+ const kodE=document.getElementById('buyutKod'),acikE=document.getElementById('buyutAcik');
+ kodE.textContent=u.kod?('Ürün kodu: '+u.kod):''; kodE.hidden=!u.kod;
+ acikE.textContent=u.acik||''; acikE.hidden=!u.acik;
+ document.getElementById('buyutFiyat').textContent=TL(u.fiyat);
+ const tek=byListe.length<2;
+ document.getElementById('buyutGeri').hidden=tek;
+ document.getElementById('buyutIleri').hidden=tek;
+ [1,-1].forEach(function(n){ const k=byListe[(bySira+n+byListe.length)%byListe.length];
+  if(k){ const ön=new Image(); ön.src=resim(k.gorsel); } });
+}
+function byAc(id){
+ byListe=suzulmus();
+ bySira=byListe.findIndex(u=>u.id===id); if(bySira<0)return;
+ BY.hidden=false; document.body.style.overflow='hidden'; byCiz();
+ document.getElementById('buyutKapat').focus();
+}
+function byKapat(){ BY.hidden=true; document.body.style.overflow=''; }
+function byGit(n){ if(!byListe.length)return; bySira=(bySira+n+byListe.length)%byListe.length; byCiz(); }
+document.getElementById('buyutKapat').addEventListener('click',byKapat);
+document.getElementById('buyutGeri').addEventListener('click',()=>byGit(-1));
+document.getElementById('buyutIleri').addEventListener('click',()=>byGit(1));
+BY.addEventListener('click',e=>{ if(e.target===BY) byKapat(); });
+addEventListener('keydown',e=>{ if(BY.hidden)return;
+ if(e.key==='Escape')byKapat(); else if(e.key==='ArrowRight')byGit(1); else if(e.key==='ArrowLeft')byGit(-1); });
+let dokunX=0;
+BY.addEventListener('touchstart',e=>{dokunX=e.changedTouches[0].clientX},{passive:true});
+BY.addEventListener('touchend',e=>{const f=e.changedTouches[0].clientX-dokunX;
+ if(Math.abs(f)>60)byGit(f<0?1:-1)},{passive:true});
+document.getElementById('buyutEkle').addEventListener('click',()=>{
+ const u=byListe[bySira]; if(!u)return; Sepet.ekle(u.id,1); cubukMesaj('Eklendi: '+u.ad); durum(); });
+document.getElementById('buyutSor').addEventListener('click',()=>{
+ const u=byListe[bySira]; if(!u)return;
+ const m='Merhaba, bu ürün hakkında bilgi almak istiyorum:\n'+u.ad+(u.kod?(' ('+u.kod+')'):'')+'\n'+TL(u.fiyat);
+ open('https://wa.me/905551044040?text='+encodeURIComponent(m),'_blank','noopener'); });
+
 function durum(){
  I.querySelectorAll('.kart').forEach(k=>{const n=Sepet.adet(k.dataset.id),o=k.querySelector('output');k.classList.toggle('sepette',n>0);
   if(n>0&&o.textContent!=n){o.textContent=n;o.classList.remove('vur');void o.offsetWidth;o.classList.add('vur')}});
