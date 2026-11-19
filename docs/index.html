@@ -39,6 +39,8 @@
 .hero-medya{position:absolute;inset:0 0 auto 0;height:100vh;height:100svh;z-index:-2;transform:translate3d(0,calc(var(--sy,0)*.22px),0)}
 .hero-medya video,.hero-medya img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 50%;display:block}
 @media (min-width:821px) and (max-aspect-ratio:3/2){.hero-medya video,.hero-medya img{object-position:50% 50%}}
+.hero-medya video[hidden]{display:none}
+#hero-giris{transition:opacity .45s ease}
 .hero-bugu{position:absolute;inset:0 0 auto 0;height:100vh;height:100svh;z-index:-1;pointer-events:none;background:
  linear-gradient(90deg,rgba(6,13,31,.88) 0%,rgba(6,13,31,.78) 22%,rgba(6,13,31,.42) 34%,rgba(6,13,31,0) 46%),
  linear-gradient(0deg,var(--gece) 0%,rgba(6,13,31,.55) 12%,transparent 30%),
@@ -151,9 +153,13 @@
 <!-- AÇILIŞ -->
 <section class="hero kap" aria-label="İstanbul Hac Umre Hediyelik">
  <div class="hero-medya" aria-hidden="true">
-  <video id="hero-video" muted loop playsinline preload="auto" poster="assets/hero/magaza.webp" disablepictureinpicture>
+  <video id="hero-video" muted loop playsinline preload="none" poster="assets/hero/magaza.webp" disablepictureinpicture>
    <source src="assets/hero/magaza-m.mp4" type="video/mp4" media="(max-width: 600px)">
    <source src="assets/hero/magaza.mp4" type="video/mp4">
+  </video>
+  <video id="hero-giris" muted playsinline preload="none" poster="assets/hero/magaza.webp" disablepictureinpicture hidden>
+   <source src="assets/hero/giris-m.mp4" type="video/mp4" media="(max-width: 600px)">
+   <source src="assets/hero/giris.mp4" type="video/mp4">
   </video>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
@@ -253,14 +259,27 @@
 kabuk('ana');
 /* Açılış videosu: telefonda dikey kırpım, ekrandan çıkınca ve sekme gizlenince durur */
 (function(){
- const v=document.getElementById('hero-video');if(!v)return;
- if(matchMedia('(max-width: 600px)').matches)v.poster='assets/hero/magaza-m.webp';
+ const v=document.getElementById('hero-video'),g=document.getElementById('hero-giris');if(!v)return;
+ if(matchMedia('(max-width: 600px)').matches){v.poster='assets/hero/magaza-m.webp';if(g)g.poster='assets/hero/magaza-m.webp'}
  const dur=matchMedia('(prefers-reduced-motion: reduce)').matches||(navigator.connection&&navigator.connection.saveData);
  if(dur){v.removeAttribute('autoplay');v.preload='none';return}
- const oynat=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};
- let gorunur=true;
- new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;gorunur&&!document.hidden?oynat():v.pause()}).observe(v);
- document.addEventListener('visibilitychange',()=>{document.hidden?v.pause():gorunur&&oynat()});
+ let aktif=v,gorunur=true;
+ const oynat=()=>{const p=aktif.play();if(p&&p.catch)p.catch(()=>{})};
+ /* Giriş videosu (önünden geçen amca) oturumda bir kez oynar, sonra döngüye geçilir.
+    İki videonun da ilk/son karesi aynı fotoğraf olduğu için geçiş görünmez. */
+ let gordu=false;try{gordu=sessionStorage.getItem('hu-giris')==='1'}catch(e){}
+ if(g&&!gordu){
+  aktif=g;g.hidden=false;g.preload='auto';v.preload='none';
+  const donguyeGec=()=>{if(aktif===v)return;try{sessionStorage.setItem('hu-giris','1')}catch(e){}
+   aktif=v;v.currentTime=0;oynat();
+   const gizle=()=>{g.style.opacity='0';setTimeout(()=>{g.hidden=true;g.pause()},500)};
+   if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(gizle);else v.addEventListener('playing',()=>setTimeout(gizle,60),{once:true})};
+  g.addEventListener('playing',()=>setTimeout(()=>{if(v.preload!=='auto'){v.preload='auto';v.load()}},2500),{once:true});
+  g.addEventListener('ended',donguyeGec,{once:true});
+  const ks=g.querySelectorAll('source');ks[ks.length-1].addEventListener('error',donguyeGec,{once:true});
+ }
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;gorunur&&!document.hidden?oynat():aktif.pause()}).observe(v.parentElement);
+ document.addEventListener('visibilitychange',()=>{document.hidden?aktif.pause():gorunur&&oynat()});
  oynat();
 })();
 document.getElementById('ziyaret-wa').insertAdjacentHTML('afterbegin',WA_SVG);
