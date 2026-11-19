@@ -29,10 +29,10 @@ jobs:
 
       - name: Depoya yaz
         run: |
-          if [ -n "$(git status --porcelain docs/data/urunler.json)" ]; then
+          if [ -n "$(git status --porcelain docs/data/urunler.json docs/urunler-veri.js)" ]; then
             git config user.name "katalog-bot"
             git config user.email "katalog-bot@users.noreply.github.com"
-            git add docs/data/urunler.json
+            git add docs/data/urunler.json docs/urunler-veri.js
             git commit -m "Odoo ürün listesi güncellendi"
             git pull --rebase --autostash
             git push
