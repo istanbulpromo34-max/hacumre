@@ -78,6 +78,9 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 .durum{max-width:1180px;margin:9px auto 0;padding:8px 12px;border-radius:10px;font-size:12.5px;
   background:rgba(63,174,122,.14);border:1px solid rgba(63,174,122,.35);color:#bfeed7}
 .durum.hata{background:rgba(214,74,74,.14);border-color:rgba(214,74,74,.4);color:#ffc9c9}
+.uyari{max-width:1180px;margin:9px auto 0;padding:10px 13px;border-radius:12px;font-size:12.5px;line-height:1.55;
+  background:rgba(201,162,75,.14);border:1px solid rgba(201,162,75,.42);color:#f0dcae}
+.uyari b{color:#fff}
 .taniAc{position:fixed;right:12px;bottom:calc(84px + var(--alt));z-index:45;width:36px;height:36px;border-radius:50%;
   background:rgba(18,35,71,.9);border:1px solid var(--cizgi);font-size:15px;color:var(--sol);backdrop-filter:blur(10px)}
 .taniKutu{position:fixed;inset:auto 10px calc(10px + var(--alt));z-index:55;max-height:60svh;overflow:auto;
@@ -125,6 +128,10 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
   </div>
   <div class="suz" id="suz"></div>
   <div class="durum" id="cubukDurum" hidden></div>
+  <div class="uyari" id="uyari" hidden>
+    <b>Otomatik gönderme kapalı.</b> Çektiğiniz fotoğraflar bu telefonda bekliyor, kendiliğinden gitmiyor.
+    Kurulum bağlantısını isteyin; ya da alttaki <b>Paketi gönder</b> düğmesiyle elle yollayın.
+  </div>
 </header>
 
 <main>
@@ -182,7 +189,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 13:40';
+var SURUM = '19 Kasım 13:45';
 var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var ANAHTAR_YER = 'ihh-gh-anahtar';
 var anahtarBellek = '';
@@ -369,7 +376,7 @@ function baglantiSina(deger){
     return c.json();
   }).then(function(d){
     if (!d.permissions || !d.permissions.push){ anahtarYaz(eski); throw new Error('bu anahtarın yazma izni yok'); }
-    otomatik = true; return d;
+    otomatik = true; sayac(); return d;
   });
 }
 
@@ -447,6 +454,7 @@ function sayac(){
   $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' çekildi · ' + eksik + ' kaldı';
   var bs = $('#bekSay'); if (bs) bs.textContent = bek;
   $('#altbar').classList.toggle('ac', bek > 0 && !otomatik);
+  var uy = $('#uyari'); if (uy) uy.hidden = otomatik || !urunler.length;
   var ab = $('#altbarMetin');
   if (ab) ab.innerHTML = otomatik ? 'Fotoğraflar kendiliğinden gönderiliyor'
     : '<b id="bekSay">' + bek + '</b> fotoğraf stüdyoya gönderilmeyi bekliyor';
