@@ -114,15 +114,53 @@ footer.sf .f-not{max-width:1240px;margin:32px auto 0;padding-top:22px;border-top
 @media(max-width:820px){footer.sf .f-ust{grid-template-columns:1fr 1fr}footer.sf .f-blok:first-child{grid-column:1/-1}}
 @media(max-width:720px){footer.sf{padding:44px 22px calc(156px + env(safe-area-inset-bottom,0px))}footer.sf .f-ust{grid-template-columns:1fr;gap:24px}}
 
-/* Sabit WhatsApp düğmesi */
-.wa-sabit{position:fixed;right:20px;bottom:20px;z-index:46;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--k-wa);color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .3s,opacity .3s,bottom .45s cubic-bezier(.2,.8,.2,1)}
+/* Sabit WhatsApp düğmesi ve üstündeki tanıtım filmi düğmesi */
+:root{--wa-sag:20px;--wa-alt:20px;--wa-cap:58px}
+.wa-sabit{position:fixed;right:var(--wa-sag);bottom:var(--wa-alt);z-index:46;width:var(--wa-cap);height:var(--wa-cap);border-radius:50%;display:grid;place-items:center;background:var(--k-wa);color:#fff;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .3s,opacity .3s,bottom .45s cubic-bezier(.2,.8,.2,1)}
 .wa-sabit:hover{transform:scale(1.07)}
 .wa-sabit svg{width:30px;height:30px;fill:currentColor}
-@media(max-width:720px){.wa-sabit{right:12px;bottom:calc(82px + env(safe-area-inset-bottom,0px));width:52px;height:52px}.wa-sabit svg{width:27px;height:27px}
- body.cubuk-acik .wa-sabit{bottom:calc(170px + env(safe-area-inset-bottom,0px))}}
+@media(max-width:720px){:root{--wa-sag:12px;--wa-alt:calc(82px + env(safe-area-inset-bottom,0px));--wa-cap:52px}
+ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
+ .wa-sabit svg{width:27px;height:27px}}
+
+/* Tanıtım filmi düğmesi */
+.film-sabit{position:fixed;right:var(--wa-sag);bottom:calc(var(--wa-alt) + var(--wa-cap) + 12px);z-index:46;
+ width:var(--wa-cap);height:var(--wa-cap);border-radius:50%;display:grid;place-items:center;cursor:pointer;
+ background:rgba(10,22,48,.82);backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);
+ border:1px solid rgba(201,162,75,.55);color:var(--k-altin2);
+ box-shadow:0 12px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);
+ transition:transform .3s,opacity .3s,bottom .45s cubic-bezier(.2,.8,.2,1)}
+.film-sabit:hover{transform:scale(1.07)}
+.film-sabit svg{width:24px;height:24px;fill:currentColor;margin-left:3px}
+.film-sabit::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--k-altin);
+ opacity:.5;pointer-events:none;animation:filmNabiz 3.2s cubic-bezier(.2,.8,.2,1) infinite}
+@keyframes filmNabiz{0%{transform:scale(1);opacity:.5}65%{transform:scale(1.42);opacity:0}100%{transform:scale(1.42);opacity:0}}
+.film-sabit .ipucu{position:absolute;right:calc(100% + 12px);white-space:nowrap;font-size:13.5px;line-height:1;
+ padding:9px 14px;border-radius:999px;background:rgba(10,22,48,.92);border:1px solid rgba(201,162,75,.35);
+ backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--k-yazi);
+ opacity:0;transform:translateX(8px);transition:opacity .25s,transform .25s;pointer-events:none}
+.film-sabit:hover .ipucu,.film-sabit:focus-visible .ipucu{opacity:1;transform:none}
+@media(max-width:720px){.film-sabit .ipucu{display:none}}
+
+/* Tanıtım filmi katmanı */
+.film-kat{position:fixed;inset:0;z-index:92;display:grid;place-items:center;padding:clamp(12px,2.5vw,30px);
+ background:rgba(4,8,18,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+ opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+.film-kat.acik{opacity:1;visibility:visible;transition:opacity .35s}
+.film-kat video{display:block;width:auto;height:auto;max-height:min(100svh - 88px,1280px);
+ max-width:min(94vw,calc((100svh - 88px) * 0.5625));aspect-ratio:9/16;background:#000;
+ border-radius:20px;border:1px solid rgba(201,162,75,.3);box-shadow:0 30px 90px rgba(0,0,0,.6);
+ transform:scale(.96);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.film-kat.acik video{transform:none}
+.film-kapat{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:16px;z-index:2;
+ width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:#fff;
+ background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+ backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .25s,transform .25s}
+.film-kapat:hover{background:rgba(255,255,255,.18);transform:scale(1.06)}
 
 @media (prefers-reduced-motion: reduce){
  [data-gel]{opacity:1;transform:none;transition:none}
- .nav a,.btn,.toast,.cekmece .pan,.cekmece .perde,.wa-sabit{transition:none}
+ .nav a,.btn,.toast,.cekmece .pan,.cekmece .perde,.wa-sabit,.film-sabit,.film-kat video{transition:none}
+ .film-sabit::after{animation:none}
  .sepetbtn.zipla{animation:none}
 }

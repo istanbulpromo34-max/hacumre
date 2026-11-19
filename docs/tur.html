@@ -67,7 +67,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .rota-gosterge b{font-weight:600}
 
 /* WhatsApp ve ses */
-.sabit-sag{position:fixed;right:27px;bottom:calc(90px + env(safe-area-inset-bottom,0px));z-index:47;display:flex;flex-direction:column;align-items:center;gap:10px}
+.sabit-sag{position:fixed;right:calc(var(--wa-sag,20px) + (var(--wa-cap,58px) - 44px)/2);bottom:calc(var(--wa-alt,20px) + (var(--wa-cap,58px) + 12px)*2);z-index:47;display:flex;flex-direction:column;align-items:center;gap:10px}
 .ses{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:var(--cam);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;cursor:pointer;color:var(--murekkep);padding:0;box-shadow:0 8px 24px -10px rgba(14,23,41,.45)}
 .ses svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ses .dalga{display:none}.ses.caliyor .dalga{display:inline}.ses.caliyor .sessiz{display:none}

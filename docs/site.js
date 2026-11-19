@@ -40,6 +40,36 @@ const resim=y=>/^assets\/(u|g)\/[^/]+\.jpg$/.test(y||'')?y.replace(/\.jpg$/,'.we
 const RESIM_YEDEK=`onerror="this.onerror=null;this.src=this.src.replace(/\\.webp$/,'.jpg')"`;
 const depo={al(k,v){try{return JSON.parse(localStorage.getItem(k)||v)}catch(e){return JSON.parse(v)}},yaz(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const WA_SVG='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.6.7.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5l-.2-.3z"/></svg>';
+const OYNAT_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>';
+const FILM = {video:'assets/tanitim/film.mp4', kapak:'assets/tanitim/kapak.webp'};
+let _filmKat=null,_filmVid=null,_filmOdak=null;
+function filmKur(){
+ if(_filmKat)return;
+ _filmKat=document.createElement('div');_filmKat.className='film-kat';
+ _filmKat.setAttribute('role','dialog');_filmKat.setAttribute('aria-modal','true');
+ _filmKat.setAttribute('aria-label','İstanbul Hac Umre tanıtım filmi');
+ _filmKat.innerHTML='<button class="film-kapat" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'+
+  '<video playsinline controls preload="none" poster="'+FILM.kapak+'"><source src="'+FILM.video+'" type="video/mp4">Tarayıcınız videoyu oynatamıyor.</video>';
+ _filmVid=_filmKat.querySelector('video');
+ _filmKat.addEventListener('click',e=>{if(e.target===_filmKat)filmKapat()});
+ _filmKat.querySelector('.film-kapat').addEventListener('click',filmKapat);
+ _filmVid.addEventListener('ended',filmKapat);
+ document.body.append(_filmKat);
+}
+function filmAc(){
+ filmKur();_filmOdak=document.activeElement;
+ document.documentElement.classList.add('kilit');try{lenis&&lenis.stop()}catch(e){}
+ requestAnimationFrame(()=>{_filmKat.classList.add('acik');
+  const o=_filmVid.play();if(o&&o.catch)o.catch(()=>{});
+  _filmKat.querySelector('.film-kapat').focus()});
+}
+function filmKapat(){
+ if(!_filmKat||!_filmKat.classList.contains('acik'))return;
+ _filmKat.classList.remove('acik');try{_filmVid.pause()}catch(e){}
+ document.documentElement.classList.remove('kilit');try{lenis&&lenis.start()}catch(e){}
+ if(_filmOdak&&_filmOdak.focus)_filmOdak.focus();
+}
+addEventListener('keydown',e=>{if(e.key==='Escape')filmKapat()});
 /* Sepet */
 const Sepet={
  al(){return depo.al('hu_sepet','{}')},
@@ -143,6 +173,11 @@ function kabuk(aktif){
  /* sabit WhatsApp */
  const wa=document.createElement('a');wa.className='wa-sabit';wa.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Merhaba, sitenizden yazıyorum.');wa.target='_blank';wa.rel='noopener';wa.setAttribute('aria-label',"WhatsApp'tan yazın");
  wa.innerHTML=WA_SVG;document.body.append(wa);
+ /* tanıtım filmi düğmesi (WhatsApp'ın üstünde) */
+ const fb=document.createElement('button');fb.type='button';fb.className='film-sabit';
+ fb.setAttribute('aria-label','Tanıtım filmini izleyin');
+ fb.innerHTML='<span class="ipucu">Tanıtım filmi</span>'+OYNAT_SVG;
+ fb.addEventListener('click',filmAc);document.body.append(fb);
  /* altbilgi */
  const f=document.querySelector('footer.sf');
  if(f){const notlar=[...f.querySelectorAll('.f-not')];
