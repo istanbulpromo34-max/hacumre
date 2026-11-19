@@ -9,6 +9,8 @@ import os
 import re
 import sys
 import xmlrpc.client
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from datetime import datetime, timezone
 
 URL = os.environ.get("ODOO_URL", "https://isthac.istanbulpromo.com").rstrip("/")
@@ -19,51 +21,11 @@ KATEGORI = (os.environ.get("ODOO_KATEGORI") or "").strip() or "İSTANBUL HAC UMR
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
-# Odoo'daki gerçek alt kategoriler sitedeki dört ana başlığa oturtulur.
-SITE_KAT = [
-    ("Hac Umre Kıyafetleri", ("giyim", "terlik", "ayakkab", "ihram", "ferace", "esarp", "eşarp")),
-    ("Hurma ve Zemzem", ("hurma", "zemzem", "kuruyemiş", "kuruyemis", "ikram", "gıda", "gida")),
-    ("Hac Umre Malzemeleri", ("bakım", "bakim", "hijyen", "seyahat", "ekipman", "çanta", "canta")),
-    ("İslami Hediyelik", ()),
-]
-KAT_GORSEL = {
-    "Hac Umre Malzemeleri": "assets/g/masa.jpg",
-    "Hac Umre Kıyafetleri": "assets/g/ihram.jpg",
-    "İslami Hediyelik": "assets/g/donus.jpg",
-    "Hurma ve Zemzem": "assets/g/hurma.jpg",
-}
-
-
-def site_kategorisi(ad):
-    d = (ad or "").lower()
-    for baslik, anahtarlar in SITE_KAT:
-        if not anahtarlar or any(a in d for a in anahtarlar):
-            return baslik
-    return "İslami Hediyelik"
-
-if not all([URL, DB, LOGIN, KEY]):
-    sys.exit("Eksik ayar: ODOO_URL, ODOO_DB, ODOO_LOGIN, ODOO_KEY gerekli.")
-
-
-def baglan():
-    ortak = xmlrpc.client.ServerProxy(f"{URL}/xmlrpc/2/common", allow_none=True)
-    uid = ortak.authenticate(DB, LOGIN, KEY, {})
-    if not uid:
-        sys.exit("Odoo girişi başarısız: kullanıcı adı veya API anahtarı hatalı.")
-    model = xmlrpc.client.ServerProxy(f"{URL}/xmlrpc/2/object", allow_none=True)
-    return uid, model
-
-
-def oku(model, uid, metot, alan, *args, **kw):
-    return model.execute_kw(DB, uid, KEY, alan, metot, *args, **kw)
+from kategori import kategori as site_kategorisi, KAT_GORSEL, sadelestir
 
 
 def slug(s):
-    s = (s or "").lower()
-    for a, b in (("ı", "i"), ("İ", "i"), ("ş", "s"), ("ğ", "g"), ("ü", "u"), ("ö", "o"), ("ç", "c")):
-        s = s.replace(a, b)
-    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
-    return s[:48] or "urun"
+    return re.sub(r"[^a-z0-9]+", "-", sadelestir(s)).strip("-")[:48] or "urun"
 
 
 def main():
@@ -98,7 +60,7 @@ def main():
             anahtar, n = f"{temel}-{n}", n + 1
         kullanilan.add(anahtar)
         alt = (u["categ_id"][1].split(" / ")[-1] if u.get("categ_id") else "")
-        kat = site_kategorisi(alt)
+        kat = site_kategorisi(u.get("name", ""), alt)
         cikti.append({
             "id": anahtar,
             "odooId": u["id"],

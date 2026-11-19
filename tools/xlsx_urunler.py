@@ -21,81 +21,8 @@ GIRDI = os.environ.get("URUN_XLSX", os.path.join("veri", "urunler.xlsx"))
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
-# Sıra önemli: ilk uyan başlık kazanır, hiçbiri uymazsa son satır geçerli olur.
-KURALLAR = [
-    ("Hurma ve Zemzem", ("hurma", "zemzem", "lokum", "kahve", "biskuvi", "cikolata", "kuruyemis",
-                         "fistik", "bal ", "recel", "kurabiye", "helva", "sakiz")),
-    ("Hac Umre Kiyafetleri", ("ihram", "ferace", "elbise", "etek", "gomlek", "shirt", "esarp",
-                              "yazma", "basortu", "takke", "corap", "corab", "bone", "tesettur",
-                              "kiyafet", "giyim", "abaya", "atlet", "pantolon", "tunik", "hirka",
-                              "salvar", "sal", "sali", "tulum", "yelek", "kaftan", "entari",
-                              "bornoz", "sapka", "kemer", "bluz", "cubbe", "sarik", "muslin",
-                              "takim", "bluzu", "sal")),
-    ("Hac Umre Malzemeleri", ("mest", "canta", "cuzdan", "valiz", "bavul", "misvak", "sabun",
-                              "mendil", "krem", "sampuan", "dis", "dismacunu", "ayna", "makas",
-                              "tirnak", "matara", "termos", "boyunluk", "kilit", "seyahat",
-                              "yastik", "kulaklik", "maske", "sirt", "tarak", "poset", "etiket",
-                              "terlik", "patik", "ayakkabi", "ayakkabisi", "tavaf", "pusula",
-                              "kablo", "bellek", "sarj", "sarz", "powerbank", "pedometre")),
-    ("Islami Hediyelik", ()),          # kalan her sey
-]
-KAT_GORSEL = {
-    "Hac Umre Malzemeleri": "assets/g/masa.jpg",
-    "Hac Umre Kıyafetleri": "assets/g/ihram.jpg",
-    "İslami Hediyelik": "assets/g/donus.jpg",
-    "Hurma ve Zemzem": "assets/g/hurma.jpg",
-}
-
-
-def sadelestir(s):
-    """Turkce harfleri ASCII karsiligina indirir; 'İ' -> 'i' sorununu da cozer."""
-    for a, b in (("ı", "i"), ("İ", "i"), ("I", "i"), ("ş", "s"), ("Ş", "s"), ("ğ", "g"),
-                 ("Ğ", "g"), ("ü", "u"), ("Ü", "u"), ("ö", "o"), ("Ö", "o"), ("ç", "c"), ("Ç", "c")):
-        s = (s or "").replace(a, b)
-    s = unicodedata.normalize("NFKD", s)
-    return "".join(c for c in s if not unicodedata.combining(c)).lower()
-
-
-KAT_ADI = {
-    "Hac Umre Kiyafetleri": "Hac Umre Kıyafetleri",
-    "Hac Umre Malzemeleri": "Hac Umre Malzemeleri",
-    "Islami Hediyelik": "İslami Hediyelik",
-    "Hurma ve Zemzem": "Hurma ve Zemzem",
-}
-
-
-def kategori(ad):
-    kelimeler = set(re.findall(r"[a-z0-9]+", sadelestir(ad)))
-    metin = sadelestir(ad)
-    for baslik, anahtarlar in KURALLAR:
-        if not anahtarlar:
-            return KAT_ADI[baslik]
-        for a in anahtarlar:
-            # kısa anahtarlar tam kelime arar, uzunlar metnin içinde geçebilir
-            if (a in kelimeler) or (len(a) >= 5 and a in metin):
-                return KAT_ADI[baslik]
-    return "İslami Hediyelik"
-
-
-# Satışa konu olmayan iç kayıtlar (peşinat, promosyon fişi gibi) listeye girmez.
-ELEME = ("pesinat", "promosyon", "showroom", "iade", "kargo ucreti",
-         "indirim", "avans", "test urun", "hizmet bedeli")
-
-
-def elenecek(ad):
-    d = sadelestir(ad)
-    return any(e in d for e in ELEME) or d.strip() == "hediyelik"
-
-
-BIRIM = {"ML", "CC", "GR", "KG", "LT", "MT", "CM", "MM", "TL", "DNC", "XL", "XXL", "3D", "USB", "LED", "CD"}
-
-
-def tr_kucuk(s):
-    return s.replace("I", "ı").replace("İ", "i").lower()
-
-
-def tr_buyuk(s):
-    return s.replace("i", "İ").replace("ı", "I").upper()
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from kategori import kategori, KAT_GORSEL, sadelestir
 
 
 def basliklandir(ad):
