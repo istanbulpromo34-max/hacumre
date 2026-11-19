@@ -382,8 +382,32 @@ function klasor(yol){
     .then(function(r){ return r.ok ? r.json() : []; })
     .catch(function(){ return []; });
 }
+/* Anahtarı olmayan cihaz (ör. yönetici kendi telefonundan bakıyor) depoyu
+   doğrudan okur: raw.githubusercontent herkese açık ve GitHub Pages'ten çok
+   daha taze. Böylece anahtarlı da anahtarsız da aynı sayıyı görür. */
+function ham(yol){
+  return fetch('https://raw.githubusercontent.com/' + AYAR.depo + '/' + AYAR.dal + '/' + yol +
+               '?t=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .catch(function(){ return null; });
+}
+function anahtarsizEsitle(){
+  return Promise.all([ham('docs/data/urunler.json'), ham('gelen/higgs.json')]).then(function(x){
+    var veri = x[0];
+    if (!veri || !veri.urunler) return;
+    var h = {}, sr = {};
+    veri.urunler.forEach(function(u){ if (u.fotoVar) h[u.id] = true; });
+    (Array.isArray(x[1]) ? x[1] : []).forEach(function(k){ if (k && k.id) sr[k.id] = true; });
+    // ürün listesi de tazelensin: yeni ürün eklenmiş olabilir
+    var yeni = veri.urunler.filter(function(u){ return u.aktif !== false; });
+    if (yeni.length) urunler = yeni;
+    sunucuHazir = h; sunucuSirada = sr; sonEsitleme = Date.now();
+    ciz();
+  });
+}
 function esitle(sessiz){
-  if (!anahtar()) return Promise.resolve();
+  if (!anahtar()) return anahtarsizEsitle()
+    .catch(function(e){ if (!sessiz) not('eşitlenemedi: ' + (e && e.message || e), true); });
   return Promise.all([klasor('docs/assets/u'), klasor('gelen')]).then(function(x){
     var h = {}, sr = {};
     (Array.isArray(x[0]) ? x[0] : []).forEach(function(f){
@@ -614,6 +638,7 @@ Promise.all([
   urunler = (s[1] && s[1].urunler) ? s[1].urunler.filter(function(u){ return u.aktif !== false; }) : [];
   if (!urunler.length) bildir('Ürün listesi yüklenemedi');
   ciz();
+  esitlemeyiBaslat();          // anahtar olmasa da depodaki güncel durumu oku
   if (anahtar()){
     baglantiSina(anahtar()).then(function(d){
       not('otomatik yükleme açık (' + d.full_name + ')'); sayac(); yarimKalanlariYolla();
