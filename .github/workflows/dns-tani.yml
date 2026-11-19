@@ -22,6 +22,19 @@ jobs:
           echo "== MX =="       ; dig +short MX   "$ALAN"
           echo "== whois ozet =="
           whois "$ALAN" 2>/dev/null | grep -iE "registrar:|creation|expir|status:|name server" | head -12
-          echo "== http yanit =="
-          curl -sS -m 15 -o /dev/null -w "http://%{url_effective} -> %{http_code}\n" -L "http://$ALAN" || echo "ulasilamadi"
-          curl -sS -m 15 -o /dev/null -w "https -> %{http_code}\n" -L "https://$ALAN" || echo "https ulasilamadi"
+          echo "== yonlendirme zinciri =="
+          for u in "http://$ALAN/" "https://$ALAN/" "https://www.$ALAN/" "https://istanbulpromo34-max.github.io/hacumre/"; do
+            printf "%-52s " "$u"
+            curl -sS -m 20 -o /dev/null -w "%{http_code} -> %{redirect_url}  [son: %{url_effective} %{http_code}]\n" "$u" || echo "ulasilamadi"
+          done
+          echo "== son adres (yonlendirmeleri izleyerek) =="
+          for u in "http://$ALAN/" "https://www.$ALAN/" "https://istanbulpromo34-max.github.io/hacumre/"; do
+            printf "%-52s " "$u"
+            curl -sS -m 20 -o /dev/null -L -w "%{url_effective} (%{http_code})\n" "$u" || echo "ulasilamadi"
+          done
+          echo "== icerik ve dosyalar =="
+          curl -sS -m 20 -L "https://$ALAN/" | grep -o "<title>[^<]*</title>" | head -1
+          for d in "/sitemap.xml" "/robots.txt" "/CNAME" "/assets/tanitim/film.mp4" "/urunler.html" "/tur.html" "/iletisim.html" "/admin/"; do
+            printf "%-34s " "$d"
+            curl -sS -m 25 -o /dev/null -L -w "%{http_code} %{size_download}b %{content_type}\n" "https://$ALAN$d"
+          done
