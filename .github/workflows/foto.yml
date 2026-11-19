@@ -1,14 +1,22 @@
 name: Foto temizle
 
 # gelen/ klasörüne ham fotoğraf düştüğünde arkaplanı temizler,
-# 2K beyaz zeminli görsele çevirir, siteye ve Odoo ürün kartına yazar.
+# 2K krem zeminli görsele çevirir, siteye ve Odoo ürün kartına yazar.
+#
+# Aynı anda tek iş çalışır. Arka arkaya gelen yüklemelerde bekleyen işler
+# GitHub tarafından iptal edilebildiği için, iş bitiminde gelen/ hâlâ doluysa
+# kendini yeniden tetikler; ayrıca 15 dakikada bir kuyruğa bakar. Böylece
+# yüklenen hiçbir kare kuyrukta unutulmaz.
 on:
   push:
     paths: ['gelen/**']
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: foto
@@ -20,19 +28,31 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+
+      - name: Kuyruga bak
+        id: kuyruk
+        run: |
+          n=$(find gelen -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.heic' \) 2>/dev/null | wc -l)
+          echo "adet=$n" >> "$GITHUB_OUTPUT"
+          echo "Kuyrukta $n kare var."
+
       - uses: actions/setup-python@v5
+        if: steps.kuyruk.outputs.adet != '0'
         with: { python-version: '3.12' }
 
       - name: Model önbelleği
+        if: steps.kuyruk.outputs.adet != '0'
         uses: actions/cache@v4
         with:
           path: ~/.u2net
           key: rembg-isnet-general-use
 
       - name: Kurulum
+        if: steps.kuyruk.outputs.adet != '0'
         run: pip install --quiet pillow "rembg[cpu]==2.0.59" onnxruntime
 
       - name: Temizle
+        if: steps.kuyruk.outputs.adet != '0'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ODOO_URL: ${{ secrets.ODOO_URL }}
@@ -41,12 +61,18 @@ jobs:
           ODOO_KEY: ${{ secrets.ODOO_KEY }}
         run: python tools/foto_temizle.py
 
+      - name: Urun listesindeki foto durumunu tazele
+        if: steps.kuyruk.outputs.adet != '0'
+        run: python tools/foto_durum.py
+
       - name: Depoya yaz
+        if: steps.kuyruk.outputs.adet != '0'
         run: |
+          YOLLAR="docs/assets/u gelen docs/data docs/urunler-veri.js"
           git config user.name "foto-bot"
           git config user.email "foto-bot@users.noreply.github.com"
-          git add -A docs/assets/u gelen
-          if [ -z "$(git status --porcelain docs/assets/u gelen)" ]; then
+          git add -A $YOLLAR
+          if [ -z "$(git status --porcelain $YOLLAR)" ]; then
             echo "Değişiklik yok."; exit 0
           fi
           git commit -m "Ürün fotoğrafları temizlendi"
@@ -56,10 +82,22 @@ jobs:
             if git push; then echo "yazıldı (deneme $deneme)"; exit 0; fi
             git fetch origin main
             if ! git rebase -X theirs origin/main; then
-              git checkout --theirs -- docs/assets/u gelen 2>/dev/null || true
-              git add -A docs/assets/u gelen
+              git checkout --theirs -- $YOLLAR 2>/dev/null || true
+              git add -A $YOLLAR
               GIT_EDITOR=true git rebase --continue || git rebase --abort
             fi
             sleep $((RANDOM % 6 + 3))
           done
           echo "::error::Depoya yazılamadı"; exit 1
+
+      - name: Kuyrukta kalan varsa kendini yeniden calistir
+        if: always() && steps.kuyruk.outputs.adet != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git fetch origin main --quiet || true
+          kalan=$(git ls-tree -r --name-only origin/main gelen/ 2>/dev/null | grep -icE '\.(jpe?g|png|webp|heic)$' || true)
+          echo "Depoda kalan kare: ${kalan:-0}"
+          if [ "${kalan:-0}" != "0" ]; then
+            gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/workflows/foto.yml/dispatches" -f ref=main && echo "Yeni tur başlatıldı."
+          fi

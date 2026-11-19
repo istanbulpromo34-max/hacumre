@@ -41,6 +41,8 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 .k:hover{border-color:rgba(201,162,75,.4)}
 .k.bekliyor{border-color:rgba(201,162,75,.65)}
 .k.hazir{border-color:rgba(63,174,122,.45)}
+.k.islemde{border-color:rgba(201,162,75,.4)}
+.k.islemde .bos{opacity:.55}
 .cerceve{position:relative;aspect-ratio:1;width:100%;display:grid;place-items:center;background:#0a162f}
 .cerceve{background:#0a162f;border:0}
 .cerceve img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -216,6 +218,9 @@ function anahtarYaz(v){
 var otomatik = false;
 var $ = function(s){ return document.querySelector(s); };
 var urunler = [], db = null, bekleyen = {}, suzgec = 'eksik', arama = '';
+/* sunucudaki ortak durum: hangi ürün stüdyodan çıkmış, hangisi sırada.
+   Bütün telefon ve bilgisayarlar bunu okur, böylece hepsi aynı listeyi görür. */
+var sunucuHazir = {}, sunucuSirada = {}, sonEsitleme = 0, esitZaman = null;
 
 function bildir(m){
   var b = $('#bildirim'); b.textContent = m; b.classList.add('gor');
@@ -369,6 +374,44 @@ function yukle(id, blob, ad){
     });
   });
 }
+/* ---- cihazlar arası eşitleme ----
+   Tek doğru kaynak depo: docs/assets/u stüdyodan çıkanlar, gelen/ ise sırada
+   bekleyenler. Her cihaz bunu okuyunca hepsi aynı listeyi görür. */
+function klasor(yol){
+  return gh('/contents/' + yol + '?ref=' + AYAR.dal + '&t=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : []; })
+    .catch(function(){ return []; });
+}
+function esitle(sessiz){
+  if (!anahtar()) return Promise.resolve();
+  return Promise.all([klasor('docs/assets/u'), klasor('gelen')]).then(function(x){
+    var h = {}, sr = {};
+    (Array.isArray(x[0]) ? x[0] : []).forEach(function(f){
+      var m = /^(.+)\.webp$/i.exec(f.name || ''); if (m) h[m[1]] = true;
+    });
+    (Array.isArray(x[1]) ? x[1] : []).forEach(function(f){
+      var m = /^(.+)\.(jpe?g|png|webp)$/i.exec(f.name || ''); if (m) sr[m[1]] = true;
+    });
+    if (!Object.keys(h).length && !Object.keys(sr).length && !sessiz) return;
+    sunucuHazir = h; sunucuSirada = sr; sonEsitleme = Date.now();
+    // Stüdyodan çıkmış kareyi bu cihazda tutmaya gerek yok
+    Object.keys(bekleyen).forEach(function(id){
+      if (h[id] && bekleyen[id].durum === 'studyoda'){
+        try { URL.revokeObjectURL(bekleyen[id].url); } catch (e){}
+        delete bekleyen[id]; sil(id);
+      }
+    });
+    ciz();
+  }).catch(function(e){ if (!sessiz) not('eşitlenemedi: ' + (e && e.message || e), true); });
+}
+function esitlemeyiBaslat(){
+  esitle(true);
+  if (esitZaman) clearInterval(esitZaman);
+  esitZaman = setInterval(function(){ if (!document.hidden) esitle(true); }, 45000);
+}
+document.addEventListener('visibilitychange', function(){
+  if (!document.hidden && Date.now() - sonEsitleme > 15000) esitle(true);
+});
 function baglantiSina(deger){
   var eski = anahtar(); anahtarYaz(deger);
   return gh('').then(function(c){
@@ -376,7 +419,7 @@ function baglantiSina(deger){
     return c.json();
   }).then(function(d){
     if (!d.permissions || !d.permissions.push){ anahtarYaz(eski); throw new Error('bu anahtarın yazma izni yok'); }
-    otomatik = true; sayac(); return d;
+    otomatik = true; sayac(); esitlemeyiBaslat(); return d;
   });
 }
 
@@ -409,8 +452,12 @@ function zipYap(dosyalar){
 
 /* ---- çizim ---- */
 function durum(u){
-  if (bekleyen[u.id]) return 'bekliyor';
-  if (u.fotoVar) return 'hazir';
+  var b = bekleyen[u.id];
+  // bu cihazda sırada, yükleniyor ya da hata almış kare her şeyin önüne geçer
+  if (b && b.durum !== 'studyoda') return 'bekliyor';
+  if (sunucuHazir[u.id] || u.fotoVar) return 'hazir';
+  if (b) return 'bekliyor';
+  if (sunucuSirada[u.id]) return 'islemde';
   return 'yok';
 }
 function suzulmus(){
@@ -418,6 +465,7 @@ function suzulmus(){
     var d = durum(u);
     if (suzgec === 'eksik' && d !== 'yok') return false;
     if (suzgec === 'bekleyen' && d !== 'bekliyor') return false;
+    if (suzgec === 'islemde' && d !== 'islemde') return false;
     if (suzgec === 'hazir' && d !== 'hazir') return false;
     if (arama && norm(u.ad + ' ' + (u.kod || '')).indexOf(arama) === -1) return false;
     return true;
@@ -438,6 +486,7 @@ function ciz(){
            '<img alt="" src="' + bekleyen[u.id].url + '"><button class="degis" data-cek="' + u.id + '">Yeniden çek</button>';
     }
     else if (d === 'hazir') ic = '<span class="rozet h">hazır</span><img alt="" loading="lazy" src="../assets/u/' + u.id + '.webp"><button class="degis" data-cek="' + u.id + '">Değiştir</button>';
+    else if (d === 'islemde') ic = '<span class="rozet b">stüdyoda işleniyor</span><span class="bos">' + KAMERA + 'Başka bir cihazdan gönderildi</span><button class="degis" data-cek="' + u.id + '">Yeniden çek</button>';
     else ic = '<span class="bos">' + KAMERA + 'Fotoğraf ekle</span>';
     return '<article class="k ' + d + '" data-id="' + u.id + '">' +
       '<div class="cerceve" data-cek="' + u.id + '">' + ic + '</div>' +
@@ -448,10 +497,14 @@ function ciz(){
 }
 
 function sayac(){
-  var hazir = urunler.filter(function(u){ return u.fotoVar; }).length;
-  var bek = Object.keys(bekleyen).length;
-  var eksik = urunler.length - hazir - bek;
-  $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' çekildi · ' + eksik + ' kaldı';
+  var hazir = 0, bek = 0, islemde = 0, eksik = 0;
+  urunler.forEach(function(u){
+    var d = durum(u);
+    if (d === 'hazir') hazir++; else if (d === 'bekliyor') bek++;
+    else if (d === 'islemde') islemde++; else eksik++;
+  });
+  $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' çekildi · ' + eksik + ' kaldı'
+    + (sonEsitleme ? ' · eşitlendi ' + new Date(sonEsitleme).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) : '');
   var bs = $('#bekSay'); if (bs) bs.textContent = bek;
   $('#altbar').classList.toggle('ac', bek > 0 && !otomatik);
   var uy = $('#uyari'); if (uy) uy.hidden = otomatik || !urunler.length;
@@ -461,9 +514,10 @@ function sayac(){
   $('#suz').innerHTML = [
     ['eksik', 'Çekilecek', eksik],
     ['bekleyen', 'Gönderilecek', bek],
+    ['islemde', 'Stüdyoda', islemde],
     ['hazir', 'Biten', hazir],
     ['hepsi', 'Tümü', urunler.length]
-  ].map(function(x){
+  ].filter(function(x){ return x[0] !== 'islemde' || x[2] > 0; }).map(function(x){
     return '<button data-s="' + x[0] + '" class="' + (suzgec === x[0] ? 'on' : '') + '">' + x[1] + '<i>' + x[2] + '</i></button>';
   }).join('');
 }

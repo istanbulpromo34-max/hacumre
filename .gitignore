@@ -1,2 +1,4 @@
 node_modules/
 public/data/failed.json
+__pycache__/
+*.pyc
