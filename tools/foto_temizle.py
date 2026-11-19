@@ -274,8 +274,24 @@ def main():
             if len(ham) > 18 * 1024 * 1024:
                 im0 = Image.open(io.BytesIO(ham)); im0.thumbnail((2400, 2400), Image.LANCZOS)
                 t = io.BytesIO(); im0.convert("RGB").save(t, "PNG"); ham = t.getvalue()
-            kesik = _openai(ham, ad) if openai_kullan else _rembg(ham)
-            son = beyaza_otur(kesik, kesilmis=not openai_kullan)
+            # OpenAI kullanılamazsa (kredi bitti, model kapalı, istek reddedildi)
+            # kare yine de işlensin: ürünü kesip krem zemine oturtuyoruz.
+            openai_ile = openai_kullan
+            if openai_kullan:
+                try:
+                    kesik = _openai(ham, ad)
+                except Exception as oe:
+                    mesaj = str(oe)
+                    print(f"    OpenAI olmadı ({mesaj[:110]}) — kesme yöntemine geçiliyor")
+                    if "no credits" in mesaj or "429" in mesaj or "insufficient" in mesaj.lower():
+                        # kredi bitmişse kalan kareler için boşuna denemeyelim
+                        openai_kullan = False
+                        print("    Kalan kareler kesme yöntemiyle işlenecek.")
+                    kesik = _rembg(ham)
+                    openai_ile = False
+            else:
+                kesik = _rembg(ham)
+            son = beyaza_otur(kesik, kesilmis=not openai_ile)
             son.save(CIKTI / f"{urun_id}.webp", "WEBP", quality=88, method=6)
             basarili.append(urun_id)
             print(f"  ✓ {urun_id} ({ad[:40]})")

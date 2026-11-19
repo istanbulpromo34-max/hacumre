@@ -90,14 +90,23 @@ jobs:
           done
           echo "::error::Depoya yazılamadı"; exit 1
 
+      # Kuyrukta kare kaldıysa yeni tur başlatılır; ama yalnızca bu turda
+      # gerçekten ilerleme olduysa. Yoksa (ör. her kare hata veriyorsa)
+      # kendini sonsuza kadar tetiklemesin.
       - name: Kuyrukta kalan varsa kendini yeniden calistir
         if: always() && steps.kuyruk.outputs.adet != '0'
         env:
           GH_TOKEN: ${{ github.token }}
+          BASLANGIC: ${{ steps.kuyruk.outputs.adet }}
         run: |
           git fetch origin main --quiet || true
           kalan=$(git ls-tree -r --name-only origin/main gelen/ 2>/dev/null | grep -icE '\.(jpe?g|png|webp|heic)$' || true)
-          echo "Depoda kalan kare: ${kalan:-0}"
-          if [ "${kalan:-0}" != "0" ]; then
+          kalan=${kalan:-0}
+          echo "Başlangıç: $BASLANGIC kare, şimdi kalan: $kalan"
+          if [ "$kalan" = "0" ]; then
+            echo "Kuyruk boşaldı."
+          elif [ "$kalan" -lt "$BASLANGIC" ]; then
             gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/workflows/foto.yml/dispatches" -f ref=main && echo "Yeni tur başlatıldı."
+          else
+            echo "::warning::Bu turda hiç kare işlenemedi; yeni tur başlatılmıyor. 15 dakikalık zamanlı kontrol yine deneyecek."
           fi
