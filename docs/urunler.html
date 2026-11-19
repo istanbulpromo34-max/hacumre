@@ -217,12 +217,26 @@ function filtreyeGit(){const hedef=document.querySelector('.bas').offsetHeight+(
  if(lenis)lenis.scrollTo(hedef,{immediate:azHareketU});else scrollTo(0,hedef)}
 let ara='';
 const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i');
+/* Sıralama: doğrudan hac ve umre malzemeleri en üstte, hazırlıkla ilgili
+   olanlar onların ardında, hediyelik çeşitleri en sonda. Ziyaretçi sayfayı
+   açtığında önce yolculuk için gerekenleri görsün. */
+const ONCE_CEKIRDEK=['ihram','tesbih','zikirmatik','kokusuz','koku','sabun','şampuan','terlik','takke'];
+const ONCE_YOLCULUK=['seccade','misvak','mest','bone','ferace','eşarp','başörtü','abdest','peştamal','sürme','boyun çanta','bel çanta','ihram kemeri','hac','umre','zemzem','hurma','namaz','cüzdan','pasaport'];
+const oncelikBellek={};
+function oncelik(u){
+ if(oncelikBellek[u.id]!==undefined)return oncelikBellek[u.id];
+ const ad=sade(u.ad),hepsi=ad+' '+sade(u.kat||'');
+ let p=2;
+ if(ONCE_CEKIRDEK.some(k=>ad.indexOf(k)>-1))p=0;
+ else if(ONCE_YOLCULUK.some(k=>hepsi.indexOf(k)>-1))p=1;
+ return (oncelikBellek[u.id]=p);
+}
 function suzulmus(){
  return URUNLER.filter(u=>{
   if(sec!=='Tümü'&&u.kat!==sec)return false;
   if(ara&&sade(u.ad+' '+(u.kod||'')+' '+u.kat).indexOf(ara)===-1)return false;
   return true;
- });
+ }).sort((a,b)=>oncelik(a)-oncelik(b));
 }
 function izgaraCiz(){
  const liste=suzulmus();
