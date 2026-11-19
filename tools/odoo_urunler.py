@@ -19,14 +19,12 @@ KATEGORI = os.environ.get("ODOO_KATEGORI", "İSTANBUL HAC UMRE")
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
-# Sitedeki dört ana başlık; Odoo alt kategorisi anahtar kelimeyle buraya oturtulur.
+# Odoo'daki gerçek alt kategoriler sitedeki dört ana başlığa oturtulur.
 SITE_KAT = [
-    ("Hac Umre Kıyafetleri", ("kiyafet", "kıyafet", "ihram", "ferace", "esarp", "eşarp", "elbise",
-                              "tesettur", "tesettür", "bone", "corap", "çorap", "giyim")),
-    ("Hurma ve Zemzem", ("hurma", "zemzem", "su", "gida", "gıda", "kahve", "cay", "çay")),
-    ("İslami Hediyelik", ("hediye", "tesbih", "seccade", "esans", "koku", "misk", "kitap",
-                          "tablo", "zikir", "takı", "taki", "kolye")),
-    ("Hac Umre Malzemeleri", ()),
+    ("Hac Umre Kıyafetleri", ("giyim", "terlik", "ayakkab", "ihram", "ferace", "esarp", "eşarp")),
+    ("Hurma ve Zemzem", ("hurma", "zemzem", "kuruyemiş", "kuruyemis", "ikram", "gıda", "gida")),
+    ("Hac Umre Malzemeleri", ("bakım", "bakim", "hijyen", "seyahat", "ekipman", "çanta", "canta")),
+    ("İslami Hediyelik", ()),
 ]
 KAT_GORSEL = {
     "Hac Umre Malzemeleri": "assets/g/masa.jpg",
@@ -39,9 +37,9 @@ KAT_GORSEL = {
 def site_kategorisi(ad):
     d = (ad or "").lower()
     for baslik, anahtarlar in SITE_KAT:
-        if any(a in d for a in anahtarlar):
+        if not anahtarlar or any(a in d for a in anahtarlar):
             return baslik
-    return "Hac Umre Malzemeleri"
+    return "İslami Hediyelik"
 
 if not all([URL, DB, LOGIN, KEY]):
     sys.exit("Eksik ayar: ODOO_URL, ODOO_DB, ODOO_LOGIN, ODOO_KEY gerekli.")
@@ -100,7 +98,7 @@ def main():
             anahtar, n = f"{temel}-{n}", n + 1
         kullanilan.add(anahtar)
         alt = (u["categ_id"][1].split(" / ")[-1] if u.get("categ_id") else "")
-        kat = site_kategorisi(alt + " " + u.get("name", ""))
+        kat = site_kategorisi(alt)
         cikti.append({
             "id": anahtar,
             "odooId": u["id"],
@@ -130,6 +128,7 @@ def main():
         "id": u["id"], "ad": u["ad"], "fiyat": u["fiyat"], "kat": u["kat"],
         "acik": u["acik"] or u["altkat"] or "",
         "gorsel": f"assets/u/{u['id']}.webp",
+        "odooFoto": u["fotoVar"],
         "yedek": KAT_GORSEL.get(u["kat"], "assets/g/masa.jpg"),
     } for u in satilan]
     with open(OUT_JS, "w", encoding="utf-8") as f:
