@@ -9,9 +9,9 @@ import os
 import re
 import sys
 import xmlrpc.client
+from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from datetime import datetime, timezone
 
 URL = os.environ.get("ODOO_URL", "https://isthac.istanbulpromo.com").rstrip("/")
 DB = os.environ.get("ODOO_DB", "isthac")
@@ -22,6 +22,23 @@ OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
 from kategori import kategori as site_kategorisi, KAT_GORSEL, sadelestir
+
+
+if not all([URL, DB, LOGIN, KEY]):
+    sys.exit("Eksik ayar: ODOO_LOGIN ve ODOO_KEY gerekli.")
+
+
+def baglan():
+    ortak = xmlrpc.client.ServerProxy(f"{URL}/xmlrpc/2/common", allow_none=True)
+    uid = ortak.authenticate(DB, LOGIN, KEY, {})
+    if not uid:
+        sys.exit("Odoo girişi başarısız: kullanıcı adı veya API anahtarı hatalı.")
+    model = xmlrpc.client.ServerProxy(f"{URL}/xmlrpc/2/object", allow_none=True)
+    return uid, model
+
+
+def oku(model, uid, metot, alan, *args, **kw):
+    return model.execute_kw(DB, uid, KEY, alan, metot, *args, **kw)
 
 
 def slug(s):
