@@ -45,7 +45,11 @@
  linear-gradient(90deg,rgba(6,13,31,.88) 0%,rgba(6,13,31,.78) 22%,rgba(6,13,31,.42) 34%,rgba(6,13,31,0) 46%),
  linear-gradient(0deg,var(--gece) 0%,rgba(6,13,31,.55) 12%,transparent 30%),
  linear-gradient(180deg,rgba(6,13,31,.5),transparent 16%)}
-.hero .metin{position:relative;width:min(520px,calc(34vw - max(20px,5vw)));padding:clamp(110px,14vh,150px) 0 clamp(48px,8vh,80px)}
+.hero-efekt{position:absolute;inset:0 0 auto 0;height:100vh;height:100svh;z-index:0;pointer-events:none;
+ width:100%;display:block}
+@media (max-width:820px){.hero-efekt{top:72px;height:clamp(320px,56svh,640px)}}
+@media (prefers-reduced-motion:reduce){.hero-efekt{display:none}}
+.hero .metin{position:relative;z-index:1;width:min(520px,calc(34vw - max(20px,5vw)));padding:clamp(110px,14vh,150px) 0 clamp(48px,8vh,80px)}
 .hero h1{font-size:clamp(38px,3.9vw,76px);line-height:1.03;margin:22px 0 22px;text-shadow:0 2px 34px rgba(6,13,31,.55)}
 .hero .giris{font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:rgba(234,230,220,.86);max-width:44ch;text-shadow:0 1px 18px rgba(6,13,31,.6)}
 .hero .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
@@ -163,6 +167,7 @@
   </video>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
+ <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
  <div class="metin">
   <div class="ust-yazi sz">Hac · Umre · Hurma · Hediyelik</div>
   <h1 class="sz">Mübarek<br>yolculuğun<br><span class="metal metal-yazi" data-isik>her ihtiyacı</span><br>burada.</h1>
@@ -255,6 +260,7 @@
 
 <script src="urunler-veri.js"></script>
 <script src="site.js"></script>
+<script src="hava.js" defer></script>
 <script>
 kabuk('ana');
 /* Açılış videosu: telefonda dikey kırpım, ekrandan çıkınca ve sekme gizlenince durur */
