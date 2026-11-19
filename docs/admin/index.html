@@ -181,7 +181,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 13:25';
+var SURUM = '19 Kasım 13:35';
 var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var ANAHTAR_YER = 'ihh-gh-anahtar';
 var anahtarBellek = '';
@@ -443,16 +443,16 @@ function sayac(){
   var hazir = urunler.filter(function(u){ return u.fotoVar; }).length;
   var bek = Object.keys(bekleyen).length;
   var eksik = urunler.length - hazir - bek;
-  $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' hazır · ' + eksik + ' eksik';
+  $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' çekildi · ' + eksik + ' kaldı';
   var bs = $('#bekSay'); if (bs) bs.textContent = bek;
   $('#altbar').classList.toggle('ac', bek > 0 && !otomatik);
   var ab = $('#altbarMetin');
   if (ab) ab.innerHTML = otomatik ? 'Fotoğraflar kendiliğinden gönderiliyor'
     : '<b id="bekSay">' + bek + '</b> fotoğraf stüdyoya gönderilmeyi bekliyor';
   $('#suz').innerHTML = [
-    ['eksik', 'Fotoğrafı eksik', eksik],
+    ['eksik', 'Çekilecek', eksik],
     ['bekleyen', 'Gönderilecek', bek],
-    ['hazir', 'Hazır', hazir],
+    ['hazir', 'Biten', hazir],
     ['hepsi', 'Tümü', urunler.length]
   ].map(function(x){
     return '<button data-s="' + x[0] + '" class="' + (suzgec === x[0] ? 'on' : '') + '">' + x[1] + '<i>' + x[2] + '</i></button>';

@@ -88,7 +88,8 @@ def main():
             "kat": kat,
             "altkat": alt,
             "acik": re.sub(r"\s+", " ", (u.get("description_sale") or "")).strip(),
-            "fotoVar": u["id"] in fotolu,
+            "fotoVar": os.path.exists(os.path.join("docs", "assets", "u", f"{anahtar}.webp")),
+            "odooFoto": u["id"] in fotolu,
             "aktif": bool(u.get("active", True)),
             "satilir": bool(u.get("sale_ok", True)),
         })
@@ -112,7 +113,7 @@ def main():
         "id": u["id"], "ad": u["ad"], "fiyat": u["fiyat"], "kat": u["kat"],
         "acik": u["acik"] or u["altkat"] or "",
         "gorsel": f"assets/u/{u['id']}.webp",
-        "odooFoto": u["fotoVar"],
+        "odooFoto": u["odooFoto"],
         "yedek": KAT_GORSEL.get(u["kat"], "assets/g/masa.jpg"),
     } for u in satilan]
     with open(OUT_JS, "w", encoding="utf-8") as f:
@@ -121,7 +122,9 @@ def main():
         f.write(";\n")
     print("Yazıldı:", OUT_JS, "|", len(js), "ürün siteye çıkıyor")
 
-    print("Yazıldı:", OUT, "|", len(cikti), "ürün,", sum(1 for u in cikti if not u["fotoVar"]), "tanesi fotoğrafsız")
+    print("Yazıldı:", OUT, "|", len(cikti), "ürün,",
+          sum(1 for u in cikti if not u["fotoVar"]), "tanesi stüdyodan geçmemiş,",
+          sum(1 for u in cikti if u["odooFoto"]), "tanesinin Odoo'da eski karesi var")
 
 
 if __name__ == "__main__":
