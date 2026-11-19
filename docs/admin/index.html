@@ -50,6 +50,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 .rozet{position:absolute;top:8px;left:8px;z-index:2;padding:5px 9px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:.02em}
 .rozet.b{background:linear-gradient(135deg,var(--altin2),var(--altin));color:#1a1205}
 .rozet.h{background:rgba(63,174,122,.9);color:#04210f}
+.rozet.x{background:rgba(214,74,74,.92);color:#2b0606}
 .degis{position:absolute;right:8px;bottom:8px;z-index:2;padding:7px 11px;border-radius:999px;font-size:11.5px;
   background:rgba(6,13,31,.78);border:1px solid var(--cizgi);backdrop-filter:blur(8px)}
 .g{padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px;flex:1}
@@ -83,6 +84,11 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 .taniKutu b{display:block;margin-bottom:8px;font-size:13px}
 .taniKutu pre{white-space:pre-wrap;font:11.5px/1.6 ui-monospace,Menlo,monospace;color:var(--sol);margin-bottom:10px}
 .taniKutu button{padding:9px 16px;border-radius:999px;border:1px solid var(--cizgi);font-size:13px}
+.ayarAciklama{font-size:12.5px;color:var(--sol);line-height:1.6;margin-bottom:12px}
+#ghAnahtar{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--cizgi);
+  background:rgba(255,255,255,.05);color:var(--yazi);font-size:14px;margin-bottom:10px}
+.ayarDugme{display:flex;gap:8px;flex-wrap:wrap}
+.ayarDurum{margin-top:10px;font-size:12.5px;color:var(--sol);line-height:1.5}
 @media (max-width:560px){
   .ara{max-width:none}
   .ust b{font-size:14px}
@@ -114,14 +120,28 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 
 <div class="altbar" id="altbar">
   <div class="ic">
-    <span><b id="bekSay">0</b> fotoğraf stüdyoya gönderilmeyi bekliyor</span>
+    <span id="altbarMetin"><b id="bekSay">0</b> fotoğraf stüdyoya gönderilmeyi bekliyor</span>
     <button class="gonder" id="btnGonder">Paketi gönder</button>
   </div>
 </div>
 
 <div class="bildirim" id="bildirim"></div>
 
+<button class="taniAc" id="ayarAc" title="Bağlantı" style="right:56px">⚙</button>
 <button class="taniAc" id="taniAc" title="Tanı">ⓘ</button>
+
+<div class="taniKutu" id="ayarKutu" hidden>
+  <b>Otomatik yükleme</b>
+  <p class="ayarAciklama">Buraya GitHub erişim anahtarını bir kez yapıştırın; bu telefonda saklanır.
+  Sonrasında çektiğiniz her fotoğraf kendiliğinden stüdyoya gider, elle göndermeniz gerekmez.</p>
+  <input id="ghAnahtar" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+  <div class="ayarDugme">
+    <button id="ghSina">Bağlantıyı sına ve kaydet</button>
+    <button id="ghSil">Anahtarı sil</button>
+    <button id="ayarKapat">Kapat</button>
+  </div>
+  <p class="ayarDurum" id="ghDurum"></p>
+</div>
 <div class="taniKutu" id="taniKutu" hidden>
   <b>Tanı kaydı · sürüm <span id="surum"></span></b>
   <pre id="tani">henüz kayıt yok</pre>
@@ -131,8 +151,12 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 12:45';
-var AYAR = { yukleUrl: '', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
+var SURUM = '19 Kasım 13:05';
+var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
+var ANAHTAR_YER = 'ihh-gh-anahtar';
+function anahtar(){ try { return localStorage.getItem(ANAHTAR_YER) || ''; } catch (e){ return ''; } }
+function anahtarYaz(v){ try { v ? localStorage.setItem(ANAHTAR_YER, v) : localStorage.removeItem(ANAHTAR_YER); } catch (e){} }
+var otomatik = false;
 var $ = function(s){ return document.querySelector(s); };
 var urunler = [], db = null, bekleyen = {}, suzgec = 'eksik', arama = '';
 
@@ -245,6 +269,55 @@ function kucult(dosya){
   });
 }
 
+/* ---- GitHub'a doğrudan yükleme ---- */
+function gh(yol, secenek){
+  secenek = secenek || {};
+  secenek.headers = Object.assign({
+    'Authorization': 'Bearer ' + anahtar(),
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  }, secenek.headers || {});
+  return fetch('https://api.github.com/repos/' + AYAR.depo + yol, secenek);
+}
+function b64(blob){
+  return new Promise(function(ok, hata){
+    var f = new FileReader();
+    f.onload = function(){ ok(String(f.result).split(',')[1]); };
+    f.onerror = function(){ hata(new Error('dosya okunamadı')); };
+    f.readAsDataURL(blob);
+  });
+}
+function yukle(id, blob, ad){
+  var yol = '/contents/gelen/' + encodeURIComponent(id) + '.jpg';
+  return b64(blob).then(function(icerik){
+    var govde = { message: 'foto: ' + (ad || id), content: icerik, branch: AYAR.dal };
+    return gh(yol, { method: 'PUT', body: JSON.stringify(govde) }).then(function(c){
+      if (c.ok) return c.json();
+      if (c.status === 422 || c.status === 409){
+        // aynı isimde bekleyen kare var: üstüne yaz
+        return gh(yol + '?ref=' + AYAR.dal).then(function(r){ return r.ok ? r.json() : null; }).then(function(v){
+          if (v && v.sha) govde.sha = v.sha;
+          return gh(yol, { method: 'PUT', body: JSON.stringify(govde) }).then(function(c2){
+            if (!c2.ok) return c2.text().then(function(t){ throw new Error(c2.status + ' ' + t.slice(0, 120)); });
+            return c2.json();
+          });
+        });
+      }
+      return c.text().then(function(t){ throw new Error(c.status + ' ' + t.slice(0, 120)); });
+    });
+  });
+}
+function baglantiSina(deger){
+  var eski = anahtar(); anahtarYaz(deger);
+  return gh('').then(function(c){
+    if (!c.ok) { anahtarYaz(eski); return c.text().then(function(t){ throw new Error(c.status + ' ' + t.slice(0, 90)); }); }
+    return c.json();
+  }).then(function(d){
+    if (!d.permissions || !d.permissions.push){ anahtarYaz(eski); throw new Error('bu anahtarın yazma izni yok'); }
+    otomatik = true; return d;
+  });
+}
+
 /* ---- zip ---- */
 var crcT = (function(){ var t = new Uint32Array(256);
   for (var n = 0; n < 256; n++){ var c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
@@ -295,7 +368,13 @@ function ciz(){
   $('#yok').hidden = liste.length > 0;
   I.innerHTML = liste.slice(0, 600).map(function(u){
     var d = durum(u), ic;
-    if (d === 'bekliyor') ic = '<span class="rozet b">stüdyoya gidecek</span><img alt="" src="' + bekleyen[u.id].url + '"><button class="degis" data-cek="' + u.id + '">Yeniden çek</button>';
+    if (d === 'bekliyor') {
+      var dur = bekleyen[u.id].durum || 'bekliyor';
+      var etiket = dur === 'yukleniyor' ? 'yükleniyor…' : dur === 'studyoda' ? 'stüdyoda işleniyor' :
+                   dur === 'hata' ? 'yüklenemedi' : 'stüdyoya gidecek';
+      ic = '<span class="rozet ' + (dur === 'hata' ? 'x' : 'b') + '">' + etiket + '</span>' +
+           '<img alt="" src="' + bekleyen[u.id].url + '"><button class="degis" data-cek="' + u.id + '">Yeniden çek</button>';
+    }
     else if (d === 'hazir') ic = '<span class="rozet h">hazır</span><img alt="" loading="lazy" src="../assets/u/' + u.id + '.webp"><button class="degis" data-cek="' + u.id + '">Değiştir</button>';
     else ic = '<span class="bos">' + KAMERA + 'Fotoğraf ekle</span>';
     return '<article class="k ' + d + '" data-id="' + u.id + '">' +
@@ -311,8 +390,11 @@ function sayac(){
   var bek = Object.keys(bekleyen).length;
   var eksik = urunler.length - hazir - bek;
   $('#ozet').textContent = urunler.length + ' ürün · ' + hazir + ' hazır · ' + eksik + ' eksik';
-  $('#bekSay').textContent = bek;
-  $('#altbar').classList.toggle('ac', bek > 0);
+  var bs = $('#bekSay'); if (bs) bs.textContent = bek;
+  $('#altbar').classList.toggle('ac', bek > 0 && !otomatik);
+  var ab = $('#altbarMetin');
+  if (ab) ab.innerHTML = otomatik ? 'Fotoğraflar kendiliğinden gönderiliyor'
+    : '<b id="bekSay">' + bek + '</b> fotoğraf stüdyoya gönderilmeyi bekliyor';
   $('#suz').innerHTML = [
     ['eksik', 'Fotoğrafı eksik', eksik],
     ['bekleyen', 'Gönderilecek', bek],
@@ -342,15 +424,31 @@ function cek(id){
         return kaydet({ id: id, ad: u.ad || id, kod: u.kod || '', blob: b, ts: Date.now(), gonderildi: false })
           .then(function(){
             if (bekleyen[id]) URL.revokeObjectURL(bekleyen[id].url);
-            bekleyen[id] = { url: URL.createObjectURL(b), boyut: b.size };
+            bekleyen[id] = { url: URL.createObjectURL(b), boyut: b.size, durum: otomatik ? 'yukleniyor' : 'bekliyor' };
             not('✓ ' + (u.ad || id) + ' kaydedildi');
             bildir('✓ ' + (u.ad || id) + ' eklendi');
             ciz();
+            if (otomatik) hemenYukle(id, b, u.ad || id);
           });
       }).catch(function(e){ not('olmadı: ' + (e && e.message ? e.message : e), true); bildir('Olmadı: ' + (e && e.message ? e.message : e)); });
     };
   }
   girdi.click();
+}
+
+function hemenYukle(id, blob, ad){
+  bekleyen[id] && (bekleyen[id].durum = 'yukleniyor'); ciz();
+  yukle(id, blob, ad).then(function(){
+    not('↑ ' + ad + ' stüdyoya yollandı');
+    if (bekleyen[id]) bekleyen[id].durum = 'studyoda';
+    return hepsi().then(function(kayitlar){
+      var k = kayitlar.filter(function(x){ return x.id === id; })[0];
+      if (k){ k.gonderildi = true; return kaydet(k); }
+    });
+  }).catch(function(e){
+    if (bekleyen[id]) bekleyen[id].durum = 'hata';
+    not('yükleme olmadı (' + ad + '): ' + e.message, true);
+  }).then(ciz);
 }
 
 /* ---- gönderme ---- */
@@ -399,6 +497,11 @@ Promise.all([
   urunler = (s[1] && s[1].urunler) ? s[1].urunler.filter(function(u){ return u.aktif !== false; }) : [];
   if (!urunler.length) bildir('Ürün listesi yüklenemedi');
   ciz();
+  if (anahtar()){
+    baglantiSina(anahtar()).then(function(d){
+      not('otomatik yükleme açık (' + d.full_name + ')'); sayac(); yarimKalanlariYolla();
+    }).catch(function(e){ not('kayıtlı anahtar çalışmadı: ' + e.message, true); });
+  }
 });
 
 $('#izgara').addEventListener('click', function(e){
@@ -413,6 +516,24 @@ $('#ara').addEventListener('input', function(){ arama = norm(this.value); ciz();
 $('#btnGonder').addEventListener('click', paketGonder);
 $('#surum').textContent = SURUM;
 not('sayfa açıldı · sürüm ' + SURUM);
+$('#ayarAc').addEventListener('click', function(){ $('#ayarKutu').hidden = !$('#ayarKutu').hidden; });
+$('#ayarKapat').addEventListener('click', function(){ $('#ayarKutu').hidden = true; });
+$('#ghSil').addEventListener('click', function(){ anahtarYaz(''); otomatik = false; $('#ghDurum').textContent = 'Anahtar silindi, elle gönderme kipine dönüldü.'; sayac(); });
+$('#ghSina').addEventListener('click', function(){
+  var v = $('#ghAnahtar').value.trim();
+  if (!v) return ($('#ghDurum').textContent = 'Önce anahtarı yapıştırın.');
+  $('#ghDurum').textContent = 'Sınanıyor…';
+  baglantiSina(v).then(function(d){
+    $('#ghDurum').textContent = '✓ Bağlandı: ' + d.full_name + '. Bundan sonra fotoğraflar kendiliğinden gidecek.';
+    $('#ghAnahtar').value = ''; not('otomatik yükleme açık'); sayac(); yarimKalanlariYolla();
+  }).catch(function(e){ $('#ghDurum').textContent = '✗ Olmadı: ' + e.message; });
+});
+function yarimKalanlariYolla(){
+  if (!otomatik) return;
+  hepsi().then(function(kayitlar){
+    kayitlar.filter(function(k){ return !k.gonderildi; }).forEach(function(k){ hemenYukle(k.id, k.blob, k.ad); });
+  });
+}
 $('#taniAc').addEventListener('click', function(){ $('#taniKutu').hidden = !$('#taniKutu').hidden; });
 $('#taniKapat').addEventListener('click', function(){ $('#taniKutu').hidden = true; });
 window.addEventListener('error', function(e){ not('sayfa hatası: ' + e.message, true); });
