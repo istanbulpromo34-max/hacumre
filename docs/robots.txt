@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /foto/
+Disallow: /gelen/
+
+Sitemap: https://istanbulhacumre.com/sitemap.xml

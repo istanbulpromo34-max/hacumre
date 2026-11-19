@@ -3,7 +3,7 @@
 // Yayın adresi ve arama motoru etiketleri burada eklenir.
 import fs from 'node:fs/promises';
 
-const SITE = process.env.SITE_URL || 'https://istanbulpromo34-max.github.io/hacumre/';
+const SITE = process.env.SITE_URL || 'https://istanbulhacumre.com/';
 const DESC = 'Ümraniye’de hac ve umre hazırlık malzemeleri: ihram, kokusuz bakım ürünleri, mest, seccade, tesbih, zikirmatik ve hediyelik hat tabloları. Hazırlık kontrol listesi ve kısa rehber.';
 
 const body = await fs.readFile('src/page.html', 'utf8');
