@@ -15,7 +15,7 @@ URL = os.environ.get("ODOO_URL", "https://isthac.istanbulpromo.com").rstrip("/")
 DB = os.environ.get("ODOO_DB", "isthac")
 LOGIN = os.environ.get("ODOO_LOGIN", "")
 KEY = os.environ.get("ODOO_KEY", "")
-KATEGORI = os.environ.get("ODOO_KATEGORI", "İSTANBUL HAC UMRE")
+KATEGORI = (os.environ.get("ODOO_KATEGORI") or "").strip() or "İSTANBUL HAC UMRE"
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
@@ -112,6 +112,10 @@ def main():
             "aktif": bool(u.get("active", True)),
             "satilir": bool(u.get("sale_ok", True)),
         })
+
+    if len(cikti) > 1500:
+        sys.exit(f"Beklenenden çok ürün geldi ({len(cikti)}). Kategori süzgeci '{KATEGORI}' "
+                 "doğru çalışmıyor olabilir; dosyalara dokunulmadı.")
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
