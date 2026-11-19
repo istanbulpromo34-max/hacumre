@@ -111,7 +111,7 @@ def main():
     satilan = [u for u in cikti if u["aktif"] and u["satilir"]]
     js = [{
         "id": u["id"], "ad": u["ad"], "kod": u["kod"], "fiyat": u["fiyat"], "kat": u["kat"],
-        "acik": u["acik"] or u["altkat"] or "",
+        "acik": u["acik"] or (u["altkat"] if u["altkat"] and u["altkat"] != KATEGORI else ""),
         "gorsel": f"assets/u/{u['id']}.webp",
         "odooFoto": u["odooFoto"],
         "yedek": KAT_GORSEL.get(u["kat"], "assets/g/masa.jpg"),
