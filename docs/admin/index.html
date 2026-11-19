@@ -73,6 +73,16 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
   backdrop-filter:blur(14px);font-size:14px;opacity:0;transition:all .35s;pointer-events:none;max-width:88vw;text-align:center}
 .bildirim.gor{opacity:1;transform:translate(-50%,0)}
 .yok{text-align:center;color:var(--sol);padding:60px 20px;line-height:1.7}
+.durum{max-width:1180px;margin:9px auto 0;padding:8px 12px;border-radius:10px;font-size:12.5px;
+  background:rgba(63,174,122,.14);border:1px solid rgba(63,174,122,.35);color:#bfeed7}
+.durum.hata{background:rgba(214,74,74,.14);border-color:rgba(214,74,74,.4);color:#ffc9c9}
+.taniAc{position:fixed;right:12px;bottom:calc(84px + var(--alt));z-index:45;width:36px;height:36px;border-radius:50%;
+  background:rgba(18,35,71,.9);border:1px solid var(--cizgi);font-size:15px;color:var(--sol);backdrop-filter:blur(10px)}
+.taniKutu{position:fixed;inset:auto 10px calc(10px + var(--alt));z-index:55;max-height:60svh;overflow:auto;
+  padding:14px;border-radius:16px;background:rgba(10,22,47,.97);border:1px solid var(--cizgi);backdrop-filter:blur(16px)}
+.taniKutu b{display:block;margin-bottom:8px;font-size:13px}
+.taniKutu pre{white-space:pre-wrap;font:11.5px/1.6 ui-monospace,Menlo,monospace;color:var(--sol);margin-bottom:10px}
+.taniKutu button{padding:9px 16px;border-radius:999px;border:1px solid var(--cizgi);font-size:13px}
 @media (max-width:560px){
   .ara{max-width:none}
   .ust b{font-size:14px}
@@ -94,6 +104,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
     </div>
   </div>
   <div class="suz" id="suz"></div>
+  <div class="durum" id="cubukDurum" hidden></div>
 </header>
 
 <main>
@@ -110,9 +121,17 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 
 <div class="bildirim" id="bildirim"></div>
 
+<button class="taniAc" id="taniAc" title="Tanı">ⓘ</button>
+<div class="taniKutu" id="taniKutu" hidden>
+  <b>Tanı kaydı · sürüm <span id="surum"></span></b>
+  <pre id="tani">henüz kayıt yok</pre>
+  <button id="taniKapat">Kapat</button>
+</div>
+
 <script>
 (function(){
 'use strict';
+var SURUM = '19 Kasım 12:45';
 var AYAR = { yukleUrl: '', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var $ = function(s){ return document.querySelector(s); };
 var urunler = [], db = null, bekleyen = {}, suzgec = 'eksik', arama = '';
@@ -136,24 +155,93 @@ function dbAc(){
     i.onerror = function(){ hata(i.error); };
   });
 }
-function kaydet(k){ return new Promise(function(ok, h){ var t = db.transaction('kare','readwrite'); t.objectStore('kare').put(k); t.oncomplete = ok; t.onerror = function(){ h(t.error); }; }); }
-function hepsi(){ return new Promise(function(ok){ var t = db.transaction('kare','readonly').objectStore('kare').getAll(); t.onsuccess = function(){ ok(t.result || []); }; t.onerror = function(){ ok([]); }; }); }
-function sil(id){ return new Promise(function(ok){ var t = db.transaction('kare','readwrite'); t.objectStore('kare').delete(id); t.oncomplete = ok; t.onerror = ok; }); }
+var bellek = {};      /* IndexedDB çalışmazsa yedek depo */
+function kaydet(k){
+  if (!db){ bellek[k.id] = k; return Promise.resolve(); }
+  return new Promise(function(ok, h){
+    try {
+      var t = db.transaction('kare','readwrite');
+      t.objectStore('kare').put(k);
+      t.oncomplete = function(){ ok(); };
+      t.onerror = function(){ bellek[k.id] = k; not('tarayıcı deposu yazmadı, bellekte tutuldu', true); ok(); };
+    } catch (e){ bellek[k.id] = k; ok(); }
+  });
+}
+function hepsi(){
+  var b = Object.keys(bellek).map(function(x){ return bellek[x]; });
+  if (!db) return Promise.resolve(b);
+  return new Promise(function(ok){
+    try {
+      var t = db.transaction('kare','readonly').objectStore('kare').getAll();
+      t.onsuccess = function(){ ok((t.result || []).concat(b)); };
+      t.onerror = function(){ ok(b); };
+    } catch (e){ ok(b); }
+  });
+}
+function sil(id){
+  delete bellek[id];
+  if (!db) return Promise.resolve();
+  return new Promise(function(ok){
+    try { var t = db.transaction('kare','readwrite'); t.objectStore('kare').delete(id); t.oncomplete = ok; t.onerror = ok; }
+    catch (e){ ok(); }
+  });
+}
 
 /* ---- görsel ---- */
+var TANI = [];
+function not(m, hata){
+  TANI.unshift(new Date().toLocaleTimeString('tr-TR') + ' · ' + m);
+  TANI = TANI.slice(0, 40);
+  var d = $('#tani'); if (d) d.textContent = TANI.join('\n');
+  var c = $('#cubukDurum');
+  if (c && m.indexOf('sayfa açıldı') !== 0){ c.textContent = m; c.className = 'durum' + (hata ? ' hata' : ''); c.hidden = false; }
+}
+function toBlob(c){
+  return new Promise(function(ok){
+    try { c.toBlob(function(b){ ok(b); }, 'image/jpeg', AYAR.kalite); }
+    catch (e){ ok(null); }
+  });
+}
+function cizVeAl(kaynak, g0, y0){
+  var o = Math.min(1, AYAR.enBuyukKenar / Math.max(g0, y0));
+  var c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(g0 * o)); c.height = Math.max(1, Math.round(y0 * o));
+  var ct = c.getContext('2d');
+  if (!ct) return Promise.resolve(null);
+  ct.drawImage(kaynak, 0, 0, c.width, c.height);
+  return toBlob(c);
+}
+/* iPhone'da kare HEIC gelebilir ya da 48 MP olabilir; üç yoldan biri tutar. */
 function kucult(dosya){
-  return new Promise(function(ok, hata){
-    var url = URL.createObjectURL(dosya), im = new Image();
-    im.onload = function(){
-      var o = Math.min(1, AYAR.enBuyukKenar / Math.max(im.width, im.height));
-      var c = document.createElement('canvas');
-      c.width = Math.round(im.width * o); c.height = Math.round(im.height * o);
-      c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
-      URL.revokeObjectURL(url);
-      c.toBlob(function(b){ b ? ok(b) : hata(new Error('çevrilemedi')); }, 'image/jpeg', AYAR.kalite);
-    };
-    im.onerror = function(){ URL.revokeObjectURL(url); hata(new Error('okunamadı')); };
-    im.src = url;
+  return (function(){
+    if (!window.createImageBitmap) return Promise.reject(new Error('bitmap yok'));
+    return createImageBitmap(dosya).then(function(bm){
+      var g = bm.width, y = bm.height;
+      return cizVeAl(bm, g, y).then(function(b){
+        if (bm.close) bm.close();
+        if (!b) throw new Error('tuval boş döndü');
+        not('fotoğraf hazır (' + g + '×' + y + ' → ' + Math.round(b.size / 1024) + ' KB)');
+        return b;
+      });
+    });
+  })().catch(function(e1){
+    return new Promise(function(ok, hata){
+      var url = URL.createObjectURL(dosya), im = new Image();
+      im.onload = function(){
+        cizVeAl(im, im.naturalWidth, im.naturalHeight).then(function(b){
+          URL.revokeObjectURL(url);
+          if (!b) return hata(new Error('tuval boş döndü'));
+          not('fotoğraf hazır (' + im.naturalWidth + '×' + im.naturalHeight + ' → ' + Math.round(b.size / 1024) + ' KB)');
+          ok(b);
+        });
+      };
+      im.onerror = function(){ URL.revokeObjectURL(url); hata(new Error('görsel çözülemedi (' + (dosya.type || 'tür yok') + ')')); };
+      im.src = url;
+    });
+  }).catch(function(e2){
+    // son çare: kareyi olduğu gibi sakla, kalite düşmesin diye değil, kaybolmasın diye
+    not('küçültülemedi, kare olduğu gibi saklandı (' + Math.round(dosya.size / 1024) + ' KB)', true);
+    return dosya;
   });
 }
 
@@ -245,18 +333,21 @@ function cek(id){
     girdi.style.display = 'none'; document.body.appendChild(girdi);
     girdi.onchange = function(){
       var d = girdi.files && girdi.files[0]; girdi.value = '';
-      if (!d || !hedef) return;
+      if (!d){ not('kamera kare döndürmedi', true); return; }
+      if (!hedef){ not('hangi ürün olduğu kayboldu', true); return; }
       var id = hedef;
+      not('kare alındı: ' + (d.type || 'tür yok') + ' · ' + Math.round(d.size / 1024) + ' KB');
       kucult(d).then(function(b){
         var u = urunler.filter(function(x){ return x.id === id; })[0] || {};
         return kaydet({ id: id, ad: u.ad || id, kod: u.kod || '', blob: b, ts: Date.now(), gonderildi: false })
           .then(function(){
             if (bekleyen[id]) URL.revokeObjectURL(bekleyen[id].url);
             bekleyen[id] = { url: URL.createObjectURL(b), boyut: b.size };
+            not('✓ ' + (u.ad || id) + ' kaydedildi');
             bildir('✓ ' + (u.ad || id) + ' eklendi');
             ciz();
           });
-      }).catch(function(e){ bildir('Olmadı: ' + e.message); });
+      }).catch(function(e){ not('olmadı: ' + (e && e.message ? e.message : e), true); bildir('Olmadı: ' + (e && e.message ? e.message : e)); });
     };
   }
   girdi.click();
@@ -297,7 +388,9 @@ function paketGonder(){
 
 /* ---- başlangıç ---- */
 Promise.all([
-  dbAc().then(function(d){ db = d; return hepsi(); }).catch(function(){ return []; }),
+  dbAc().then(function(d){ db = d; return hepsi(); }).catch(function(e){
+    not('tarayıcı deposu açılmadı, fotoğraflar bellekte tutulacak', true); return [];
+  }),
   fetch('../data/urunler.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
 ]).then(function(s){
   (s[0] || []).forEach(function(k){
@@ -318,6 +411,12 @@ $('#suz').addEventListener('click', function(e){
 });
 $('#ara').addEventListener('input', function(){ arama = norm(this.value); ciz(); });
 $('#btnGonder').addEventListener('click', paketGonder);
+$('#surum').textContent = SURUM;
+not('sayfa açıldı · sürüm ' + SURUM);
+$('#taniAc').addEventListener('click', function(){ $('#taniKutu').hidden = !$('#taniKutu').hidden; });
+$('#taniKapat').addEventListener('click', function(){ $('#taniKutu').hidden = true; });
+window.addEventListener('error', function(e){ not('sayfa hatası: ' + e.message, true); });
+window.addEventListener('unhandledrejection', function(e){ not('beklenmedik hata: ' + (e.reason && e.reason.message || e.reason), true); });
 })();
 </script>
 </body>
