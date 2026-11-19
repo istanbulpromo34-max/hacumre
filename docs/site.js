@@ -130,10 +130,11 @@ function kabuk(aktif){
  const nav=document.createElement('nav');nav.className='nav';nav.setAttribute('aria-label','Ana menü');
  const on=k=>aktif===k?' class="on" aria-current="page"':'';
  nav.innerHTML=`<a class="logo" href="index.html" aria-label="${MAGAZA.ad}, ana sayfa"><img src="assets/logo-nav.png" alt="" width="128" height="31"></a>
- <a href="index.html"${on('ana')}>Ana Sayfa</a>
- <a href="urunler.html"${on('urun')}>Ürünlerimiz</a>
+ <a href="index.html"${on('ana')}><span class="uzun">Ana Sayfa</span><span class="kisa">Ana</span></a>
+ <a href="urunler.html"${on('urun')}><span class="uzun">Ürünlerimiz</span><span class="kisa">Ürünler</span></a>
+ <a href="tablolar.html"${on('tablo')}><span class="uzun">Tablo Eserleri</span><span class="kisa">Tablolar</span></a>
  <a href="iletisim.html"${on('ilet')}>İletişim</a>
- <a href="tur.html" class="tur${aktif==='tur'?' on':''}"${aktif==='tur'?' aria-current="page"':''}>Dijital Tur</a>
+ <a href="tur.html" class="tur${aktif==='tur'?' on':''}"${aktif==='tur'?' aria-current="page"':''}><span class="uzun">Dijital Tur</span><span class="kisa">Tur</span></a>
  <button class="sepetbtn" type="button" aria-label="Çantam, boş"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 7h14l-1.5 11h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b aria-hidden="true">0</b></button>`;
  document.body.prepend(nav);
  const ml=document.createElement('a');ml.className='mlogo';ml.href='index.html';ml.setAttribute('aria-label',MAGAZA.ad+', ana sayfa');ml.innerHTML='<img src="assets/logo-nav.png" alt="" width="128" height="31">';
@@ -182,7 +183,7 @@ function kabuk(aktif){
  const f=document.querySelector('footer.sf');
  if(f){const notlar=[...f.querySelectorAll('.f-not')];
  f.innerHTML=`<div class="f-ust"><div class="f-blok"><a class="f-logo" href="index.html" aria-label="${MAGAZA.ad}, ana sayfa"><img src="assets/logo-alt.png" alt="" width="184" height="44" loading="lazy"></a><p>${MAGAZA.adres}<br>${MAGAZA.saat}</p></div>
- <nav class="f-blok" aria-label="Alt menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünlerimiz</a><a href="tur.html">Dijital Umre Turu</a><a href="iletisim.html">İletişim</a></nav>
+ <nav class="f-blok" aria-label="Alt menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünlerimiz</a><a href="tablolar.html">Tablo Eserleri</a><a href="tur.html">Dijital Umre Turu</a><a href="iletisim.html">İletişim</a></nav>
  <div class="f-blok"><a href="${MAGAZA.telLink}">${MAGAZA.tel}</a><a href="https://wa.me/${WA}" target="_blank" rel="noopener">WhatsApp'tan yazın</a><a href="${MAGAZA.instagram}" target="_blank" rel="noopener">Instagram</a><span class="f-telif">© ${new Date().getFullYear()} ${MAGAZA.ad}</span></div></div>`;
  notlar.forEach(n=>f.append(n))}
  Sepet.ciz();

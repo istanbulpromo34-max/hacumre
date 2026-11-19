@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tablo Eserleri · İstanbul Hac Umre Hediyelik</title>
+<meta name="description" content="Hat tabloları, hilye-i şerif, ayetel kürsi, tuğra ve esmaül hüsna tabloları. Beğendiğiniz eseri WhatsApp'tan sorun, ölçü ve fiyat bilgisini verelim.">
+<meta name="theme-color" content="#0b1630">
+<link rel="canonical" href="https://istanbulhacumre.com/tablolar.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="İstanbul Hac Umre Hediyelik">
+<meta property="og:title" content="Tablo Eserleri · İstanbul Hac Umre Hediyelik">
+<meta property="og:description" content="Hat tabloları, hilye-i şerif, ayetel kürsi ve tuğra tabloları. Beğendiğiniz eseri WhatsApp'tan sorun.">
+<meta property="og:url" content="https://istanbulhacumre.com/tablolar.html">
+<meta property="og:image" content="https://istanbulhacumre.com/assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/ikon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="assets/ikon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="assets/js/lenis.min.js" defer></script>
+<style>
+[hidden]{display:none !important}
+.kap{padding-inline:max(20px,5vw)}
+.ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
+.bas{padding-top:clamp(120px,18vh,170px);padding-bottom:40px;background:radial-gradient(60% 80% at 90% 0%,rgba(201,162,75,.12),transparent 60%),var(--gece)}
+.bas h1{font-size:clamp(42px,6vw,92px);line-height:1;margin:18px 0 0;max-width:15ch}
+.bas .giris{max-width:62ch;margin-top:22px;font-size:17px;line-height:1.7;color:rgba(234,230,220,.76)}
+.adim3{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:40px;border:1px solid rgba(201,162,75,.3);border-radius:22px;overflow:hidden;background:rgba(255,255,255,.02)}
+.adim3 li{display:flex;gap:16px;align-items:flex-start;padding:22px 24px}
+.adim3 li+li{border-left:1px solid rgba(201,162,75,.2)}
+.adim3 i{font-style:normal;flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:50%;font:600 16px 'Hanken Grotesk';color:#1a1205}
+.adim3 b{display:block;font-family:'Marcellus';font-weight:400;font-size:20px;margin-bottom:4px}
+.adim3 span{font-size:14px;line-height:1.55;color:rgba(234,230,220,.75)}
+.not-alt{font-size:13.5px;color:rgba(234,230,220,.6);margin-top:18px;max-width:72ch;line-height:1.6}
+
+/* süzgeç şeridi */
+.filtre-dis{position:sticky;top:0;z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
+.filtre-dis.yapisti{background:rgba(6,13,31,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
+.filtre-satir{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px 14px;flex:1;min-width:0}
+.filtre::-webkit-scrollbar{display:none}
+.filtre button{flex:none;min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(11,22,48,.7);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:background .3s,border-color .3s,color .3s}
+.filtre button:hover{border-color:rgba(201,162,75,.55)}
+.filtre button[aria-pressed="true"]{background:var(--altin);color:#1a1205;border-color:transparent}
+.filtre button small{opacity:.65;margin-left:6px;font-size:12.5px}
+.arama{flex:none;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+  border:1px solid rgba(201,162,75,.28);background:rgba(255,255,255,.05);width:min(260px,38vw)}
+.arama svg{width:16px;height:16px;flex:none;fill:none;stroke:rgba(230,199,122,.9);stroke-width:1.8}
+.arama input{flex:1;min-width:0;border:0;background:none;color:inherit;font:inherit;font-size:14px;outline:none}
+.arama input::-webkit-search-cancel-button{display:none}
+.arama input::placeholder{color:rgba(234,230,220,.42)}
+.arama button{flex:none;border:0;background:none;color:rgba(234,230,220,.6);font-size:19px;line-height:1;cursor:pointer;padding:0 2px}
+.arama button:hover{color:#eae6dc}
+.sonuc{font-size:14px;color:rgba(234,230,220,.65);padding:6px 0 18px}
+
+/* eser kartları */
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.eser{position:relative;text-align:left;border-radius:22px;background:linear-gradient(180deg,var(--lac2),var(--lac));border:1px solid rgba(255,255,255,.07);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;padding:0;color:inherit;font:inherit;
+ transition:transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s,box-shadow .4s}
+.eser:hover{transform:translateY(-6px);border-color:rgba(201,162,75,.38);box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.eser .cer{position:relative;aspect-ratio:4/5;display:grid;place-items:center;overflow:hidden;
+ background:radial-gradient(120% 90% at 50% 0%,rgba(201,162,75,.12),transparent 62%),#0d1a38}
+.eser .cer img{width:100%;height:100%;object-fit:cover}
+.eser .cer svg{width:72%;height:72%;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.eser:hover .cer svg{transform:scale(1.04)}
+.eser .b{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.eser .kat{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--altin2);opacity:.9}
+.eser h3{font-size:17.5px;line-height:1.28;font-weight:400;font-family:'Marcellus',serif}
+.eser .f{font:400 19px 'Marcellus';margin-top:auto;padding-top:8px;color:var(--altin2)}
+.eser .f small{display:block;margin-top:3px;font-family:'Hanken Grotesk';font-size:12px;opacity:.55;letter-spacing:.02em;line-height:1.4}
+.daha{display:grid;place-items:center;padding:34px 0 140px}
+.daha button{min-height:50px;padding:14px 30px;border-radius:999px;border:1px solid rgba(201,162,75,.45);background:rgba(255,255,255,.04);color:var(--altin2);font:500 15px 'Hanken Grotesk';cursor:pointer;transition:background .3s,border-color .3s}
+.daha button:hover{background:rgba(201,162,75,.14);border-color:rgba(201,162,75,.8)}
+.daha p{font-size:13.5px;color:rgba(234,230,220,.5);margin-top:12px}
+
+/* eser penceresi */
+.pencere{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:clamp(12px,2.5vw,30px);
+ background:rgba(4,8,18,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.pencere-ic{position:relative;width:min(900px,100%);max-height:calc(100svh - 60px);overflow:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ border-radius:26px;border:1px solid rgba(201,162,75,.28);background:linear-gradient(180deg,var(--lac2),var(--lac));box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.pencere-gor{display:grid;place-items:center;padding:28px;background:radial-gradient(120% 90% at 50% 0%,rgba(201,162,75,.12),transparent 62%),#0d1a38}
+.pencere-gor svg{width:100%;max-width:300px}
+.pencere-gor img{width:100%;border-radius:10px}
+.pencere-b{padding:30px 30px 32px;display:flex;flex-direction:column;gap:10px}
+.pencere-b .kat{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--altin2)}
+.pencere-b h3{font-size:clamp(23px,2.6vw,31px);line-height:1.2}
+.pencere-b .kod{font-size:12.5px;color:rgba(234,230,220,.5);letter-spacing:.08em}
+.pencere-b .fi{font:400 27px 'Marcellus';margin-top:4px}
+.pencere-b .fi small{font-family:'Hanken Grotesk';font-size:13px;opacity:.6;display:block;margin-top:4px;letter-spacing:.02em}
+.pencere-b .dug{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pencere-x{position:absolute;top:12px;right:12px;z-index:2;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+ border:1px solid rgba(255,255,255,.2);background:rgba(10,20,44,.6);color:#fff;font-size:22px;line-height:1;backdrop-filter:blur(10px);transition:background .25s}
+.pencere-x:hover{background:rgba(201,162,75,.9);color:#21160a;border-color:transparent}
+
+@media(max-width:860px){.pencere-ic{grid-template-columns:1fr}.pencere-gor{padding:22px}.pencere-gor svg{max-width:210px}}
+@media(max-width:820px){.adim3{grid-template-columns:1fr}.adim3 li+li{border-left:0;border-top:1px solid rgba(201,162,75,.2)}.adim3 li{padding:16px 18px}}
+@media(max-width:720px){
+ .bas{padding-bottom:36px}
+ .filtre-dis{margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+ .filtre-satir{flex-wrap:wrap;gap:9px}
+ .arama{width:100%;order:-1}
+ .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .eser .b{padding:13px}
+ .eser h3{font-size:15px}
+ .eser .f{font-size:16.5px}
+ .pencere-b{padding:22px}
+}
+@media(prefers-reduced-motion:reduce){.eser,.eser .cer svg{transition:none}}
+@media(prefers-reduced-motion:no-preference){
+ .pencere{animation:pAc .22s ease-out}
+ .pencere-ic{animation:pKalk .32s cubic-bezier(.2,.8,.2,1)}
+}
+@keyframes pAc{from{opacity:0}to{opacity:1}}
+@keyframes pKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<main id="icerik">
+<section class="bas kap">
+ <div class="ust-yazi">Tablo Eserleri</div>
+ <h1>Duvarınıza bir <span class="metal metal-yazi" data-isik>hat</span> eseri.</h1>
+ <p class="giris">Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, çerçevesiz ve lazer kesim seçenekleriyle. Hac ve umre dönüşü hediye etmek için de, kendi evinizin duvarı için de.</p>
+ <ol class="adim3">
+  <li><i class="metal" aria-hidden="true">1</i><div><b>Eseri seçin</b><span>Kategorilerden gezin ya da arayın; beğendiğinizin üzerine dokunun.</span></div></li>
+  <li><i class="metal" aria-hidden="true">2</i><div><b>WhatsApp'tan sorun</b><span>Eserin kodu mesaja kendiliğinden eklenir, siz göndermeye basarsınız.</span></div></li>
+  <li><i class="metal" aria-hidden="true">3</i><div><b>Ölçü ve fiyatı konuşalım</b><span>Hangi ölçüler mevcut, çerçeve nasıl olsun; hepsini birlikte belirleyelim.</span></div></li>
+ </ol>
+ <p class="not-alt" id="notAlt"></p>
+</section>
+<div class="filtre-dis" id="filtre-dis"><div class="kap">
+ <div class="filtre-satir">
+  <div class="filtre" role="group" aria-label="Eser grupları"></div>
+  <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
+   <input id="ara" type="search" placeholder="Eser ara…" autocomplete="off" aria-label="Eser ara">
+   <button type="button" id="araSil" aria-label="Aramayı temizle" hidden>&times;</button></label>
+ </div>
+</div></div>
+<div class="kap">
+ <p class="sonuc" id="sonuc" aria-live="polite"></p>
+ <div class="izgara" id="izgara"></div>
+ <div class="daha"><button type="button" id="daha" hidden>Daha fazla eser göster</button><p id="dahaNot"></p></div>
+</div>
+</main>
+<p class="sr" id="duyuru" aria-live="polite"></p>
+<footer class="sf"></footer>
+<script src="tablo-veri.js"></script>
+<script src="site.js"></script>
+<script>
+kabuk('tablo');
+(function(){
+const SAYFA = 48;
+const ESERLER = window.TABLOLAR || [], KATLAR = window.TABLO_KAT || [], FOTO = !!window.TABLO_FOTO;
+const I = document.getElementById('izgara'), F = document.querySelector('.filtre'),
+      SON = document.getElementById('sonuc'), FD = document.getElementById('filtre-dis'),
+      DAHA = document.getElementById('daha'), DNOT = document.getElementById('dahaNot');
+const sade = t => (t || '').toLocaleLowerCase('tr').replace(/[ıİ]/g, 'i');
+const kacis = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const TL = n => n == null ? null : new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(n) + ' ₺';
+const azHareket = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+document.getElementById('notAlt').textContent = ESERLER.length
+  ? ESERLER.length.toLocaleString('tr-TR') + ' eser listeleniyor. Ölçüye göre fiyat değiştiği için tabloları WhatsApp üzerinden satıyoruz; stok ve fiyatı siparişiniz sırasında teyit ediyoruz.'
+  : 'Katalog yükleniyor.';
+
+/* Fotoğraflar hazır olana kadar her esere, adından türeyen bir çerçeve deseni
+   düşüyor; böylece liste tek düze görünmüyor. */
+const DESEN = [
+  '<path d="M26 72c7-5 10-14 15-23 3-7 7-12 12-12 6 0 8 6 6 12-3 7-9 11-15 11-8 0-13-4-19-4" />' +
+  '<path d="M44 84h28" /><circle cx="52" cy="34" r="3.4" fill="currentColor" stroke="none"/>',
+  '<path d="M30 80c0-18 7-30 20-30s20 12 20 30" /><path d="M36 80h30" />' +
+  '<path d="M50 30v12" /><circle cx="50" cy="26" r="3" fill="currentColor" stroke="none"/>',
+  '<path d="M28 62c10 0 14-9 22-9s12 9 22 9" /><path d="M32 78c8-3 12-8 18-8s10 5 18 8" />' +
+  '<circle cx="50" cy="38" r="8" /><circle cx="50" cy="38" r="3.2" fill="currentColor" stroke="none"/>',
+  '<path d="M34 84V54c0-11 7-18 16-18s16 7 16 18v30" /><path d="M28 84h44" />' +
+  '<path d="M50 44v22" /><circle cx="50" cy="32" r="3" fill="currentColor" stroke="none"/>'
+];
+function cerceve(id){
+  const d = DESEN[(id.charCodeAt(4) + id.charCodeAt(5)) % DESEN.length];
+  return '<svg viewBox="0 0 100 125" fill="none" aria-hidden="true" stroke="rgba(230,199,122,.62)" stroke-width="2.1" stroke-linecap="round">' +
+    '<rect x="5" y="5" width="90" height="115" rx="4" stroke="rgba(201,162,75,.5)" stroke-width="1.5"/>' +
+    '<rect x="12" y="12" width="76" height="101" rx="2.5" stroke="rgba(201,162,75,.26)" stroke-width="1"/>' +
+    '<g color="rgba(230,199,122,.62)">' + d + '</g></svg>';
+}
+function fiyatYazi(e){
+  const a = TL(e.fiyat), b = TL(e.fiyatUst);
+  if (!a) return '<span>Fiyat için sorun</span>';
+  return b ? a + '<small>ölçüye göre ' + b + ' değerine kadar</small>' : a;
+}
+function waMetin(e){
+  return 'Merhaba, şu hat eserini soracaktım:\n\n' + e.ad + '\nEser kodu: ' + e.id +
+    (e.kat ? '\nGrup: ' + e.kat : '') +
+    '\n\nHangi ölçüleri mevcut ve fiyatı nedir?';
+}
+
+let sec = 'Tümü', ara = '', gosterilen = SAYFA;
+
+function suzulmus(){
+  return ESERLER.filter(e => {
+    if (sec !== 'Tümü' && e.kat !== sec) return false;
+    if (ara && sade(e.ad + ' ' + e.kat + ' ' + e.id).indexOf(ara) === -1) return false;
+    return true;
+  });
+}
+function filtreCiz(){
+  const liste = [{ ad: 'Tümü', adet: ESERLER.length }].concat(KATLAR);
+  F.innerHTML = liste.map(k =>
+    '<button type="button" data-k="' + kacis(k.ad) + '" aria-pressed="' + (sec === k.ad) + '">' +
+    kacis(k.ad) + '<small>' + k.adet + '</small></button>').join('');
+}
+function izgaraCiz(){
+  const liste = suzulmus(), goster = liste.slice(0, gosterilen);
+  SON.textContent = ara
+    ? (liste.length ? '"' + document.getElementById('ara').value.trim() + '" için ' + liste.length + ' eser' : '"' + document.getElementById('ara').value.trim() + '" için sonuç yok')
+    : (sec === 'Tümü' ? liste.length.toLocaleString('tr-TR') + ' eser' : sec + ': ' + liste.length + ' eser');
+  I.innerHTML = goster.map(e =>
+    '<button class="eser" type="button" data-id="' + e.id + '">' +
+      '<span class="cer">' + (FOTO && e.gorsel
+        ? '<img src="' + kacis(e.gorsel) + '" alt="' + kacis(e.ad) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer">'
+        : cerceve(e.id)) + '</span>' +
+      '<span class="b"><span class="kat">' + kacis(e.kat) + '</span>' +
+      '<h3>' + kacis(e.ad) + '</h3>' +
+      '<span class="f metal metal-yazi" data-isik>' + fiyatYazi(e) + '</span></span>' +
+    '</button>').join('');
+  const kalan = liste.length - goster.length;
+  DAHA.hidden = kalan <= 0;
+  DNOT.textContent = kalan > 0 ? kalan.toLocaleString('tr-TR') + ' eser daha var' : '';
+  if (window.isikYenile) window.isikYenile();
+}
+
+F.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.dataset.k === sec) return;
+  sec = b.dataset.k; gosterilen = SAYFA;
+  history.replaceState(null, '', sec === 'Tümü' ? location.pathname : '#' + encodeURIComponent(sec));
+  filtreCiz(); izgaraCiz(); filtreyeGit();
+});
+DAHA.addEventListener('click', () => { gosterilen += SAYFA; izgaraCiz(); });
+
+const araKutu = document.getElementById('ara'), araSil = document.getElementById('araSil');
+let araZaman = null;
+araKutu.addEventListener('input', () => {
+  araSil.hidden = !araKutu.value;
+  clearTimeout(araZaman);
+  araZaman = setTimeout(() => { ara = sade(araKutu.value.trim()); gosterilen = SAYFA; izgaraCiz(); }, 150);
+});
+araSil.addEventListener('click', () => { araKutu.value = ''; araSil.hidden = true; ara = ''; gosterilen = SAYFA; izgaraCiz(); araKutu.focus(); });
+
+function filtreyeGit(){
+  const hedef = document.querySelector('.bas').offsetHeight + (innerWidth > 720 ? -82 : 0);
+  if (window.lenis) lenis.scrollTo(hedef, { immediate: azHareket }); else scrollTo(0, hedef);
+}
+const yapisGozcu = new IntersectionObserver(([g]) => FD.classList.toggle('yapisti', g.intersectionRatio < 1), { threshold: [1] });
+yapisGozcu.observe(FD);
+
+/* ---- eser penceresi ---- */
+let pencere = null, oncekiOdak = null;
+function pencereyiAc(id){
+  const e = ESERLER.find(x => x.id === id); if (!e) return;
+  oncekiOdak = document.activeElement;
+  if (!pencere){
+    pencere = document.createElement('div'); pencere.className = 'pencere';
+    pencere.setAttribute('role', 'dialog'); pencere.setAttribute('aria-modal', 'true');
+    pencere.addEventListener('click', ev => { if (ev.target === pencere) pencereyiKapat(); });
+    document.body.append(pencere);
+  }
+  pencere.innerHTML =
+    '<div class="pencere-ic">' +
+      '<button class="pencere-x" type="button" aria-label="Kapat">&times;</button>' +
+      '<div class="pencere-gor">' + (FOTO && e.gorsel
+        ? '<img src="' + kacis(e.gorsel) + '" alt="' + kacis(e.ad) + '" referrerpolicy="no-referrer">'
+        : cerceve(e.id)) + '</div>' +
+      '<div class="pencere-b">' +
+        '<span class="kat">' + kacis(e.kat) + '</span>' +
+        '<h3>' + kacis(e.ad) + '</h3>' +
+        '<span class="kod">Eser kodu ' + kacis(e.id) + '</span>' +
+        '<div class="fi metal metal-yazi" data-isik>' + fiyatYazi(e) + '</div>' +
+        '<div class="dug">' +
+          '<a class="btn wa" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(waMetin(e)) + '" target="_blank" rel="noopener">WhatsApp\'tan sorun</a>' +
+          '<a class="btn cam" href="tel:' + MAGAZA.telLink.replace('tel:', '') + '">Arayın</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  pencere.querySelector('.pencere-x').addEventListener('click', pencereyiKapat);
+  pencere.querySelector('.btn.wa').insertAdjacentHTML('afterbegin', WA_SVG);
+  pencere.hidden = false;
+  document.documentElement.classList.add('kilit'); try { window.lenis && lenis.stop(); } catch (x){}
+  pencere.querySelector('.pencere-x').focus();
+  if (window.isikYenile) window.isikYenile();
+}
+function pencereyiKapat(){
+  if (!pencere || pencere.hidden) return;
+  pencere.hidden = true; pencere.innerHTML = '';
+  document.documentElement.classList.remove('kilit'); try { window.lenis && lenis.start(); } catch (x){}
+  if (oncekiOdak && oncekiOdak.focus) oncekiOdak.focus();
+}
+I.addEventListener('click', e => { const k = e.target.closest('.eser'); if (k) pencereyiAc(k.dataset.id); });
+addEventListener('keydown', e => { if (e.key === 'Escape') pencereyiKapat(); });
+
+/* ---- açılış ---- */
+(function(){
+  const h = decodeURIComponent((location.hash || '').slice(1));
+  if (h && (h === 'Tümü' || KATLAR.some(k => k.ad === h))) sec = h;
+})();
+filtreCiz(); izgaraCiz();
+akisKur();
+})();
+</script>
+</body>
+</html>
