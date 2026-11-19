@@ -1,0 +1,27 @@
+name: Alan adi tanisi
+on:
+  workflow_dispatch:
+    inputs:
+      alan: { description: 'Alan adı', required: false, default: 'istanbulhacumre.com' }
+permissions:
+  contents: read
+jobs:
+  bak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: DNS kayitlari
+        env:
+          ALAN: ${{ inputs.alan }}
+        run: |
+          set +e
+          echo "== A =="        ; dig +short A    "$ALAN"
+          echo "== AAAA =="     ; dig +short AAAA "$ALAN"
+          echo "== CNAME www ==" ; dig +short CNAME "www.$ALAN"; dig +short A "www.$ALAN"
+          echo "== NS =="       ; dig +short NS   "$ALAN"
+          echo "== MX =="       ; dig +short MX   "$ALAN"
+          echo "== whois ozet =="
+          whois "$ALAN" 2>/dev/null | grep -iE "registrar:|creation|expir|status:|name server" | head -12
+          echo "== http yanit =="
+          curl -sS -m 15 -o /dev/null -w "http://%{url_effective} -> %{http_code}\n" -L "http://$ALAN" || echo "ulasilamadi"
+          curl -sS -m 15 -o /dev/null -w "https -> %{http_code}\n" -L "https://$ALAN" || echo "https ulasilamadi"
