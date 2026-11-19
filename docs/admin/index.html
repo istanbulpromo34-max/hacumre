@@ -89,6 +89,19 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
   background:rgba(255,255,255,.05);color:var(--yazi);font-size:14px;margin-bottom:10px}
 .ayarDugme{display:flex;gap:8px;flex-wrap:wrap}
 .ayarDurum{margin-top:10px;font-size:12.5px;color:var(--sol);line-height:1.5}
+.karsila{position:fixed;inset:0;z-index:70;background:rgba(4,9,20,.9);backdrop-filter:blur(14px);
+  display:grid;place-items:center;padding:24px}
+.karsilaIc{max-width:380px;text-align:center;background:linear-gradient(180deg,var(--lac2),var(--lac));
+  border:1px solid var(--cizgi);border-radius:24px;padding:28px 24px;box-shadow:0 40px 90px -40px #000}
+.karsilaIk{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--altin2),var(--altin));color:#21160a}
+.karsilaIk svg{width:30px;height:30px}
+.karsilaIc h2{font-size:23px;font-weight:600;margin-bottom:10px}
+.karsilaIc p{font-size:14.5px;color:var(--sol);line-height:1.65;margin-bottom:12px}
+.karsilaIc p.kucuk{font-size:12.5px}
+.karsilaIc b{color:var(--yazi);font-weight:600}
+.karsilaIc button{margin-top:8px;width:100%;padding:15px;border-radius:14px;font-size:16px;font-weight:600;
+  color:#21160a;background:linear-gradient(135deg,var(--altin2),var(--altin) 55%,#a8822f)}
 @media (max-width:560px){
   .ara{max-width:none}
   .ust b{font-size:14px}
@@ -125,6 +138,19 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
   </div>
 </div>
 
+<div class="karsila" id="karsila" hidden>
+  <div class="karsilaIc">
+    <span class="karsilaIk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.3l1.1-1.8A1 1 0 0 1 9.8 3.7h4.4a1 1 0 0 1 .9.5L16.2 6h1.3A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.2" r="3.6"/></svg>
+    </span>
+    <h2>Hazırsınız</h2>
+    <p>Listedeki ürünü masaya koyun, karenin içindeki <b>Fotoğraf ekle</b> yazısına dokunun ve fotoğrafı çekin.
+    Gerisini sistem yapıyor: fotoğraf kendiliğinden gönderiliyor, beyaz stüdyo karesine çevriliyor ve siteye konuyor.</p>
+    <p class="kucuk">En iyi sonuç için ürünü düz ve sade bir zemine koyun — beyaz bir kâğıt yeter. Ürünün tamamı kadraja girsin.</p>
+    <button id="karsilaKapat">Başlayalım</button>
+  </div>
+</div>
+
 <div class="bildirim" id="bildirim"></div>
 
 <button class="taniAc" id="ayarAc" title="Bağlantı" style="right:56px">⚙</button>
@@ -155,7 +181,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 13:15';
+var SURUM = '19 Kasım 13:25';
 var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var ANAHTAR_YER = 'ihh-gh-anahtar';
 var anahtarBellek = '';
@@ -172,6 +198,7 @@ function anahtarYaz(v){
   try {
     var p = new URLSearchParams(location.search), k = p.get('k');
     if (k){
+      window.__kurulumYeni = true;
       anahtarYaz(k.trim());
       p.delete('k');
       history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : '') + location.hash);
@@ -542,6 +569,10 @@ $('#suz').addEventListener('click', function(e){
 $('#ara').addEventListener('input', function(){ arama = norm(this.value); ciz(); });
 $('#btnGonder').addEventListener('click', paketGonder);
 $('#surum').textContent = SURUM;
+if (window.__kurulumYeni){
+  $('#karsila').hidden = false;
+  $('#karsilaKapat').addEventListener('click', function(){ $('#karsila').hidden = true; });
+}
 not('sayfa açıldı · sürüm ' + SURUM);
 $('#ayarAc').addEventListener('click', function(){ $('#ayarKutu').hidden = !$('#ayarKutu').hidden; });
 $('#ayarKapat').addEventListener('click', function(){ $('#ayarKutu').hidden = true; });
