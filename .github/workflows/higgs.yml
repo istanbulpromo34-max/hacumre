@@ -1,0 +1,75 @@
+name: Higgsfield karelerini al
+
+# Claude, gelen/ klasöründeki ham kareleri Higgsfield'a gönderip sonuç
+# adreslerini gelen/higgs.json dosyasına yazar. Bu akış o adresleri indirip
+# siteye ve Odoo ürün kartına işler. Koşucunun ağı açık olduğu için indirme
+# burada yapılır.
+on:
+  push:
+    paths: ['gelen/higgs.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: foto          # foto.yml ile aynı grup: ikisi aynı anda yazmasın
+  cancel-in-progress: false
+
+jobs:
+  al:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kuyruga bak
+        id: kuyruk
+        run: |
+          n=$(python3 -c "import json,pathlib;p=pathlib.Path('gelen/higgs.json');print(len(json.loads(p.read_text() or '[]')) if p.exists() else 0)" 2>/dev/null || echo 0)
+          echo "adet=$n" >> "$GITHUB_OUTPUT"
+          echo "Kuyrukta $n kare var."
+
+      - uses: actions/setup-python@v5
+        if: steps.kuyruk.outputs.adet != '0'
+        with: { python-version: '3.12' }
+
+      - name: Kurulum
+        if: steps.kuyruk.outputs.adet != '0'
+        run: pip install --quiet pillow
+
+      - name: Indir ve isle
+        if: steps.kuyruk.outputs.adet != '0'
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_LOGIN: ${{ secrets.ODOO_LOGIN }}
+          ODOO_KEY: ${{ secrets.ODOO_KEY }}
+        run: python tools/higgs_al.py
+
+      - name: Urun listesindeki foto durumunu tazele
+        if: steps.kuyruk.outputs.adet != '0'
+        run: python tools/foto_durum.py
+
+      - name: Depoya yaz
+        if: steps.kuyruk.outputs.adet != '0'
+        run: |
+          YOLLAR="docs/assets/u gelen docs/data docs/urunler-veri.js"
+          git config user.name "foto-bot"
+          git config user.email "foto-bot@users.noreply.github.com"
+          git add -A $YOLLAR
+          if [ -z "$(git status --porcelain $YOLLAR)" ]; then
+            echo "Değişiklik yok."; exit 0
+          fi
+          git commit -m "Stüdyo görselleri alındı (Higgsfield)"
+          for deneme in 1 2 3 4 5; do
+            if git push; then echo "yazıldı (deneme $deneme)"; exit 0; fi
+            git fetch origin main
+            if ! git rebase -X theirs origin/main; then
+              git checkout --theirs -- $YOLLAR 2>/dev/null || true
+              git add -A $YOLLAR
+              GIT_EDITOR=true git rebase --continue || git rebase --abort
+            fi
+            sleep $((RANDOM % 6 + 3))
+          done
+          echo "::error::Depoya yazılamadı"; exit 1

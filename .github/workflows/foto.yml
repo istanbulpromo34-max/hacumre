@@ -9,7 +9,7 @@ name: Foto temizle
 # yüklenen hiçbir kare kuyrukta unutulmaz.
 on:
   push:
-    paths: ['gelen/**']
+    paths: ['gelen/**', '!gelen/higgs.json']   # higgs.json'u higgs.yml işler
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
