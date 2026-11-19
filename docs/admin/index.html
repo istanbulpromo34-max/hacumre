@@ -189,7 +189,7 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 13:45';
+var SURUM = '19 Kasım 13:50';
 var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var ANAHTAR_YER = 'ihh-gh-anahtar';
 var anahtarBellek = '';
@@ -563,7 +563,14 @@ Promise.all([
   if (anahtar()){
     baglantiSina(anahtar()).then(function(d){
       not('otomatik yükleme açık (' + d.full_name + ')'); sayac(); yarimKalanlariYolla();
-    }).catch(function(e){ not('kayıtlı anahtar çalışmadı: ' + e.message, true); });
+    }).catch(function(e){
+      if (/401|Bad credentials/i.test(e.message)){
+        anahtarYaz(''); otomatik = false; sayac();
+        not('kurulum bağlantısı geçersiz — yöneticinizden yeni bağlantı isteyin', true);
+      } else {
+        not('bağlantı kurulamadı: ' + e.message, true);
+      }
+    });
   }
 });
 
