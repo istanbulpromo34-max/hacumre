@@ -163,7 +163,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .kontrol input::after{content:"";width:9px;height:5px;border-left:1.5px solid var(--fildisi);border-bottom:1.5px solid var(--fildisi);transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .3s}
 .kontrol input:checked{background:var(--altin)}
 .kontrol input:checked::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
-.kontrol input:checked + span{color:var(--soluk);text-decoration:line-through;text-decoration-color:var(--altin)}
+.kontrol input:checked + span{color:var(--murekkep);font-weight:500}
 .liste-alt{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:14px;color:var(--soluk)}
 .ilerleme{height:3px;flex:1;margin-right:16px;background:var(--cizgi);border-radius:3px;overflow:hidden}
 .ilerleme i{display:block;height:100%;width:0;background:var(--altin);transition:width .5s}
@@ -570,17 +570,17 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
         <div class="dikkat"><h4>Yolculuğun ahlâkı</h4><p>Sıcak iklim, kalabalık, yorgunluk ve uzun beklemeler bu yolculuğun bir parçasıdır. Rehberimiz bu anlarda sabırlı, güler yüzlü ve nazik olmayı; sebebi ne olursa olsun kimsenin kalbini kırmamayı tavsiye eder.</p></div>
       </div>
       <div class="liste-kart" id="liste-kart">
-        <h3 class="liste-baslik">Hazırlık listesi</h3>
+        <h3 class="liste-baslik">İhtiyaç listesi</h3>
         <div class="sekmeler" id="sekmeler" data-secili="erkek" role="group" aria-label="Liste seçimi">
           <span class="kayar" aria-hidden="true"></span>
           <button aria-pressed="true" data-liste="erkek" type="button">Erkekler için</button>
           <button aria-pressed="false" data-liste="kadin" type="button">Hanımlar için</button>
         </div>
-        <p class="liste-ust">Valizinizi hazırlarken tamamladıklarınızı işaretleyin; işaretleriniz bu cihazda saklanır.</p>
+        <p class="liste-ust">İhtiyacınız olanları işaretleyin; işaretleriniz bu cihazda saklanır.</p>
         <ul class="kontrol" id="kontrol"></ul>
         <div class="liste-alt"><div class="ilerleme"><i id="ilerleme"></i></div><span id="sayac">0/0</span></div>
         <p class="liste-not" id="liste-not"></p>
-        <div class="eksik"><p>Elinizdekileri kullanabilir, eksiklerinizi dilediğiniz yerden temin edebilirsiniz. Dilerseniz mağazamızdan da tamamlayabilirsiniz.</p><button type="button" id="eksik-btn">Eksiklerimi çantama ekle</button></div>
+        <div class="eksik"><p>İşaretlediklerinizi bize WhatsApp'tan iletebilirsiniz; hangilerinin mağazamızda bulunduğunu söyleyelim. Elinizdekileri kullanabilir, kalanını dilediğiniz yerden temin edebilirsiniz.</p><button type="button" id="eksik-btn">İşaretlediklerimi WhatsApp'tan gönder</button></div>
       </div>
     </div>
   </div>
@@ -988,13 +988,13 @@ const LISTE={
 };
 const NOT={erkek:'İhramın yedeğini valizde değil el çantanızda taşıyın. Kafileniz doğrudan Cidde\'ye uçuyorsa ihrama Türkiye\'deki havalimanında girersiniz.',kadin:'Hanımlar için özel bir ihram kıyafeti yoktur; tesettüre uygun, bol ve rahat kıyafetlerle ihrama girilir.'};
 let secili='erkek';try{if(localStorage.getItem('hu-liste-sekme')==='kadin')secili='kadin'}catch(e){}
-const kayit=()=>{try{return JSON.parse(localStorage.getItem('hu-liste')||'{}')}catch(e){return{}}};
-const kaydet=v=>{try{localStorage.setItem('hu-liste',JSON.stringify(v))}catch(e){}};
+const kayit=()=>{try{return JSON.parse(localStorage.getItem('hu-ihtiyac')||'{}')}catch(e){return{}}};
+const kaydet=v=>{try{localStorage.setItem('hu-ihtiyac',JSON.stringify(v))}catch(e){}};
 function listeCiz(){
   const k=kayit(),ul=document.getElementById('kontrol');ul.innerHTML='';
   LISTE[secili].forEach((m,i)=>{
     const id=secili+'-'+i,li=document.createElement('li');
-    li.innerHTML='<label><input type="checkbox" id="'+id+'" data-urun="'+(m[1]||'')+'" data-adet="'+(m[2]||1)+'"'+(k[id]?' checked':'')+'><span>'+m[0]+'</span></label>';
+    li.innerHTML='<label><input type="checkbox" id="'+id+'"'+(k[id]?' checked':'')+'><span>'+m[0]+'</span></label>';
     ul.appendChild(li);
   });
   document.getElementById('liste-not').textContent=NOT[secili];
@@ -1003,7 +1003,7 @@ function listeCiz(){
 }
 function sayacGuncelle(){
   const kutular=[...document.querySelectorAll('#kontrol input')],n=kutular.filter(x=>x.checked).length;
-  document.getElementById('sayac').textContent=n+'/'+kutular.length;
+  document.getElementById('sayac').textContent=n?n+' madde işaretlendi':'Hiç işaret yok';
   document.getElementById('ilerleme').style.width=(n/kutular.length*100)+'%';
 }
 document.getElementById('kontrol').addEventListener('change',e=>{const k=kayit();k[e.target.id]=e.target.checked;kaydet(k);sayacGuncelle()});
@@ -1017,21 +1017,15 @@ function listeYapis(){/* kart ekrana sığmıyorsa yapışmaz; başlığı menü
   const sigar=listeKart.offsetHeight<=innerHeight-110-24;listeKart.style.position=sigar?'':'relative';listeKart.style.top=sigar?'110px':'0'}
 listeYapis();addEventListener('resize',listeYapis);
 document.getElementById('eksik-btn').addEventListener('click',()=>{
-  const isaretsiz=[...document.querySelectorAll('#kontrol input:not(:checked)')];
-  if(!isaretsiz.length){toast('Listenizde eksik görünmüyor.');return}
-  const eslesen=isaretsiz.filter(x=>URUNLER.some(u=>u.id===x.dataset.urun));
-  if(!eslesen.length){
-    /* katalogda karşılığı olmayan maddeler için mağazaya WhatsApp'tan sorulur */
-    const adlar=isaretsiz.map(x=>x.nextElementSibling.textContent).join(', ');
-    const metin='Merhaba, umre hazırlık listemde eksik olanlar: '+adlar+'. Mağazanızda bulunuyor mu?';
-    toast("Eksikleri WhatsApp'tan sorun",['WhatsApp',()=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener')]);return}
-  const s=Sepet.al();let yeni=0;eslesen.forEach(x=>{const id=x.dataset.urun;if(!s[id]){s[id]=+x.dataset.adet||1;yeni++}});
-  if(yeni)Sepet.yaz(s);cekmeceAc();
-  const yok=isaretsiz.filter(x=>!URUNLER.some(u=>u.id===x.dataset.urun)).map(x=>x.nextElementSibling.textContent);
-  if(yok.length){const metin='Merhaba, umre hazırlık listemde eksik olanlar: '+yok.join(', ')+'. Mağazanızda bulunuyor mu?';
-    toast((yok.length===1?yok[0]:yok.length+' madde')+' katalogda yok',['Sor',()=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener')])}
-  else if(!yeni)toast('Eksikleriniz zaten çantanızda.');
+  const secilenler=[...document.querySelectorAll('#kontrol input:checked')].map(x=>x.nextElementSibling.textContent.trim());
+  if(!secilenler.length){toast('Önce ihtiyacınız olanları işaretleyin.');return}
+  const kim=secili==='kadin'?'Hanımlar için':'Erkekler için';
+  const metin='Merhaba, umre hazırlığı için ihtiyaç listem ('+kim+'):\n\n'
+    +secilenler.map(m=>'• '+m).join('\n')
+    +'\n\nBunlardan hangileri mağazanızda var, bilgi verebilir misiniz?';
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(metin),'_blank','noopener');
 });
+
 
 /* ===== Kumaş kartları ===== */
 document.querySelectorAll('.kumas').forEach(k=>k.addEventListener('click',()=>{k.classList.toggle('acik');k.setAttribute('aria-pressed',k.classList.contains('acik'))}));
