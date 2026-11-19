@@ -141,6 +141,10 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
     <button id="ayarKapat">Kapat</button>
   </div>
   <p class="ayarDurum" id="ghDurum"></p>
+  <p class="ayarAciklama" style="margin:12px 0 6px">Bu telefonda bağlantı kurulduysa, aşağıdaki
+  bağlantıyı mağazadaki arkadaşa gönderebilirsiniz — açtığı anda onun telefonunda da kurulur,
+  hiçbir şey yapıştırması gerekmez.</p>
+  <div class="ayarDugme"><button id="ghLink">Kurulumlu bağlantıyı kopyala</button></div>
 </div>
 <div class="taniKutu" id="taniKutu" hidden>
   <b>Tanı kaydı · sürüm <span id="surum"></span></b>
@@ -151,11 +155,29 @@ main{max-width:1180px;margin:0 auto;padding:calc(126px + var(--ust)) 16px calc(1
 <script>
 (function(){
 'use strict';
-var SURUM = '19 Kasım 13:05';
+var SURUM = '19 Kasım 13:15';
 var AYAR = { depo: 'istanbulpromo34-max/hacumre', dal: 'main', paketBoyu: 20, enBuyukKenar: 2000, kalite: 0.85 };
 var ANAHTAR_YER = 'ihh-gh-anahtar';
-function anahtar(){ try { return localStorage.getItem(ANAHTAR_YER) || ''; } catch (e){ return ''; } }
-function anahtarYaz(v){ try { v ? localStorage.setItem(ANAHTAR_YER, v) : localStorage.removeItem(ANAHTAR_YER); } catch (e){} }
+var anahtarBellek = '';
+function anahtar(){
+  try { return localStorage.getItem(ANAHTAR_YER) || anahtarBellek; } catch (e){ return anahtarBellek; }
+}
+function anahtarYaz(v){
+  anahtarBellek = v || '';
+  try { v ? localStorage.setItem(ANAHTAR_YER, v) : localStorage.removeItem(ANAHTAR_YER); } catch (e){}
+}
+/* Adreste ?k=... varsa bir kez kaydedilir ve adres çubuğundan silinir;
+   böylece bağlantıyı açan kişi hiçbir şey yapıştırmak zorunda kalmaz. */
+(function(){
+  try {
+    var p = new URLSearchParams(location.search), k = p.get('k');
+    if (k){
+      anahtarYaz(k.trim());
+      p.delete('k');
+      history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : '') + location.hash);
+    }
+  } catch (e){}
+})();
 var otomatik = false;
 var $ = function(s){ return document.querySelector(s); };
 var urunler = [], db = null, bekleyen = {}, suzgec = 'eksik', arama = '';
@@ -187,7 +209,12 @@ function kaydet(k){
       var t = db.transaction('kare','readwrite');
       t.objectStore('kare').put(k);
       t.oncomplete = function(){ ok(); };
-      t.onerror = function(){ bellek[k.id] = k; not('tarayıcı deposu yazmadı, bellekte tutuldu', true); ok(); };
+      t.onerror = function(){
+        bellek[k.id] = k;
+        not(otomatik ? 'kalıcı depo kapalı — fotoğraf doğrudan gönderiliyor'
+                     : 'kalıcı depo kapalı — sayfayı kapatmadan gönderin', !otomatik);
+        ok();
+      };
     } catch (e){ bellek[k.id] = k; ok(); }
   });
 }
@@ -487,7 +514,7 @@ function paketGonder(){
 /* ---- başlangıç ---- */
 Promise.all([
   dbAc().then(function(d){ db = d; return hepsi(); }).catch(function(e){
-    not('tarayıcı deposu açılmadı, fotoğraflar bellekte tutulacak', true); return [];
+    not('kalıcı depo kapalı (gizli sekme olabilir) — fotoğraflar sayfa açıkken tutulur', true); return [];
   }),
   fetch('../data/urunler.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
 ]).then(function(s){
@@ -518,6 +545,18 @@ $('#surum').textContent = SURUM;
 not('sayfa açıldı · sürüm ' + SURUM);
 $('#ayarAc').addEventListener('click', function(){ $('#ayarKutu').hidden = !$('#ayarKutu').hidden; });
 $('#ayarKapat').addEventListener('click', function(){ $('#ayarKutu').hidden = true; });
+$('#ghLink').addEventListener('click', function(){
+  var a = anahtar();
+  if (!a) return ($('#ghDurum').textContent = 'Önce bu telefonda bağlantıyı kurun.');
+  var url = location.origin + location.pathname + '?k=' + encodeURIComponent(a);
+  var bitir = function(){ $('#ghDurum').textContent = '✓ Bağlantı kopyalandı. Yalnız güvendiğiniz kişiye gönderin — bu bağlantı anahtarı taşır.'; };
+  var kopyala = function(){
+    if (navigator.clipboard) return navigator.clipboard.writeText(url).then(bitir).catch(function(){ prompt('Bağlantı:', url); bitir(); });
+    prompt('Bağlantı:', url); bitir();
+  };
+  if (navigator.share) navigator.share({ title: 'Ürün Görselleri', url: url }).then(bitir).catch(kopyala);
+  else kopyala();
+});
 $('#ghSil').addEventListener('click', function(){ anahtarYaz(''); otomatik = false; $('#ghDurum').textContent = 'Anahtar silindi, elle gönderme kipine dönüldü.'; sayac(); });
 $('#ghSina').addEventListener('click', function(){
   var v = $('#ghAnahtar').value.trim();

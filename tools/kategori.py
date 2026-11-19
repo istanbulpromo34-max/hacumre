@@ -75,3 +75,36 @@ def kategori(ad, altkat=""):
         if bulunan:
             return bulunan
     return _eslestir(sadelestir(ad), AD_KURAL) or HEDIYE
+
+
+BIRIM = {"ML", "CC", "GR", "KG", "LT", "MT", "CM", "MM", "TL", "DNC", "XL", "XXL", "3D", "USB", "LED", "CD"}
+
+
+def tr_kucuk(s):
+    return s.replace("I", "ı").replace("İ", "i").lower()
+
+
+def tr_buyuk(s):
+    return s.replace("i", "İ").replace("ı", "I").upper()
+
+
+def basliklandir(ad):
+    """Tamamı büyük harfle girilmiş ürün adlarını Türkçe yazımına çevirir."""
+    ad = re.sub(r"\s+", " ", (ad or "").strip())
+    cikti = []
+    for kelime in ad.split(" "):
+        if not any(c.isalpha() for c in kelime) or kelime != tr_buyuk(kelime):
+            cikti.append(kelime)                      # zaten düzgün yazılmış ya da sayı
+            continue
+        yeni = []
+        for p in re.split(r"([-./])", kelime):
+            if not p or not p[0].isalpha():
+                yeni.append(p)
+            elif tr_buyuk(p) in BIRIM:
+                yeni.append(tr_buyuk(p))
+            elif len(p) == 1 and yeni and yeni[-1] == "-":
+                yeni.append(tr_kucuk(p))              # "Hadis-i" gibi ekler
+            else:
+                yeni.append(tr_buyuk(p[0]) + tr_kucuk(p[1:]))
+        cikti.append("".join(yeni))
+    return " ".join(cikti)

@@ -22,30 +22,7 @@ OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from kategori import kategori, KAT_GORSEL, sadelestir
-
-
-def basliklandir(ad):
-    """Tamamı büyük harfle girilmiş adları Türkçe yazım kurallarına göre düzeltir."""
-    ad = re.sub(r"\s+", " ", (ad or "").strip())
-    cikti = []
-    for kelime in ad.split(" "):
-        if not any(c.isalpha() for c in kelime) or kelime != tr_buyuk(kelime):
-            cikti.append(kelime)                 # zaten düzgün yazılmış ya da sayı
-            continue
-        parcalar = re.split(r"([-./])", kelime)
-        yeni = []
-        for p in parcalar:
-            if not p or not p[0].isalpha():
-                yeni.append(p)
-            elif tr_buyuk(p) in BIRIM:
-                yeni.append(tr_buyuk(p))
-            elif len(p) == 1 and yeni and yeni[-1] == "-":
-                yeni.append(tr_kucuk(p))            # "Hadis-i" gibi ekler
-            else:
-                yeni.append(tr_buyuk(p[0]) + tr_kucuk(p[1:]))
-        cikti.append("".join(yeni))
-    return " ".join(cikti)
+from kategori import kategori, KAT_GORSEL, sadelestir, basliklandir
 
 
 def slug(s):

@@ -21,7 +21,7 @@ KATEGORI = (os.environ.get("ODOO_KATEGORI") or "").strip() or "İSTANBUL HAC UMR
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
 
-from kategori import kategori as site_kategorisi, KAT_GORSEL, sadelestir
+from kategori import kategori as site_kategorisi, KAT_GORSEL, sadelestir, basliklandir
 
 
 if not all([URL, DB, LOGIN, KEY]):
@@ -82,7 +82,8 @@ def main():
             "id": anahtar,
             "odooId": u["id"],
             "kod": kod,
-            "ad": (u.get("name") or "").strip(),
+            "ad": basliklandir((u.get("name") or "").strip()),
+            "hamAd": (u.get("name") or "").strip(),
             "fiyat": round(u.get("list_price") or 0, 2),
             "kat": kat,
             "altkat": alt,
