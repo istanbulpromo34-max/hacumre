@@ -23,6 +23,7 @@ ANAHTAR = os.environ.get("GOOGLE_PLACES_KEY", "").strip()
 ARAMA = "İstanbul Hac Umre Hediyelik, Cevherağa Camii Sk. No:10-A, Ümraniye, İstanbul"
 BEKLENEN_ADRES = "cevherağa"
 ALANLAR = "places.id,places.displayName,places.formattedAddress,places.rating,places.userRatingCount"
+YORUM_YOL = os.path.join(KOK, "docs", "yorumlar.json")
 
 
 def istek(url, govde=None, basliklar=None):
@@ -51,7 +52,7 @@ def yer_getir(kimlik):
     return istek(
         "https://places.googleapis.com/v1/places/" + kimlik + "?languageCode=tr",
         None,
-        {"X-Goog-Api-Key": ANAHTAR, "X-Goog-FieldMask": "id,displayName,formattedAddress,rating,userRatingCount"},
+        {"X-Goog-Api-Key": ANAHTAR, "X-Goog-FieldMask": "id,displayName,formattedAddress,rating,userRatingCount,reviews"},
     )
 
 
@@ -142,6 +143,26 @@ def main():
                 (r"<i>%s yorum</i>" % sayi, "<i>%s yorum</i>" % adet_yazi),
             ],
         )
+
+    # Places API en fazla 5 yorum veriyor ve hangisinin geleceğini seçtirmiyor.
+    # Elle seçilmiş yorumlar docs/yorumlar-secili.json içindeyse onlar korunur;
+    # burada yazılan dosya yalnızca Google'dan geleni taşır.
+    yorumlar = []
+    for y in (yer.get("reviews") or [])[:5]:
+        metin = ((y.get("originalText") or y.get("text") or {}).get("text") or "").strip()
+        ad = ((y.get("authorAttribution") or {}).get("displayName") or "").strip()
+        if not metin or not ad:
+            continue
+        yorumlar.append({
+            "ad": ad,
+            "puan": y.get("rating"),
+            "metin": metin,
+            "ne_zaman": y.get("relativePublishTimeDescription"),
+            "baglanti": y.get("googleMapsUri") or (y.get("authorAttribution") or {}).get("uri"),
+        })
+    if yorumlar:
+        yaz(YORUM_YOL, json.dumps({"kaynak": "google-places", "yorumlar": yorumlar}, ensure_ascii=False, indent=1) + "\n")
+        print("%d yorum yazıldı." % len(yorumlar))
 
     yaz(
         JSON_YOL,
