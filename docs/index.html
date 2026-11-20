@@ -70,11 +70,21 @@
  line-height:1.12;letter-spacing:.005em;color:rgba(244,240,230,.94);margin-top:.1em}
 /* "ibadetinize" altın renkte ve üzerinden ışık geçiyor */
 .hero h1 .parilti{font-style:normal;color:transparent;-webkit-background-clip:text;background-clip:text;
- background-image:linear-gradient(100deg,#b8954a 0%,#cfb071 26%,#fff6dd 44%,#f3e2b0 52%,#cfb071 64%,#a8853d 100%);
- background-size:260% 100%;background-position:120% 0;
+ /* "ibadetinize": logodaki bordodan (#742E2E) yapılmış cam bir harf gibi. Katmanlar
+    yukarıdan aşağı: üzerinden geçen parıltı · camın üst yansıması ve alt gölgesi ·
+    kırmızı mermer damarlı iç dolgu. İnce açık kenar camın kıyısını verir. */
+ background-image:
+  linear-gradient(105deg,transparent 0%,transparent 38%,rgba(255,236,230,.85) 46%,rgba(255,255,255,.95) 49%,rgba(255,226,220,.6) 53%,transparent 61%,transparent 100%),
+  linear-gradient(180deg,rgba(255,220,212,.42) 0%,rgba(255,200,190,.1) 30%,rgba(116,46,46,0) 46%,rgba(30,4,8,.42) 100%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='140'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .055' numOctaves='5' seed='11'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='.30 .42 .50 .40 .86 .44 .98 .46'/%3E%3CfeFuncG type='table' tableValues='.06 .12 .16 .11 .46 .13 .80 .14'/%3E%3CfeFuncB type='table' tableValues='.08 .12 .16 .12 .42 .14 .74 .15'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23m%29'/%3E%3C/svg%3E"),
+  linear-gradient(#8a3434,#742e2e);
+ background-size:260% 100%,100% 100%,420px 140px,100% 100%;background-repeat:no-repeat,no-repeat,repeat,no-repeat;
+ background-position:150% 0,0 0,0 0,0 0;
+ -webkit-text-stroke:.6px rgba(255,205,198,.42);
+ filter:drop-shadow(0 1px 0 rgba(255,210,200,.18)) drop-shadow(0 6px 18px rgba(116,46,46,.55));
  animation:parilti 5.4s cubic-bezier(.45,.05,.3,1) 1.2s infinite}
-@keyframes parilti{0%{background-position:150% 0}42%,100%{background-position:-50% 0}}
-@media(prefers-reduced-motion:reduce){.hero h1 .parilti{animation:none;background-position:50% 0}}
+@keyframes parilti{0%{background-position:150% 0,0 0,0 0,0 0}42%,100%{background-position:-50% 0,0 0,0 0,0 0}}
+@media(prefers-reduced-motion:reduce){.hero h1 .parilti{animation:none;background-position:-50% 0,0 0,0 0,0 0}}
 .hero h1 .ana{display:block}
 .hero h1 .sat{display:block}
 /* Dönen kelime yukarı akan bir rulo gibi çalışır. Kutunun görünen alanı iç
