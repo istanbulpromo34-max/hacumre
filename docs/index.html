@@ -367,6 +367,43 @@
 .hero .dugmeler .btn{flex:1 1 0;min-width:0;padding:14px 10px;font-size:14px;white-space:nowrap}
 .hero .dugmeler .uzun{display:none}
 .hero .dugmeler .kisa{display:inline}}
+/* ===== Kapalı saatler: vitrin hafif loş, kapıya kepenk iner =====
+   Konumlar fotoğraf piksellerinden: vitrin açıklığı ve kapı (büyük ve telefon görseli
+   ayrı ölçülü). Görsel object-fit:cover ile kırpıldığı için yerleşim betikte hesaplanır.
+   Kepenk resim değil, CSS ile çizilir: antrasit alüminyum lameller (her birinin üstü
+   ışık alır, altı gölgede), ince doku, tavandaki spotlardan gelen ışık, yan raylar,
+   üstte kepenk kutusu ve alt çıta. */
+.gece{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
+.gece.on{opacity:1}
+.gece-ic{position:absolute;left:var(--gx,0);top:var(--gy,0);width:var(--gw,0);height:var(--gh,0);
+ background:radial-gradient(70% 75% at 50% 40%,rgba(10,16,36,.34),rgba(6,10,26,.56));
+ -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
+.kepenk{position:absolute;left:var(--kx,0);top:var(--ky,0);width:var(--kw,0);height:var(--kh,0);--l:calc(var(--kw,100px) * .066)}
+/* zemine düşen yumuşak gölge */
+.kepenk::after{content:"";position:absolute;left:-6%;right:-6%;bottom:calc(var(--l) * -.6);height:calc(var(--l) * 1.1);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);opacity:0;transition:opacity 1s 1.8s}
+.gece.on .kepenk::after{opacity:1}
+/* kepenk kutusu: üstte, kapıdan biraz geniş */
+.kp-kutu{position:absolute;left:-4%;right:-4%;top:calc(var(--l) * -2.6);height:calc(var(--l) * 2.7);border-radius:1px;
+ background:linear-gradient(180deg,#3a3f47 0%,#2b2f36 18%,#23272d 70%,#1a1d22 100%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(0,0,0,.6),0 3px 6px rgba(0,0,0,.45)}
+.kp-ray{position:absolute;top:0;bottom:0;width:calc(var(--l) * .9);
+ background:linear-gradient(90deg,#16191d,#30353c 45%,#1d2025);box-shadow:0 0 3px rgba(0,0,0,.6)}
+.kp-ray.sol{left:calc(var(--l) * -.45)}.kp-ray.sag{right:calc(var(--l) * -.45)}
+.kp-perde{position:absolute;left:calc(var(--l) * .3);right:calc(var(--l) * .3);top:0;height:0;overflow:hidden;
+ background:
+  linear-gradient(180deg,rgba(255,228,180,.13),rgba(255,228,180,0) 30%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(0,0,0,.28)),
+  linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 12%,rgba(255,255,255,.035) 50%,rgba(0,0,0,0) 88%,rgba(0,0,0,.34)),
+  repeating-linear-gradient(180deg,
+   #3d424a 0, #33373e calc(var(--l) * .12), #2a2e34 calc(var(--l) * .45),
+   #22252a calc(var(--l) * .8), #0f1114 calc(var(--l) * .88), #0f1114 var(--l)),
+  #25282d;
+ box-shadow:0 6px 10px -4px rgba(0,0,0,.55);transition:height 2.6s cubic-bezier(.45,.05,.25,1)}
+.kp-perde::after{content:"";position:absolute;inset:0;opacity:.22;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.kp-alt{position:absolute;left:0;right:0;bottom:0;height:calc(var(--l) * .8);
+ background:linear-gradient(180deg,#5a606a,#2a2e34 60%,#121417);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.gece.on .kp-perde{height:100%}
+@media(prefers-reduced-motion:reduce){.kp-perde{transition:none}.gece{transition:none}}
 /* Telefonda açılış sade: konum satırı ve açıklama kalkar (tabela ve başlık aynı şeyi
    söylüyor); başlık ekran genişliğine göre ölçeklenir ki "siz ibadetinize odaklanın."
    tek satıra, en uzun dönen kelime de satıra sığsın; düğmeler ilk ekranda görünür. */
@@ -396,6 +433,10 @@
    <source src="assets/hero/giris-m.mp4" type="video/mp4" media="(max-width: 600px)">
    <source src="assets/hero/giris.mp4" type="video/mp4">
   </video>
+ </div>
+ <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
+ <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
+  <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-alt"></i></i></div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
@@ -587,6 +628,40 @@ akisKur();
   Z.style.opacity=k((p-.5)/.15).toFixed(3);
  }
  uyan();
+})();
+</script>
+<script>
+/* Kapalı saatler (İstanbul saatiyle 20:00–09:00): vitrin hafif loşlaşır, kapıya kepenk iner.
+   Fotoğraf object-fit:cover ile kırpıldığından vitrin ve kapının ekrandaki yeri
+   görselin gerçek boyutundan hesaplanır. Saat her dakika yeniden kontrol edilir. */
+(function(){
+ const G=document.getElementById('gece'),M=document.querySelector('.hero-medya');if(!G||!M)return;
+ /* Görsel pikselleri: [genişlik, yükseklik, vitrin x1,y1,x2,y2, kapı x1,y1,x2,y2] */
+ const BUYUK=[1920,1080, 880,488,1622,890, 1178,606,1337,881];
+ const KUCUK=[1080,1064, 105,456,981,930, 457,595,645,919];
+ const saat=()=>{const p=new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  return +p.find(x=>x.type==='hour').value*60+ +p.find(x=>x.type==='minute').value};
+ const yerlestir=()=>{
+  const v=M.querySelector('video:not([hidden])')||M.querySelector('video');
+  const D=innerWidth<=600?KUCUK:BUYUK,[iw,ih]=D;
+  const r=M.getBoundingClientRect(),h=G.parentElement.getBoundingClientRect();
+  const cs=getComputedStyle(v),op=cs.objectPosition.split(' ').map(parseFloat);
+  const k=Math.max(r.width/iw,r.height/ih),dw=iw*k,dh=ih*k;
+  const ox=(r.width-dw)*(op[0]/100),oy=(r.height-dh)*((isNaN(op[1])?50:op[1])/100);
+  const X=x=>r.left-h.left+ox+x*k,Y=y=>r.top-h.top+oy+y*k;
+  const st=G.style;
+  st.setProperty('--gx',X(D[2])+'px');st.setProperty('--gy',Y(D[3])+'px');
+  st.setProperty('--gw',(D[4]-D[2])*k+'px');st.setProperty('--gh',(D[5]-D[3])*k+'px');
+  st.setProperty('--kx',X(D[6])+'px');st.setProperty('--ky',Y(D[7])+'px');
+  st.setProperty('--kw',(D[8]-D[6])*k+'px');st.setProperty('--kh',(D[9]-D[7])*k+'px')};
+ const durum=()=>{
+  const dk=saat(),kapali=dk>=20*60||dk<9*60;
+  if(kapali){yerlestir();requestAnimationFrame(()=>G.classList.add('on'))}else G.classList.remove('on')};
+ /* İsteğe bağlı deneme: adrese ?gece=1 eklenirse saat ne olursa olsun kapalı görünüm */
+ if(/[?&]gece=1/.test(location.search)){G.classList.add('on');requestAnimationFrame(yerlestir)}else durum();
+ addEventListener('resize',()=>{if(G.classList.contains('on'))yerlestir()});
+ M.querySelectorAll('video').forEach(v=>v.addEventListener('loadedmetadata',()=>{if(G.classList.contains('on'))yerlestir()}));
+ setInterval(()=>{if(!/[?&]gece=1/.test(location.search))durum()},60000);
 })();
 </script>
 <script>

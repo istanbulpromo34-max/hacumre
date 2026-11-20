@@ -64,7 +64,7 @@
 .kart h3{font-size:21px;line-height:1.2}
 /* İsim her kartta sabit iki satır: uzun isim üç noktayla kısalır, kısa isimde de
    fiyat satırı aynı hizada kalır; kartlar eşit boyda olur. Tam ad ürüne dokununca görünür. */
-.kart h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.4em}
+.kart h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .kart p{font-size:14px;color:rgba(234,230,220,.7);line-height:1.55;flex:1}
 .kart .f{font:400 24px 'Marcellus';margin:0}
 /* Çantaya ekleme: fiyatın sağında küçük, sakin bir altın hap (sitedeki diğer
@@ -80,12 +80,14 @@
 .kart.sepette .ekle{display:none}
 /* Dokununca bir anlığına "Çantada ✓" yazar, sonra adet seçici gelir */
 .kart .ekle .ek-yazi{display:none;white-space:nowrap}
+.kart .ekle .ek-ad{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1}
+.kart .ekle .ek-ad small{font:600 7.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;opacity:.72;margin-bottom:1px}
 .kart.eklendi .ekle{display:inline-flex!important}
-.kart.eklendi .ekle .ek-ad{display:none}
+.kart.eklendi .ekle .ek-ad{display:none!important}
 .kart.eklendi .ekle .ek-yazi{display:inline;animation:ekGel .3s cubic-bezier(.2,.8,.2,1)}
 @keyframes ekGel{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 .kart.eklendi .stepper{display:none!important}
-.kart .fsat{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:8px;min-height:34px}
+.kart .fsat{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:0;padding-top:6px;min-height:34px}
 .kart .stepper{display:none;align-items:center;gap:2px;height:38px;border-radius:999px;border:1px solid rgba(201,162,75,.6);padding:2px;background:rgba(201,162,75,.06)}
 .kart .stepper output{min-width:26px}
 .kart .stepper button{width:32px;height:32px;border-radius:50%;border:0;background:rgba(201,162,75,.2);color:var(--altin2);font-size:19px;line-height:1;cursor:pointer;transition:background .25s}
@@ -146,12 +148,10 @@
 .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .daha{padding-bottom:120px}
  .daha button{min-width:0;width:100%}
-.kart .b{padding:8px 11px 10px;gap:3px}
-/* Fotoğraf biraz daha uzun: kartta baskın olan ürün olsun */
-.kart .g{aspect-ratio:5/6}
+.kart .b{padding:11px 11px 10px;gap:3px}
 /* Telefonda kategori adı kalkar (üstte zaten seçili); yazı alanı fotoğrafın yarısından az */
 .kart .kat{display:none}
-.kart h3{font-size:14.5px;line-height:1.25;min-height:2.5em}
+.kart h3{font-size:14.5px;line-height:1.25}
 .kart p{display:none}
 .kart .f{font-size:16.5px}
 .kart .fsat{padding-top:4px;min-height:30px}
@@ -362,7 +362,7 @@ function kartHtml(u){
  return `<article class="kart" data-id="${u.id}">
   <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><div class="fsat"><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
-  <button class="ekle" type="button" aria-label="${u.ad}, çantaya ekle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><span class="ek-ad">Ekle</span><span class="ek-yazi" aria-hidden="true">Çantada ✓</span></button><div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
+  <button class="ekle" type="button" aria-label="${u.ad}, çantaya ekle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><span class="ek-ad"><small>Çantama</small>Ekle</span><span class="ek-yazi" aria-hidden="true">Çantada ✓</span></button><div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
 }
 function dahaCiz(){
  const parca=sonListe.slice(gosterilen,gosterilen+GRUP);
