@@ -225,20 +225,21 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .kumas{perspective:1400px;height:440px;cursor:pointer;border:0;padding:0;background:none;text-align:left;font:inherit;color:inherit}
 .kumas-ic{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
 .kumas.acik .kumas-ic{transform:rotateY(180deg)}
-.yuz,.arka{position:absolute;inset:0;border-radius:28px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;
- transform:translateZ(0)}
-/* iOS Safari'de yuvarlatılmış köşe + taşmayı gizleme, arka yüz gizlemeyi bozuyor
-   ve kart dönünce ön yüzün yazısı ters olarak sızıyordu. Yüzler kartın tam yan
-   döndüğü anda (dönüşün yarısı) görünürlüğünü değiştirerek bu kapatılıyor. */
-.yuz,.arka{transition:opacity .01s .45s}
-.arka{opacity:0}
-.kumas.acik .yuz{opacity:0}
-.kumas.acik .arka{opacity:1}
-.yuz img{width:100%;height:100%;object-fit:cover}
-.yuz::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,23,41,.55),transparent 50%)}
+.yuz,.arka{position:absolute;inset:0;border-radius:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+/* iOS Safari'de arka yüz gizleme, yüzlerde "overflow:hidden" varken çalışmıyor
+   ve kart dönünce ön yüzün yazısı ters olarak sızıyordu. Taşma gizleme yüzlerden
+   kaldırıldı (köşeleri resmin ve kaplamanın kendisi yuvarlatıyor), ayrıca yüzler
+   kart tam yan döndüğü anda görünürlük değiştiriyor. Görünürlük, opaklığın aksine
+   üç boyutlu yerleşimi bozmuyor. */
+.yuz,.arka{transition:visibility 0s .45s}
+.arka{visibility:hidden}
+.kumas.acik .yuz{visibility:hidden}
+.kumas.acik .arka{visibility:visible}
+.yuz img{width:100%;height:100%;object-fit:cover;border-radius:28px}
+.yuz::after{content:"";position:absolute;inset:0;border-radius:28px;background:linear-gradient(0deg,rgba(14,23,41,.55),transparent 50%)}
 .yuz h4{position:absolute;left:24px;bottom:20px;z-index:1;margin:0;font-family:var(--display);font-weight:400;font-size:34px;color:var(--fildisi)}
 .yuz small{position:absolute;right:20px;bottom:26px;z-index:1;color:var(--fildisi);font-size:13px;opacity:.85}
-.arka{transform:rotateY(180deg) translateZ(0);background:var(--lacivert);color:var(--fildisi);padding:30px;display:flex;flex-direction:column;justify-content:space-between}
+.arka{transform:rotateY(180deg);background:var(--lacivert);color:var(--fildisi);padding:30px;display:flex;flex-direction:column;justify-content:space-between}
 .arka h4{font-family:var(--display);font-weight:400;font-size:30px;margin:0 0 12px;color:var(--altin-acik)}
 .arka p{font-size:16px;color:rgba(239,231,216,.85)}
 @media (max-width:900px){
