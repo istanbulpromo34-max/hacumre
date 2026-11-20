@@ -334,3 +334,20 @@ function damlaArama(){
   if(kutu.classList.contains('acik'))kapa()},{passive:true});
  bak();
 }
+
+/* Arama sonuçları: sonuç gelince listenin başı görünür olsun; Enter / Ara tuşunda
+   klavye de kapansın. Telefonda sağ üstteki arama damlasının altında kalacak şekilde. */
+function aramaSonucunaGit(gir,hedef,klavyeKapat){
+ if(!hedef)return;
+ if(klavyeKapat&&gir)gir.blur();
+ const ust=innerWidth<=720?66:96;
+ const y=hedef.getBoundingClientRect().top+scrollY-ust;
+ /* Zaten görünür ve yakınsa kaydırma yapma (yazarken sayfa zıplamasın) */
+ const r=hedef.getBoundingClientRect();
+ if(!klavyeKapat&&r.top>=ust-4&&r.top<innerHeight*.45)return;
+ if(window.lenis)lenis.scrollTo(Math.max(0,y),{duration:.6});else scrollTo({top:Math.max(0,y),behavior:'smooth'});
+}
+function aramaKlavyesi(gir,hedef){
+ if(!gir)return;
+ gir.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();setTimeout(()=>aramaSonucunaGit(gir,hedef(),true),160)}});
+}

@@ -490,8 +490,10 @@ araKutu.addEventListener('input', () => {
        kullanıcı neden sonuç çıkmadığını anlamıyor. */
     if (ara && sec){ sec = ''; adresiYaz(); filtreCiz(); }
     gosterilen = SAYFA; izgaraCiz();
+    if (ara) aramaSonucunaGit(araKutu, SON, false);
   }, 150);
 });
+aramaKlavyesi(araKutu, () => SON);
 araSil.addEventListener('click', () => { araKutu.value = ''; araSil.hidden = true; ara = ''; gosterilen = SAYFA; izgaraCiz(); araKutu.focus(); });
 
 function filtreyeGit(){
