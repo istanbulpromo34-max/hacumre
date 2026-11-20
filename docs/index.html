@@ -177,36 +177,48 @@
 /* ===== Ziyaret ===== */
 /* Masaüstünde üç sütun: solda puan ve adres, ortada harita, sağda düğmeler.
    Önceden ortadaki geniş alan boş kalıyordu. */
-.ziyaret{display:grid;grid-template-columns:minmax(190px,.62fr) minmax(0,1fr) minmax(300px,.92fr);
- gap:30px 34px;align-items:center;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+/* Geniş ekranda dağılmasın diye bölüm ortalanıp genişliği sınırlandı */
+.ziyaret{display:grid;grid-template-columns:minmax(196px,.52fr) minmax(0,1.02fr) minmax(310px,.78fr);
+ max-width:1258px;margin-inline:auto;padding-inline:24px;gap:30px 38px;align-items:center;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:1080px){.ziyaret{grid-template-columns:1fr;gap:26px}
-.puan{justify-content:flex-start;text-align:left}
-.ziyaret-harita{height:300px;max-height:none}}
-.ziyaret-harita{position:relative;border-radius:22px;overflow:hidden;min-height:300px;height:100%;
- max-height:340px;border:1px solid rgba(201,162,75,.28);background:#e9e5dc}
-.ziyaret-harita iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.2) contrast(1.03)}
-.ziyaret-harita .harita-kart{position:absolute;left:9px;right:9px;bottom:9px;z-index:2;
- display:grid;grid-template-columns:48px 1fr;gap:9px 11px;align-items:center;padding:10px;
- border-radius:16px;background:rgba(8,16,36,.94);border:1px solid rgba(201,162,75,.38);
- backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
- box-shadow:0 20px 44px -22px rgba(0,0,0,.85);color:#fff}
-.ziyaret-harita .harita-kart>img{width:48px;height:48px;border-radius:12px;object-fit:cover}
-.ziyaret-harita .hk-bilgi{min-width:0;display:flex;flex-direction:column;gap:2px}
-.ziyaret-harita .hk-bilgi strong{font-family:'Marcellus',serif;font-weight:400;font-size:15.5px;line-height:1.25}
-.ziyaret-harita .hk-puan{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(234,230,220,.78)}
-.ziyaret-harita .hk-puan b{color:var(--altin2);font-weight:600}
-.ziyaret-harita .hk-yildiz{color:var(--altin2);letter-spacing:1px;font-size:11px}
-.ziyaret-harita .hk-puan i{font-style:normal}
-.ziyaret-harita .hk-adr{font-size:12px;line-height:1.4;color:rgba(234,230,220,.66)}
-.ziyaret-harita .hk-yol{grid-column:1/-1;min-height:42px;display:flex;align-items:center;justify-content:center;
- border-radius:999px;background:var(--altin);color:#1a1205;font:600 13.5px 'Hanken Grotesk',sans-serif}
-@media (hover:hover){.ziyaret-harita .hk-yol:hover{filter:brightness(1.06)}}
-/* Puan bloğu haritaya yaklaşsın: arada gereksiz boşluk kalıyordu */
-.puan{display:flex;align-items:center;justify-content:flex-end;gap:18px;text-align:right}
+.puan{justify-content:flex-start;text-align:left}}
+/* Google yorumları: harita yerine buraya geldi. Kart yüksekliği sabit,
+   böylece uzun ve kısa yorumlar arasında geçerken sayfa zıplamıyor. */
+.yorumlar{display:flex;flex-direction:column;gap:14px;min-width:0}
+.yorum-kart{position:relative;min-height:264px;display:flex;flex-direction:column;justify-content:center;gap:16px;
+ padding:30px 30px 26px;border-radius:22px;border:1px solid rgba(201,162,75,.26);
+ background:linear-gradient(158deg,rgba(255,255,255,.075),rgba(255,255,255,.02) 58%,rgba(201,162,75,.05));
+ box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 24px 50px -34px rgba(0,0,0,.9)}
+.yorum-kart .tirnak{position:absolute;top:18px;right:22px;width:38px;height:38px;fill:var(--altin);opacity:.17}
+.yorum-kart blockquote{margin:0;font-size:16.5px;line-height:1.72;color:rgba(240,236,226,.93);
+ transition:opacity .42s cubic-bezier(.2,.8,.2,1),transform .42s cubic-bezier(.2,.8,.2,1)}
+.yorumlar.gecis .yorum-kart blockquote,.yorumlar.gecis .yorum-alt{opacity:0;transform:translateY(10px)}
+.yorum-alt{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:13.5px;color:rgba(234,230,220,.6);
+ transition:opacity .42s cubic-bezier(.2,.8,.2,1),transform .42s cubic-bezier(.2,.8,.2,1)}
+.yorum-alt b{font-family:'Marcellus',serif;font-weight:400;font-size:16px;color:#f0ece2}
+.yorum-yildiz{color:var(--altin2);letter-spacing:2px;font-size:13px}
+.yorum-kumanda{display:flex;align-items:center;gap:12px}
+.yorum-ok{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+ border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:rgba(234,230,220,.8);
+ font-size:20px;line-height:1;transition:background .3s,border-color .3s,color .3s}
+@media (hover:hover){.yorum-ok:hover{background:rgba(201,162,75,.9);border-color:transparent;color:#1a1205}}
+.yorum-ok:active{transform:scale(.94)}
+.yorum-cizgi{flex:1;height:2px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.yorum-cizgi i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--altin2),var(--altin))}
+.yorum-tum{align-self:flex-start;font-size:13.5px;color:var(--altin2);text-decoration:underline;
+ text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+@media (hover:hover){.yorum-tum:hover{color:#fff}}
+@media(max-width:720px){
+.yorum-kart{min-height:286px;padding:24px 22px 22px;border-radius:19px}
+.yorum-kart blockquote{font-size:15.5px;line-height:1.68}
+.yorum-kart .tirnak{width:30px;height:30px;top:14px;right:16px}}
+@media(prefers-reduced-motion:reduce){
+.yorum-kart blockquote,.yorum-alt{transition:none}}
+.puan{display:flex;align-items:center;justify-content:flex-end;gap:16px;text-align:right}
 .puan>div{text-align:left}
-.puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(66px,6.6vw,104px);line-height:1}
-.puan .yildiz{color:var(--altin2);letter-spacing:4px;font-size:18px}
-.puan p{color:rgba(234,230,220,.75);margin-top:6px}
+.puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(56px,4.9vw,80px);line-height:1}
+.puan .yildiz{color:var(--altin2);letter-spacing:4px;font-size:17px}
+.puan p{color:rgba(234,230,220,.75);margin-top:6px;font-size:14px}
 .ziyaret-sag{display:grid;gap:18px;justify-items:start}
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
@@ -258,7 +270,7 @@
 .guven{gap:10px 20px}
 .guven b{font-size:20px}
 .ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}
-.ziyaret-harita{min-height:0;height:260px;max-height:none;order:2}
+.yorumlar{order:2}
 .ziyaret-sag{order:3}}
 @media(max-width:380px){
 .adimlar{grid-template-columns:1fr}}
@@ -361,17 +373,22 @@
 <!-- ZİYARET -->
 <section class="ziyaret kap" aria-label="Mağazamıza ulaşın">
  <div class="puan" data-gel><b class="metal metal-yazi" data-isik>5,0</b><div><div class="yildiz" aria-hidden="true">★★★★★</div><p><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 124 yorum</p></div></div>
- <div class="ziyaret-harita" data-gel>
-  <iframe title="İstanbul Hac Umre Hediyelik'in haritadaki konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d29.0910215!3d41.0242974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac952952a7ffb%3A0x423d712d0ee38821!2s%C4%B0stanbul%20Hac-Umre%20Malzemeleri%20ve%20Hediyelik!5e0!3m2!1str!2str!4v1763450000000!5m2!1str!2str"></iframe>
-  <div class="harita-kart">
-   <img src="assets/hero/magaza-m.webp" alt="" width="48" height="48" loading="lazy" decoding="async">
-   <div class="hk-bilgi">
-    <strong>İstanbul Hac Umre Hediyelik</strong>
-    <span class="hk-puan"><b>5,0</b><span class="hk-yildiz" aria-hidden="true">★★★★★</span><i>124 yorum</i></span>
-    <span class="hk-adr">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A · Ümraniye</span>
+ <div class="yorumlar" data-gel aria-roledescription="carousel" aria-label="Google yorumları">
+  <div class="yorum-kart">
+   <svg class="tirnak" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 5.4c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Zm9.3 0c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Z"/></svg>
+   <blockquote id="yorumMetin"></blockquote>
+   <div class="yorum-alt">
+    <b id="yorumAd"></b>
+    <span class="yorum-yildiz" aria-hidden="true">★★★★★</span>
+    <span id="yorumZaman"></span>
    </div>
-   <a class="hk-yol" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a>
   </div>
+  <div class="yorum-kumanda">
+   <button type="button" class="yorum-ok" id="yorumGeri" aria-label="Önceki yorum">‹</button>
+   <div class="yorum-cizgi"><i id="yorumDolu"></i></div>
+   <button type="button" class="yorum-ok" id="yorumIleri" aria-label="Sonraki yorum">›</button>
+  </div>
+  <a class="yorum-tum" href="https://g.page/r/CSGI4w4tcT1CEBM" target="_blank" rel="noopener">124 yorumun tamamını Google'da okuyun</a>
  </div>
  <div class="ziyaret-sag" data-gel>
   <p class="adres">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul<br><span>Her gün 09:00–20:00 açığız.</span></p>
@@ -387,6 +404,7 @@
 
 <footer class="sf"></footer>
 
+<script src="yorumlar.js"></script>
 <script src="urunler-veri.js"></script>
 <script src="site.js"></script>
 <script src="hava.js" defer></script>
@@ -492,6 +510,46 @@ akisKur();
   if(!document.hidden&&gorunur){i=(i+1)%kelimeler.length;goster(kelimeler[i])}
   setTimeout(sira,3200);
  },2600);
+})();
+</script>
+<script>
+/* Google yorumları sırayla döner. Kart yüksekliği sabit olduğu için geçişte
+   sayfa kaymaz. Fare üzerindeyken, sekme arkadayken ve bölüm ekran dışındayken
+   durur; oklarla elle de gezilebilir. */
+(function(){
+ const kok=document.querySelector('.yorumlar');
+ if(!kok||typeof YORUMLAR==='undefined'||!YORUMLAR.length)return;
+ const M=document.getElementById('yorumMetin'),A=document.getElementById('yorumAd'),
+       Z=document.getElementById('yorumZaman'),D=document.getElementById('yorumDolu');
+ const SURE=7000;
+ let i=0,bas=0,duruyor=false,gorunur=true,az=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const yaz=n=>{const y=YORUMLAR[n];M.textContent=y.metin;A.textContent=y.ad;Z.textContent=y.zaman};
+ const git=(n,yon)=>{
+  i=(n+YORUMLAR.length)%YORUMLAR.length;bas=performance.now();
+  if(az){yaz(i);return}
+  kok.classList.add('gecis');
+  setTimeout(()=>{yaz(i);kok.classList.remove('gecis')},300);
+ };
+ yaz(0);
+ document.getElementById('yorumIleri').onclick=()=>git(i+1);
+ document.getElementById('yorumGeri').onclick=()=>git(i-1);
+ kok.addEventListener('pointerenter',()=>duruyor=true);
+ kok.addEventListener('pointerleave',()=>duruyor=false);
+ kok.addEventListener('focusin',()=>duruyor=true);
+ kok.addEventListener('focusout',()=>duruyor=false);
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;if(gorunur)bas=performance.now()},{rootMargin:'0px'}).observe(kok);
+ bas=performance.now();
+ (function dongu(t){
+  if(!az){
+   if(duruyor||document.hidden||!gorunur){bas=t-0;D.style.width=D.style.width||'0%'}
+   else{
+    const g=(t-bas)/SURE;
+    D.style.width=Math.min(100,g*100).toFixed(1)+'%';
+    if(g>=1)git(i+1);
+   }
+  }
+  requestAnimationFrame(dongu);
+ })(performance.now());
 })();
 </script>
 </body>

@@ -23,6 +23,8 @@ ANAHTAR = os.environ.get("GOOGLE_PLACES_KEY", "").strip()
 ARAMA = "İstanbul Hac Umre Hediyelik, Cevherağa Camii Sk. No:10-A, Ümraniye, İstanbul"
 BEKLENEN_ADRES = "cevherağa"
 ALANLAR = "places.id,places.displayName,places.formattedAddress,places.rating,places.userRatingCount"
+# Google'dan gelen beş yorum buraya düşer; sitede gösterilen seçilmiş yirmi
+# yorum docs/yorumlar.js dosyasında elle tutuluyor.
 YORUM_YOL = os.path.join(KOK, "docs", "yorumlar.json")
 
 
