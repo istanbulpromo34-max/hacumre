@@ -41,10 +41,12 @@
 .bilgi{display:grid;gap:0;margin-bottom:24px}
 .bilgi div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;line-height:1.55}
 .bilgi dt{color:var(--altin2);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
-.bilgi a{text-decoration:underline;text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px}
+.bilgi a{display:inline-flex;align-items:center;min-height:44px;margin-block:-10px;
+ text-decoration:underline;text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px}
 @media (hover:hover){.bilgi a:hover{color:var(--altin2)}}
 .dug{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
-.dug .btn{padding:13px 14px;font-size:14px}
+.dug .genis{grid-column:1/-1}
+.dug .btn{min-height:52px;padding:14px 16px;border-radius:16px;font:500 15px 'Hanken Grotesk',system-ui,sans-serif}
 .puan-satir{display:flex;align-items:center;gap:14px;margin:4px 0 20px}
 .puan-satir b{font-family:'Marcellus';font-weight:400;font-size:44px;line-height:1}
 .puan-satir span{font-size:14px;color:rgba(234,230,220,.78)}
@@ -100,11 +102,10 @@
    <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/istanbulhacumrehediyelik/" target="_blank" rel="noopener">@istanbulhacumrehediyelik</a></dd></div>
   </dl>
   <div class="dug">
-   <a class="btn altin" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a>
-   <a class="btn wa" id="ilet-wa" href="https://wa.me/905551044040?text=Merhaba%2C%20sitenizden%20yaz%C4%B1yorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
-   <a class="btn cam" href="tel:+905551044040">Arayın</a>
-   <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener">Google'da yorum yapın</a>
-   <button class="film-ac" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
+   <a class="btn sivi wa genis" id="ilet-wa" href="https://wa.me/905551044040?text=Merhaba%2C%20sitenizden%20yaz%C4%B1yorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+   <a class="btn sivi" href="tel:+905551044040"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.3a1.8 1.8 0 0 1 2.5.7l1.5 2.7a1.8 1.8 0 0 1-.4 2.2l-1 .9a9.7 9.7 0 0 0 4.3 4.3l.9-1a1.8 1.8 0 0 1 2.2-.4l2.7 1.5a1.8 1.8 0 0 1 .7 2.5l-.9 1.5a2.8 2.8 0 0 1-3.1 1.3C10.3 19.2 4.4 13.3 3 7.3a2.8 2.8 0 0 1 1.3-3.1Z"/></svg>Arayın</a>
+   <a class="btn sivi" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9Z"/></svg>Yorum yapın</a>
+   <button class="btn sivi genis" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.2a9.8 9.8 0 1 0 0 19.6 9.8 9.8 0 0 0 0-19.6Zm-1.7 6 5.5 3.3a.6.6 0 0 1 0 1l-5.5 3.3a.6.6 0 0 1-.9-.5V8.7a.6.6 0 0 1 .9-.5Z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
   </div>
  </div>
  <div class="harita"><iframe title="İstanbul Hac Umre Hediyelik'in haritadaki konumu" referrerpolicy="no-referrer-when-downgrade" allowfullscreen

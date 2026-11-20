@@ -174,12 +174,13 @@
 /* ===== Ziyaret ===== */
 /* Masaüstünde üç sütun: solda puan ve adres, ortada harita, sağda düğmeler.
    Önceden ortadaki geniş alan boş kalıyordu. */
-.ziyaret{display:grid;grid-template-columns:minmax(220px,.85fr) minmax(0,1.3fr) minmax(290px,.85fr);
- gap:34px 48px;align-items:center;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+.ziyaret{display:grid;grid-template-columns:minmax(190px,.62fr) minmax(0,1fr) minmax(300px,.92fr);
+ gap:30px 34px;align-items:center;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:1080px){.ziyaret{grid-template-columns:1fr;gap:26px}
+.puan{justify-content:flex-start;text-align:left}
 .ziyaret-harita{height:300px;max-height:none}}
 .ziyaret-harita{position:relative;border-radius:22px;overflow:hidden;min-height:300px;height:100%;
- max-height:380px;border:1px solid rgba(201,162,75,.28);background:#e9e5dc}
+ max-height:340px;border:1px solid rgba(201,162,75,.28);background:#e9e5dc}
 .ziyaret-harita iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.2) contrast(1.03)}
 .ziyaret-harita .harita-kart{position:absolute;left:9px;right:9px;bottom:9px;z-index:2;
  display:grid;grid-template-columns:48px 1fr;gap:9px 11px;align-items:center;padding:10px;
@@ -197,29 +198,23 @@
 .ziyaret-harita .hk-yol{grid-column:1/-1;min-height:42px;display:flex;align-items:center;justify-content:center;
  border-radius:999px;background:var(--altin);color:#1a1205;font:600 13.5px 'Hanken Grotesk',sans-serif}
 @media (hover:hover){.ziyaret-harita .hk-yol:hover{filter:brightness(1.06)}}
-.puan{display:flex;align-items:center;gap:22px}
-.puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(70px,8vw,120px);line-height:1}
+/* Puan bloğu haritaya yaklaşsın: arada gereksiz boşluk kalıyordu */
+.puan{display:flex;align-items:center;justify-content:flex-end;gap:18px;text-align:right}
+.puan>div{text-align:left}
+.puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(66px,6.6vw,104px);line-height:1}
 .puan .yildiz{color:var(--altin2);letter-spacing:4px;font-size:18px}
 .puan p{color:rgba(234,230,220,.75);margin-top:6px}
 .ziyaret-sag{display:grid;gap:18px;justify-items:start}
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
-/* Eylem düğmeleri: eşit boy, ince çizgi ikon, cam yüzey — yalnız bu bölüme özel */
+/* Eylem düğmeleri: eşit boy, dolgun altın ikon, sıvı cam yüzey.
+   Dört düğme alt alta gelince dolu yeşil ve altın ağır duruyordu; renk artık
+   yalnız kenarda ve ikonda ince bir ton. Ortak görünüm site.css'teki .btn.sivi. */
 .ziyaret .dugmeler{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .ziyaret .dugmeler .genis{grid-column:1/-1}
 .ziyaret .dugmeler .btn{width:100%;min-height:54px;padding:15px 18px;gap:10px;border-radius:17px;
- font:500 15.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.004em;
- transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .3s,background .3s,border-color .3s}
-.ziyaret .dugmeler .btn svg.cz{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
-.ziyaret .dugmeler .btn.altin{background:linear-gradient(177deg,#e9c87f,#d8b667 58%,#bd9440);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px -14px rgba(201,162,75,.9)}
-.ziyaret .dugmeler .btn.wa{background:linear-gradient(177deg,#2bbd6c,#189c4f);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 10px 26px -14px rgba(31,174,91,.85)}
-.ziyaret .dugmeler .btn.wa svg{width:19px;height:19px;opacity:.95}
-.ziyaret .dugmeler .btn.cam{background:rgba(255,255,255,.052);border:1px solid rgba(255,255,255,.1);
- backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
- box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
-@media (hover:hover){.ziyaret .dugmeler .btn.cam:hover{background:rgba(255,255,255,.09);border-color:rgba(201,162,75,.4)}}
-.ziyaret .dugmeler .btn .sure{margin-left:2px;padding:3px 8px;border-radius:7px;background:rgba(255,255,255,.07);
- font-size:12.5px;font-weight:500;letter-spacing:.01em;opacity:.7}
+ font:500 15.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.004em}
+.ziyaret .dugmeler .btn .sure{margin-left:2px;border-radius:8px}
 @media(max-width:1100px){
 .grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
 .grup{aspect-ratio:4/3.6}}
@@ -378,11 +373,10 @@
  <div class="ziyaret-sag" data-gel>
   <p class="adres">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul<br><span>Her gün 09:00–20:00 açığız.</span></p>
   <div class="dugmeler">
-   <a class="btn altin genis" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s6-5.2 6-9.8a6 6 0 1 0-12 0c0 4.6 6 9.8 6 9.8Z"/><circle cx="12" cy="10.4" r="2.4"/></svg>Yol tarifi alın</a>
-   <a class="btn wa genis" id="ziyaret-wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
-   <a class="btn cam" href="tel:+905551044040"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.1 4.4 9.6 8 8 9.3a11.6 11.6 0 0 0 5.1 5.1l1.3-1.6 3.6 1.5v3.1a1.6 1.6 0 0 1-1.7 1.6A14.2 14.2 0 0 1 3.2 6.4a1.6 1.6 0 0 1 1.6-1.7h3.3Z"/></svg>Arayın</a>
-   <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" aria-label="Google'da yorum yapın"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4.4 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/></svg>Yorum yapın</a>
-   <button class="btn cam genis" type="button" data-film><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M10.4 9.2 15 12l-4.6 2.8z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
+   <a class="btn sivi wa genis" id="ziyaret-wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+   <a class="btn sivi" href="tel:+905551044040"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.3a1.8 1.8 0 0 1 2.5.7l1.5 2.7a1.8 1.8 0 0 1-.4 2.2l-1 .9a9.7 9.7 0 0 0 4.3 4.3l.9-1a1.8 1.8 0 0 1 2.2-.4l2.7 1.5a1.8 1.8 0 0 1 .7 2.5l-.9 1.5a2.8 2.8 0 0 1-3.1 1.3C10.3 19.2 4.4 13.3 3 7.3a2.8 2.8 0 0 1 1.3-3.1Z"/></svg>Arayın</a>
+   <a class="btn sivi" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" aria-label="Google'da yorum yapın"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9Z"/></svg>Yorum yapın</a>
+   <button class="btn sivi genis" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.2a9.8 9.8 0 1 0 0 19.6 9.8 9.8 0 0 0 0-19.6Zm-1.7 6 5.5 3.3a.6.6 0 0 1 0 1l-5.5 3.3a.6.6 0 0 1-.9-.5V8.7a.6.6 0 0 1 .9-.5Z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
   </div>
  </div>
 </section>
