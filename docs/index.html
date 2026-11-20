@@ -182,7 +182,7 @@
 @media (hover:hover){.grup:hover{transform:translateY(-8px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(120,86,24,.14),0 30px 54px -24px rgba(56,36,4,.7)}}
 @media (hover:hover){.grup:hover img{transform:scale(1.07)}}
 /* ===== Dijital tur ===== */
-.tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(90px,14vh,160px)}
+.tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(64px,9vh,112px)}
 .tur-bolum h2{font-size:clamp(36px,4.4vw,66px);line-height:1.05;margin:18px 0 22px}
 .tur-bolum .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.8);max-width:50ch}
 .tur-bolum .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
@@ -204,7 +204,7 @@
    Bölüm ortalanıp genişliği sınırlandı; geniş ekranda dağılmıyor. */
 .ziyaret{display:grid;grid-template-columns:minmax(168px,.76fr) minmax(0,1.78fr) minmax(296px,.9fr);
  max-width:1468px;margin-inline:auto;padding-inline:24px;gap:34px 46px;align-items:center;
- padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+ padding-block:clamp(48px,7vh,84px);border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:1180px){.ziyaret{grid-template-columns:1fr;gap:26px}
 /* Tek sütunda her şey ortada: puan, yorum kartı ve düğmeler aynı eksende */
 .ziyaret .puan{align-items:center;text-align:center}
@@ -221,15 +221,17 @@
 /* Google yorumları. Bütün yorumlar aynı ızgara gözünde üst üste durur:
    kutu en uzun yoruma göre yüksekliğini alır, böylece yorum değişirken
    sayfa hiç kaymaz. Yalnızca görünen yorumun opaklığı değişir. */
-.yorumlar{display:flex;flex-direction:column;gap:16px;min-width:0}
-.yorum-kart{position:relative;display:flex;flex-direction:column;justify-content:center;
- padding:38px 36px 30px;border-radius:24px;border:1px solid rgba(201,162,75,.26);
- background:linear-gradient(158deg,rgba(255,255,255,.075),rgba(255,255,255,.02) 58%,rgba(201,162,75,.05));
- box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 24px 50px -34px rgba(0,0,0,.9)}
+.yorumlar{display:flex;flex-direction:column;gap:14px;min-width:0}
+.yorum-bas{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap}
+.yorum-bas h2{font-size:clamp(24px,2.1vw,32px);line-height:1.15}
+.yorum-bas .yorum-yap{min-height:44px;padding:10px 18px;border-radius:999px;font-size:14px;gap:8px}
+.yorum-bas .yorum-yap svg{width:16px;height:16px}
+.yorum-kart{position:relative;display:flex;flex-direction:column;justify-content:flex-start;
+ padding:30px 4px 6px;border:0;background:none;box-shadow:none}
 /* WhatsApp durumu gibi: her yoruma bir çizgi; çizgi dolunca sonraki yorum gelir.
    Kartın sağına dokunmak ileri, soluna dokunmak geri götürür; basılı tutmak durdurur. */
 .yorum-kart{cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation}
-.yorum-bar{position:absolute;top:13px;left:20px;right:20px;display:flex;gap:3px;pointer-events:none}
+.yorum-bar{position:absolute;top:8px;left:4px;right:4px;display:flex;gap:3px;pointer-events:none}
 .yorum-bar i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
 .yorum-bar i::after{content:"";display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--altin),var(--altin2))}
 .yorum-bar i.dolu::after{width:100%}
@@ -237,10 +239,12 @@
 .yorumlar.durdu .yorum-bar i.aktif::after{animation-play-state:paused}
 @keyframes yorumDol{from{width:0}to{width:100%}}
 .yorum-yigin{display:grid}
-.yorum-yigin>figure{grid-area:1/1;margin:0;display:flex;flex-direction:column;gap:18px;
- opacity:0;transform:translateY(9px);pointer-events:none;
- transition:opacity .42s cubic-bezier(.2,.8,.2,1),transform .42s cubic-bezier(.2,.8,.2,1)}
-.yorum-yigin>figure.acik{opacity:1;transform:none;pointer-events:auto}
+.yorum-yigin>figure{grid-area:1/1;margin:0;display:flex;flex-direction:column;gap:16px;
+ opacity:0;transform:translateY(8px);pointer-events:none;visibility:hidden;
+ transition:opacity .22s ease,transform .22s ease,visibility 0s .22s}
+.yorum-yigin>figure.acik{opacity:1;transform:none;pointer-events:auto;visibility:visible;
+ transition:opacity .45s cubic-bezier(.2,.8,.2,1) .22s,transform .45s cubic-bezier(.2,.8,.2,1) .22s,visibility 0s .22s}
+.yorum-yigin .yorum-kisi{order:-1}
 /* Alıntı olduğu belli olsun: ince, italik ve tırnak içinde */
 .yorum-yigin blockquote{margin:0;font-size:17px;line-height:1.72;font-style:italic;font-weight:400;
  color:rgba(238,234,224,.86);max-width:64ch;quotes:'\201C' '\201D'}
@@ -267,11 +271,13 @@
  text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
 @media (hover:hover){.yorum-tum:hover{color:#fff}}
 @media(max-width:720px){
-.yorum-kart{padding:32px 22px 22px;border-radius:19px}
-.yorum-yigin>figure{gap:15px}
+.yorum-kart{padding:26px 0 4px}
+.yorum-yigin>figure{gap:13px}
+.yorum-bas{justify-content:center;text-align:center}
+.yorum-bas h2{font-size:23px;width:100%}
 .yorum-yigin blockquote{font-size:15.5px;line-height:1.7}
 .yorum-kisi img{width:42px;height:42px}
-.yorum-bar{top:11px;left:14px;right:14px;gap:2.5px}}
+.yorum-bar{top:6px;left:0;right:0;gap:2.5px}}
 @media(prefers-reduced-motion:reduce){
 .yorum-yigin>figure{transition:none}
 .yorum-bar i.aktif::after{animation:none;width:100%}}
@@ -286,6 +292,7 @@
 .ziyaret .dugmeler .btn{width:100%;min-height:54px;padding:15px 18px;gap:10px;border-radius:17px;
  font:500 15.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.004em}
 .ziyaret .dugmeler .btn .sure{margin-left:2px;border-radius:8px}
+.ziyaret .dugmeler .btn{white-space:nowrap}
 @media(max-width:1100px){
 .grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
 .grup{aspect-ratio:4/3.6}}
@@ -448,6 +455,10 @@
   <p><span class="sr">5 üzerinden 5,0 puan. </span>Google'da <b>124</b> yorum</p>
  </div>
  <div class="yorumlar" data-gel aria-roledescription="carousel" aria-label="Google yorumları">
+  <div class="yorum-bas">
+   <h2>Yorumlarınız bizim için <span class="metal metal-yazi" data-isik>değerli.</span></h2>
+   <a class="btn sivi yorum-yap" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9Z"/></svg>Yorum yapın</a>
+  </div>
   <div class="yorum-kart">
    <div class="yorum-bar" id="yorumBar" aria-hidden="true"></div>
    <div class="yorum-yigin" id="yorumYigin"></div>
@@ -465,8 +476,7 @@
   <div class="dugmeler">
    <a class="btn sivi wa genis" id="ziyaret-wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
    <a class="btn sivi" href="tel:+905551044040"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.3a1.8 1.8 0 0 1 2.5.7l1.5 2.7a1.8 1.8 0 0 1-.4 2.2l-1 .9a9.7 9.7 0 0 0 4.3 4.3l.9-1a1.8 1.8 0 0 1 2.2-.4l2.7 1.5a1.8 1.8 0 0 1 .7 2.5l-.9 1.5a2.8 2.8 0 0 1-3.1 1.3C10.3 19.2 4.4 13.3 3 7.3a2.8 2.8 0 0 1 1.3-3.1Z"/></svg>Arayın</a>
-   <a class="btn sivi" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" aria-label="Google'da yorum yapın"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6L3.3 9.4l6-.9Z"/></svg>Yorum yapın</a>
-   <button class="btn sivi genis" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.2a9.8 9.8 0 1 0 0 19.6 9.8 9.8 0 0 0 0-19.6Zm-1.7 6 5.5 3.3a.6.6 0 0 1 0 1l-5.5 3.3a.6.6 0 0 1-.9-.5V8.7a.6.6 0 0 1 .9-.5Z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
+   <button class="btn sivi" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.2a9.8 9.8 0 1 0 0 19.6 9.8 9.8 0 0 0 0-19.6Zm-1.7 6 5.5 3.3a.6.6 0 0 1 0 1l-5.5 3.3a.6.6 0 0 1-.9-.5V8.7a.6.6 0 0 1 .9-.5Z"/></svg>Tanıtım filmi</button>
   </div>
  </div>
 </section>
@@ -590,7 +600,7 @@ akisKur();
 (function(){
  const kok=document.querySelector('.yorumlar'),yigin=document.getElementById('yorumYigin'),bar=document.getElementById('yorumBar');
  if(!kok||!yigin||typeof YORUMLAR==='undefined'||!YORUMLAR.length)return;
- const SURE=7000, YOL='m12 2.6 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-1z';
+ const SURE=5000, YOL='m12 2.6 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-1z';
  const kac=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const yildizlar=n=>{let h='';for(let k=1;k<=5;k++)
    h+='<svg class="yld'+(k<=n?'':' bos')+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+YOL+'"/></svg>';
@@ -613,8 +623,10 @@ akisKur();
  const cizgiKur=()=>cizgiler.forEach((c,n)=>{
   c.classList.remove('aktif');c.classList.toggle('dolu',n<i);
   if(n===i){void c.offsetWidth;c.classList.add('aktif')}});
+ /* Kısa yorum çabuk, uzun yorum okunacak kadar kalır */
+ const sure=n=>Math.max(3500,Math.min(6500,1600+YORUMLAR[n].metin.length*26));
  const git=n=>{kartlar[i].classList.remove('acik');i=(n+kartlar.length)%kartlar.length;
-  kartlar[i].classList.add('acik');cizgiKur()};
+  kartlar[i].classList.add('acik');kok.style.setProperty('--yorum-sure',sure(i)+'ms');cizgiKur()};
  const durum=()=>kok.classList.toggle('durdu',az||fare||basili||!gorunur||document.hidden);
  cizgiler.forEach(c=>c.addEventListener('animationend',()=>{if(c.classList.contains('aktif'))git(i+1)}));
  document.getElementById('yorumIleri').onclick=()=>git(i+1);
@@ -634,7 +646,7 @@ akisKur();
   kok.addEventListener('pointerleave',()=>{fare=false;durum()})}
  document.addEventListener('visibilitychange',durum);
  new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;durum()},{rootMargin:'0px'}).observe(kok);
- durum();cizgiKur();
+ kok.style.setProperty('--yorum-sure',sure(0)+'ms');durum();cizgiKur();
 })();
 </script>
 </body>
