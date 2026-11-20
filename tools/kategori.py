@@ -2,10 +2,11 @@
 """Ürünü sitedeki sekiz başlıktan birine yerleştirir.
 
 Kategoriler yalnızca bu sitenin katalogu içindir; Odoo'daki kayıtlara
-dokunulmaz. Karar sırayla verilir: önce Odoo'dan gelen alt kategori metni
-anlamlıysa ondan, sonra ürün adındaki anahtar kelimelerden. Kural listesinin
-SIRASI önemlidir; üstteki kural önce bakar (ör. "İhram Sabunu" bakım ürünüdür,
-kıyafet değil; "Kokulu Tesbih" tesbihtir, koku değil).
+dokunulmaz. Kararı ÜRÜN ADI verir. Odoo'daki alt kategori metni yalnızca ad
+hiçbir kurala uymadığında, son çare olarak kullanılır: oradaki kayıtlar
+güvenilir değil (ör. "Akik Takke" Odoo'da hurma alt grubunda duruyor).
+Kural listesinin SIRASI önemlidir; üstteki kural önce bakar (ör. "İhram
+Sabunu" bakım ürünüdür, kıyafet değil; "Kokulu Tesbih" tesbihtir, koku değil).
 
 Başlık adları site.js içindeki KATEGORILER listesiyle birebir aynı olmalıdır.
 """
@@ -47,8 +48,15 @@ ALT_KURAL = [
 
 # Ürün adı için — sıra önemlidir, üstteki kural önce bakar
 AD_KURAL = [
+    # Hediyelik eşya adları yiyecek ve yolculuk kurallarından ÖNCE bakar:
+    # "Zemzem Takımı" bir hediyelik takımdır, zemzemin kendisi değil.
+    (HEDIYE, ("zemzem takimi", "surahi", "saat", "biblo", "maket", "dunya", "cerceve",
+              "sadaka", "anahtarlik", "bileklik", "kalemlik", "muska", "promosyon",
+              "hediyelik", "stant", "sarkacli",
+              # yolculuk çantasından çok hediyelik sayılanlar
+              "termos", "bardak", "bellek", "kablo", "sarj", "sarz", "ayna")),
     (YIYECEK, ("hurma", "zemzem", "acve", "safavi", "sugay", "mebrum", "hudri", "sukkari",
-               "biskuvi", "lokum", "cikolata", "kahve", "helva", "tahin", "surahi",
+               "biskuvi", "lokum", "cikolata", "kahve", "helva", "tahin",
                "kuruyemis", "recel", "fistik", "kurabiye")),
     (SECCADE, ("seccade", "namazlik", "sonil", "medine hali", "ipek hali", "halisi")),
     (TESBIH, ("tesbih", "tespih", "zikirmatik", "kuka", "kehribar", "misbaha")),
@@ -67,9 +75,8 @@ AD_KURAL = [
                "sapka", "tulum")),
     (KOKU, ("kolonya", "kolanya", "esans", "parfum", "koku", "difuser", "difusor",
             "buhurdanlik", "oil", "aksa", "silindir", "hatira")),
-    (YOLCULUK, ("termos", "bardak", "bellek", "kablo", "sarz", "sarj", "cuzdan",
-                "boyunluk", "canta", "valiz", "pusula", "matara", "kilit", "yastik",
-                "maske", "sirt", "poset")),
+    (YOLCULUK, ("cuzdan", "boyunluk", "canta", "valiz", "pusula", "matara", "kilit",
+                "yastik", "maske", "sirt", "poset")),
     (HEDIYE, ()),
 ]
 
@@ -94,13 +101,20 @@ def _eslestir(metin, kurallar):
 
 
 def kategori(ad, altkat=""):
-    """Alt kategori anlamlıysa ondan, değilse ürün adından karar verir."""
+    """Önce ürün adından karar verir; ad hiçbir kurala uymazsa alt kategoriye bakar."""
+    adli = sadelestir(ad)
+    for baslik, anahtarlar in AD_KURAL:
+        if not anahtarlar:
+            break                      # son satır (yakalanmayanlar) burada devreye girmesin
+        for a in anahtarlar:
+            if a in set(re.findall(r"[a-z0-9']+", adli)) or (len(a) >= 4 and a in adli):
+                return baslik
     alt = sadelestir(altkat)
     if alt and alt != sadelestir(ANA):
         bulunan = _eslestir(alt, ALT_KURAL)
         if bulunan:
             return bulunan
-    return _eslestir(sadelestir(ad), AD_KURAL) or HEDIYE
+    return HEDIYE
 
 
 BIRIM = {"ML", "CC", "GR", "KG", "LT", "MT", "CM", "MM", "TL", "DNC", "XL", "XXL", "3D", "USB", "LED", "CD"}

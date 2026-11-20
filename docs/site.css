@@ -177,8 +177,9 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 .nav a,.btn,.toast,.cekmece .pan,.cekmece .perde,.wa-sabit,.film-sabit,.film-kat video{transition:none}
 .film-sabit::after{animation:none}
 .sepetbtn.zipla{animation:none}}
-.nav a.ev{gap:7px}
-.nav a.ev svg{flex:none}
+/* Ev ikonu ile 'Ana Sayfa' yazısı aynı hizada dursun (satır tabanına oturmasın) */
+.nav a.ev{display:inline-flex;align-items:center;gap:7px}
+.nav a.ev svg{flex:none;display:block}
 
 /* ===== Mobil kabuk: kaydırırken çekilir, yukarı kaydırınca döner =====
    Telefonda menü, WhatsApp düğmesi ve üst logo okunan metnin üstünü kapatmasın diye

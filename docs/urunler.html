@@ -178,24 +178,16 @@
 @keyframes buyutKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}/* Telefonda kategori/sekme şeridi yukarıda kalır (sayfayla birlikte yukarı çıkar);
    yalnızca arama kutusu kullanıcıyla birlikte aşağı iner. */
 @media(max-width:720px){
-.arama-yer{order:-1;width:100%;min-height:46px;display:flex;justify-content:flex-end}
-/* Arama kutusu: sayfa başında tüm genişlikte durur. Kaydırınca ekranın sağ
-   üstüne tutunup bir damla gibi küçülür; dokununca yine genişler, kaydırmaya
-   devam edilince kendiliğinden küçülür. */
-.arama{flex:none;width:100%;margin-left:0}
+.arama-yer{order:-1;width:100%;min-height:46px;display:flex}
+/* Arama kutusu satır olarak kalır; kaydırınca sayfayla birlikte yukarı çıkar.
+   (Önceden ekranın sağ üstüne tutunup yüzüyordu; kategori şeridinin ve
+   kartların üstüne bindiği için bırakıldı.) */
+.arama{flex:1;width:100%;margin-left:0}
 .arama input{flex:1;min-width:0;width:auto}
-body.ara-sabit .arama{position:fixed;left:auto;right:12px;width:152px;z-index:30;
- top:calc(10px + env(safe-area-inset-top,0px));
- background:rgba(8,16,36,.93);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
- border-color:rgba(201,162,75,.35);box-shadow:0 14px 34px -18px rgba(0,0,0,.85);
- transition:width .42s cubic-bezier(.22,.9,.25,1),box-shadow .3s;
- animation:araKucul .42s cubic-bezier(.22,.9,.25,1)}
-body.ara-sabit .arama.acik{width:calc(100vw - 24px);box-shadow:0 18px 44px -18px rgba(0,0,0,.9)}
-@keyframes araKucul{from{width:calc(100vw - 24px)}to{width:152px}}
-@media(prefers-reduced-motion:reduce){
- body.ara-sabit .arama{animation:none;transition:none}}
-.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
-.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+/* Kategori şeridi tepede kalsın: arama satırı yukarı çıkar, çipler yapışır */
+.filtre-dis{position:sticky;top:calc(-1 * var(--kay,0px));margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+.filtre-dis.yapisti{background:rgba(6,13,31,.9);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
+.filtre-dis .filtre{padding-block:10px 12px}
 }
 @keyframes araIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
 </style>
@@ -301,7 +293,7 @@ function kartHtml(u){
  else zincir.push(tam.replace(/\.webp$/,'.jpg'));
  return `<article class="kart" data-id="${u.id}">
   <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
-  <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
+  <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
   <div class="eylem"><button class="btn altin ekle" type="button" aria-label="${u.ad}, çantaya ekle">Çantaya ekle</button>
   <div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
 }
@@ -372,7 +364,8 @@ function byCiz(){
  document.getElementById('buyutAd').textContent=u.ad;
  const kodE=document.getElementById('buyutKod'),acikE=document.getElementById('buyutAcik');
  kodE.textContent=u.kod?('Ürün kodu: '+u.kod):''; kodE.hidden=!u.kod;
- acikE.textContent=u.acik||''; acikE.hidden=!u.acik;
+ /* Odoo alt grup adları ürün açıklaması değil, yanıltıcı oluyordu; gösterilmiyor */
+ acikE.textContent=''; acikE.hidden=true;
  document.getElementById('buyutFiyat').textContent=TL(u.fiyat);
  const tek=byListe.length<2;
  document.getElementById('buyutGeri').hidden=tek;
@@ -446,42 +439,8 @@ DAHA.querySelector('button').addEventListener('click',dahaCiz);
 /* Düğmeye yaklaşınca sıradaki grup kendiliğinden yüklenir */
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&!DAHA.hidden)dahaCiz()},{rootMargin:'600px 0px'}).observe(DAHA);
 filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();
-/* Arama kutusu kendi yerinden yukarı çıkınca ekranın üstüne tutunur ve
-   kullanıcıyla birlikte aşağı iner; kategori şeridi yukarıda kalır. */
-(function(){
-  const yer=document.querySelector('.arama-yer');if(!yer)return;
-  const bak=()=>{
-    if(innerWidth>720){document.body.classList.remove('ara-sabit');return}
-    const r=yer.getBoundingClientRect();
-    document.body.classList.toggle('ara-sabit', r.top < (10 + 2));
-  };
-  addEventListener('scroll',bak,{passive:true});addEventListener('resize',bak);bak();
-})();
-/* Küçülmüş arama kutusuna dokununca genişler; boşken odaktan çıkınca ya da
-   kaydırmaya devam edilince yeniden küçülür. */
-(function(){
-  const kutu=document.querySelector('.arama'),gir=document.getElementById('ara');
-  if(!kutu||!gir)return;
-  const ac=()=>{if(innerWidth<=720)kutu.classList.add('acik')};
-  const kapa=()=>{if(!gir.value.trim())kutu.classList.remove('acik')};
-  /* Küçük hâline dokunulduğunda kutu açılır ve imleç kutuya girer */
-  kutu.addEventListener('pointerdown',e=>{
-    if(e.target.closest('button'))return;
-    ac();
-    if(document.activeElement!==gir)setTimeout(()=>gir.focus(),10);
-  });
-  gir.addEventListener('focus',ac);
-  gir.addEventListener('blur',()=>setTimeout(kapa,160));
-  let sonY=scrollY;
-  addEventListener('scroll',()=>{
-    if(Math.abs(scrollY-sonY)<40)return;sonY=scrollY;
-    /* Yazarken kapanmaz: iOS klavyeyi açarken sayfayı kaydırıyor, bu da
-       kutuyu hemen kapatıyordu. Yalnızca odak dışındayken küçülür. */
-    if(document.activeElement===gir)return;
-    if(kutu.classList.contains('acik'))kapa();
-  },{passive:true});
-  addEventListener('resize',()=>{if(innerWidth>720)kutu.classList.remove('acik')});
-})();
+/* Not: arama kutusu artık ekranın üstünde yüzmüyor; kategori şeridi yapışıyor,
+   arama satırı sayfayla birlikte yukarı çıkıyor. */
 if(sec!=='Tümü')requestAnimationFrame(()=>filtreyeGit());
 </script>
 </body>

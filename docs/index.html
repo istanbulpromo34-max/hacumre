@@ -99,18 +99,31 @@
 .gruplar-bas h2{font-size:clamp(42px,6vw,96px);line-height:1;margin-top:14px}
 .gruplar-bas p{margin:16px auto 0;font-size:17px;max-width:44ch;color:#1d2440}
 .grup-izgara{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-.grup{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4;border-radius:22px;overflow:hidden;color:var(--fil);background:var(--lac);box-shadow:0 30px 60px -30px rgba(40,25,5,.6);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+/* Kartlar buzlu cam bir pervaz içinde duruyor: altın zemin üzerinde açık tonlu
+   fotoğraflar da nesne gibi öne çıksın diye. */
+.grup{display:block;padding:7px;border-radius:27px;color:var(--fil);
+ background:linear-gradient(157deg,rgba(255,255,255,.46),rgba(255,255,255,.15) 52%,rgba(255,255,255,.3));
+ backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
+ border:1px solid rgba(255,255,255,.55);
+ box-shadow:0 1px 0 rgba(255,255,255,.85) inset,0 0 0 1px rgba(120,86,24,.1),0 22px 44px -24px rgba(56,36,4,.62);
+ transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s}
+.grup .gorsel{position:relative;display:block;aspect-ratio:3/4;border-radius:21px;overflow:hidden;background:var(--lac);
+ box-shadow:0 1px 3px rgba(20,12,0,.3)}
 .grup picture{position:absolute;inset:0}
 .grup img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-.grup::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,13,31,.06) 14%,rgba(6,13,31,.68) 46%,rgba(6,13,31,.96) 82%)}
-.grup .ic{position:relative;z-index:1;padding:22px}
-.grup .no{font-size:12px;letter-spacing:.2em;color:var(--altin2)}
-.grup h3{font-size:clamp(22px,1.8vw,28px);line-height:1.15;margin:8px 0 8px;min-height:2.3em;display:flex;align-items:flex-end}
-.grup p{font-size:14px;line-height:1.55;opacity:.82}
-.grup .ok{display:inline-flex;margin-top:14px;font-size:14px;color:var(--altin2);gap:8px;transition:gap .3s}
-@media (hover:hover){.grup:hover{transform:translateY(-8px)}}
+/* Karartma yalnız yazının oturduğu alt şeritte; fotoğrafın gövdesi açık kalıyor */
+.grup .gorsel::after{content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(180deg,transparent 52%,rgba(6,13,31,.42) 74%,rgba(6,13,31,.82))}
+.grup .ic{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:15px 15px 14px;display:grid;gap:11px;justify-items:start}
+.grup h3{font-size:clamp(19px,1.5vw,25px);line-height:1.16;margin:0;text-shadow:0 1px 10px rgba(6,13,31,.5)}
+.grup .ok{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;
+ font-size:12.5px;font-weight:500;letter-spacing:.01em;color:#f7f0e1;
+ background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
+ backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:gap .3s,background .3s}
+.grup .ok svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover){.grup:hover{transform:translateY(-8px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(120,86,24,.14),0 30px 54px -24px rgba(56,36,4,.7)}}
 @media (hover:hover){.grup:hover img{transform:scale(1.07)}}
-@media (hover:hover){.grup:hover .ok{gap:14px}}
+@media (hover:hover){.grup:hover .ok{gap:11px;background:rgba(255,255,255,.22)}}
 /* ===== Dijital tur ===== */
 .tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(90px,14vh,160px)}
 .tur-bolum h2{font-size:clamp(36px,4.4vw,66px);line-height:1.05;margin:18px 0 22px}
@@ -125,7 +138,31 @@
 .adimlar a::before{counter-increment:a;content:counter(a,decimal-leading-zero);font:600 12px 'Hanken Grotesk';letter-spacing:.06em;color:var(--altin2);flex:none;width:20px}
 @media (hover:hover){.adimlar a:hover{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.4)}}
 /* ===== Ziyaret ===== */
-.ziyaret{display:flex;flex-wrap:wrap;gap:30px 60px;align-items:center;justify-content:space-between;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+/* Masaüstünde üç sütun: solda puan ve adres, ortada harita, sağda düğmeler.
+   Önceden ortadaki geniş alan boş kalıyordu. */
+.ziyaret{display:grid;grid-template-columns:minmax(220px,.85fr) minmax(0,1.3fr) minmax(290px,.85fr);
+ gap:34px 48px;align-items:center;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
+@media(max-width:1080px){.ziyaret{grid-template-columns:1fr;gap:26px}
+.ziyaret-harita{height:300px;max-height:none}}
+.ziyaret-harita{position:relative;border-radius:22px;overflow:hidden;min-height:300px;height:100%;
+ max-height:380px;border:1px solid rgba(201,162,75,.28);background:#e9e5dc}
+.ziyaret-harita iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.2) contrast(1.03)}
+.ziyaret-harita .harita-kart{position:absolute;left:9px;right:9px;bottom:9px;z-index:2;
+ display:grid;grid-template-columns:48px 1fr;gap:9px 11px;align-items:center;padding:10px;
+ border-radius:16px;background:rgba(8,16,36,.94);border:1px solid rgba(201,162,75,.38);
+ backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
+ box-shadow:0 20px 44px -22px rgba(0,0,0,.85);color:#fff}
+.ziyaret-harita .harita-kart>img{width:48px;height:48px;border-radius:12px;object-fit:cover}
+.ziyaret-harita .hk-bilgi{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ziyaret-harita .hk-bilgi strong{font-family:'Marcellus',serif;font-weight:400;font-size:15.5px;line-height:1.25}
+.ziyaret-harita .hk-puan{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(234,230,220,.78)}
+.ziyaret-harita .hk-puan b{color:var(--altin2);font-weight:600}
+.ziyaret-harita .hk-yildiz{color:var(--altin2);letter-spacing:1px;font-size:11px}
+.ziyaret-harita .hk-puan i{font-style:normal}
+.ziyaret-harita .hk-adr{font-size:12px;line-height:1.4;color:rgba(234,230,220,.66)}
+.ziyaret-harita .hk-yol{grid-column:1/-1;min-height:42px;display:flex;align-items:center;justify-content:center;
+ border-radius:999px;background:var(--altin);color:#1a1205;font:600 13.5px 'Hanken Grotesk',sans-serif}
+@media (hover:hover){.ziyaret-harita .hk-yol:hover{filter:brightness(1.06)}}
 .puan{display:flex;align-items:center;gap:22px}
 .puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(70px,8vw,120px);line-height:1}
 .puan .yildiz{color:var(--altin2);letter-spacing:4px;font-size:18px}
@@ -181,13 +218,16 @@
 .serit .akis img{width:11px}}
 @media(max-width:560px){
 .grup-izgara{grid-template-columns:1fr 1fr;gap:10px}
-.grup{aspect-ratio:3/4.2}
-.grup .ic{padding:14px}
-.grup h3{font-size:19px}
-.grup p,.grup .ok{display:none}
+.grup{padding:5px;border-radius:21px}
+.grup .gorsel{aspect-ratio:3/4.2;border-radius:16px}
+.grup .ic{padding:12px;gap:9px}
+.grup h3{font-size:18px}
+.grup .ok{padding:6px 11px;font-size:11.5px}
 .guven{gap:10px 20px}
 .guven b{font-size:20px}
-.ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}}
+.ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}
+.ziyaret-harita{min-height:0;height:260px;max-height:none;order:2}
+.ziyaret-sag{order:3}}
 @media(max-width:380px){
 .adimlar{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
@@ -289,6 +329,18 @@
 <!-- ZİYARET -->
 <section class="ziyaret kap" aria-label="Mağazamıza ulaşın">
  <div class="puan" data-gel><b class="metal metal-yazi" data-isik>5,0</b><div><div class="yildiz" aria-hidden="true">★★★★★</div><p><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 120+ yorum</p></div></div>
+ <div class="ziyaret-harita" data-gel>
+  <iframe title="İstanbul Hac Umre Hediyelik'in haritadaki konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d29.0910215!3d41.0242974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac952952a7ffb%3A0x423d712d0ee38821!2s%C4%B0stanbul%20Hac-Umre%20Malzemeleri%20ve%20Hediyelik!5e0!3m2!1str!2str!4v1763450000000!5m2!1str!2str"></iframe>
+  <div class="harita-kart">
+   <img src="assets/hero/magaza-m.webp" alt="" width="48" height="48" loading="lazy" decoding="async">
+   <div class="hk-bilgi">
+    <strong>İstanbul Hac Umre Hediyelik</strong>
+    <span class="hk-puan"><b>5,0</b><span class="hk-yildiz" aria-hidden="true">★★★★★</span><i>120+ yorum</i></span>
+    <span class="hk-adr">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A · Ümraniye</span>
+   </div>
+   <a class="hk-yol" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a>
+  </div>
+ </div>
  <div class="ziyaret-sag" data-gel>
   <p class="adres">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul<br><span>Her gün 09:00–20:00 açığız.</span></p>
   <div class="dugmeler">
@@ -345,7 +397,7 @@ kabuk('ana');
 })();
 document.getElementById('ziyaret-wa').insertAdjacentHTML('afterbegin',WA_SVG);
 /* Ürün grupları */
-document.getElementById('grup-izgara').innerHTML=KATEGORILER.map((k,i)=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><picture><source media="(max-width:720px)" srcset="${mini(resim(k.gorsel))}"><img src="${kucuk(resim(k.gorsel))}" alt="" loading="lazy" decoding="async" width="880" height="1168" data-yedekler="${resim(k.gorsel)}" onerror="gorselYedek(this)"></picture><div class="ic"><span class="no">0${i+1}</span><h3>${k.ad}</h3><p>${k.acik}</p><span class="ok">İncele <span aria-hidden="true">→</span></span></div></a>`).join('');
+document.getElementById('grup-izgara').innerHTML=KATEGORILER.map(k=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><div class="gorsel"><picture><source media="(max-width:720px)" srcset="${mini(resim(k.gorsel))}"><img src="${kucuk(resim(k.gorsel))}" alt="" loading="lazy" decoding="async" width="880" height="1168" data-yedekler="${resim(k.gorsel)}" onerror="gorselYedek(this)"></picture><div class="ic"><h3>${k.ad}</h3><span class="ok">İncele <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></span></div></div></a>`).join('');
 document.querySelectorAll('#grup-izgara [data-gel]').forEach((e,i)=>e.style.transitionDelay=(i*.08)+'s');
 akisKur();
 /* Altın şerit: kaydırdıkça döner, büyür ve sayfa altın zemine dönüşür */

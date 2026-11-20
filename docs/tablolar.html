@@ -314,10 +314,8 @@ function waMetin(e){
    için kendi sekmesinde durur, diğer her şey "Hat Tablo" altında toplanır. */
 const YAZMA = 'Orijinal Hat Eserleri';
 const SEKMELER = [
-  { k: 'hat', ad: 'Hat Tablo', kisa: 'Hat Tablo',
-    not: 'Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, lazer kesim ve masaüstü seçenekleriyle.' },
-  { k: 'yazma', ad: 'El Yazması Orijinal Eserler', kisa: 'El Yazması',
-    not: 'Hattatın elinden çıkmış orijinal eserler. Her biri tek tek yazıldığı için ölçüsüne ve işçiliğine göre fiyatlanır.' }
+  { k: 'hat', ad: 'Hat Tablo', kisa: 'Hat Tablo', not: '' },
+  { k: 'yazma', ad: 'El Yazması Orijinal Eserler', kisa: 'El Yazması', not: '' }
 ];
 const sekmedekiler = k => ESERLER.filter(e => k === 'yazma' ? e.kat === YAZMA : e.kat !== YAZMA);
 
@@ -351,13 +349,10 @@ function isigiTasi(){
   SISIK.style.transform = 'translateX(' + b.offsetLeft + 'px)';
 }
 function filtreCiz(){
-  /* El yazması tek bir grup; orada kategori şeridine gerek yok. */
-  if (sekme === 'yazma'){ F.hidden = true; F.innerHTML = ''; return; }
-  F.hidden = false;
-  F.innerHTML = KATLAR.filter(k => k.ad !== YAZMA).map(k =>
-    '<button type="button" data-k="' + kacis(k.ad) + '" aria-pressed="' + (sec === k.ad) + '"' +
-    (sec === k.ad ? ' title="Seçimi kaldırmak için tekrar dokunun"' : '') + '>' +
-    kacis(k.ad) + '<small>' + k.adet + '</small></button>').join('');
+  /* Alt gruplar kaldırıldı: sayfada yalnız iki sekme var — Hat Tablo ve
+     El Yazması Orijinal Eserler. Eser aramak için arama kutusu kullanılır. */
+  sec = '';
+  F.hidden = true; F.innerHTML = '';
   if (typeof filtreTumDurum === 'function') filtreTumDurum();
 }
 /* Telefonda alt gruplar yapışkan şeritte değil, alttan açılan panelde durur.

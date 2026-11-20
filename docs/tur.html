@@ -223,7 +223,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .kumaslar{padding:4vh 0 18vh}
 .kumas-izgara{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:6vh}
 .kumas{perspective:1400px;height:440px;cursor:pointer;border:0;padding:0;background:none;text-align:left;font:inherit;color:inherit}
-.kumas-ic{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.kumas-ic{position:relative;width:100%;height:100%;transition:transform .62s cubic-bezier(.33,.9,.3,1);transform-style:preserve-3d;will-change:transform}
 .kumas.acik .kumas-ic{transform:rotateY(180deg)}
 .yuz,.arka{position:absolute;inset:0;border-radius:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 /* iOS Safari'de arka yüz gizleme, yüzlerde "overflow:hidden" varken çalışmıyor
@@ -231,7 +231,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
    kaldırıldı (köşeleri resmin ve kaplamanın kendisi yuvarlatıyor), ayrıca yüzler
    kart tam yan döndüğü anda görünürlük değiştiriyor. Görünürlük, opaklığın aksine
    üç boyutlu yerleşimi bozmuyor. */
-.yuz,.arka{transition:visibility 0s .45s}
+.yuz,.arka{transition:visibility 0s .31s}
 .arka{visibility:hidden}
 .kumas.acik .yuz{visibility:hidden}
 .kumas.acik .arka{visibility:visible}
@@ -538,24 +538,8 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 .durak-liste button{min-height:52px}
 /* Haritanın üstünde işletme kartı: Google'ın yer işaretine dokunulmuş hâlini
    gömme bağlantısıyla sabitlemek mümkün olmadığı için kart siteye ait. */
-.harita-kart{position:absolute;left:10px;right:10px;bottom:10px;z-index:2;
- display:grid;grid-template-columns:56px 1fr;gap:11px 12px;align-items:center;padding:12px;
- border-radius:18px;background:rgba(8,16,36,.94);border:1px solid rgba(201,162,75,.38);
- backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
- box-shadow:0 20px 44px -22px rgba(0,0,0,.85);color:#fff}
-.harita-kart>img{width:56px;height:56px;border-radius:13px;object-fit:cover}
-.hk-bilgi{min-width:0;display:flex;flex-direction:column;gap:3px}
-.hk-bilgi strong{font-family:'Marcellus',serif;font-weight:400;font-size:16.5px;line-height:1.25}
-.hk-puan{display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(234,230,220,.78)}
-.hk-puan b{color:var(--altin2,#e6c77a);font-weight:600}
-.hk-yildiz{color:#e6c77a;letter-spacing:1px;font-size:12px}
-.hk-puan i{font-style:normal}
-.hk-adr{font-size:12.5px;line-height:1.45;color:rgba(234,230,220,.66)}
-.hk-yol{grid-column:1/-1;min-height:44px;display:flex;align-items:center;justify-content:center;
+/* Harita üstündeki işletme kartı kaldırıldı (turda gereksizdi). */
  border-radius:999px;background:var(--altin,#c9a24b);color:#1a1205;font:600 14px 'Hanken Grotesk',sans-serif}
-.hk-yol:active{transform:scale(.97)}
-@media (hover:hover){.hk-yol:hover{filter:brightness(1.06)}}
-@media(max-width:340px){.hk-adr{display:none}}
 </style>
 </head>
 <body>
@@ -1023,15 +1007,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       </div>
     </div>
     <div class="harita"><iframe title="İstanbul Hac Umre Hediyelik harita konumu" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d29.0910215!3d41.0242974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac952952a7ffb%3A0x423d712d0ee38821!2s%C4%B0stanbul%20Hac-Umre%20Malzemeleri%20ve%20Hediyelik!5e0!3m2!1str!2str!4v1763450000000!5m2!1str!2str"></iframe>
- <div class="harita-kart">
-  <img src="assets/hero/magaza-m.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
-  <div class="hk-bilgi">
-   <strong>İstanbul Hac Umre Hediyelik</strong>
-   <span class="hk-puan"><b>5,0</b><span class="hk-yildiz" aria-hidden="true">★★★★★</span><i>120+ yorum</i></span>
-   <span class="hk-adr">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A · Ümraniye</span>
-  </div>
-  <a class="hk-yol" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener">Yol tarifi alın</a>
- </div></div>
+/div>
   </div>
 </section>
 
@@ -1125,7 +1101,17 @@ document.getElementById('eksik-btn').addEventListener('click',()=>{
 
 
 /* ===== Kumaş kartları ===== */
-document.querySelectorAll('.kumas').forEach(k=>k.addEventListener('click',()=>{k.classList.toggle('acik');k.setAttribute('aria-pressed',k.classList.contains('acik'))}));
+/* Kart dönerken gelen ikinci dokunuş yok sayılır: eskiden dönüş yarıda kesilip
+   kart kapanıp yeniden açılıyormuş gibi görünüyordu. */
+document.querySelectorAll('.kumas').forEach(k=>{
+  let doner=false;
+  k.addEventListener('click',()=>{
+    if(doner)return;
+    doner=true;setTimeout(()=>{doner=false},640);
+    k.classList.toggle('acik');
+    k.setAttribute('aria-pressed',k.classList.contains('acik'));
+  });
+});
 
 /* ===== Hurma şeridi ===== */
 const serit=document.getElementById('serit');
