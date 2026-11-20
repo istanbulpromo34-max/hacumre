@@ -264,7 +264,10 @@
 .serit .akis span{font-size:12px;letter-spacing:.14em}
 .serit .akis img{width:11px}}
 @media(max-width:560px){
-.grup-izgara{grid-template-columns:1fr 1fr;gap:10px}
+/* minmax(0,1fr) şart: kartın içindeki en-boy oranlı kutu, 1fr'nin varsayılan
+   auto alt sınırıyla sütunu kendi asgari genişliğine kadar şişiriyordu ve
+   sayfa telefonda 390 yerine 548 piksel genişliğe çıkıyordu. */
+.grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .grup{padding:5px;border-radius:21px}
 .grup .gorsel{aspect-ratio:3/4.2;border-radius:16px}
 .grup .ic{padding:12px;gap:9px}
