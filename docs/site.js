@@ -16,7 +16,7 @@ const KATEGORILER=[
  {ad:'İhram ve Umre Kıyafetleri',gorsel:'assets/g/kat-kiyafet.jpg',acik:'İhram, ihram kemeri, umre feracesi, eşarp, takke ve çocuk kıyafetleri.'},
  {ad:'Terlik, Mest ve Yolculuk',gorsel:'assets/g/kat-malzeme.jpg',acik:'Terlik, deri mest, tavaf çorabı, misvak, kokusuz sabun ve boyun çantası.'},
  {ad:'Seccade ve Namaz Örtüsü',gorsel:'assets/g/kat-seccade.jpg',acik:'Şönil, velür ve goblen seccadeler; cep seccadesi ve çocuk seccadesi.'},
- {ad:'Tesbih ve Zikirmatik',gorsel:'assets/g/kat-tesbih.jpg',acik:'Kuka, kehribar ve doğal taş tesbihler; sesli ve pusulalı zikirmatikler.'},
+ {ad:'Tespih ve Zikirmatik',gorsel:'assets/g/kat-tesbih.jpg',acik:'Kuka, kehribar ve doğal taş tespihler; sesli ve pusulalı zikirmatikler.'},
  {ad:"Kur'an-ı Kerim, Kitap ve Rahle",gorsel:'assets/g/kat-kuran.jpg',acik:'Kur\'an-ı Kerim, Enam-ı Şerif, hatim setleri, ilmihal ve ahşap rahleler.'},
  {ad:'Koku, Kolonya ve Esans',gorsel:'assets/g/kat-koku.jpg',acik:'Esans, kolonya, oda ve araç kokuları, difüzör ve buhurdanlıklar.'},
  {ad:'Hurma, Zemzem ve İkramlık',gorsel:'assets/g/kat-hurma.jpg',acik:'Acve, Safavi ve Mebrum hurmalar; zemzem takımları ve hurmalı ikramlıklar.'},
@@ -33,7 +33,7 @@ const URUNLER=window.URUNLER||[
  {id:'kokusuz-sabun',ad:'Kokusuz Bakım Seti',fiyat:200,kat:'Hac Umre Malzemeleri',gorsel:'assets/u/bakim.jpg',acik:'İhramlıyken kullanılabilen kokusuz sabun, şampuan ve ıslak mendil.'},
  {id:'misvak',ad:'Misvak',fiyat:60,kat:'Hac Umre Malzemeleri',gorsel:'assets/u/misvak.jpg',acik:'Doğal erak ağacından misvak.'},
  {id:'seccade',ad:'Seyahat Seccadesi',fiyat:300,kat:'İslami Hediyelik',gorsel:'assets/u/seccade.jpg',acik:'Katlanır, hafif cep seccadesi.'},
- {id:'tesbih',ad:'Tesbih',fiyat:120,kat:'İslami Hediyelik',gorsel:'assets/u/tesbih.jpg',acik:'33\'lük, püsküllü tesbih.'},
+ {id:'tesbih',ad:'Tespih',fiyat:120,kat:'İslami Hediyelik',gorsel:'assets/u/tesbih.jpg',acik:'33\'lük, püsküllü tespih.'},
  {id:'zikirmatik',ad:'Zikirmatik',fiyat:90,kat:'İslami Hediyelik',gorsel:'assets/u/zikirmatik.jpg',acik:'Parmağa takılan dijital sayaç.'},
  {id:'hurma',ad:'Medine Hurması 1 kg',fiyat:650,kat:'Hurma ve Zemzem',gorsel:'assets/u/hurma.jpg',acik:'Seçme Medine hurması.'},
  {id:'zemzem',ad:'Zemzem 5 L',fiyat:400,kat:'Hurma ve Zemzem',gorsel:'assets/u/zemzem.jpg',acik:'Dönüş ikramları için zemzem.'}

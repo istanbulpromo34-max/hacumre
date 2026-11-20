@@ -577,7 +577,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       <div class="ipucu"><i></i>Başlamak için aşağı kaydırın</div>
     </div>
     <svg class="kemer-cizgi" id="kemer-cizgi" aria-hidden="true" style="display:none"><path id="kemer-yol"/></svg>
-    <div class="kemer" id="kemer"><img data-g="masa" data-w="1800" alt="Sabah ışığında ahşap masada katlanmış beyaz ihram, rehber kitap, deri boyun çantası ve tesbih" fetchpriority="high"></div>
+    <div class="kemer" id="kemer"><img data-g="masa" data-w="1800" alt="Sabah ışığında ahşap masada katlanmış beyaz ihram, rehber kitap, deri boyun çantası ve tespih" fetchpriority="high"></div>
     <div class="acilis-son" id="acilis-son"><span class="ar" lang="ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span><p>Bismillahirrahmanirrahim</p><small>Yolculuğumuza hazırlıkla başlıyoruz.</small></div>
   </div>
 </section>
@@ -1054,8 +1054,8 @@ const gorunurIlerleme=el=>{const r=el.getBoundingClientRect();return sinir((VH-r
 /* ===== Hazırlık listesi ===== */
 /* [madde, ürün kimliği (yoksa null), adet] */
 const LISTE={
-  erkek:[['İki takım ihram','ihram-havlu',2],['İhram kemeri','ihram-kemer'],['İhram terliği','terlik'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']],
-  kadin:[['Umre feracesi ya da bol, tesettürlü kıyafet','ferace'],['Pamuklu eşarp ve bone','esarp'],['Rahat, kapalı ayakkabı ya da terlik',null],['Tavaf patiği','tavaf-patigi'],['Tavaf çorabı','tavaf-corabi'],['Pratik abdest çorabı','abdest-corabi'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']]
+  erkek:[['İki takım ihram','ihram-havlu',2],['İhram kemeri','ihram-kemer'],['İhram terliği','terlik'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tespih ya da zikirmatik','zikirmatik'],['Misvak','misvak']],
+  kadin:[['Umre feracesi ya da bol, tesettürlü kıyafet','ferace'],['Pamuklu eşarp ve bone','esarp'],['Rahat, kapalı ayakkabı ya da terlik',null],['Tavaf patiği','tavaf-patigi'],['Tavaf çorabı','tavaf-corabi'],['Pratik abdest çorabı','abdest-corabi'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tespih ya da zikirmatik','zikirmatik'],['Misvak','misvak']]
 };
 const NOT={erkek:'İhramın yedeğini valizde değil el çantanızda taşıyın. Kafileniz doğrudan Cidde\'ye uçuyorsa ihrama Türkiye\'deki havalimanında girersiniz.',kadin:'Hanımlar için özel bir ihram kıyafeti yoktur; tesettüre uygun, bol ve rahat kıyafetlerle ihrama girilir.'};
 let secili='erkek';try{if(localStorage.getItem('hu-liste-sekme')==='kadin')secili='kadin'}catch(e){}

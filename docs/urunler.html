@@ -311,11 +311,11 @@ function filtreyeGit(){const hedef=innerWidth>720?document.querySelector('.bas')
   :Math.max(0,F.getBoundingClientRect().top+scrollY-66); /* telefonda şerit arama damlasının altında kalsın */
  if(lenis)lenis.scrollTo(hedef,{immediate:azHareketU});else scrollTo(0,hedef)}
 let ara='';
-const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i');
+const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i').replace(/tesbih/g,'tespih'); /* "tesbih" yazan da bulsun */
 /* Sıralama: doğrudan hac ve umre malzemeleri en üstte, hazırlıkla ilgili
    olanlar onların ardında, hediyelik çeşitleri en sonda. Ziyaretçi sayfayı
    açtığında önce yolculuk için gerekenleri görsün. */
-const ONCE_CEKIRDEK=['ihram','tesbih','zikirmatik','kokusuz','koku','sabun','şampuan','terlik','takke'];
+const ONCE_CEKIRDEK=['ihram','tespih','zikirmatik','kokusuz','koku','sabun','şampuan','terlik','takke'];
 const ONCE_YOLCULUK=['seccade','misvak','mest','bone','ferace','eşarp','başörtü','abdest','peştamal','sürme','boyun çanta','bel çanta','ihram kemeri','hac','umre','zemzem','hurma','namaz','cüzdan','pasaport'];
 const oncelikBellek={};
 function oncelik(u){

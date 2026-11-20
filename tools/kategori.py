@@ -17,7 +17,7 @@ ANA = "İSTANBUL HAC UMRE"
 
 KIYAFET = "İhram ve Umre Kıyafetleri"
 KITAP = "Kur'an-ı Kerim, Kitap ve Rahle"
-TESBIH = "Tesbih ve Zikirmatik"
+TESBIH = "Tespih ve Zikirmatik"
 YOLCULUK = "Terlik, Mest ve Yolculuk"
 KOKU = "Koku, Kolonya ve Esans"
 HEDIYE = "Hediyelik ve Dekoratif"
@@ -147,4 +147,12 @@ def basliklandir(ad):
             else:
                 yeni.append(tr_buyuk(p[0]) + tr_kucuk(p[1:]))
         cikti.append("".join(yeni))
-    return " ".join(cikti)
+    return tespih(" ".join(cikti))
+
+
+def tespih(s):
+    """Ürün adlarında TDK yazımı: boncuk dizisi "tespih"tir ("tesbih" Allah'ı anmaktır).
+    Odoo'daki kayıt değişmez; yalnız sitede gösterilen ad düzeltilir."""
+    s = re.sub(r"Tesbih", "Tespih", s or "")
+    s = re.sub(r"TESBİH", "TESPİH", s)
+    return re.sub(r"tesbih", "tespih", s)
