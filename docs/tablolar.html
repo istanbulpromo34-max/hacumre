@@ -286,6 +286,7 @@ function izgaraCiz(){
   DAHA.hidden = kalan <= 0 || !!dahaGozcu;
   DNOT.textContent = kalan > 0 ? kalan.toLocaleString('tr-TR') + ' eser daha var' : '';
   if (window.isikYenile) window.isikYenile();
+  if (kalan > 0 && dahaGozcu) requestAnimationFrame(dahaKontrol);
 }
 
 /* Seçili gruba yeniden basmak seçimi kaldırır; böylece ayrı bir "Tümü"
@@ -303,14 +304,24 @@ SK.addEventListener('click', e => {
 addEventListener('resize', isigiTasi);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(isigiTasi);
 /* Aşağı inildikçe sonraki sayfa kendiliğinden yüklenir; düğme yalnızca
-   IntersectionObserver bulunmayan tarayıcılarda görünür. */
+   IntersectionObserver bulunmayan tarayıcılarda görünür.
+   Gözcü yalnızca görünür alana giriş/çıkışta haber verdiği için, dip zaten
+   ekrandayken ikinci kez tetiklenmez; o yüzden her çizimden sonra dibin
+   nerede olduğuna kendimiz bakıyoruz. */
+const ESIK = 700;
 function dahaYukle(){
   if (gosterilen >= suzulmus().length) return;
   gosterilen += SAYFA; izgaraCiz();
 }
+function dahaKontrol(){
+  if (!dahaGozcu || gosterilen >= suzulmus().length) return;
+  const d = document.querySelector('.daha');
+  if (d.getBoundingClientRect().top > innerHeight + ESIK) return;
+  dahaYukle();                       // izgaraCiz sonraki kareyi yine kontrol ettirir
+}
 DAHA.addEventListener('click', dahaYukle);
 const dahaGozcu = ('IntersectionObserver' in window)
-  ? new IntersectionObserver(g => { if (g[0].isIntersecting) dahaYukle(); }, { rootMargin: '700px 0px' })
+  ? new IntersectionObserver(g => { if (g[0].isIntersecting) dahaKontrol(); }, { rootMargin: ESIK + 'px 0px' })
   : null;
 if (dahaGozcu) dahaGozcu.observe(document.querySelector('.daha'));
 
