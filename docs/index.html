@@ -66,25 +66,24 @@
  src:url(assets/font/story-script-latin-400-normal.woff2) format('woff2');
  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* El yazısı satırı: harfler küçük gövdeli olduğu için punto büyütülüyor */
-.hero h1 .elyazi{font-family:'Story Script','Marcellus',cursive;font-weight:400;font-size:1.08em;
- line-height:1.12;letter-spacing:.005em;color:rgba(244,240,230,.94);margin-top:.1em}
-/* "ibadetinize" altın renkte ve üzerinden ışık geçiyor */
-.hero h1 .parilti{font-style:normal;color:transparent;-webkit-background-clip:text;background-clip:text;
- /* "ibadetinize": tabeladaki lale gibi. İçi koyu, dolgun bordo; kenarında ince altın
-    çerçeve; üst kısmında cam yansıması; üzerinden ara ara bir ışık geçer.
-    Katmanlar yukarıdan aşağı: geçen parıltı · cam yansıması · bordo dolgu. */
+.hero h1 .elyazi{font-family:'Story Script','Marcellus',cursive;font-weight:400;font-size:1em;white-space:nowrap;
+ line-height:1.12;letter-spacing:.005em;margin-top:.18em;
+ /* Satırın tamamı lacivert; arkasında elle çekilmiş gibi, uçları hafif eğik kesik,
+    fırçalanmış mat altın bir bant. Üzerinden ara ara yumuşak bir ışık geçer. */
+ width:fit-content;color:#0b1630;padding:.04em .5em .1em .42em;
+ clip-path:polygon(.28em 0,100% 0,calc(100% - .28em) 100%,0 100%);
  background-image:
-  linear-gradient(105deg,transparent 0%,transparent 40%,rgba(255,232,214,.7) 47%,rgba(255,250,240,.95) 50%,rgba(255,228,210,.55) 53%,transparent 60%,transparent 100%),
-  linear-gradient(180deg,rgba(255,226,214,.5) 0%,rgba(255,200,186,.16) 26%,rgba(255,255,255,0) 40%,rgba(0,0,0,0) 70%,rgba(20,0,0,.32) 100%),
-  linear-gradient(180deg,#a8291f 0%,#8a1d16 38%,#6c1510 70%,#4e0d0a 100%);
- background-size:260% 100%,100% 100%,100% 100%;background-repeat:no-repeat;
- background-position:150% 0,0 0,0 0;
- -webkit-text-stroke:1px #dcb867;
- paint-order:stroke fill;
- filter:drop-shadow(0 1px 0 rgba(255,226,160,.25)) drop-shadow(0 6px 16px rgba(80,10,8,.6));
- animation:parilti 5.4s cubic-bezier(.45,.05,.3,1) 1.2s infinite}
-@keyframes parilti{0%{background-position:150% 0,0 0,0 0}42%,100%{background-position:-50% 0,0 0,0 0}}
-@media(prefers-reduced-motion:reduce){.hero h1 .parilti{animation:none;background-position:-50% 0,0 0,0 0}}
+  linear-gradient(105deg,transparent 0%,transparent 42%,rgba(255,248,226,.55) 49%,rgba(255,248,226,.0) 56%,transparent 100%),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.05) 1px 2px,transparent 2px 4px),
+  linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%,rgba(0,0,0,.1)),
+  linear-gradient(100deg,#a8853d 0%,#c3a056 22%,#d4b674 40%,#bf9b52 58%,#cfb06c 78%,#a98640 100%);
+ background-size:260% 100%,auto,100% 100%,100% 100%;background-repeat:no-repeat,repeat,no-repeat,no-repeat;
+ background-position:150% 0,0 0,0 0,0 0;
+ animation:bantIsik 6s cubic-bezier(.45,.05,.3,1) 1.4s infinite}
+@keyframes bantIsik{0%{background-position:150% 0,0 0,0 0,0 0}40%,100%{background-position:-50% 0,0 0,0 0,0 0}}
+@media(prefers-reduced-motion:reduce){.hero h1 .elyazi{animation:none}}
+/* "ibadetinize" altın renkte ve üzerinden ışık geçiyor */
+.hero h1 .parilti{font-style:normal}
 .hero h1 .ana{display:block}
 .hero h1 .sat{display:block}
 /* Dönen kelime yukarı akan bir rulo gibi çalışır. Kutunun görünen alanı iç
@@ -373,9 +372,11 @@
    tek satıra, en uzun dönen kelime de satıra sığsın; düğmeler ilk ekranda görünür. */
 @media(max-width:720px){
 .hero .ust-yazi,.hero .giris{display:none}
-.hero h1{font-size:min(38px,calc((100vw - 2 * max(20px,5vw)) / 10.1));margin-top:0}
+.hero h1{font-size:min(40px,calc((100vw - 2 * max(20px,5vw)) / 10.3));margin-top:0}
 .hero h1 .elyazi{white-space:nowrap}
 .hero .dugmeler{margin-top:24px}
+/* Dönen kelime fotoğrafın üstüne binmesin: blok fotoğrafın altından başlar */
+.hero .metin{margin-top:6px}
 /* "Yol tarifi alın" ile aşağıdaki fotoğraf arasında boşluk fazlaydı */
 .hero .metin{padding-bottom:20px}
 .hak{padding-top:28px}}

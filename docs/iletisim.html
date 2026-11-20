@@ -33,8 +33,10 @@
 .kap{padding-inline:max(20px,5vw)}
 .ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
 .bas{padding-top:clamp(120px,18vh,170px);padding-bottom:44px;background:radial-gradient(60% 80% at 90% 0%,rgba(201,162,75,.12),transparent 60%),var(--gece)}
-.bas h1{font-size:clamp(46px,6.5vw,104px);line-height:1;margin:18px 0 18px}
+.bas h1{font-size:clamp(34px,4.8vw,76px);line-height:1.06;margin:18px 0 18px;max-width:16ch}
+/* Telefonda başlık logonun hemen altında başlasın; üstte boşluk kalmasın */
 .bas p{font-size:18px;line-height:1.7;color:rgba(234,230,220,.8);max-width:56ch}
+@media(max-width:720px){.bas{padding-top:76px;padding-bottom:28px}.bas h1{font-size:clamp(32px,8.6vw,40px);margin:12px 0 14px}.bas>p{font-size:15.5px;line-height:1.6}}
 .izg{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.35fr);gap:22px;padding-bottom:110px;align-items:stretch}
 .kutu{border-radius:24px;background:linear-gradient(180deg,var(--lac2),var(--lac));border:1px solid rgba(255,255,255,.08);padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:6px}
 .kutu h2{font-size:clamp(24px,2.2vw,32px);line-height:1.15;margin-bottom:14px}
@@ -88,8 +90,8 @@
 <main id="icerik">
 <section class="bas kap">
  <div class="ust-yazi">İletişim</div>
- <h1>Bize <span class="metal metal-yazi" data-isik>ulaşın.</span></h1>
- <p>Ümraniye'deki mağazamızda sizi ağırlamaktan memnuniyet duyarız. Gelmeden önce sormak istedikleriniz için bize telefonla ya da WhatsApp'tan ulaşabilirsiniz.</p>
+ <h1>Zemzem ve hurma ikramına <span class="metal metal-yazi" data-isik>buyurun.</span></h1>
+ <p>Ümraniye'deki mağazamıza gelen her misafirimize zemzem ve hurma ikram ediyoruz. Gelmeden önce sormak istedikleriniz için bize telefonla ya da WhatsApp'tan ulaşabilirsiniz.</p>
 </section>
 <section class="izg kap" aria-label="Mağaza bilgileri ve harita">
  <div class="kutu">
