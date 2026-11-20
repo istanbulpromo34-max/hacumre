@@ -415,7 +415,7 @@
  /* Boya lamellerin şeklini alır: aralıklarda kesilir, yer yer aşınmıştır */
  -webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.15) calc(var(--l) * .87),#000 var(--l)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
  mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.15) calc(var(--l) * .87),#000 var(--l)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
- -webkit-mask-composite:source-in;mask-composite:intersect;filter:blur(.2px)}
+ -webkit-mask-composite:source-in;mask-composite:intersect}
 /* Yazı satırları lamel ızgarasına oturur (her satır tam lamel yüksekliğinde) ki
    kesikler harflerin hep aynı yerinden geçsin; renge lamellerin ışık-gölgesi işlenir */
 .kp-bas,.kp-saat{display:block;color:transparent;-webkit-background-clip:text;background-clip:text;background-size:100% var(--l),100% 100%}
@@ -424,6 +424,13 @@
 .kp-saat{font:600 calc(var(--l) * 2.05) 'Barlow Condensed','Hanken Grotesk',sans-serif;line-height:calc(var(--l) * 2);letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-top:calc(var(--l) * .5);white-space:nowrap;
  background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#ece7dc,#d6d0c3)}
 @media(prefers-reduced-motion:reduce){.kp-perde{transition:none}.gece{transition:none}}
+/* Telefonda kepenk küçük (yaklaşık 70px): saatler kapı genişliğinin ~%90'ına büyür,
+   aşınma dokusu kalkar ve lamel kesikleri yumuşar ki yazı keskin kalsın */
+@media(max-width:600px){
+.kp-yazi{-webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .82),rgba(0,0,0,.6) calc(var(--l) * .88),#000 var(--l));
+ mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .82),rgba(0,0,0,.6) calc(var(--l) * .88),#000 var(--l))}
+.kp-saat{font-size:calc(var(--kw,70px) * .175);background-image:linear-gradient(180deg,#f4f0e8,#e2ddd2)}
+.kp-bas{font-size:calc(var(--kw,70px) * .07);background-image:linear-gradient(180deg,#ece7dc,#d6d0c3)}}
 /* Telefonda vitrin karartması yok (küçük fotoğrafta sönük leke gibi duruyordu); yalnız kepenk iner */
 @media(max-width:600px){.gece-ic{display:none}}
 /* Telefonda fotoğrafın alt yarısındaki koyu geçiş kalktı: yazılar artık fotoğrafın
