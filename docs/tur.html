@@ -95,7 +95,9 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .ipucu{display:flex;align-items:center;gap:10px;margin-top:34px;font-size:14px;color:var(--soluk)}
 .ipucu i{display:block;width:1px;height:38px;background:linear-gradient(var(--altin),transparent);animation:inis 2.2s ease-in-out infinite}
 @keyframes inis{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.kemer{position:absolute;z-index:1;overflow:hidden;will-change:width,height,left,top,border-radius;background:var(--tas)}
+.kemer{position:absolute;z-index:1;overflow:hidden;will-change:width,height,left,top,border-radius;background:var(--tas);opacity:0;transition:opacity .45s ease-out}
+.kemer.hazir,.kemer-cizgi.hazir{opacity:1}
+.kemer-cizgi{opacity:0;transition:opacity .45s ease-out}
 .kemer img{width:100%;height:100%;object-fit:cover;will-change:transform}
 .kemer::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(180,138,78,.55);pointer-events:none}
 .kemer-cizgi{position:absolute;z-index:0;pointer-events:none;overflow:visible}
@@ -1232,6 +1234,11 @@ function kare(){bekliyor=false;
 const iste=()=>{if(!bekliyor){bekliyor=true;requestAnimationFrame(kare)}};
 addEventListener('scroll',iste,{passive:true});addEventListener('resize',iste);
 kare();
+/* Kemer sahneleri ölçüleri betikle aldığı için ilk karede yerine oturur;
+   o ana kadar gizli kalırlar, böylece sayfa açılışta zıplamaz. */
+const kemerHazir=()=>document.querySelectorAll('.kemer,.kemer-cizgi').forEach(e=>e.classList.add('hazir'));
+requestAnimationFrame(()=>requestAnimationFrame(kemerHazir));
+setTimeout(kemerHazir,1200);
 
 /* ===== Neşid: tercih edilmişse ilk dokunuşta yavaşça açılır ===== */
 const nesid=$('nesid'),sesBtn=$('ses');let solma=null;

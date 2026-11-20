@@ -88,7 +88,7 @@
 .gecis{position:relative;height:150vh;background:var(--gece)}
 .gecis .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
 .serit{position:absolute;left:50%;top:50%;width:150vw;height:56px;transform:translate(-50%,-50%) rotate(-7deg);display:flex;align-items:center;overflow:hidden;will-change:transform,height}
-.serit .akis{display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform}
+.serit .akis{position:absolute;left:0;top:0;height:44px;display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform}
 .serit .akis span{font-family:'Marcellus';font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#20170a}
 .serit .akis img{width:13px;height:auto;opacity:.85;filter:sepia(1) saturate(.3) brightness(.35)}
 .altin-zemin{position:absolute;inset:0;opacity:0}
@@ -357,7 +357,10 @@ akisKur();
    const h0=innerWidth<=720?40:innerWidth<820?44:56;
    S.style.height=(h0+(H*1.3-h0)*t)+'px';
    S.style.transform=`translate(-50%,-50%) rotate(${-7*(1-t)}deg)`;
-   const w=akis.scrollWidth/3||1;akis.style.transform=`translateX(${-((((r.top*.35)%w)+w)%w)}px)`;
+   /* Şerit büyürken yazı şeridi yüksekliği sabit kalır ve yalnızca dönüştürmeyle
+      konumlanır; yoksa her karede düzen kayması (CLS) üretiyordu. */
+   const sH=h0+(H*1.3-h0)*t,dy=(sH-44)/2;
+   const w=akis.scrollWidth/3||1;akis.style.transform=`translate(${-((((r.top*.35)%w)+w)%w)}px,${dy}px)`;
    akis.style.opacity=1-k((t-.34)/.3);
    Z.style.opacity=k((t-.74)/.24);
   }
