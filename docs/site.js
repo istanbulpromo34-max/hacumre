@@ -147,6 +147,15 @@ function kabuk(aktif){
  <a href="iletisim.html"${on('ilet')}>İletişim</a>
  <a href="tur.html" class="tur${aktif==='tur'?' on':''}"${aktif==='tur'?' aria-current="page"':''}>Dijital Tur</a>`;
  document.body.prepend(nav);
+ /* Dijital Tur'a parmak değdiği anda sayfayı önceden getir: dokunup bıraktığında
+    sayfa hazır olsun, geçiş anında açılsın. (Sesin kendiliğinden başlaması ayrı
+    bir konu: tarayıcı sesi, çalınacağı sayfadaki bir dokunuşa bağlıyor.) */
+ if(aktif!=='tur'){
+  const tl=nav.querySelector('a[href="tur.html"]');
+  if(tl){const getir=()=>{if(tl._on)return;tl._on=1;
+    const l=document.createElement('link');l.rel='prefetch';l.href='tur.html';document.head.append(l)};
+   ['pointerdown','touchstart','mouseenter'].forEach(t=>tl.addEventListener(t,getir,{once:true,passive:true}))}
+ }
  const ml=document.createElement('a');ml.className='mlogo';ml.href='index.html';ml.setAttribute('aria-label',MAGAZA.ad+', ana sayfa');ml.innerHTML='<img src="assets/logo-nav.png" alt="" width="128" height="31">';
  document.body.prepend(ml);
  const gec=document.createElement('a');gec.className='icerige-gec';gec.href='#icerik';gec.textContent='İçeriğe geç';document.body.prepend(gec);
