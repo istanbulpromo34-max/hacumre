@@ -405,15 +405,18 @@
  background:linear-gradient(180deg,#5a606a,#2a2e34 60%,#121417);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
 .gece.on .kp-perde{height:100%}
 /* Kepengin üstüne boyanmış "KAPALI": lamel aralıklarında boya kesilir, yüzey dokusu geçer */
-.kp-yazi{position:absolute;left:0;right:0;top:30%;display:grid;justify-items:center;gap:calc(var(--kw,100px) * .05);text-align:center;font-weight:400;
- -webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.3) calc(var(--l) * .86),#000 var(--l));
- mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.3) calc(var(--l) * .86),#000 var(--l))}
-/* Üstte altın "ÇALIŞMA SAATLERİ", altında beyaz saatler; kepenge boyanmış gibi */
-.kp-bas{font:400 calc(var(--kw,100px) * .082) 'Marcellus',serif;letter-spacing:.12em;padding-left:.12em;text-transform:uppercase;
- color:transparent;background:linear-gradient(180deg,#f0d793,#cfac5c 55%,#a8853a);-webkit-background-clip:text;background-clip:text;
- filter:drop-shadow(0 1px 0 rgba(0,0,0,.45))}
-.kp-saat{font:500 calc(var(--kw,100px) * .092) 'Hanken Grotesk',system-ui,sans-serif;line-height:1.3;letter-spacing:.03em;
- color:rgba(240,236,226,.86);text-shadow:0 1px 0 rgba(0,0,0,.4);font-variant-numeric:tabular-nums}
+.kp-yazi{position:absolute;left:0;right:0;top:calc(var(--l) * 5);display:grid;justify-items:center;text-align:center;font-weight:400;
+ /* Boya lamellerin şeklini alır: aralıklarda kesilir, yer yer aşınmıştır */
+ -webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.15) calc(var(--l) * .87),#000 var(--l)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+ mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.15) calc(var(--l) * .87),#000 var(--l)),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.3' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.1 1.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+ -webkit-mask-composite:source-in;mask-composite:intersect;filter:blur(.2px)}
+/* Yazı satırları lamel ızgarasına oturur (her satır tam lamel yüksekliğinde) ki
+   kesikler harflerin hep aynı yerinden geçsin; renge lamellerin ışık-gölgesi işlenir */
+.kp-bas,.kp-saat{display:block;color:transparent;-webkit-background-clip:text;background-clip:text;background-size:100% var(--l),100% 100%}
+.kp-bas{font:400 calc(var(--l) * 1.32) 'Marcellus',serif;line-height:calc(var(--l) * 2);letter-spacing:.12em;padding-left:.12em;text-transform:uppercase;
+ background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#e6cb86,#c9a556 60%,#a9853b)}
+.kp-saat{font:600 calc(var(--l) * 1.55) 'Hanken Grotesk',system-ui,sans-serif;line-height:calc(var(--l) * 2);letter-spacing:.03em;font-variant-numeric:tabular-nums;margin-top:calc(var(--l) * .5);
+ background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#ece7dc,#d6d0c3)}
 @media(prefers-reduced-motion:reduce){.kp-perde{transition:none}.gece{transition:none}}
 /* Telefonda vitrin karartması yok (küçük fotoğrafta sönük leke gibi duruyordu); yalnız kepenk iner */
 @media(max-width:600px){.gece-ic{display:none}}
@@ -452,7 +455,7 @@
   </video>
   <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
   <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
-   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><b class="kp-yazi"><span class="kp-bas">Çalışma saatleri</span><span class="kp-saat">Her gün<br>09:00 – 20:00</span></b><i class="kp-alt"></i></i></div>
+   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><b class="kp-yazi"><span class="kp-bas">Çalışma saatleri</span><span class="kp-saat">Her gün<br>09.00 – 20.00</span></b><i class="kp-alt"></i></i></div>
   </div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
