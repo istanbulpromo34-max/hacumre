@@ -113,6 +113,9 @@
 .hak .foto{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:4/5;max-height:82vh}
 .hak .foto picture{display:contents}
 .hak .foto img{width:100%;height:115%;object-fit:cover;transform:translateY(calc(4% + max(-16%, var(--sy,0)*-.05px)))}
+/* Dokunmatik ekranda bu paralaks kaydırma bittikten sonra da gecikmeli kaydığı için
+   fotoğraf yerine oturduktan sonra bir kez daha titriyordu: telefonda sabit durur. */
+@media (hover:none),(max-width:820px){.hak .foto img{height:100%;transform:none}}
 .hak h2{font-size:clamp(36px,4.4vw,68px);line-height:1.05;margin:18px 0 22px}
 .hak .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.8);max-width:52ch}
 .ayaklar{display:grid;gap:0;margin-top:36px;border-top:1px solid rgba(255,255,255,.1)}
@@ -124,17 +127,20 @@
  repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,rgba(0,0,0,.035) 1px 2px,transparent 2px 4px),
  linear-gradient(90deg,#9a7836 0%,#b8954a 20%,#cfb071 36%,#b18e45 52%,#c6a45d 66%,#d6bb80 78%,#a8853d 92%,#b8954a 100%);
  background-size:auto,220% 100%;background-position:0 0,60% 0}
-.gecis{position:relative;height:118vh;background:var(--gece)}
+.gecis{position:relative;height:150vh;background:var(--gece)}
 .gecis .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
-.serit{position:absolute;left:50%;top:50%;width:150vw;height:56px;transform:translate(-50%,-50%) rotate(-7deg);display:flex;align-items:center;overflow:hidden;will-change:transform,height}
-.serit .akis{position:absolute;left:0;top:0;height:44px;display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform}
+.serit{position:absolute;left:50%;top:50%;width:160vw;height:56px;transform:translate(-50%,-50%) rotate(-7deg);display:flex;align-items:center;overflow:hidden;will-change:transform,height;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(0,0,0,.35),0 18px 50px -20px rgba(0,0,0,.7)}
+/* Bandın parlak kenarı büyüdükçe söner; sonunda zeminle birebir aynı yüzey kalır */
+.serit::after{opacity:var(--parilti,1)}
+.serit .akis{position:absolute;left:0;top:50%;height:44px;margin-top:-22px;display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform,opacity}
 .serit .akis span{font-family:'Marcellus';font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#20170a}
 .serit .akis img{width:13px;height:auto;opacity:.85;filter:sepia(1) saturate(.3) brightness(.35)}
 .altin-zemin{position:absolute;inset:0;opacity:0}
 /* ===== Ürün grupları (altın zemin) ===== */
 /* Altın zemin tamamlanırken başlık ve kartlar alttan görünmeye başlasın diye
    bölüm geçişin son parçasının üstüne biniyor; ikisi de aynı altın yüzey. */
-.gruplar{margin-top:-55vh;position:relative;z-index:1;padding-bottom:clamp(90px,14vh,150px);color:var(--lac)}
+.gruplar{margin-top:-34vh;position:relative;z-index:1;padding-bottom:clamp(90px,14vh,150px);color:var(--lac)}
 .gruplar-bas{text-align:center;padding:clamp(12px,4vh,40px) 0 clamp(36px,6vh,64px)}
 .gruplar-bas .ust-yazi{color:#3b2905;font-weight:500;font-size:12.5px;letter-spacing:.3em}
 .gruplar-bas h2{font-size:clamp(42px,6vw,96px);line-height:1;margin-top:14px}
@@ -184,10 +190,13 @@
 .telbiye .ar{display:block;direction:rtl;text-align:center;font-family:'Amiri',serif;font-weight:400;font-size:clamp(38px,4.4vw,64px);line-height:1.7;color:var(--altin2);letter-spacing:0}
 .telbiye .anlam{text-align:center;font-size:15px;line-height:1.6;color:rgba(234,230,220,.78);margin:2px auto 0;max-width:40ch}
 .telbiye .anlam em{font-style:normal;color:var(--yazi)}
-.adimlar{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:26px;counter-reset:a}
-.adimlar a{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:14.5px;transition:background .3s,border-color .3s}
-.adimlar a::before{counter-increment:a;content:counter(a,decimal-leading-zero);font:600 12px 'Hanken Grotesk';letter-spacing:.06em;color:var(--altin2);flex:none;width:20px}
-@media (hover:hover){.adimlar a:hover{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.4)}}
+.tur-bolum .dugmeler .kisa{display:none}
+/* Duraklar yalnızca turun içeriğini gösterir; tıklanmaz, tur her zaman baştan izlenir.
+   Bütün kutular aynı boyda (grid-auto-rows:1fr). */
+.adimlar{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:8px;margin-top:26px;counter-reset:a}
+.adimlar li{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.25;min-width:0}
+.adimlar li::before{counter-increment:a;content:counter(a,decimal-leading-zero);font:600 12px 'Hanken Grotesk';letter-spacing:.06em;color:var(--altin2);flex:none;width:20px}
+.tur-basla-m{display:none}
 /* ===== Ziyaret ===== */
 /* Masaüstünde üç sütun: solda puan ve adres, ortada harita, sağda düğmeler.
    Önceden ortadaki geniş alan boş kalıyordu. */
@@ -196,7 +205,12 @@
 .ziyaret{display:grid;grid-template-columns:minmax(168px,.76fr) minmax(0,1.78fr) minmax(296px,.9fr);
  max-width:1468px;margin-inline:auto;padding-inline:24px;gap:34px 46px;align-items:center;
  padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
-@media(max-width:1180px){.ziyaret{grid-template-columns:1fr;gap:26px}}
+@media(max-width:1180px){.ziyaret{grid-template-columns:1fr;gap:26px}
+/* Tek sütunda her şey ortada: puan, yorum kartı ve düğmeler aynı eksende */
+.ziyaret .puan{align-items:center;text-align:center}
+.ziyaret .yorumlar{width:100%;max-width:620px;justify-self:center}
+.ziyaret-sag{justify-self:center;justify-items:center;text-align:center;max-width:620px}
+.ziyaret .dugmeler{width:100%}}
 /* Puan: büyük sayı, altında beş ayrı yıldız, en altta yorum sayısı */
 .puan{display:flex;flex-direction:column;align-items:flex-start;gap:11px}
 .puan b{font-family:'Marcellus';font-weight:400;font-size:clamp(62px,5.2vw,86px);line-height:.92}
@@ -209,10 +223,19 @@
    sayfa hiç kaymaz. Yalnızca görünen yorumun opaklığı değişir. */
 .yorumlar{display:flex;flex-direction:column;gap:16px;min-width:0}
 .yorum-kart{position:relative;display:flex;flex-direction:column;justify-content:center;
- padding:32px 36px 30px;border-radius:24px;border:1px solid rgba(201,162,75,.26);
+ padding:38px 36px 30px;border-radius:24px;border:1px solid rgba(201,162,75,.26);
  background:linear-gradient(158deg,rgba(255,255,255,.075),rgba(255,255,255,.02) 58%,rgba(201,162,75,.05));
  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 24px 50px -34px rgba(0,0,0,.9)}
-.yorum-kart .tirnak{position:absolute;top:20px;right:26px;width:40px;height:40px;fill:var(--altin);opacity:.16}
+/* WhatsApp durumu gibi: her yoruma bir çizgi; çizgi dolunca sonraki yorum gelir.
+   Kartın sağına dokunmak ileri, soluna dokunmak geri götürür; basılı tutmak durdurur. */
+.yorum-kart{cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+.yorum-bar{position:absolute;top:13px;left:20px;right:20px;display:flex;gap:3px;pointer-events:none}
+.yorum-bar i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
+.yorum-bar i::after{content:"";display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--altin),var(--altin2))}
+.yorum-bar i.dolu::after{width:100%}
+.yorum-bar i.aktif::after{animation:yorumDol var(--yorum-sure,7s) linear forwards}
+.yorumlar.durdu .yorum-bar i.aktif::after{animation-play-state:paused}
+@keyframes yorumDol{from{width:0}to{width:100%}}
 .yorum-yigin{display:grid}
 .yorum-yigin>figure{grid-area:1/1;margin:0;display:flex;flex-direction:column;gap:18px;
  opacity:0;transform:translateY(9px);pointer-events:none;
@@ -244,13 +267,14 @@
  text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
 @media (hover:hover){.yorum-tum:hover{color:#fff}}
 @media(max-width:720px){
-.yorum-kart{padding:24px 22px 22px;border-radius:19px}
+.yorum-kart{padding:32px 22px 22px;border-radius:19px}
 .yorum-yigin>figure{gap:15px}
 .yorum-yigin blockquote{font-size:15.5px;line-height:1.7}
 .yorum-kisi img{width:42px;height:42px}
-.yorum-kart .tirnak{width:30px;height:30px;top:14px;right:16px}}
+.yorum-bar{top:11px;left:14px;right:14px;gap:2.5px}}
 @media(prefers-reduced-motion:reduce){
-.yorum-yigin>figure{transition:none}}
+.yorum-yigin>figure{transition:none}
+.yorum-bar i.aktif::after{animation:none;width:100%}}
 .ziyaret-sag{display:grid;gap:16px;justify-items:start;justify-self:end;width:100%;max-width:352px}
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
@@ -281,13 +305,11 @@
 .hak,.tur-bolum{grid-template-columns:1fr}
 .hak .foto{aspect-ratio:4/4.4}
 .ayak{grid-template-columns:1fr;gap:6px}
-.gecis{height:140vh}
 .serit{height:44px}
 .serit .akis span{font-size:13px}}
 @media(max-width:720px){
 /* Telefonda geçiş bölümü kısalır ve şeride daha çok ürün adı sığar;
    önceki hâlinde şeridin önü ve arkası iki ekran boyu boş kalıyordu. */
-.gecis{height:128vh}
 .serit{height:40px}
 .serit .akis{gap:16px;padding-left:16px}
 .serit .akis span{font-size:12px;letter-spacing:.14em}
@@ -308,8 +330,16 @@
 .ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}
 .yorumlar{order:2}
 .ziyaret-sag{order:3}}
-@media(max-width:380px){
-.adimlar{grid-template-columns:1fr}}
+@media(max-width:720px){
+/* İki düğme yan yana */
+.tur-bolum .dugmeler{flex-wrap:nowrap;gap:10px}
+.tur-bolum .dugmeler .btn{flex:1 1 0;min-width:0;padding:14px 12px;font-size:14.5px}
+.tur-bolum .dugmeler .uzun{display:none}
+.tur-bolum .dugmeler .kisa{display:inline}
+.adimlar li{font-size:13.5px;padding:10px 12px;gap:9px}
+.adimlar li::before{width:18px}
+/* Durakların altında turu baştan başlatan düğme (yalnız telefonda) */
+.tur-basla-m{display:flex;width:100%;margin-top:16px}}
 @media(prefers-reduced-motion:reduce){
 .hero-medya{transform:none}
 .sz{animation:none;opacity:1;transform:none}
@@ -365,7 +395,7 @@
 <!-- ALTIN GEÇİŞ (süs) -->
 <div class="gecis" id="gecis" aria-hidden="true">
  <div class="yapis">
-  <div class="serit metal metal-bant" id="serit"><div class="akis" id="akis"></div></div>
+  <div class="serit metal-duz metal-bant" id="serit"><div class="akis" id="akis"></div></div>
   <div class="altin-zemin metal-duz" id="altin-zemin"></div>
  </div>
 </div>
@@ -386,23 +416,24 @@
   <div class="ust-yazi" data-gel>Umre rehberi</div>
   <h2 id="tur-baslik" data-gel>Umre nasıl yapılır? <span class="metal metal-yazi" data-isik>Adım adım</span> dijital tur.</h2>
   <p data-gel>Hazırlıktan eve dönüşe kadar umreyi on durakta anlatan rehberimizi gezin. Her durakta o adımın ne zaman ve nasıl yapıldığını, okunacak duaları ve dikkat edilecek noktaları fotoğraflarla öğrenirsiniz. Kayıt gerekmez; rehber telefondan da rahatça takip edilir.</p>
-  <div class="dugmeler" data-gel><a class="btn altin" href="tur.html">Tura başlayın</a><a class="btn cam" href="tur.html#hazirlik">Hazırlık listesine gidin</a></div>
+  <div class="dugmeler" data-gel><a class="btn altin" href="tur.html">Tura başlayın</a><a class="btn cam" href="tur.html#hazirlik"><span class="uzun">Hazırlık listesine gidin</span><span class="kisa">Hazırlık listesi</span></a></div>
  </div>
  <div class="telbiye" data-gel>
   <span class="ar" lang="ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</span>
   <p class="anlam"><em>“Buyur Allah'ım, buyur!”</em> İhrama girerken söylenmeye başlanan ve Mescid-i Haram'a varıncaya kadar tekrarlanan telbiyenin ilk cümlesidir.</p>
   <ol class="adimlar" aria-label="Turun durakları">
-   <li><a href="tur.html#hazirlik">Hazırlık</a></li>
-   <li><a href="tur.html#yolculuk">Yola çıkış</a></li>
-   <li><a href="tur.html#medine">Medine</a></li>
-   <li><a href="tur.html#mikat">Mîkat</a></li>
-   <li><a href="tur.html#tavaf">Tavaf</a></li>
-   <li><a href="tur.html#zemzem">Namaz ve zemzem</a></li>
-   <li><a href="tur.html#say">Sa'y</a></li>
-   <li><a href="tur.html#tiras">Tıraş</a></li>
-   <li><a href="tur.html#mekke">Mekke'deki günler</a></li>
-   <li><a href="tur.html#donus">Dönüş</a></li>
+   <li>Hazırlık</li>
+   <li>Yola çıkış</li>
+   <li>Medine</li>
+   <li>Mîkat</li>
+   <li>Tavaf</li>
+   <li>Namaz ve zemzem</li>
+   <li>Sa'y</li>
+   <li>Tıraş</li>
+   <li>Mekke'deki günler</li>
+   <li>Dönüş</li>
   </ol>
+  <a class="btn altin tur-basla-m" href="tur.html">Turu başlat</a>
  </div>
 </section>
 
@@ -415,7 +446,7 @@
  </div>
  <div class="yorumlar" data-gel aria-roledescription="carousel" aria-label="Google yorumları">
   <div class="yorum-kart">
-   <svg class="tirnak" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 5.4c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Zm9.3 0c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Z"/></svg>
+   <div class="yorum-bar" id="yorumBar" aria-hidden="true"></div>
    <div class="yorum-yigin" id="yorumYigin"></div>
   </div>
   <div class="yorum-kumanda">
@@ -485,7 +516,10 @@ document.getElementById('ziyaret-wa').insertAdjacentHTML('afterbegin',WA_SVG);
 document.getElementById('grup-izgara').innerHTML=KATEGORILER.map(k=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><div class="gorsel"><picture><source media="(max-width:720px)" srcset="${mini(resim(k.gorsel))}"><img src="${kucuk(resim(k.gorsel))}" alt="" loading="lazy" decoding="async" width="880" height="1168" data-yedekler="${resim(k.gorsel)}" onerror="gorselYedek(this)"></picture><div class="ic"><h3>${k.ad}</h3><span class="ok">İncele <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13m-5-5 5 5-5 5"/></svg></span></div></div></a>`).join('');
 document.querySelectorAll('#grup-izgara [data-gel]').forEach((e,i)=>e.style.transitionDelay=(i*.08)+'s');
 akisKur();
-/* Altın şerit: kaydırdıkça döner, büyür ve sayfa altın zemine dönüşür */
+/* Altın şerit: kaydırdıkça düzleşip büyür, ekranı kaplayınca altın zemine dönüşür.
+   İlerleme doğrudan kaydırma konumundan hesaplanır (gecikmeli yumuşatma yok):
+   ürün grupları ekrana girdiğinde zemin her zaman tamamlanmış olur, iki altın
+   yüzey arasında ek yeri görünmez. Yazılar büyütülmez (bulanıklaşıyordu). */
 (function(){
  const G=document.getElementById('gecis');
  if(!G||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -494,37 +528,29 @@ akisKur();
  akis.innerHTML=parca+parca+parca;
  const Z=document.getElementById('altin-zemin'),S=document.getElementById('serit');
  const k=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),yum=t=>t*t*(3-2*t);
- let p0=0,gorunur=true,calisiyor=false;
- const uyan=()=>{if(calisiyor||!gorunur||document.hidden)return;calisiyor=true;requestAnimationFrame(ciz)};
+ let gorunur=true,istek=false;
+ const uyan=()=>{if(istek||!gorunur||document.hidden)return;istek=true;requestAnimationFrame(ciz)};
  new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;uyan()},{rootMargin:'300px 0px'}).observe(G);
  addEventListener('scroll',uyan,{passive:true});addEventListener('resize',uyan);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)uyan()});
  function ciz(){
-  if(document.hidden||!gorunur){calisiyor=false;return}
-  {
-   /* şerit ekranın ortasına girdiği anda büyümeye başlar, yapışık bölüm biterken altın zemin tamamlanır */
-   const r=G.getBoundingClientRect(),H=innerHeight,yol=r.height-H/2;
-   const hedef=k((H/2-r.top)/yol);p0+=(hedef-p0)*.16;const p=p0;
-   /* ilk bölümde şerit ince kalıp ürün adları akar, sonra büyümeye başlar */
-  const t=Math.pow(k(Math.max(0,(p-.05)/.95)),1.2);
-   const h0=innerWidth<=720?40:innerWidth<820?44:56;
-   const sH=h0+(H*1.3-h0)*t;
-   S.style.height=sH+'px';
-   /* Bölüm ekrana girerken şerit alt kenardan yükselir; yoksa önce bir ekran
-      boyu boş lacivert alan görünüyordu. */
-   const giris=r.top>0?r.top*(.5+60/H):0;
-   S.style.transform=`translate(-50%,calc(-50% - ${Math.round(giris)}px)) rotate(${-7*(1-t)}deg)`;
-   /* Şerit büyürken ürün adları da onunla birlikte büyür; yazı şeridinin kendi
-      yüksekliği sabit kalır, yalnızca dönüştürmeyle ölçeklenip konumlanır
-      (yoksa her karede düzen kayması üretiyordu). */
-   const ol=1+t*2.6,dy=(sH-44)/2;
-   const w=(akis.scrollWidth/3||1)*ol;
-   akis.style.transformOrigin='0 22px';
-   akis.style.transform=`translate(${-((((r.top*.35)%w)+w)%w)}px,${dy}px) scale(${ol.toFixed(3)})`;
-   akis.style.opacity=1-k((t-.62)/.26);
-   Z.style.opacity=k((t-.66)/.26);
-  }
-  requestAnimationFrame(ciz)}
+  istek=false;
+  const r=G.getBoundingClientRect(),H=innerHeight;
+  const p=k((H/2-r.top)/(r.height-H/2));      // 0: bant ekran ortasında · 1: sahne bitti
+  const kayma=r.top>0?r.top*(.5+60/H):0;      // bant alttan yükselerek gelir
+  /* İlk %15'te bant ince kalıp ürün adlarını akıtır; %15–70 arasında düzleşip ekranı
+     kaplar; zemin %50–65 arasında belirir. Başlık (margin-top:-34vh) zemin tamamlandığı an gelir. */
+  const t=yum(k((p-.15)/.55));
+  const h0=innerWidth<=720?40:innerWidth<=820?44:56;
+  const sH=h0+(H*1.45-h0)*t;
+  S.style.height=sH.toFixed(1)+'px';
+  S.style.transform=`translate(-50%,calc(-50% - ${Math.round(kayma)}px)) rotate(${(-7*(1-t)).toFixed(3)}deg)`;
+  S.style.setProperty('--parilti',(1-k(t/.6)).toFixed(3));
+  const w=akis.scrollWidth/3||1;
+  akis.style.transform=`translate3d(${-((((r.top*.35)%w)+w)%w).toFixed(1)}px,0,0)`;
+  akis.style.opacity=(1-k(t/.3)).toFixed(3);
+  Z.style.opacity=k((p-.5)/.15).toFixed(3);
+ }
  uyan();
 })();
 </script>
@@ -553,14 +579,15 @@ akisKur();
 })();
 </script>
 <script>
-/* Google yorumları dört saniyede bir değişir. Bütün yorumlar baştan basılıp
-   aynı ızgara gözünde üst üste durur; kutu en uzun yoruma göre yüksekliğini
-   aldığı için geçişte sayfa kaymaz. Fare üzerindeyken, sekme arkadayken ve
-   bölüm ekran dışındayken durur; oklarla elle de gezilebilir. */
+/* Google yorumları WhatsApp durumu gibi akar: kartın üstünde her yoruma bir çizgi,
+   etkin çizgi dolunca sonraki yorum gelir. Kartın sağına dokunmak ileri, soluna
+   dokunmak geri götürür; basılı tutunca, fare üzerindeyken, sekme arkadayken ve
+   bölüm ekran dışındayken durur. Yorumlar aynı ızgara gözünde üst üste durur,
+   geçişte sayfa kaymaz. */
 (function(){
- const kok=document.querySelector('.yorumlar'),yigin=document.getElementById('yorumYigin');
+ const kok=document.querySelector('.yorumlar'),yigin=document.getElementById('yorumYigin'),bar=document.getElementById('yorumBar');
  if(!kok||!yigin||typeof YORUMLAR==='undefined'||!YORUMLAR.length)return;
- const SURE=4000, YOL='m12 2.6 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-1z';
+ const SURE=7000, YOL='m12 2.6 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-1z';
  const kac=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const yildizlar=n=>{let h='';for(let k=1;k<=5;k++)
    h+='<svg class="yld'+(k<=n?'':' bos')+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+YOL+'"/></svg>';
@@ -575,20 +602,36 @@ akisKur();
      '<span class="sr">5 üzerinden '+(y.puan||5)+' puan. </span>'+kac(y.zaman)+'</span></span>'+
    '</figcaption></figure>').join('');
  const kartlar=[...yigin.children];
- let i=0,sayac=null,duruyor=false,gorunur=true;
+ bar.innerHTML=kartlar.map(()=>'<i></i>').join('');
+ const cizgiler=[...bar.children];
+ kok.style.setProperty('--yorum-sure',SURE+'ms');
  const az=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const git=n=>{kartlar[i].classList.remove('acik');i=(n+kartlar.length)%kartlar.length;kartlar[i].classList.add('acik')};
- const dur=()=>{clearInterval(sayac);sayac=null};
- const basla=()=>{if(sayac||az||duruyor||!gorunur||document.hidden)return;sayac=setInterval(()=>git(i+1),SURE)};
- const yenile=()=>{dur();basla()};
- document.getElementById('yorumIleri').onclick=()=>{git(i+1);yenile()};
- document.getElementById('yorumGeri').onclick=()=>{git(i-1);yenile()};
- kok.addEventListener('pointerenter',()=>{duruyor=true;dur()});
- kok.addEventListener('pointerleave',()=>{duruyor=false;basla()});
- kok.addEventListener('focusin',()=>{duruyor=true;dur()});
- kok.addEventListener('focusout',()=>{duruyor=false;basla()});
- document.addEventListener('visibilitychange',()=>document.hidden?dur():basla());
- new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;gorunur?basla():dur()},{rootMargin:'0px'}).observe(kok);
+ let i=0,fare=false,basili=false,gorunur=true;
+ const cizgiKur=()=>cizgiler.forEach((c,n)=>{
+  c.classList.remove('aktif');c.classList.toggle('dolu',n<i);
+  if(n===i){void c.offsetWidth;c.classList.add('aktif')}});
+ const git=n=>{kartlar[i].classList.remove('acik');i=(n+kartlar.length)%kartlar.length;
+  kartlar[i].classList.add('acik');cizgiKur()};
+ const durum=()=>kok.classList.toggle('durdu',az||fare||basili||!gorunur||document.hidden);
+ cizgiler.forEach(c=>c.addEventListener('animationend',()=>{if(c.classList.contains('aktif'))git(i+1)}));
+ document.getElementById('yorumIleri').onclick=()=>git(i+1);
+ document.getElementById('yorumGeri').onclick=()=>git(i-1);
+ const kart=kok.querySelector('.yorum-kart');let uzun=false,uzunSayac=null;
+ kart.addEventListener('pointerdown',e=>{if(e.target.closest('a'))return;uzun=false;basili=true;durum();
+  clearTimeout(uzunSayac);uzunSayac=setTimeout(()=>{uzun=true},450)});
+ const birak=()=>{clearTimeout(uzunSayac);if(!basili)return;basili=false;durum()};
+ ['pointerup','pointercancel','pointerleave'].forEach(t=>kart.addEventListener(t,birak));
+ kart.addEventListener('click',e=>{
+  if(e.target.closest('a'))return;
+  if(uzun){uzun=false;return}                    // basılı tutulduysa geçiş yok
+  const r=kart.getBoundingClientRect();
+  git(e.clientX-r.left<r.width*.34?i-1:i+1)});
+ if(matchMedia('(hover:hover)').matches){
+  kok.addEventListener('pointerenter',()=>{fare=true;durum()});
+  kok.addEventListener('pointerleave',()=>{fare=false;durum()})}
+ document.addEventListener('visibilitychange',durum);
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;durum()},{rootMargin:'0px'}).observe(kok);
+ durum();cizgiKur();
 })();
 </script>
 </body>

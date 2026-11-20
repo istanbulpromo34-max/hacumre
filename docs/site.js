@@ -112,7 +112,7 @@ const Sepet={
  gonder(){window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(Sepet.waMetin()),'_blank','noopener')},
  ciz(){
   const n=Sepet.sayi(),btn=document.querySelector('.sepetbtn');
-  if(btn){const b=btn.querySelector('b');b.textContent=n;b.classList.toggle('var',n>0);btn.classList.toggle('dolu',n>0);btn.setAttribute('aria-label',n?`Çantam, ${Sepet.ozet()}`:'Çantam, boş')}
+  if(btn){const b=btn.querySelector('b');if(b.textContent!=String(n)&&n>0){b.classList.remove('yeni');void b.offsetWidth;b.classList.add('yeni')}b.textContent=n;b.classList.toggle('var',n>0);btn.classList.toggle('dolu',n>0);btn.setAttribute('aria-label',n?`Çantam, ${Sepet.ozet()}`:'Çantam, boş')}
   const L=document.querySelector('.cekmece .liste');if(!L)return;const k=Sepet.kalemler();
   document.querySelector('.cekmece .alt').hidden=!k.length;
   if(!k.length){
@@ -128,10 +128,15 @@ function toast(m,eylem){let t=document.querySelector('.toast');if(!t){t=document
  t.innerHTML='<span>'+m+'</span>'+(eylem?'<button type="button">'+eylem[0]+'</button>':'');
  if(eylem)t.querySelector('button').onclick=eylem[1];
  t.classList.add('on');clearTimeout(t._z);t._z=setTimeout(()=>t.classList.remove('on'),2600)}
-/* Ürün görselini sepete uçur, sepet zıplasın */
+/* Çantanın çevresinde altın ışık halkası (zıplama yerine) */
+function parlat(e){if(!e)return;e.classList.add('isil');e.classList.remove('parla');void e.offsetWidth;e.classList.add('parla')}
+/* Ürün görseli çantaya uçar, çanta hafifçe parlar. Görünür bir çanta hedefi
+   (örneğin Ürünlerimiz'deki alt çubuk) varsa oraya, yoksa köşedeki düğmeye. */
 function sepeteUcur(kaynak){
- const hedef=document.querySelector('.sepetbtn');if(!hedef||!kaynak)return;
- if(matchMedia('(prefers-reduced-motion: reduce)').matches){hedef.classList.remove('zipla');void hedef.offsetWidth;hedef.classList.add('zipla');return}
+ const adaylar=[...document.querySelectorAll('[data-sepet-hedef],.sepetbtn')]
+  .filter(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&s.visibility!=='hidden'&&+s.opacity>.3&&r.bottom>0&&r.top<innerHeight});
+ const hedef=adaylar[0];if(!hedef||!kaynak)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){parlat(hedef);return}
  const a=kaynak.getBoundingClientRect(),b=hedef.getBoundingClientRect();
  const k=document.createElement('img');k.src=kaynak.currentSrc||kaynak.src;k.className='ucan';k.alt='';
  if(kaynak.style.objectPosition)k.style.objectPosition=kaynak.style.objectPosition;
@@ -140,7 +145,7 @@ function sepeteUcur(kaynak){
  document.body.append(k);
  const dx=b.left+b.width/2-(a.left+a.width/2),dy=b.top+b.height/2-(a.top+a.height/2);
  const an=k.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*.5}px,${dy*.5-80}px) scale(.55)`,opacity:1,offset:.55},{transform:`translate(${dx}px,${dy}px) scale(.12)`,opacity:.4}],{duration:750,easing:'cubic-bezier(.5,0,.3,1)'});
- an.onfinish=()=>{k.remove();hedef.classList.remove('zipla');void hedef.offsetWidth;hedef.classList.add('zipla')};
+ an.onfinish=()=>{k.remove();parlat(hedef)};
 }
 let _oncekiOdak=null;
 function cekmeceAc(){const c=document.querySelector('.cekmece');if(!c)return;_oncekiOdak=document.activeElement;c.classList.add('acik');c.querySelector('.pan').setAttribute('aria-hidden','false');
@@ -149,6 +154,18 @@ function cekmeceAc(){const c=document.querySelector('.cekmece');if(!c)return;_on
 function cekmeceKapat(){const c=document.querySelector('.cekmece');if(!c||!c.classList.contains('acik'))return;c.classList.remove('acik');c.querySelector('.pan').setAttribute('aria-hidden','true');
  document.documentElement.classList.remove('kilit');try{lenis&&lenis.start()}catch(e){}
  if(_oncekiOdak&&_oncekiOdak.focus)_oncekiOdak.focus()}
+/* Altbilgi bağlantılarının yanındaki küçük altın ikonlar (tek çizgi ailesi) */
+const F_IKON={
+ ev:'<path d="M3.6 10.4 12 4l8.4 6.4"/><path d="M5.7 9.4V19a.9.9 0 0 0 .9.9h3.3v-4.6h4.2v4.6h3.3a.9.9 0 0 0 .9-.9V9.4"/>',
+ canta:'<path d="M5 7h14l-1.5 12h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/>',
+ cerceve:'<rect x="4" y="4" width="16" height="16" rx="1.5"/><rect x="7.5" y="7.5" width="9" height="9" rx=".8"/>',
+ kabe:'<path d="M4 8.5 12 5l8 3.5v9L12 21l-8-3.5z"/><path d="M4 11.5l8 3.5 8-3.5"/>',
+ konum:'<path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+ tel:'<path d="M6.6 3.6a1.6 1.6 0 0 1 2.2.6l1.4 2.5a1.6 1.6 0 0 1-.4 2l-1 .9a9.4 9.4 0 0 0 4.1 4.1l.9-1a1.6 1.6 0 0 1 2-.4l2.5 1.4a1.6 1.6 0 0 1 .6 2.2l-.8 1.4a2.6 2.6 0 0 1-2.9 1.2C9.8 19 5 14.2 3.6 8.4a2.6 2.6 0 0 1 1.2-2.9z"/>',
+ wa:'<path d="M4.5 19.5 5.6 16A8 8 0 1 1 8.4 18.6z"/><path d="M9.3 9.2c.3 1.9 1.6 3.4 3.5 4.1l1-1 1.6.8-.3 1.2c-2.8.3-6-2.6-6.2-5.3l1.2-.4.8 1.5z"/>',
+ insta:'<rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.6" cy="7.4" r=".6" fill="currentColor"/>'
+};
+const fl=(href,ik,ad,dis)=>`<a href="${href}"${dis?' target="_blank" rel="noopener"':''}><svg class="f-ik" viewBox="0 0 24 24" aria-hidden="true">${F_IKON[ik]}</svg><span>${ad}</span></a>`;
 /* Menü, çekmece, sabit WhatsApp ve altbilgi */
 function kabuk(aktif){
  const nav=document.createElement('nav');nav.className='nav';nav.setAttribute('aria-label','Ana menü');
@@ -236,8 +253,9 @@ function kabuk(aktif){
  const f=document.querySelector('footer.sf');
  if(f){const notlar=[...f.querySelectorAll('.f-not')];
  f.innerHTML=`<div class="f-ust"><div class="f-blok"><a class="f-logo" href="index.html" aria-label="${MAGAZA.ad}, ana sayfa"><img src="assets/logo-alt.png" alt="" width="184" height="44" loading="lazy"></a><p>${MAGAZA.adres}<br>${MAGAZA.saat}</p></div>
- <nav class="f-blok" aria-label="Alt menü"><a href="index.html">Ana Sayfa</a><a href="urunler.html">Ürünlerimiz</a><a href="tablolar.html">Tablo Eserleri</a><a href="tur.html">Dijital Umre Turu</a><a href="iletisim.html">İletişim</a></nav>
- <div class="f-blok"><a href="${MAGAZA.telLink}">${MAGAZA.tel}</a><a href="https://wa.me/${WA}" target="_blank" rel="noopener">WhatsApp'tan yazın</a><a href="${MAGAZA.instagram}" target="_blank" rel="noopener">Instagram</a><span class="f-telif">© ${new Date().getFullYear()} ${MAGAZA.ad}</span></div></div>`;
+ <nav class="f-blok f-menu" aria-label="Alt menü">${fl('index.html','ev','Ana Sayfa')}${fl('urunler.html','canta','Ürünlerimiz')}${fl('tablolar.html','cerceve','Tablo Eserleri')}${fl('tur.html','kabe','Dijital Umre Turu')}${fl('iletisim.html','konum','İletişim')}</nav>
+ <div class="f-blok f-menu">${fl(MAGAZA.telLink,'tel',MAGAZA.tel)}${fl('https://wa.me/'+WA,'wa','WhatsApp',1)}${fl(MAGAZA.instagram,'insta','Instagram',1)}</div></div>
+ <p class="f-telif">© ${new Date().getFullYear()} ${MAGAZA.ad}</p>`;
  notlar.forEach(n=>f.append(n))}
  Sepet.ciz();
 }
@@ -269,4 +287,50 @@ function akisKur(){
  uyandir();
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('gel');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -6% 0px'});
  document.querySelectorAll('[data-gel]').forEach(e=>io.observe(e));
+}
+
+/* Damlacık arama kutusu (telefon). sayfa: .arama-yer içindeki .arama kullanılır.
+   Eşik iki yönlüdür: yukarı çıkarken 10px'te tutunur, geri inerken 22px'te bırakır;
+   böylece eşik çevresinde gidip gelip titremez. */
+function damlaArama(){
+ const yer=document.querySelector('.arama-yer'),kutu=yer&&yer.querySelector('.arama'),gir=kutu&&kutu.querySelector('input');
+ if(!kutu||!gir)return;
+ kutu.classList.add('damla');
+ let sabit=false;
+ const tel=()=>innerWidth<=720;
+ const birak=()=>{sabit=false;kutu.classList.remove('acik','donuyor');kutu.style.width='';document.body.classList.remove('ara-sabit')};
+ const tutun=()=>{
+  const r=kutu.getBoundingClientRect();
+  document.documentElement.style.setProperty('--damla-sag',Math.max(12,Math.round(innerWidth-r.right))+'px');
+  sabit=true;
+  /* Tutunduğu an, kutunun o anki genişliğiyle başla; sonraki karede damlaya küçül */
+  kutu.classList.add('donuyor');kutu.style.width=r.width+'px';
+  document.body.classList.add('ara-sabit');
+  void kutu.offsetWidth;
+  kutu.classList.remove('donuyor');
+  requestAnimationFrame(()=>{kutu.style.width=''});
+ };
+ let bekle=false;
+ const bak=()=>{bekle=false;
+  if(!tel()){if(sabit)birak();return}
+  const t=yer.getBoundingClientRect().top;
+  if(!sabit&&t<=10)tutun();
+  else if(sabit&&t>22&&!kutu.classList.contains('acik'))birak();
+  else if(sabit&&t>22&&kutu.classList.contains('acik')&&document.activeElement!==gir)birak();
+ };
+ addEventListener('scroll',()=>{if(bekle)return;bekle=true;requestAnimationFrame(bak)},{passive:true});
+ addEventListener('resize',()=>{if(!tel()&&sabit)birak();bak()});
+ /* Küçük hâline dokununca açılır ve imleç kutuya girer */
+ const ac=()=>{if(sabit)kutu.classList.add('acik')};
+ const kapa=()=>{if(!gir.value.trim())kutu.classList.remove('acik')};
+ kutu.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;ac();
+  if(document.activeElement!==gir)setTimeout(()=>gir.focus(),10)});
+ gir.addEventListener('focus',ac);
+ gir.addEventListener('blur',()=>setTimeout(kapa,160));
+ let sonY=scrollY;
+ addEventListener('scroll',()=>{if(Math.abs(scrollY-sonY)<40)return;sonY=scrollY;
+  /* Yazarken kapanmaz: iOS klavyeyi açarken sayfayı kaydırıyor */
+  if(document.activeElement===gir)return;
+  if(kutu.classList.contains('acik'))kapa()},{passive:true});
+ bak();
 }

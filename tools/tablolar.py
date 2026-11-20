@@ -7,6 +7,7 @@ dışarı verilmez: her esere kendi kodumuz (IHE-xxxx) verilir.
 
 Çıktı: docs/tablo-veri.js  ->  window.TABLOLAR, window.TABLO_KAT
 """
+import glob
 import hashlib
 import json
 import os
@@ -24,6 +25,9 @@ FOTO = os.environ.get("TABLO_FOTO", "1").lower() in {"1", "true", "evet"}
 
 # Satmadığımız baskı (çerçevesiz) eserler: ne kendileri ne kategorileri listelenir.
 BASKI_KAT = {"cercevesiz hat eserleri"}
+
+# Hat sanatıyla ilgisi olmayan (manzara, şehir vb.) eserler: listelenmez
+ILGISIZ = {"dev dalganin gun batimiyla dansi", "ingiltere sokaklarinda gunluk hayat"}
 
 # Katalogda geçen, müşteriye gösterilmemesi gereken marka adları
 YASAK = ("aşiyan", "asiyan", "myikas", "ikas")
@@ -58,6 +62,47 @@ def temiz_ad(ad):
     return re.sub(r"\s+", " ", ad).strip(" -–—|")
 
 
+OLCU_RE = re.compile(r"(\d{1,3})\s*[xX×]\s*(\d{1,3})")
+
+
+def detaylar():
+    """Ürün kodu -> ayrıntı (varyantlar). Boyutlar kaynakta varyant adında duruyor."""
+    d = {}
+    for f in sorted(glob.glob(os.path.join("docs", "data", "detay", "*.json"))):
+        with open(f, encoding="utf-8") as fh:
+            d.update(json.load(fh))
+    return d
+
+
+def olculer(det):
+    """Varyant adlarından benzersiz ölçüleri çıkarır (küçükten büyüğe): ['18x18', '35x35']"""
+    gor, out = set(), []
+    for v in (det or {}).get("variants") or []:
+        m = OLCU_RE.search(v.get("name") or "")
+        if not m:
+            continue
+        o = f"{int(m.group(1))}x{int(m.group(2))}"
+        if o not in gor:
+            gor.add(o)
+            out.append(o)
+    return sorted(out, key=lambda o: [int(x) for x in o.split("x")])
+
+
+PARCA_RE = re.compile(r"(Küçük|Büyük|Orta)\s*:\s*(\d{1,3})\s*[xX×]\s*(\d{1,3})", re.I)
+
+
+def parca_olculeri(det):
+    """Takım eserlerde varyant yok; parça ölçüleri açıklamada yazıyor."""
+    gor, out = set(), []
+    for ad, a, b in PARCA_RE.findall((det or {}).get("description") or ""):
+        k = ad.capitalize()
+        if k in gor:
+            continue
+        gor.add(k)
+        out.append(f"{k} {int(a)}x{int(b)}")
+    return out
+
+
 def main():
     if not os.path.exists(KAYNAK):
         sys.exit("Katalog yok: " + KAYNAK)
@@ -65,6 +110,7 @@ def main():
         ham = json.load(f)
     kayitlar = ham if isinstance(ham, list) else (ham.get("products") or list(ham.values()))
 
+    det = detaylar()
     cikti, gorulen = [], set()
     for i, p in enumerate(kayitlar):
         if not isinstance(p, dict):
@@ -76,6 +122,8 @@ def main():
         if anahtar in gorulen:                       # aynı eser birden çok kayıtta olabilir
             continue
         if any(y in anahtar for y in YASAK):
+            continue
+        if anahtar.replace("ı", "i") in ILGISIZ:
             continue
         kat = temiz_ad(p.get("category")) or "Hat Eserleri"
         # Baskı eserler satılmıyor: kategorisinden ya da adından anlaşılanı at
@@ -90,6 +138,13 @@ def main():
             "fiyat": p.get("price"),
             "fiyatUst": p.get("priceMax") if p.get("priceMax") != p.get("price") else None,
         }
+        ol = olculer(det.get(p.get("code")))
+        if ol:
+            kayit["olcu"] = ol
+        else:
+            pa = parca_olculeri(det.get(p.get("code")))
+            if pa:
+                kayit["parca"] = pa
         if FOTO and p.get("cover"):
             kayit["gorsel"] = p["cover"]
         cikti.append({k: v for k, v in kayit.items() if v is not None})

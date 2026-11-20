@@ -63,15 +63,25 @@
 .kart .kat{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--altin2);opacity:.9}
 .kart h3{font-size:21px;line-height:1.2}
 .kart p{font-size:14px;color:rgba(234,230,220,.7);line-height:1.55;flex:1}
-.kart .f{font:400 24px 'Marcellus';margin:6px 0 10px}
-.kart .eylem{height:48px;position:relative}
-.kart .ekle{width:100%;height:48px;padding:0}
-.kart .stepper{position:absolute;inset:0;display:none;align-items:center;justify-content:space-between;border-radius:999px;border:1px solid var(--altin);padding:3px;background:rgba(201,162,75,.06)}
-.kart .stepper button{width:42px;height:42px;border-radius:50%;border:0;background:rgba(201,162,75,.2);color:var(--altin2);font-size:22px;line-height:1;cursor:pointer;transition:background .25s}
+.kart .f{font:400 24px 'Marcellus';margin:0}
+/* Çantaya ekleme: görselin sağ alt köşesinde küçük, cam bir çanta ikonu.
+   Her kartta kocaman düğme olunca göz ürünü değil düğmeyi görüyordu. */
+.kart .ekle{position:absolute;right:10px;bottom:10px;z-index:2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+ border:1px solid rgba(255,255,255,.4);color:#fff;background:rgba(10,20,44,.5);
+ backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 20px -10px rgba(0,0,0,.8);
+ transition:background .3s,color .3s,border-color .3s,transform .25s}
+.kart .ekle svg{width:21px;height:21px}
+@media (hover:hover){.kart .ekle:hover{background:var(--altin);color:#1a1205;border-color:transparent;transform:scale(1.06)}}
+.kart .ekle:active{transform:scale(.9)}
+.kart.sepette .ekle{background:var(--altin);color:#1a1205;border-color:transparent}
+.kart .fsat{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:6px;min-height:40px}
+.kart .stepper{display:none;align-items:center;gap:2px;height:38px;border-radius:999px;border:1px solid rgba(201,162,75,.6);padding:2px;background:rgba(201,162,75,.06)}
+.kart .stepper output{min-width:26px}
+.kart .stepper button{width:32px;height:32px;border-radius:50%;border:0;background:rgba(201,162,75,.2);color:var(--altin2);font-size:19px;line-height:1;cursor:pointer;transition:background .25s}
 @media (hover:hover){.kart .stepper button:hover{background:rgba(201,162,75,.36)}}
 .kart .stepper output{font:600 15px 'Hanken Grotesk';text-align:center}
 .kart .stepper output small{display:block;font-weight:500;font-size:11px;opacity:.65}
-.kart.sepette .ekle{display:none}
 .kart.sepette .stepper{display:flex}
 .kart .stepper output.vur{animation:vur .4s}
 @keyframes vur{40%{transform:scale(1.3);color:var(--altin2)}}
@@ -84,7 +94,15 @@
 .canta-cubuk .ozet{display:flex;align-items:baseline;gap:10px;white-space:nowrap;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:none;color:#fff;font:500 14px 'Hanken Grotesk';cursor:pointer;text-align:left}
 @media (hover:hover){.canta-cubuk .ozet:hover{background:rgba(255,255,255,.06)}}
 .canta-cubuk .ozet b{font-family:'Marcellus';font-weight:400;font-size:19px;color:var(--altin2)}
-.canta-cubuk .ozet u{text-decoration:underline;text-underline-offset:4px;opacity:.8;font-size:13px}
+.canta-cubuk .c-ozet{display:flex;align-items:baseline;gap:9px;min-width:0}
+.canta-cubuk .c-ik{position:relative;display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:50%;align-self:center;
+ background:rgba(201,162,75,.16);border:1px solid rgba(201,162,75,.45);color:var(--altin2)}
+.canta-cubuk .c-ik svg{width:19px;height:19px}
+.canta-cubuk .c-ik .c-say{position:absolute;top:-4px;right:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;display:grid;place-items:center;
+ background:var(--k-bordo);color:#fff;font:600 11px 'Hanken Grotesk';box-shadow:0 0 0 2px rgba(10,20,44,.95)}
+.canta-cubuk .ozet{align-items:center}
+.canta-cubuk .gor svg{width:16px;height:16px;margin-right:-4px}
+.canta-cubuk .gor{gap:6px}
 .canta-cubuk .mesaj{color:var(--altin2);display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .canta-cubuk .btn{min-height:44px;padding:11px 18px;font-size:14px}
 @media(max-width:1020px){
@@ -105,23 +123,40 @@
 .adim3 i{width:30px;height:30px;font-size:14px}
 .adim3 b{font-size:13.5px;line-height:1.25;margin-bottom:0}
 .adim3 span{display:none}
-.not-alt{margin-top:14px;font-size:12.5px}
+.not-alt{display:none}
+/* Üç adım tek ince şeritte: yan yana, küçük numaralar ve kısa yazılar */
+.bas{padding-top:76px;padding-bottom:14px}
+.bas h1{font-size:clamp(27px,7.2vw,33px)}
+.bas-iki{gap:14px}
+.adim3{border-radius:14px}
+.adim3 li{flex-direction:row;align-items:center;text-align:left;gap:7px;padding:8px 8px}
+.adim3 i{width:20px;height:20px;font-size:11px}
+.adim3 b{font-family:'Hanken Grotesk';font-weight:500;font-size:11.5px;line-height:1.25;text-align:left;color:rgba(234,230,220,.86)}
+.sonuc{padding:2px 0 12px;font-size:13px}
 .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .daha{padding-bottom:120px}
  .daha button{min-width:0;width:100%}
 .kart .b{padding:14px}
 .kart h3{font-size:17px}
 .kart p{display:none}
-.kart .f{font-size:19px;margin:2px 0 8px}
+.kart .f{font-size:19px}
+/* Dar kartta adet seçici fiyatın altına iner */
+.kart .fsat{flex-wrap:wrap;gap:6px}
+.kart.sepette .stepper{flex:1 1 100%;justify-content:space-between}
+.kart .ekle{width:42px;height:42px;right:8px;bottom:8px}
 .kart .kat{font-size:10px;letter-spacing:.12em}
-.kart .ekle{font-size:13.5px}
-.kart .stepper button{width:40px;height:40px}
-.canta-cubuk{bottom:calc(84px + env(safe-area-inset-bottom,0px));width:calc(100vw - 16px);justify-content:space-between}
-.canta-cubuk .ozet{padding:0 10px;font-size:13.5px;gap:8px;min-width:0;overflow:hidden}
-.canta-cubuk .ozet u{display:none}
-.canta-cubuk .btn{padding:11px 14px;font-size:13.5px}}
+
+/* Telefonda çubuk içeriğine göre genişler ve ekranın tam ortasında durur;
+   WhatsApp'tan gönderme çekmecenin içinde. */
+.canta-cubuk{bottom:calc(84px + env(safe-area-inset-bottom,0px));width:auto;max-width:calc(100vw - 16px);justify-content:center;gap:8px;padding:6px}
+.canta-cubuk .ozet{padding:0 8px 0 0;font-size:13.5px;gap:10px;min-width:0;overflow:hidden}
+.canta-cubuk .c-ozet b{font-size:17px}
+.canta-cubuk .c-ozet>span{display:none}
+.canta-cubuk .gor{white-space:nowrap}
+.canta-cubuk #cubuk-wa{display:none}
+.canta-cubuk .btn{padding:11px 16px;font-size:14px}}
 @media(max-width:370px){
-.canta-cubuk .btn .uzun{display:none}}
+.canta-cubuk .c-ozet span{display:none}}
 @media(prefers-reduced-motion:reduce){
 .canta-cubuk,.canta-cubuk.on{transition:none}}
 /* ---- arama ---- */
@@ -193,9 +228,10 @@
    yukarı çıkar, kategori şeridi tepede yapışık kalır. */
 .arama{flex:1;width:100%;margin-left:0}
 .arama input{flex:1;min-width:0;width:auto}
-/* Kategori şeridi tepede kalsın: arama satırı yukarı çıkar, çipler yapışır */
-.filtre-dis{position:sticky;top:calc(-1 * var(--kay,0px));margin-top:0;padding-top:env(safe-area-inset-top,0px)}
-.filtre-dis.yapisti{background:rgba(6,13,31,.9);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
+/* Telefonda sabit kalan kategori şeridi değil, arama kutusudur: kaydırınca sağ
+   üste tutunup damlacığa dönüşür (ortak damlaArama). Kategori şeridi sayfayla akar. */
+.filtre-dis{position:static;margin-top:0;padding-top:0}
+.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
 .filtre-dis .filtre{padding-block:10px 12px}
 }
 @keyframes araIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
@@ -213,9 +249,9 @@
   </div>
   <div class="bas-sag">
    <ol class="adim3">
-    <li><i class="metal" aria-hidden="true">1</i><div><b>Çantanıza ekleyin</b><span>İhtiyacınız olan ürünleri ve adetlerini seçin.</span></div></li>
+    <li><i class="metal" aria-hidden="true">1</i><div><b>Çantaya ekleyin</b><span>İhtiyacınız olan ürünleri ve adetlerini seçin.</span></div></li>
     <li><i class="metal" aria-hidden="true">2</i><div><b>WhatsApp'tan gönderin</b><span>Seçtiğiniz ürünler tek mesajda, liste halinde bize ulaşır.</span></div></li>
-    <li><i class="metal" aria-hidden="true">3</i><div><b>Çantanızı hazırlayalım</b><span>Stok ve fiyatı teyit edip çantanızı mağazamızda hazırlarız.</span></div></li>
+    <li><i class="metal" aria-hidden="true">3</i><div><b>Biz hazırlayalım</b><span>Stok ve fiyatı teyit edip çantanızı mağazamızda hazırlarız.</span></div></li>
    </ol>
    <div class="arama-yer">
    <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
@@ -233,7 +269,7 @@
 <div class="kap"><p class="sonuc" id="sonuc" aria-live="polite"></p><div class="izgara"></div>
 <div class="daha" id="daha" hidden><button class="btn cam" type="button">Daha fazla göster</button></div></div>
 </main>
-<div class="canta-cubuk" id="cubuk"><button class="ozet" type="button" aria-label="Çantayı aç"></button><button class="btn wa" id="cubuk-wa" type="button" onclick="Sepet.gonder()"><span><span class="uzun">WhatsApp'tan </span>gönder</span></button></div>
+<div class="canta-cubuk" id="cubuk"><button class="ozet" type="button" aria-label="Çantayı aç"></button><button class="btn altin gor" type="button" id="cubuk-gor">Çantamı gör<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><button class="btn wa" id="cubuk-wa" type="button" onclick="Sepet.gonder()"><span>WhatsApp'tan gönder</span></button></div>
 <div class="buyut" id="buyut" hidden role="dialog" aria-modal="true" aria-labelledby="buyutAd">
  <div class="buyut-ic">
   <button class="buyut-x" type="button" id="buyutKapat" aria-label="Kapat">&times;</button>
@@ -271,7 +307,8 @@ function filtreCiz(){F.innerHTML=kats.map(k=>`<button type="button" aria-pressed
 F.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.k===sec)return;sec=b.dataset.k;
  history.replaceState(null,'',sec==='Tümü'?location.pathname:'#'+encodeURIComponent(sec));filtreCiz();izgaraCiz();
  if(FD.classList.contains('yapisti'))filtreyeGit()});
-function filtreyeGit(){const hedef=document.querySelector('.bas').offsetHeight+(innerWidth>720?-82:0);
+function filtreyeGit(){const hedef=innerWidth>720?document.querySelector('.bas').offsetHeight-82
+  :Math.max(0,F.getBoundingClientRect().top+scrollY-66); /* telefonda şerit arama damlasının altında kalsın */
  if(lenis)lenis.scrollTo(hedef,{immediate:azHareketU});else scrollTo(0,hedef)}
 let ara='';
 const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i');
@@ -307,9 +344,8 @@ function kartHtml(u){
  if(u.yedek){const yt=resim(u.yedek);zincir.push(kucuk(yt),yt)}
  else zincir.push(tam.replace(/\.webp$/,'.jpg'));
  return `<article class="kart" data-id="${u.id}">
-  <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
-  <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
-  <div class="eylem"><button class="btn altin ekle" type="button" aria-label="${u.ad}, çantaya ekle">Çantaya ekle</button>
+  <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Çantada</span><button class="ekle" type="button" aria-label="${u.ad}, çantaya ekle" title="Çantaya ekle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/><path class="arti" d="M12 13.4v4.4M9.8 15.6h4.4"/></svg></button></div>
+  <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><div class="fsat"><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
   <div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
 }
 function dahaCiz(){
@@ -346,8 +382,9 @@ ARASIL.addEventListener('click',function(){ARA.value='';ARASIL.hidden=true;ara='
 
 const C=document.getElementById('cubuk'),OZ=C.querySelector('.ozet'),DUY=document.getElementById('duyuru');
 let mesajZ=0;
-function cubukMesaj(m){OZ.innerHTML=`<span class="mesaj">✓ ${m}</span>`;DUY.textContent=m;clearTimeout(mesajZ);mesajZ=setTimeout(()=>{mesajZ=0;durum()},2200)}
-OZ.addEventListener('click',cekmeceAc);
+const CUBUK_CANTA=`<span class="c-ik" data-sepet-hedef><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><b class="c-say"></b></span>`;
+function cubukMesaj(m){OZ.innerHTML=CUBUK_CANTA+`<span class="mesaj">✓ ${m}</span>`;OZ.querySelector('.c-say').textContent=Sepet.sayi();DUY.textContent=m;clearTimeout(mesajZ);mesajZ=setTimeout(()=>{mesajZ=0;durum()},2200)}
+OZ.addEventListener('click',cekmeceAc);document.getElementById('cubuk-gor').addEventListener('click',cekmeceAc);
 I.addEventListener('click',e=>{
  const k=e.target.closest('.kart');if(!k)return;const id=k.dataset.id,u=URUNLER.find(x=>x.id===id);
  if(e.target.closest('.ekle')){Sepet.ekle(id,1);sepeteUcur(k.querySelector('.g img'));cubukMesaj(`Eklendi: ${u.ad}`);
@@ -420,7 +457,8 @@ function durum(){
  I.querySelectorAll('.kart').forEach(k=>{const n=Sepet.adet(k.dataset.id),o=k.querySelector('output');k.classList.toggle('sepette',n>0);
   if(n>0&&o.textContent!=n){o.textContent=n;o.classList.remove('vur');void o.offsetWidth;o.classList.add('vur')}});
  const n=Sepet.sayi();C.classList.toggle('on',n>0);document.body.classList.toggle('cubuk-acik',n>0&&!C.classList.contains('altta'));
- if(!mesajZ)OZ.innerHTML=n?`<span>${Sepet.ozet()}</span><b>${TL(Sepet.toplam())}</b><u>Çantayı gör</u>`:'';
+ if(!mesajZ)OZ.innerHTML=n?CUBUK_CANTA+`<span class="c-ozet"><span>${Sepet.ozet()}</span><b>${TL(Sepet.toplam())}</b></span>`:'';
+ const cs=OZ.querySelector('.c-say');if(cs)cs.textContent=n;
 }
 document.addEventListener('sepet',durum);
 /* süzgeç şeridi yapışınca arka plan; altbilgiye gelince çubuk iner */
@@ -453,7 +491,7 @@ addEventListener('hashchange',()=>{const s=hashKat();if(s!==sec){sec=s;filtreCiz
 DAHA.querySelector('button').addEventListener('click',dahaCiz);
 /* Düğmeye yaklaşınca sıradaki grup kendiliğinden yüklenir */
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&!DAHA.hidden)dahaCiz()},{rootMargin:'600px 0px'}).observe(DAHA);
-filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();
+filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();damlaArama();
 /* Not: arama kutusu artık ekranın üstünde yüzmüyor; kategori şeridi yapışıyor,
    arama satırı sayfayla birlikte yukarı çıkıyor. */
 if(sec!=='Tümü')requestAnimationFrame(()=>filtreyeGit());
