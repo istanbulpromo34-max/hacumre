@@ -419,9 +419,9 @@
 /* Yazı satırları lamel ızgarasına oturur (her satır tam lamel yüksekliğinde) ki
    kesikler harflerin hep aynı yerinden geçsin; renge lamellerin ışık-gölgesi işlenir */
 .kp-bas,.kp-saat{display:block;color:transparent;-webkit-background-clip:text;background-clip:text;background-size:100% var(--l),100% 100%}
-.kp-bas{font:400 calc(var(--l) * 1.32) 'Marcellus',serif;line-height:calc(var(--l) * 2);letter-spacing:.12em;padding-left:.12em;text-transform:uppercase;
- background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#e6cb86,#c9a556 60%,#a9853b)}
-.kp-saat{font:600 calc(var(--l) * 2.05) 'Barlow Condensed','Hanken Grotesk',sans-serif;line-height:calc(var(--l) * 2);letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-top:var(--l);white-space:nowrap;
+.kp-bas{font:500 calc(var(--l) * .82) 'Hanken Grotesk',system-ui,sans-serif;line-height:calc(var(--l) * 1.5);letter-spacing:.16em;padding-left:.16em;text-transform:uppercase;white-space:nowrap;
+ background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#ece7dc,#d6d0c3)}
+.kp-saat{font:600 calc(var(--l) * 2.05) 'Barlow Condensed','Hanken Grotesk',sans-serif;line-height:calc(var(--l) * 2);letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-top:calc(var(--l) * .5);white-space:nowrap;
  background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.22) 0,rgba(255,255,255,.06) calc(var(--l) * .14),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.18) calc(var(--l) * .8),rgba(0,0,0,.5) calc(var(--l) * .88),rgba(0,0,0,.5) var(--l)),linear-gradient(180deg,#ece7dc,#d6d0c3)}
 @media(prefers-reduced-motion:reduce){.kp-perde{transition:none}.gece{transition:none}}
 /* Telefonda vitrin karartması yok (küçük fotoğrafta sönük leke gibi duruyordu); yalnız kepenk iner */
