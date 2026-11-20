@@ -39,7 +39,7 @@ jobs:
       - name: Dosya baglantilarini damgala
         run: |
           V="${GITHUB_SHA::8}"
-          for d in site.css site.js yorumlar.js urunler-veri.js hava.js; do
+          for d in site.css site.js yorumlar.js urunler-veri.js tablo-veri.js hava.js; do
             grep -rl --include='*.html' "\"$d\"" docs | while read -r f; do
               sed -i "s|\"$d\"|\"$d?v=$V\"|g" "$f"
             done
