@@ -305,9 +305,16 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 @media(max-width:720px){
  .nav{background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04) 48%,rgba(255,255,255,.07)),rgba(12,22,48,.55);
   backdrop-filter:blur(26px) saturate(190%) brightness(1.05);-webkit-backdrop-filter:blur(26px) saturate(190%) brightness(1.05);
-  border:1px solid rgba(255,255,255,.34);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.05),
-   0 0 0 1px rgba(0,0,0,.35),0 14px 36px rgba(0,0,0,.55)}
+  /* İnce altın kontur: üstte parlak, altta koyulaşan cam kenarı gibi (likit camla uyumlu) */
+  border:1.5px solid transparent;
+  background-origin:border-box;
+  box-shadow:inset 0 1px 0 rgba(255,244,214,.5),inset 0 -1px 0 rgba(0,0,0,.35),
+   0 0 0 .5px rgba(0,0,0,.4),0 0 14px rgba(201,162,75,.18),0 14px 36px rgba(0,0,0,.55)}
+ .nav::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(160deg,rgba(246,224,160,.95),rgba(201,162,75,.55) 35%,rgba(150,115,45,.35) 60%,rgba(230,199,122,.85));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
  .nav a.on:not(.tur){background:rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
- body.kabuk-gizli .nav{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03)),rgba(12,22,48,.32);border-color:rgba(255,255,255,.26)}
+ body.kabuk-gizli .nav{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03)),rgba(12,22,48,.32);border-color:transparent}
+ body.kabuk-gizli .nav::before{opacity:.7}
 }
