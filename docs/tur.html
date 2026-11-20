@@ -1292,7 +1292,12 @@ function sesYukselt(hedef){clearInterval(solma);solma=setInterval(()=>{const v=n
   if((hedef>nesid.volume&&v>=hedef)||(hedef<=nesid.volume&&v<=hedef)){nesid.volume=Math.max(0,hedef);clearInterval(solma);if(hedef===0)nesid.pause()}else nesid.volume=Math.max(0,Math.min(1,v))},60)}
 function cal(){nesid.volume=0;return nesid.play().then(()=>{basladi=true;sesDurum(true);sesYukselt(.32)})}
 function baslat(){if(basladi||!sesAcik)return;basladi=true;cal().catch(()=>{basladi=false})}
-['pointerdown','keydown','touchstart'].forEach(t=>addEventListener(t,e=>{if(e.target.closest&&e.target.closest('#ses'))return;baslat()},{passive:true}));
+['pointerdown','keydown','touchstart','scroll','wheel'].forEach(t=>addEventListener(t,e=>{if(e.target&&e.target.closest&&e.target.closest('#ses'))return;baslat()},{passive:true}));
+/* Dijital Tur'a zaten bir dokunuşla gelindiği için neşid açılışta kendiliğinden
+   başlatılmaya çalışılır. Tarayıcı sayfa başına ayrı bir dokunuş şart koşarsa
+   (iOS Safari böyle yapar) istek sessizce reddedilir ve neşid ilk dokunuşta,
+   yani sayfayı kaydırmaya başladığınız anda açılır. */
+if(sesAcik){nesid.preload='auto';baslat()}
 sesBtn.addEventListener('click',()=>{
   if(!nesid.paused&&sesBtn.classList.contains('caliyor')){sesAcik=false;try{localStorage.setItem('hu-ses','0')}catch(e){}sesYukselt(0);sesDurum(false)}
   else{sesAcik=true;try{localStorage.setItem('hu-ses','1')}catch(e){}cal().catch(()=>{})}
