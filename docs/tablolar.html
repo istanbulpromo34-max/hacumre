@@ -40,8 +40,19 @@
 /* süzgeç şeridi */
 .filtre-dis{position:sticky;top:0;z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
 .filtre-dis.yapisti{background:rgba(6,13,31,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
-.filtre-satir{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
-.filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px 14px;flex:1;min-width:0}
+.filtre-satir{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;padding-block:13px 0}
+.sekmeler{position:relative;flex:none;display:inline-flex;gap:2px;padding:4px;border-radius:999px;
+  border:1px solid rgba(201,162,75,.32);background:rgba(11,22,48,.72)}
+.sekme-isik{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:999px;background:var(--altin);pointer-events:none;
+  transition:transform .55s cubic-bezier(.2,.8,.2,1),width .55s cubic-bezier(.2,.8,.2,1)}
+.sekmeler button{position:relative;z-index:1;flex:none;min-height:40px;padding:8px 20px;border:0;background:none;border-radius:999px;
+  color:rgba(234,230,220,.72);cursor:pointer;font:500 14.5px 'Hanken Grotesk';white-space:nowrap;transition:color .4s}
+.sekmeler button:hover{color:#eae6dc}
+.sekmeler button[aria-selected="true"]{color:#1a1205}
+.sekmeler button small{opacity:.6;margin-left:7px;font-size:12.5px}
+.arama{margin-left:auto}
+.sekme-not{font-size:14px;line-height:1.65;color:rgba(234,230,220,.62);max-width:70ch;padding:18px 0 2px}
+.filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px 14px;min-width:0}
 .filtre::-webkit-scrollbar{display:none}
 .filtre button{flex:none;min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(11,22,48,.7);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:background .3s,border-color .3s,color .3s}
 .filtre button:hover{border-color:rgba(201,162,75,.55)}
@@ -101,15 +112,19 @@
 @media(max-width:720px){
  .bas{padding-bottom:36px}
  .filtre-dis{margin-top:0;padding-top:env(safe-area-inset-top,0px)}
- .filtre-satir{flex-wrap:wrap;gap:9px}
- .arama{width:100%;order:-1}
+ .filtre-satir{flex-wrap:wrap;gap:10px}
+ .arama{width:100%;order:-1;margin-left:0}
+ .sekmeler{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .sekmeler button{padding:8px 10px;font-size:13px;white-space:normal;line-height:1.25;min-height:48px}
+ .sekmeler button small{display:block;margin:2px 0 0}
+ .sekme-not{padding-top:14px;font-size:13.5px}
  .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .eser .b{padding:13px}
  .eser h3{font-size:15px}
  .eser .f{font-size:16.5px}
  .pencere-b{padding:22px}
 }
-@media(prefers-reduced-motion:reduce){.eser,.eser .cer svg{transition:none}}
+@media(prefers-reduced-motion:reduce){.eser,.eser .cer svg,.sekme-isik{transition:none}}
 @media(prefers-reduced-motion:no-preference){
  .pencere{animation:pAc .22s ease-out}
  .pencere-ic{animation:pKalk .32s cubic-bezier(.2,.8,.2,1)}
@@ -123,9 +138,9 @@
 <section class="bas kap">
  <div class="ust-yazi">Tablo Eserleri</div>
  <h1>Duvarınıza bir <span class="metal metal-yazi" data-isik>hat</span> eseri.</h1>
- <p class="giris">Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, çerçevesiz ve lazer kesim seçenekleriyle. Hac ve umre dönüşü hediye etmek için de, kendi evinizin duvarı için de.</p>
+ <p class="giris">Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, lazer kesim ve masaüstü seçenekleriyle. Hattat elinden çıkmış el yazması orijinal eserler ayrı sekmede duruyor. Hac ve umre dönüşü hediye etmek için de, kendi evinizin duvarı için de.</p>
  <ol class="adim3">
-  <li><i class="metal" aria-hidden="true">1</i><div><b>Eseri seçin</b><span>Kategorilerden gezin ya da arayın; beğendiğinizin üzerine dokunun.</span></div></li>
+  <li><i class="metal" aria-hidden="true">1</i><div><b>Eseri seçin</b><span>İki sekmeden gezin ya da arayın; beğendiğinizin üzerine dokunun.</span></div></li>
   <li><i class="metal" aria-hidden="true">2</i><div><b>WhatsApp'tan sorun</b><span>Eserin kodu mesaja kendiliğinden eklenir, siz göndermeye basarsınız.</span></div></li>
   <li><i class="metal" aria-hidden="true">3</i><div><b>Ölçü ve fiyatı konuşalım</b><span>Hangi ölçüler mevcut, çerçeve nasıl olsun; hepsini birlikte belirleyelim.</span></div></li>
  </ol>
@@ -133,13 +148,15 @@
 </section>
 <div class="filtre-dis" id="filtre-dis"><div class="kap">
  <div class="filtre-satir">
-  <div class="filtre" role="group" aria-label="Eser grupları"></div>
+  <div class="sekmeler" id="sekmeler" role="tablist" aria-label="Eser türü"><span class="sekme-isik" id="sekmeIsik" aria-hidden="true"></span></div>
   <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
    <input id="ara" type="search" placeholder="Eser ara…" autocomplete="off" aria-label="Eser ara">
    <button type="button" id="araSil" aria-label="Aramayı temizle" hidden>&times;</button></label>
  </div>
+ <div class="filtre" role="group" aria-label="Eser grupları"></div>
 </div></div>
 <div class="kap">
+ <p class="sekme-not" id="sekmeNot"></p>
  <p class="sonuc" id="sonuc" aria-live="polite"></p>
  <div class="izgara" id="izgara"></div>
  <div class="daha"><button type="button" id="daha" hidden>Daha fazla eser göster</button><p id="dahaNot"></p></div>
@@ -156,7 +173,9 @@ const SAYFA = 48;
 const ESERLER = window.TABLOLAR || [], KATLAR = window.TABLO_KAT || [], FOTO = !!window.TABLO_FOTO;
 const I = document.getElementById('izgara'), F = document.querySelector('.filtre'),
       SON = document.getElementById('sonuc'), FD = document.getElementById('filtre-dis'),
-      DAHA = document.getElementById('daha'), DNOT = document.getElementById('dahaNot');
+      DAHA = document.getElementById('daha'), DNOT = document.getElementById('dahaNot'),
+      SK = document.getElementById('sekmeler'), SISIK = document.getElementById('sekmeIsik'),
+      SNOT = document.getElementById('sekmeNot');
 const sade = t => (t || '').toLocaleLowerCase('tr').replace(/[ıİ]/g, 'i');
 const kacis = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const TL = n => n == null ? null : new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(n) + ' ₺';
@@ -196,26 +215,64 @@ function waMetin(e){
     '\n\nHangi ölçüleri mevcut ve fiyatı nedir?';
 }
 
-let sec = 'Tümü', ara = '', gosterilen = SAYFA;
+/* İki sekme: el yazması orijinaller fiyat bakımından ayrı bir dünya olduğu
+   için kendi sekmesinde durur, diğer her şey "Hat Tablo" altında toplanır. */
+const YAZMA = 'Orijinal Hat Eserleri';
+const SEKMELER = [
+  { k: 'hat', ad: 'Hat Tablo',
+    not: 'Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, lazer kesim ve masaüstü seçenekleriyle.' },
+  { k: 'yazma', ad: 'El Yazması Orijinal Eserler',
+    not: 'Hattatın elinden çıkmış orijinal eserler. Her biri tek tek yazıldığı için ölçüsüne ve işçiliğine göre fiyatlanır.' }
+];
+const sekmedekiler = k => ESERLER.filter(e => k === 'yazma' ? e.kat === YAZMA : e.kat !== YAZMA);
+
+let sekme = 'hat', sec = '', ara = '', gosterilen = SAYFA;
 
 function suzulmus(){
-  return ESERLER.filter(e => {
-    if (sec !== 'Tümü' && e.kat !== sec) return false;
+  return sekmedekiler(sekme).filter(e => {
+    if (sec && e.kat !== sec) return false;
     if (ara && sade(e.ad + ' ' + e.kat + ' ' + e.id).indexOf(ara) === -1) return false;
     return true;
   });
 }
+function sekmeKur(){
+  SK.insertAdjacentHTML('beforeend', SEKMELER.map(x =>
+    '<button type="button" role="tab" data-s="' + x.k + '" aria-selected="false">' +
+    kacis(x.ad) + '<small>' + sekmedekiler(x.k).length + '</small></button>').join(''));
+}
+function sekmeCiz(){
+  SK.querySelectorAll('button').forEach(b => {
+    const acik = b.dataset.s === sekme;
+    b.setAttribute('aria-selected', acik);
+    b.tabIndex = acik ? 0 : -1;
+  });
+  SNOT.textContent = (SEKMELER.find(x => x.k === sekme) || {}).not || '';
+  isigiTasi();
+}
+function isigiTasi(){
+  const b = SK.querySelector('button[aria-selected="true"]'); if (!b) return;
+  SISIK.style.width = b.offsetWidth + 'px';
+  SISIK.style.transform = 'translateX(' + b.offsetLeft + 'px)';
+}
 function filtreCiz(){
-  const liste = [{ ad: 'Tümü', adet: ESERLER.length }].concat(KATLAR);
-  F.innerHTML = liste.map(k =>
-    '<button type="button" data-k="' + kacis(k.ad) + '" aria-pressed="' + (sec === k.ad) + '">' +
+  /* El yazması tek bir grup; orada kategori şeridine gerek yok. */
+  if (sekme === 'yazma'){ F.hidden = true; F.innerHTML = ''; return; }
+  F.hidden = false;
+  F.innerHTML = KATLAR.filter(k => k.ad !== YAZMA).map(k =>
+    '<button type="button" data-k="' + kacis(k.ad) + '" aria-pressed="' + (sec === k.ad) + '"' +
+    (sec === k.ad ? ' title="Seçimi kaldırmak için tekrar dokunun"' : '') + '>' +
     kacis(k.ad) + '<small>' + k.adet + '</small></button>').join('');
+}
+function adresiYaz(){
+  const h = sec ? '#' + encodeURIComponent(sec) : (sekme === 'yazma' ? '#el-yazmasi' : '');
+  history.replaceState(null, '', h || location.pathname);
 }
 function izgaraCiz(){
   const liste = suzulmus(), goster = liste.slice(0, gosterilen);
   SON.textContent = ara
     ? (liste.length ? '"' + document.getElementById('ara').value.trim() + '" için ' + liste.length + ' eser' : '"' + document.getElementById('ara').value.trim() + '" için sonuç yok')
-    : (sec === 'Tümü' ? liste.length.toLocaleString('tr-TR') + ' eser' : sec + ': ' + liste.length + ' eser');
+    : (sec ? sec + ': ' + liste.length + ' eser'
+           : (SEKMELER.find(x => x.k === sekme) || {}).ad + ': ' + liste.length.toLocaleString('tr-TR') + ' eser');
   I.innerHTML = goster.map(e =>
     '<button class="eser" type="button" data-id="' + e.id + '">' +
       '<span class="cer">' + (FOTO && e.gorsel
@@ -226,25 +283,49 @@ function izgaraCiz(){
       '<span class="f metal metal-yazi" data-isik>' + fiyatYazi(e) + '</span></span>' +
     '</button>').join('');
   const kalan = liste.length - goster.length;
-  DAHA.hidden = kalan <= 0;
+  DAHA.hidden = kalan <= 0 || !!dahaGozcu;
   DNOT.textContent = kalan > 0 ? kalan.toLocaleString('tr-TR') + ' eser daha var' : '';
   if (window.isikYenile) window.isikYenile();
 }
 
+/* Seçili gruba yeniden basmak seçimi kaldırır; böylece ayrı bir "Tümü"
+   düğmesine gerek kalmaz, sekmenin kendisi zaten tümünü gösteriyor. */
 F.addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b || b.dataset.k === sec) return;
-  sec = b.dataset.k; gosterilen = SAYFA;
-  history.replaceState(null, '', sec === 'Tümü' ? location.pathname : '#' + encodeURIComponent(sec));
-  filtreCiz(); izgaraCiz(); filtreyeGit();
+  const b = e.target.closest('button'); if (!b) return;
+  sec = (b.dataset.k === sec) ? '' : b.dataset.k;
+  gosterilen = SAYFA; adresiYaz(); filtreCiz(); izgaraCiz(); filtreyeGit();
 });
-DAHA.addEventListener('click', () => { gosterilen += SAYFA; izgaraCiz(); });
+SK.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.dataset.s === sekme) return;
+  sekme = b.dataset.s; sec = ''; ara = ''; araKutu.value = ''; araSil.hidden = true;
+  gosterilen = SAYFA; adresiYaz(); sekmeCiz(); filtreCiz(); izgaraCiz(); filtreyeGit();
+});
+addEventListener('resize', isigiTasi);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(isigiTasi);
+/* Aşağı inildikçe sonraki sayfa kendiliğinden yüklenir; düğme yalnızca
+   IntersectionObserver bulunmayan tarayıcılarda görünür. */
+function dahaYukle(){
+  if (gosterilen >= suzulmus().length) return;
+  gosterilen += SAYFA; izgaraCiz();
+}
+DAHA.addEventListener('click', dahaYukle);
+const dahaGozcu = ('IntersectionObserver' in window)
+  ? new IntersectionObserver(g => { if (g[0].isIntersecting) dahaYukle(); }, { rootMargin: '700px 0px' })
+  : null;
+if (dahaGozcu) dahaGozcu.observe(document.querySelector('.daha'));
 
 const araKutu = document.getElementById('ara'), araSil = document.getElementById('araSil');
 let araZaman = null;
 araKutu.addEventListener('input', () => {
   araSil.hidden = !araKutu.value;
   clearTimeout(araZaman);
-  araZaman = setTimeout(() => { ara = sade(araKutu.value.trim()); gosterilen = SAYFA; izgaraCiz(); }, 150);
+  araZaman = setTimeout(() => {
+    ara = sade(araKutu.value.trim());
+    /* Arama sekmenin tamamında gezsin: seçili grup varsa kalksın, yoksa
+       kullanıcı neden sonuç çıkmadığını anlamıyor. */
+    if (ara && sec){ sec = ''; adresiYaz(); filtreCiz(); }
+    gosterilen = SAYFA; izgaraCiz();
+  }, 150);
 });
 araSil.addEventListener('click', () => { araKutu.value = ''; araSil.hidden = true; ara = ''; gosterilen = SAYFA; izgaraCiz(); araKutu.focus(); });
 
@@ -302,9 +383,11 @@ addEventListener('keydown', e => { if (e.key === 'Escape') pencereyiKapat(); });
 /* ---- açılış ---- */
 (function(){
   const h = decodeURIComponent((location.hash || '').slice(1));
-  if (h && (h === 'Tümü' || KATLAR.some(k => k.ad === h))) sec = h;
+  if (!h) return;
+  if (h === 'el-yazmasi' || h === YAZMA){ sekme = 'yazma'; return; }
+  if (KATLAR.some(k => k.ad === h && k.ad !== YAZMA)) sec = h;
 })();
-filtreCiz(); izgaraCiz();
+sekmeKur(); sekmeCiz(); filtreCiz(); izgaraCiz();
 akisKur();
 })();
 </script>
