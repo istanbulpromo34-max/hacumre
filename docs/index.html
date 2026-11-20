@@ -373,7 +373,8 @@
    Kepenk resim değil, CSS ile çizilir: antrasit alüminyum lameller (her birinin üstü
    ışık alır, altı gölgede), ince doku, tavandaki spotlardan gelen ışık, yan raylar,
    üstte kepenk kutusu ve alt çıta. */
-.gece{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
+/* Fotoğrafın içinde durur: kaydırırken paralaksla birlikte hareket eder */
+.gece{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
 .gece.on{opacity:1}
 .gece-ic{position:absolute;left:var(--gx,0);top:var(--gy,0);width:var(--gw,0);height:var(--gh,0);
  background:radial-gradient(70% 75% at 50% 40%,rgba(10,16,36,.34),rgba(6,10,26,.56));
@@ -433,10 +434,10 @@
    <source src="assets/hero/giris-m.mp4" type="video/mp4" media="(max-width: 600px)">
    <source src="assets/hero/giris.mp4" type="video/mp4">
   </video>
- </div>
- <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
- <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
-  <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-alt"></i></i></div>
+  <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
+  <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
+   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-alt"></i></i></div>
+  </div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
@@ -567,7 +568,11 @@ kabuk('ana');
  /* Yavaş bağlantıda giriş videosu atlanır; yalnızca döngü videosu iner. */
  const bag=navigator.connection&&navigator.connection.effectiveType||'';
  const yavas=/2g|slow/.test(bag);
- if(g&&!gordu&&!yavas){
+ /* Kapalı saatlerde (20:00–09:00) önünden geçen adamın giriş videosu oynamaz:
+    kapıya inen kepenk onun önünde kalıyordu; kapalı dükkânın önü sakin dursun. */
+ const ist=new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',hour12:false}).format(new Date());
+ const kapaliSaat=/[?&]gece=1/.test(location.search)||(+ist>=20||+ist<9);
+ if(g&&!gordu&&!yavas&&!kapaliSaat){
   aktif=g;g.hidden=false;g.preload='auto';v.preload='none';
   const donguyeGec=()=>{if(aktif===v)return;try{sessionStorage.setItem('hu-giris','1')}catch(e){}
    aktif=v;v.currentTime=0;oynat();
