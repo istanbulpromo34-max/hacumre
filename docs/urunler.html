@@ -443,13 +443,21 @@ filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();
   const kutu=document.querySelector('.arama'),gir=document.getElementById('ara');
   if(!kutu||!gir)return;
   const ac=()=>{if(innerWidth<=720)kutu.classList.add('acik')};
-  const kapa=()=>{if(!gir.value.trim()){kutu.classList.remove('acik');if(document.activeElement===gir)gir.blur()}};
-  kutu.addEventListener('pointerdown',ac);
+  const kapa=()=>{if(!gir.value.trim())kutu.classList.remove('acik')};
+  /* Küçük hâline dokunulduğunda kutu açılır ve imleç kutuya girer */
+  kutu.addEventListener('pointerdown',e=>{
+    if(e.target.closest('button'))return;
+    ac();
+    if(document.activeElement!==gir)setTimeout(()=>gir.focus(),10);
+  });
   gir.addEventListener('focus',ac);
-  gir.addEventListener('blur',()=>setTimeout(kapa,120));
+  gir.addEventListener('blur',()=>setTimeout(kapa,160));
   let sonY=scrollY;
   addEventListener('scroll',()=>{
     if(Math.abs(scrollY-sonY)<40)return;sonY=scrollY;
+    /* Yazarken kapanmaz: iOS klavyeyi açarken sayfayı kaydırıyor, bu da
+       kutuyu hemen kapatıyordu. Yalnızca odak dışındayken küçülür. */
+    if(document.activeElement===gir)return;
     if(kutu.classList.contains('acik'))kapa();
   },{passive:true});
   addEventListener('resize',()=>{if(innerWidth>720)kutu.classList.remove('acik')});
