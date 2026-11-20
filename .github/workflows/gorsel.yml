@@ -1,0 +1,69 @@
+name: Site gorsellerini al
+
+# Claude, gelen/gorsel.json dosyasina {"url", "hedef"} ciftleri yazar.
+# Bu akis adresleri indirip siteye isler (jpg + webp + telefon boyutu),
+# sonra kuyrugu bosaltir. Kosucunun agi acik oldugu icin indirme burada yapilir.
+on:
+  push:
+    paths: ['gelen/gorsel.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: foto          # foto.yml ve higgs.yml ile ayni grup: ayni anda yazmasinlar
+  cancel-in-progress: false
+
+jobs:
+  al:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kuyruga bak
+        id: kuyruk
+        run: |
+          n=$(python3 -c "import json,pathlib;p=pathlib.Path('gelen/gorsel.json');print(len(json.loads(p.read_text() or '[]')) if p.exists() else 0)" 2>/dev/null || echo 0)
+          echo "adet=$n" >> "$GITHUB_OUTPUT"
+          echo "Kuyrukta $n gorsel var."
+
+      - uses: actions/setup-python@v5
+        if: steps.kuyruk.outputs.adet != '0'
+        with: { python-version: '3.12' }
+
+      - name: Kurulum
+        if: steps.kuyruk.outputs.adet != '0'
+        run: pip install --quiet pillow
+
+      - name: Indir ve isle
+        if: steps.kuyruk.outputs.adet != '0'
+        run: python tools/gorsel_al.py
+
+      - name: Telefon boyutu gorselleri uret
+        if: steps.kuyruk.outputs.adet != '0'
+        run: python tools/kucuk_gorsel.py docs
+
+      - name: Depoya yaz
+        if: steps.kuyruk.outputs.adet != '0'
+        run: |
+          YOLLAR="docs/assets gelen/gorsel.json"
+          git config user.name "foto-bot"
+          git config user.email "foto-bot@users.noreply.github.com"
+          git add -A $YOLLAR
+          if [ -z "$(git status --porcelain $YOLLAR)" ]; then
+            echo "Değişiklik yok."; exit 0
+          fi
+          git commit -m "Site görselleri alındı"
+          for deneme in 1 2 3 4 5; do
+            if git push; then echo "yazıldı (deneme $deneme)"; exit 0; fi
+            git fetch origin main
+            if ! git rebase -X theirs origin/main; then
+              git checkout --theirs -- $YOLLAR 2>/dev/null || true
+              git add -A $YOLLAR
+              GIT_EDITOR=true git rebase --continue || git rebase --abort
+            fi
+            sleep $((RANDOM % 6 + 3))
+          done
+          echo "::error::Depoya yazılamadı"; exit 1
