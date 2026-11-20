@@ -1,49 +1,75 @@
 #!/usr/bin/env python3
-"""Ürünü sitedeki dört ana başlıktan birine yerleştirir.
+"""Ürünü sitedeki sekiz başlıktan birine yerleştirir.
 
-Önce Odoo'daki alt kategoriye bakar; ürün doğrudan ana kategoride duruyorsa
-adındaki anahtar kelimelerden karar verir. İki betik de burayı kullanır.
+Kategoriler yalnızca bu sitenin katalogu içindir; Odoo'daki kayıtlara
+dokunulmaz. Karar sırayla verilir: önce Odoo'dan gelen alt kategori metni
+anlamlıysa ondan, sonra ürün adındaki anahtar kelimelerden. Kural listesinin
+SIRASI önemlidir; üstteki kural önce bakar (ör. "İhram Sabunu" bakım ürünüdür,
+kıyafet değil; "Kokulu Tesbih" tesbihtir, koku değil).
+
+Başlık adları site.js içindeki KATEGORILER listesiyle birebir aynı olmalıdır.
 """
 import re
 import unicodedata
 
 ANA = "İSTANBUL HAC UMRE"
 
-KIYAFET = "Hac Umre Kıyafetleri"
-MALZEME = "Hac Umre Malzemeleri"
-HEDIYE = "İslami Hediyelik"
-YIYECEK = "Hurma ve Zemzem"
+KIYAFET = "İhram ve Umre Kıyafetleri"
+KITAP = "Kur'an-ı Kerim, Kitap ve Rahle"
+TESBIH = "Tesbih ve Zikirmatik"
+YOLCULUK = "Terlik, Mest ve Yolculuk"
+KOKU = "Koku, Kolonya ve Esans"
+HEDIYE = "Hediyelik ve Dekoratif"
+SECCADE = "Seccade ve Namaz Örtüsü"
+YIYECEK = "Hurma, Zemzem ve İkramlık"
 
 KAT_GORSEL = {
-    MALZEME: "assets/g/masa.jpg",
-    KIYAFET: "assets/g/ihram.jpg",
-    HEDIYE: "assets/g/donus.jpg",
-    YIYECEK: "assets/g/hurma.jpg",
+    KIYAFET: "assets/g/kat-kiyafet.jpg",
+    KITAP: "assets/g/kat-kuran.jpg",
+    TESBIH: "assets/g/kat-tesbih.jpg",
+    YOLCULUK: "assets/g/kat-malzeme.jpg",
+    KOKU: "assets/g/kat-koku.jpg",
+    HEDIYE: "assets/g/kat-hediyelik.jpg",
+    SECCADE: "assets/g/kat-seccade.jpg",
+    YIYECEK: "assets/g/kat-hurma.jpg",
 }
 
-# Odoo alt kategorisi için
+# Odoo alt kategorisi anlamlıysa önce buraya bakılır
 ALT_KURAL = [
-    (KIYAFET, ("giyim", "terlik", "ayakkab", "ihram", "ferace", "esarp")),
+    (KITAP, ("kuran", "yayin", "kitap", "mushaf", "rahle")),
     (YIYECEK, ("hurma", "zemzem", "kuruyemis", "ikram", "gida", "lezzet")),
-    (MALZEME, ("bakim", "hijyen", "seyahat", "ekipman", "canta")),
-    (HEDIYE, ("kuran", "yayin", "kitap", "seccade", "ortu", "tesbih", "zikir",
-              "tablo", "set", "taki", "aksesuar", "hediye")),
+    (KIYAFET, ("giyim", "ihram", "ferace", "esarp", "kiyafet", "tesettur")),
+    (YOLCULUK, ("terlik", "ayakkab", "mest", "bakim", "hijyen", "seyahat", "ekipman")),
+    (SECCADE, ("seccade", "namazlik", "ortu")),
+    (TESBIH, ("tesbih", "zikir")),
+    (KOKU, ("koku", "esans", "parfum", "kolonya")),
 ]
 
-# Ürün adı için (sıra önemli)
+# Ürün adı için — sıra önemlidir, üstteki kural önce bakar
 AD_KURAL = [
-    (YIYECEK, ("hurma", "zemzem", "lokum", "kahve", "kuruyemis", "cikolata", "biskuvi",
-               "recel", "helva", "kurabiye", "fistik")),
-    (KIYAFET, ("ihram", "ferace", "elbise", "etek", "gomlek", "shirt", "esarp", "yazma",
-               "basortu", "takke", "corap", "corab", "bone", "tesettur", "kiyafet", "giyim",
-               "abaya", "atlet", "pantolon", "tunik", "hirka", "salvar", "sal", "tulum",
-               "yelek", "kaftan", "entari", "bornoz", "sapka", "bluz", "cubbe", "sarik",
-               "muslin", "kemer")),
-    (MALZEME, ("mest", "canta", "cuzdan", "valiz", "bavul", "misvak", "sabun", "mendil",
-               "krem", "sampuan", "dis", "dismacunu", "ayna", "makas", "tirnak", "matara",
-               "termos", "boyunluk", "kilit", "seyahat", "yastik", "kulaklik", "maske",
-               "sirt", "tarak", "poset", "etiket", "terlik", "patik", "ayakkabi", "tavaf",
-               "pusula", "kablo", "bellek", "sarj", "powerbank", "pedometre", "surme")),
+    (YIYECEK, ("hurma", "zemzem", "acve", "safavi", "sugay", "mebrum", "hudri", "sukkari",
+               "biskuvi", "lokum", "cikolata", "kahve", "helva", "tahin", "surahi",
+               "kuruyemis", "recel", "fistik", "kurabiye")),
+    (SECCADE, ("seccade", "namazlik", "sonil", "medine hali", "ipek hali", "halisi")),
+    (TESBIH, ("tesbih", "tespih", "zikirmatik", "kuka", "kehribar", "misbaha")),
+    (KITAP, ("kuran", "enam", "hatim", "ilmihal", "siyer", "kitap", "mushaf", "rahle",
+             "hadis", "risale", "tecvid", "elifba", "hareke", "peygamber", "hazret",
+             "padisah", "silsilename", "ruhussalat", "hazineleri", "haremeyn", "ashab",
+             "dualar", "ibadetler", "ahlak", "rehberi", "konusma", "mukerreme")),
+    # bakım ve hijyen: kıyafetten önce bakar ("İhram Sabunu" gibi adlar için)
+    (YOLCULUK, ("sabun", "misvak", "macun", "sevak", "sampuan", "mendil", "krem",
+                "hacamat", "ayna", "surme", "kerata", "dis", "tirnak", "makas", "tarak")),
+    (YOLCULUK, ("terlik", "terlig", "mest", "patik", "patig", "ayakkabi", "corap", "corab")),
+    (KIYAFET, ("ihram", "kemer", "ferace", "elbise", "etek", "gomlek", "shirt", "pantolon",
+               "salvar", "tunik", "bluz", "kaftan", "cubbe", "sal", "esarp", "basortu",
+               "yazma", "takke", "sarik", "bone", "tesettur", "abaya", "atlet", "hirka",
+               "yelek", "entari", "bornoz", "kiyafet", "giyim", "muslin", "keten",
+               "sapka", "tulum")),
+    (KOKU, ("kolonya", "kolanya", "esans", "parfum", "koku", "difuser", "difusor",
+            "buhurdanlik", "oil", "aksa", "silindir", "hatira")),
+    (YOLCULUK, ("termos", "bardak", "bellek", "kablo", "sarz", "sarj", "cuzdan",
+                "boyunluk", "canta", "valiz", "pusula", "matara", "kilit", "yastik",
+                "maske", "sirt", "poset")),
     (HEDIYE, ()),
 ]
 
@@ -62,7 +88,7 @@ def _eslestir(metin, kurallar):
         if not anahtarlar:
             return baslik
         for a in anahtarlar:
-            if a in kelimeler or (len(a) >= 5 and a in metin):
+            if a in kelimeler or (len(a) >= 4 and a in metin):
                 return baslik
     return None
 

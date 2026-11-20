@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Ürün ve bölüm görsellerinin telefon boyutundaki kopyalarını üretir.
 
-docs/assets/u ve docs/assets/g içindeki her görselin en uzun kenarı 700 piksele
-indirilmiş WebP kopyası aynı klasörün k/ alt klasörüne yazılır. Site kartlarda
-bu küçük kopyayı kullanır; büyütme penceresinde tam boy görsel açılır.
+docs/assets/u ve docs/assets/g içindeki her görselin iki küçük kopyası üretilir:
+  m/ → en uzun kenar 400 piksel (telefon ızgarası; kart genişliği ~170 piksel)
+  k/ → en uzun kenar 700 piksel (masaüstü ızgarası ve yüksek yoğunluklu ekran)
+Site kartlarda srcset ile bu ikisinden uygun olanı iner; büyütme penceresinde
+tam boy görsel açılır. Böylece telefonda ızgara dörtte bir ağırlıkta yüklenir.
 
 Kaynak dosya küçük kopyadan yeniyse kopya yeniden üretilir, değilse atlanır.
 Fotoğraf akışlarında (higgs.yml, foto.yml) depoya yazmadan hemen önce çalışır.
@@ -12,37 +14,40 @@ import os
 import sys
 from PIL import Image
 
-MAX = 700
-KALITE = 70
+BOYLAR = (('k', 700, 70), ('m', 400, 66))
 UZANTILAR = ('.webp', '.jpg', '.jpeg', '.png')
 
 
 def klasor_isle(src: str) -> tuple[int, int]:
     if not os.path.isdir(src):
         return 0, 0
-    dst = os.path.join(src, 'k')
-    os.makedirs(dst, exist_ok=True)
+    for alt, _, _ in BOYLAR:
+        os.makedirs(os.path.join(src, alt), exist_ok=True)
     uretilen = atlanan = 0
     for ad in sorted(os.listdir(src)):
         yol = os.path.join(src, ad)
         if not os.path.isfile(yol) or not ad.lower().endswith(UZANTILAR):
             continue
-        hedef = os.path.join(dst, os.path.splitext(ad)[0] + '.webp')
-        if os.path.exists(hedef) and os.path.getmtime(hedef) >= os.path.getmtime(yol):
-            atlanan += 1
-            continue
-        try:
-            im = Image.open(yol)
-            if im.mode in ('P', 'RGBA', 'LA'):
-                im = im.convert('RGB')
-            g, y = im.size
-            if max(g, y) > MAX:
-                o = MAX / max(g, y)
-                im = im.resize((max(1, round(g * o)), max(1, round(y * o))), Image.LANCZOS)
-            im.save(hedef, 'WEBP', quality=KALITE, method=4)
-            uretilen += 1
-        except Exception as hata:  # tek bir bozuk kare akışı durdurmasın
-            print(f'atlandi (okunamadi): {ad} — {hata}', file=sys.stderr)
+        kaynak = None
+        for alt, enbuyuk, kalite in BOYLAR:
+            hedef = os.path.join(src, alt, os.path.splitext(ad)[0] + '.webp')
+            if os.path.exists(hedef) and os.path.getmtime(hedef) >= os.path.getmtime(yol):
+                atlanan += 1
+                continue
+            try:
+                if kaynak is None:
+                    kaynak = Image.open(yol)
+                    if kaynak.mode in ('P', 'RGBA', 'LA'):
+                        kaynak = kaynak.convert('RGB')
+                im = kaynak
+                g, y = im.size
+                if max(g, y) > enbuyuk:
+                    o = enbuyuk / max(g, y)
+                    im = im.resize((max(1, round(g * o)), max(1, round(y * o))), Image.LANCZOS)
+                im.save(hedef, 'WEBP', quality=kalite, method=4)
+                uretilen += 1
+            except Exception as hata:  # tek bir bozuk kare akışı durdurmasın
+                print(f'atlandi (okunamadi): {ad} — {hata}', file=sys.stderr)
     return uretilen, atlanan
 
 

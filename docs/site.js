@@ -13,10 +13,14 @@ const MAGAZA={
  instagram:'https://www.instagram.com/istanbulhacumrehediyelik/'
 };
 const KATEGORILER=[
- {ad:'Hac Umre Malzemeleri',gorsel:'assets/g/kat-malzeme.jpg',acik:'İhram kemeri, terlik, boyun çantası, kokusuz bakım ürünleri ve misvak.'},
- {ad:'Hac Umre Kıyafetleri',gorsel:'assets/g/kat-kiyafet.jpg',acik:'İhram, umre feracesi, eşarp ve bone; rahat ve tesettüre uygun kıyafetler.'},
- {ad:'İslami Hediyelik',gorsel:'assets/g/kat-hediyelik.jpg',acik:'Tesbih, seccade, esans ve özenle hazırlanmış hediye paketleri.'},
- {ad:'Hurma ve Zemzem',gorsel:'assets/g/kat-hurma.jpg',acik:'Seçme Medine hurmaları ve dönüş ikramları için zemzem.'}
+ {ad:'İhram ve Umre Kıyafetleri',gorsel:'assets/g/kat-kiyafet.jpg',acik:'İhram, ihram kemeri, umre feracesi, eşarp, takke ve çocuk kıyafetleri.'},
+ {ad:'Terlik, Mest ve Yolculuk',gorsel:'assets/g/kat-malzeme.jpg',acik:'Terlik, deri mest, tavaf çorabı, misvak, kokusuz sabun ve boyun çantası.'},
+ {ad:'Seccade ve Namaz Örtüsü',gorsel:'assets/g/kat-seccade.jpg',acik:'Şönil, velür ve goblen seccadeler; cep seccadesi ve çocuk seccadesi.'},
+ {ad:'Tesbih ve Zikirmatik',gorsel:'assets/g/kat-tesbih.jpg',acik:'Kuka, kehribar ve doğal taş tesbihler; sesli ve pusulalı zikirmatikler.'},
+ {ad:"Kur'an-ı Kerim, Kitap ve Rahle",gorsel:'assets/g/kat-kuran.jpg',acik:'Kur\'an-ı Kerim, Enam-ı Şerif, hatim setleri, ilmihal ve ahşap rahleler.'},
+ {ad:'Koku, Kolonya ve Esans',gorsel:'assets/g/kat-koku.jpg',acik:'Esans, kolonya, oda ve araç kokuları, difüzör ve buhurdanlıklar.'},
+ {ad:'Hurma, Zemzem ve İkramlık',gorsel:'assets/g/kat-hurma.jpg',acik:'Acve, Safavi ve Mebrum hurmalar; zemzem takımları ve hurmalı ikramlıklar.'},
+ {ad:'Hediyelik ve Dekoratif',gorsel:'assets/g/kat-hediyelik.jpg',acik:'Kâbe maketleri, bibloları, duvar saatleri, çerçeveler ve sadaka kutuları.'}
 ];
 /* Örnek ürünler — gerçek liste gelince değişecek. İsteğe bağlı kadraj: görselin hangi bölümü görünsün ('50% 30%') */
 const URUNLER=window.URUNLER||[
@@ -42,11 +46,20 @@ const RESIM_YEDEK=`onerror="this.onerror=null;this.src=this.src.replace(/\\.webp
    büyütme penceresinde tam boy görsel açılır. Kopyalar tools/kucuk_gorsel.py ile üretilir. */
 const kucuk=y=>/^assets\/(u|g)\/[^/]+\.(webp|jpg|jpeg|png)$/i.test(y||'')
  ? y.replace(/^assets\/(u|g)\//,'assets/$1/k/').replace(/\.(jpg|jpeg|png)$/i,'.webp') : y;
+/* Telefon ızgarası için daha da küçük kopya (en uzun kenar 400px, ~15 KB).
+   Kartlar <picture> ile telefonda bunu, masaüstünde k/ kopyasını indirir;
+   tam boy görsel yalnızca ürüne girilince açılır. */
+const mini=y=>/^assets\/(u|g)\/[^/]+\.(webp|jpg|jpeg|png)$/i.test(y||'')
+ ? y.replace(/^assets\/(u|g)\//,'assets/$1/m/').replace(/\.(jpg|jpeg|png)$/i,'.webp') : y;
 /* Görsel açılamazsa sırayla yedeklere düşer: tam boy → yedeğin küçüğü → yedeğin tam boyu */
 function gorselYedek(img){
  const kalan=(img.dataset.yedekler||'').split('|').filter(Boolean);
  if(!kalan.length){img.onerror=null;return}
  img.dataset.yedekler=kalan.slice(1).join('|');
+ /* <picture> içindeyse önce boy seçenekleri kalkmalı, yoksa yeni src yok sayılır */
+ const p=img.parentElement;
+ if(p&&p.tagName==='PICTURE')p.querySelectorAll('source').forEach(k=>k.remove());
+ img.removeAttribute('srcset');
  img.src=kalan[0];
 }
 const depo={al(k,v){try{return JSON.parse(localStorage.getItem(k)||v)}catch(e){return JSON.parse(v)}},yaz(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};

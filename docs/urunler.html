@@ -136,6 +136,13 @@
 [hidden]{display:none !important}
 .buyut{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:clamp(10px,2vw,28px);
   background:rgba(4,9,20,.86);backdrop-filter:blur(18px) saturate(130%);-webkit-backdrop-filter:blur(18px) saturate(130%)}
+#buyutGorsel.iniyor{filter:saturate(.92)}
+#buyutGorsel{transition:filter .4s}
+/* tam boy görsel inerken üstte ince bir altın çizgi akar */
+.buyut-gor{position:relative}
+.buyut-gor:has(#buyutGorsel.iniyor)::after{content:'';position:absolute;left:0;right:0;top:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--altin2),transparent);background-size:42% 100%;background-repeat:no-repeat;animation:buyutIniyor 1.15s linear infinite}
+@keyframes buyutIniyor{from{background-position:-42% 0}to{background-position:142% 0}}
+@media(prefers-reduced-motion:reduce){.buyut-gor:has(#buyutGorsel.iniyor)::after{animation:none;opacity:.5}}
 .buyut-ic{position:relative;width:min(1080px,100%);max-height:calc(100svh - 24px);overflow:auto;
   display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:0;border-radius:24px;
   background:linear-gradient(180deg,rgba(18,35,71,.96),rgba(11,22,48,.98));
@@ -148,7 +155,8 @@
 .buyut-b .kod{font-size:12.5px;color:rgba(234,230,220,.55);font-variant-numeric:tabular-nums}
 .buyut-b .acik{font-size:14.5px;line-height:1.65;color:rgba(234,230,220,.72)}
 .buyut-b .fi{font-size:clamp(23px,2.6vw,30px);margin-top:4px}
-.buyut-b .dug{margin-top:auto;padding-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.buyut-b .dug{margin-top:auto;padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.buyut-b .dug .btn{width:100%;min-height:52px;padding:13px 14px;font-size:14.5px;white-space:nowrap}
 .buyut-b .dug .btn{flex:1;min-width:150px;justify-content:center}
 .buyut-x{position:absolute;top:10px;right:10px;z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.14);
   background:rgba(6,13,31,.72);color:#eae6dc;font-size:22px;line-height:1;backdrop-filter:blur(10px);cursor:pointer}
@@ -233,7 +241,7 @@ body.ara-sabit .arama.acik{width:calc(100vw - 24px);box-shadow:0 18px 44px -18px
    <div class="fi metal metal-yazi" data-isik id="buyutFiyat"></div>
    <div class="dug">
     <button class="btn altin" type="button" id="buyutEkle">Çantaya ekle</button>
-    <button class="btn wa" type="button" id="buyutSor">WhatsApp'tan sor</button>
+    <button class="btn wa" type="button" id="buyutSor" aria-label="Bu ürünü WhatsApp'tan sorun">WhatsApp'tan sorun</button>
    </div>
   </div>
  </div>
@@ -292,7 +300,7 @@ function kartHtml(u){
  if(u.yedek){const yt=resim(u.yedek);zincir.push(kucuk(yt),yt)}
  else zincir.push(tam.replace(/\.webp$/,'.jpg'));
  return `<article class="kart" data-id="${u.id}">
-  <div class="g"><img src="${kk}" alt="${u.ad}" loading="lazy" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
+  <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Çantada</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><p>${u.acik}</p><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
   <div class="eylem"><button class="btn altin ekle" type="button" aria-label="${u.ad}, çantaya ekle">Çantaya ekle</button>
   <div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
@@ -349,8 +357,17 @@ let byListe=[],bySira=-1;
 function byCiz(){
  const u=byListe[bySira]; if(!u)return;
  const g=document.getElementById('buyutGorsel');
- g.src=resim(u.gorsel); g.alt=u.ad;
+ /* Önce ızgaradan tanıdık küçük kopya gösterilir (çoğu zaman önbellekte, anında çıkar),
+    tam boy görsel arkada iner ve hazır olunca yerine geçer. Böylece pencere boş açılmaz. */
+ const tamBoy=resim(u.gorsel);
+ g.alt=u.ad; g.dataset.hedef=tamBoy;
+ /* ızgarada hangi kopya indiyse o gösterilir: telefonda m/, masaüstünde k/ — önbellekte olduğu için anında çıkar */
+ g.src=innerWidth<=720?mini(tamBoy):kucuk(tamBoy); g.classList.add('iniyor');
  g.onerror=function(){ this.onerror=null; if(u.yedek) this.src=u.yedek; };
+ const yukle=new Image();
+ yukle.onload=function(){ if(g.dataset.hedef===tamBoy){ g.src=tamBoy; g.classList.remove('iniyor'); } };
+ yukle.onerror=function(){ if(g.dataset.hedef===tamBoy) g.classList.remove('iniyor'); };
+ yukle.src=tamBoy;
  document.getElementById('buyutKat').textContent=u.kat||'';
  document.getElementById('buyutAd').textContent=u.ad;
  const kodE=document.getElementById('buyutKod'),acikE=document.getElementById('buyutAcik');
@@ -360,8 +377,11 @@ function byCiz(){
  const tek=byListe.length<2;
  document.getElementById('buyutGeri').hidden=tek;
  document.getElementById('buyutIleri').hidden=tek;
+ /* Komşu ürünler: geniş ekranda tam boy, telefonda ve veri tasarrufunda yalnız küçük kopya */
+ const ag=navigator.connection||{};
+ const tamOnYukle=innerWidth>720&&!ag.saveData&&!/2g/.test(ag.effectiveType||'');
  [1,-1].forEach(function(n){ const k=byListe[(bySira+n+byListe.length)%byListe.length];
-  if(k){ const ön=new Image(); ön.src=resim(k.gorsel); } });
+  if(k){ const ön=new Image(); ön.src=tamOnYukle?resim(k.gorsel):kucuk(resim(k.gorsel)); } });
 }
 function byAc(id){
  byListe=suzulmus();
