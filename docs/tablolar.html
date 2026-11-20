@@ -178,12 +178,11 @@
    kaydırmadan ekrana sığsın; düğmeler pencerenin altında kesiliyordu. */
 .pencere{padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
 .pencere-ic{max-height:calc(100svh - 20px - env(safe-area-inset-bottom,0px))}
-.pencere-gor{padding:14px;height:38svh;overflow:hidden}
-.pencere-gor img{width:100%;height:100%;object-fit:contain;border-radius:8px}
-.pencere-gor svg{max-height:100%}
+.pencere-gor{padding:16px}
 .pencere-b{padding:20px 18px calc(22px + env(safe-area-inset-bottom,0px))}
-.pencere-b .dug{margin-top:14px;gap:9px}
-.pencere-b .dug>*{flex:1 1 100%}}
+/* İki düğme yan yana: alt alta olunca pencere taşıyordu */
+.pencere-b .dug{margin-top:14px;gap:9px;flex-wrap:nowrap}
+.pencere-b .dug>*{flex:1 1 0;min-width:0;padding-left:12px;padding-right:12px;white-space:nowrap}}
 @media(prefers-reduced-motion:reduce){
 .eser,.eser .cer svg,.sekme-isik{transition:none}}
 @media(prefers-reduced-motion:no-preference){
@@ -520,7 +519,7 @@ function pencereyiAc(id){
         '<span class="kod">Eser kodu ' + kacis(e.id) + '</span>' +
         '<div class="fi metal metal-yazi" data-isik>' + fiyatYazi(e) + '</div>' +
         '<div class="dug">' +
-          '<a class="btn wa" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(waMetin(e)) + '" target="_blank" rel="noopener">WhatsApp\'tan sorun</a>' +
+          '<a class="btn wa" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(waMetin(e)) + '" target="_blank" rel="noopener">Sipariş ver</a>' +
           '<a class="btn cam" href="tel:' + MAGAZA.telLink.replace('tel:', '') + '">Arayın</a>' +
         '</div>' +
       '</div>' +
