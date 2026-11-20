@@ -178,8 +178,9 @@
    kaydırmadan ekrana sığsın; düğmeler pencerenin altında kesiliyordu. */
 .pencere{padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px))}
 .pencere-ic{max-height:calc(100svh - 20px - env(safe-area-inset-bottom,0px))}
-.pencere-gor{padding:14px;max-height:40svh}
-.pencere-gor img{max-height:100%;width:auto;max-width:100%;object-fit:contain}
+.pencere-gor{padding:14px;height:38svh;overflow:hidden}
+.pencere-gor img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+.pencere-gor svg{max-height:100%}
 .pencere-b{padding:20px 18px calc(22px + env(safe-area-inset-bottom,0px))}
 .pencere-b .dug{margin-top:14px;gap:9px}
 .pencere-b .dug>*{flex:1 1 100%}}
