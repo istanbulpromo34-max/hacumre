@@ -33,6 +33,20 @@ jobs:
         with:
           enablement: true
 
+      # Tarayici eski js/css dosyasini onbellekten kullanmasin diye her yayinda
+      # yerel baglantilarin sonuna o commit'in kisa kimligi ekleniyor. Kaynak
+      # dosyalar degismiyor; yalniz yayinlanan kopya damgalaniyor.
+      - name: Dosya baglantilarini damgala
+        run: |
+          V="${GITHUB_SHA::8}"
+          for d in site.css site.js yorumlar.js urunler-veri.js hava.js; do
+            grep -rl --include='*.html' "\"$d\"" docs | while read -r f; do
+              sed -i "s|\"$d\"|\"$d?v=$V\"|g" "$f"
+            done
+          done
+          echo "Damga: $V"
+          grep -o 'site\.js?v=[a-f0-9]*' docs/index.html | head -1
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
