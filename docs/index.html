@@ -128,11 +128,16 @@
  box-shadow:0 1px 3px rgba(20,12,0,.3)}
 .grup picture{position:absolute;inset:0}
 .grup img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-/* Karartma yalnız yazının oturduğu alt şeritte; fotoğrafın gövdesi açık kalıyor */
+/* İki katmanlı karartma: fotoğrafın gövdesi açık kalsın diye genel geçiş çok
+   hafif; asıl koyuluk yalnız yazı bloğunun arkasında ve yüksekliğini yazıdan
+   alıyor, böylece kısa kartlarda da başlık aynı okunurlukta kalıyor. */
 .grup .gorsel::after{content:"";position:absolute;inset:0;pointer-events:none;
- background:linear-gradient(180deg,transparent 52%,rgba(6,13,31,.42) 74%,rgba(6,13,31,.82))}
+ background:linear-gradient(180deg,transparent 56%,rgba(6,13,31,.24) 80%,rgba(6,13,31,.46))}
 .grup .ic{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:15px 15px 14px;display:grid;gap:11px;justify-items:start}
-.grup h3{font-size:clamp(19px,1.5vw,25px);line-height:1.16;margin:0;text-shadow:0 1px 10px rgba(6,13,31,.5)}
+.grup .ic::before{content:"";position:absolute;inset:-56px 0 0;z-index:-1;pointer-events:none;
+ background:linear-gradient(180deg,transparent,rgba(6,13,31,.55) 34%,rgba(6,13,31,.9))}
+.grup h3{font-size:clamp(19px,1.5vw,25px);line-height:1.16;margin:0;
+ text-shadow:0 1px 2px rgba(6,13,31,.6),0 2px 16px rgba(6,13,31,.5)}
 .grup .ok{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;
  font-size:13.5px;font-weight:500;letter-spacing:.015em;color:#fdf7ea;
  background:rgba(14,26,54,.42);border:1px solid rgba(230,199,122,.55);
@@ -271,6 +276,7 @@
 .grup{padding:5px;border-radius:21px}
 .grup .gorsel{aspect-ratio:3/4.2;border-radius:16px}
 .grup .ic{padding:12px;gap:9px}
+.grup .ic::before{inset:-40px 0 0}
 .grup h3{font-size:18px}
 .grup .ok{padding:8px 13px;font-size:12.5px}
 .guven{gap:10px 20px}
