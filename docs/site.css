@@ -19,16 +19,16 @@ img{display:block;max-width:100%}
 .icerige-gec{position:fixed;left:16px;top:-80px;z-index:120;padding:12px 18px;border-radius:12px;background:var(--k-altin);color:#1a1205;font-weight:600;transition:top .2s}
 .icerige-gec:focus{top:16px}
 /* Cam menü */
-.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:8px;border-radius:999px;
+.nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:9px;border-radius:999px;
 background:rgba(10,20,44,.82);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);
 border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 40px rgba(0,0,0,.35);color:var(--k-yazi)}
-.nav a{white-space:nowrap;padding:10px 18px;border-radius:999px;font-size:14px;letter-spacing:.04em;transition:background .35s,color .35s;color:var(--k-yazi)}
+.nav a{white-space:nowrap;padding:12px 21px;border-radius:999px;font-size:15.5px;letter-spacing:.03em;transition:background .35s,color .35s;color:var(--k-yazi)}
 @media (hover:hover){.nav a:hover{background:rgba(255,255,255,.08)}}
 .nav a.on{background:rgba(201,162,75,.2);color:var(--k-altin2)}
 .nav a .kisa{display:none}
-.nav .logo{flex:none;padding:4px 14px 4px 10px;display:flex;align-items:center}
+.nav .logo{flex:none;padding:4px 16px 4px 12px;display:flex;align-items:center}
 @media (hover:hover){.nav .logo:hover{background:none}}
-.nav .logo img{height:30px;width:auto;max-width:none}
+.nav .logo img{height:36px;width:auto;max-width:none}
 .mlogo{display:none}
 .nav .tur{background:linear-gradient(135deg,var(--k-altin),#a8822f);color:#1a1205;font-weight:600}
 .nav .tur.on{filter:brightness(1.08);background:linear-gradient(135deg,var(--k-altin2),var(--k-altin));color:#1a1205}
@@ -41,17 +41,17 @@ border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255
 @keyframes zipla{0%{transform:scale(1)}35%{transform:scale(1.32)}60%{transform:scale(.92)}100%{transform:scale(1)}}
 .ucan{position:fixed;z-index:95;border-radius:14px;object-fit:cover;pointer-events:none;box-shadow:0 12px 40px rgba(0,0,0,.45)}
 @media(max-width:720px){
-.nav{top:auto;bottom:max(12px,env(safe-area-inset-bottom));gap:0;padding:4px;max-width:calc(100vw - 12px)}
+.nav{top:auto;bottom:max(12px,env(safe-area-inset-bottom));gap:0;padding:5px;max-width:calc(100vw - 12px)}
 .nav .logo{display:none}
-.nav a{display:flex;align-items:center;min-height:44px;padding:0 10px;font-size:12.5px;letter-spacing:.01em}
+.nav a{display:flex;align-items:center;min-height:48px;padding:0 12px;font-size:13.5px;letter-spacing:.01em}
 .nav a .uzun{display:none}
 .nav a .kisa{display:inline}
 .sepetbtn{width:44px;height:44px}
-.mlogo{display:block;position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:49;padding:8px 16px;border-radius:999px;background:rgba(10,20,44,.78);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.12);transition:opacity .4s,transform .4s}
-.mlogo img{height:26px;width:auto;max-width:none}
+.mlogo{display:block;position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:49;padding:9px 18px;border-radius:999px;background:rgba(10,20,44,.78);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.12);transition:opacity .4s,transform .4s}
+.mlogo img{height:30px;width:auto;max-width:none}
 .mlogo.gizli{opacity:0;transform:translate(-50%,-20px);pointer-events:none}}
 @media(max-width:374px){
-.nav a{padding:0 7px;font-size:12px}}
+.nav a{padding:0 8px;font-size:12.5px}}
 /* Çanta çekmecesi */
 .cekmece{position:fixed;inset:0;z-index:80;pointer-events:none;visibility:hidden;transition:visibility 0s .55s}
 .cekmece.acik{pointer-events:auto;visibility:visible;transition:none}

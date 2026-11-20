@@ -85,7 +85,7 @@
  repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,rgba(0,0,0,.035) 1px 2px,transparent 2px 4px),
  linear-gradient(90deg,#9a7836 0%,#b8954a 20%,#cfb071 36%,#b18e45 52%,#c6a45d 66%,#d6bb80 78%,#a8853d 92%,#b8954a 100%);
  background-size:auto,220% 100%;background-position:0 0,60% 0}
-.gecis{position:relative;height:150vh;background:var(--gece)}
+.gecis{position:relative;height:118vh;background:var(--gece)}
 .gecis .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center}
 .serit{position:absolute;left:50%;top:50%;width:150vw;height:56px;transform:translate(-50%,-50%) rotate(-7deg);display:flex;align-items:center;overflow:hidden;will-change:transform,height}
 .serit .akis{position:absolute;left:0;top:0;height:44px;display:flex;align-items:center;gap:30px;white-space:nowrap;padding-left:30px;will-change:transform}
@@ -93,11 +93,13 @@
 .serit .akis img{width:13px;height:auto;opacity:.85;filter:sepia(1) saturate(.3) brightness(.35)}
 .altin-zemin{position:absolute;inset:0;opacity:0}
 /* ===== Ürün grupları (altın zemin) ===== */
-.gruplar{margin-top:-1px;padding-bottom:clamp(90px,14vh,150px);color:var(--lac)}
+/* Altın zemin tamamlanırken başlık ve kartlar alttan görünmeye başlasın diye
+   bölüm geçişin son parçasının üstüne biniyor; ikisi de aynı altın yüzey. */
+.gruplar{margin-top:-55vh;position:relative;z-index:1;padding-bottom:clamp(90px,14vh,150px);color:var(--lac)}
 .gruplar-bas{text-align:center;padding:clamp(12px,4vh,40px) 0 clamp(36px,6vh,64px)}
-.gruplar-bas .ust-yazi{color:#4a3610}
+.gruplar-bas .ust-yazi{color:#3b2905;font-weight:500;font-size:12.5px;letter-spacing:.3em}
 .gruplar-bas h2{font-size:clamp(42px,6vw,96px);line-height:1;margin-top:14px}
-.gruplar-bas p{margin:16px auto 0;font-size:17px;max-width:44ch;color:#1d2440}
+.gruplar-bas p{margin:16px auto 0;font-size:17px;max-width:44ch;color:#1b2138}
 .grup-izgara{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 /* Kartlar buzlu cam bir pervaz içinde duruyor: altın zemin üzerinde açık tonlu
    fotoğraflar da nesne gibi öne çıksın diye. */
@@ -116,14 +118,19 @@
  background:linear-gradient(180deg,transparent 52%,rgba(6,13,31,.42) 74%,rgba(6,13,31,.82))}
 .grup .ic{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:15px 15px 14px;display:grid;gap:11px;justify-items:start}
 .grup h3{font-size:clamp(19px,1.5vw,25px);line-height:1.16;margin:0;text-shadow:0 1px 10px rgba(6,13,31,.5)}
-.grup .ok{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;
- font-size:12.5px;font-weight:500;letter-spacing:.01em;color:#f7f0e1;
- background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);
- backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:gap .3s,background .3s}
-.grup .ok svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.grup .ok{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;
+ font-size:13.5px;font-weight:500;letter-spacing:.015em;color:#fdf7ea;
+ background:rgba(14,26,54,.42);border:1px solid rgba(230,199,122,.55);
+ box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 8px 22px -14px rgba(0,0,0,.8);
+ backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+ transition:gap .3s,background .3s,border-color .3s}
+.grup .ok svg{width:14px;height:14px;transition:transform .3s;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover){.grup:hover .ok{gap:11px;background:rgba(201,162,75,.9);border-color:transparent;color:#1a1205}
+.grup:hover .ok svg{transform:translateX(3px)}}
+.grup .ok:active,.grup:active .ok{background:rgba(201,162,75,.9);border-color:transparent;color:#1a1205}
+.grup:active .ok svg{transform:translateX(3px)}
 @media (hover:hover){.grup:hover{transform:translateY(-8px);box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(120,86,24,.14),0 30px 54px -24px rgba(56,36,4,.7)}}
 @media (hover:hover){.grup:hover img{transform:scale(1.07)}}
-@media (hover:hover){.grup:hover .ok{gap:11px;background:rgba(255,255,255,.22)}}
 /* ===== Dijital tur ===== */
 .tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(90px,14vh,160px)}
 .tur-bolum h2{font-size:clamp(36px,4.4vw,66px);line-height:1.05;margin:18px 0 22px}
@@ -222,7 +229,7 @@
 .grup .gorsel{aspect-ratio:3/4.2;border-radius:16px}
 .grup .ic{padding:12px;gap:9px}
 .grup h3{font-size:18px}
-.grup .ok{padding:6px 11px;font-size:11.5px}
+.grup .ok{padding:8px 13px;font-size:12.5px}
 .guven{gap:10px 20px}
 .guven b{font-size:20px}
 .ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}
@@ -295,7 +302,7 @@
  <div class="gruplar-bas">
   <div class="ust-yazi">Aradığınız her şey</div>
   <h2 id="gruplar-baslik">Ürün gruplarımız</h2>
-  <p>Hazırlıktan dönüşe kadar ihtiyaç duyacağınız her şeyi sekiz grupta topladık.</p>
+  <p>Yolculuğunuzun her anı için, özenle seçilmiş ürünler.</p>
  </div>
  <div class="grup-izgara" id="grup-izgara"></div>
 </section>
@@ -421,16 +428,23 @@ akisKur();
    const r=G.getBoundingClientRect(),H=innerHeight,yol=r.height-H/2;
    const hedef=k((H/2-r.top)/yol);p0+=(hedef-p0)*.16;const p=p0;
    /* ilk bölümde şerit ince kalıp ürün adları akar, sonra büyümeye başlar */
-  const t=Math.pow(k(Math.max(0,(p-.16)/.84)),1.25);
+  const t=Math.pow(k(Math.max(0,(p-.05)/.95)),1.2);
    const h0=innerWidth<=720?40:innerWidth<820?44:56;
-   S.style.height=(h0+(H*1.3-h0)*t)+'px';
-   S.style.transform=`translate(-50%,-50%) rotate(${-7*(1-t)}deg)`;
-   /* Şerit büyürken yazı şeridi yüksekliği sabit kalır ve yalnızca dönüştürmeyle
-      konumlanır; yoksa her karede düzen kayması (CLS) üretiyordu. */
-   const sH=h0+(H*1.3-h0)*t,dy=(sH-44)/2;
-   const w=akis.scrollWidth/3||1;akis.style.transform=`translate(${-((((r.top*.35)%w)+w)%w)}px,${dy}px)`;
-   akis.style.opacity=1-k((t-.34)/.3);
-   Z.style.opacity=k((t-.74)/.24);
+   const sH=h0+(H*1.3-h0)*t;
+   S.style.height=sH+'px';
+   /* Bölüm ekrana girerken şerit alt kenardan yükselir; yoksa önce bir ekran
+      boyu boş lacivert alan görünüyordu. */
+   const giris=r.top>0?r.top*(.5+60/H):0;
+   S.style.transform=`translate(-50%,calc(-50% - ${Math.round(giris)}px)) rotate(${-7*(1-t)}deg)`;
+   /* Şerit büyürken ürün adları da onunla birlikte büyür; yazı şeridinin kendi
+      yüksekliği sabit kalır, yalnızca dönüştürmeyle ölçeklenip konumlanır
+      (yoksa her karede düzen kayması üretiyordu). */
+   const ol=1+t*2.6,dy=(sH-44)/2;
+   const w=(akis.scrollWidth/3||1)*ol;
+   akis.style.transformOrigin='0 22px';
+   akis.style.transform=`translate(${-((((r.top*.35)%w)+w)%w)}px,${dy}px) scale(${ol.toFixed(3)})`;
+   akis.style.opacity=1-k((t-.62)/.26);
+   Z.style.opacity=k((t-.66)/.26);
   }
   requestAnimationFrame(ciz)}
  uyan();
