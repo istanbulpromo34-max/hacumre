@@ -39,8 +39,8 @@
 
 /* süzgeç şeridi */
 .filtre-dis{position:sticky;top:0;z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
-.filtre-dis.yapisti{background:rgba(6,13,31,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
-.filtre-satir{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;padding-block:13px 0}
+.filtre-dis.yapisti{background:rgba(6,13,31,.94);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 1px 0 rgba(201,162,75,.18),0 16px 34px -20px rgba(0,0,0,.75)}
+.filtre-satir{display:flex;align-items:center;gap:14px;flex-wrap:nowrap;padding-block:11px 0}
 .sekmeler{position:relative;flex:none;display:inline-flex;gap:2px;padding:4px;border-radius:999px;
   border:1px solid rgba(201,162,75,.32);background:rgba(11,22,48,.72)}
 .sekme-isik{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:999px;background:var(--altin);pointer-events:none;
@@ -52,9 +52,9 @@
 .sekmeler button small{opacity:.6;margin-left:7px;font-size:12.5px}
 .arama{margin-left:auto}
 .sekme-not{font-size:14px;line-height:1.65;color:rgba(234,230,220,.62);max-width:70ch;padding:18px 0 2px}
-.filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px 14px;min-width:0}
+.filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:10px 12px;min-width:0}
 .filtre::-webkit-scrollbar{display:none}
-.filtre button{flex:none;min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(11,22,48,.7);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:background .3s,border-color .3s,color .3s}
+.filtre button{flex:none;min-height:40px;padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(11,22,48,.7);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:background .3s,border-color .3s,color .3s}
 .filtre button:hover{border-color:rgba(201,162,75,.55)}
 .filtre button[aria-pressed="true"]{background:var(--altin);color:#1a1205;border-color:transparent}
 .filtre button small{opacity:.65;margin-left:6px;font-size:12.5px}
@@ -344,8 +344,17 @@ function filtreyeGit(){
   const hedef = document.querySelector('.bas').offsetHeight + (innerWidth > 720 ? -82 : 0);
   if (window.lenis) lenis.scrollTo(hedef, { immediate: azHareket }); else scrollTo(0, hedef);
 }
-const yapisGozcu = new IntersectionObserver(([g]) => FD.classList.toggle('yapisti', g.intersectionRatio < 1), { threshold: [1] });
-yapisGozcu.observe(FD);
+let yapisBekler = false;
+function yapisBak(){
+  yapisBekler = false;
+  FD.classList.toggle('yapisti', FD.getBoundingClientRect().top <= 0 && scrollY > 40);
+}
+addEventListener('scroll', () => {
+  if (yapisBekler) return;
+  yapisBekler = true; requestAnimationFrame(yapisBak);
+}, { passive: true });
+addEventListener('resize', yapisBak, { passive: true });
+yapisBak();
 
 /* ---- eser penceresi ---- */
 let pencere = null, oncekiOdak = null;
