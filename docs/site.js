@@ -13,10 +13,10 @@ const MAGAZA={
  instagram:'https://www.instagram.com/istanbulhacumrehediyelik/'
 };
 const KATEGORILER=[
- {ad:'Hac Umre Malzemeleri',gorsel:'assets/g/masa.jpg',acik:'İhram kemeri, terlik, boyun çantası, kokusuz bakım ürünleri ve misvak.'},
- {ad:'Hac Umre Kıyafetleri',gorsel:'assets/g/kiyafet.jpg',acik:'İhram, umre feracesi, eşarp ve bone; rahat ve tesettüre uygun kıyafetler.'},
- {ad:'İslami Hediyelik',gorsel:'assets/g/donus.jpg',acik:'Tesbih, seccade, esans ve özenle hazırlanmış hediye paketleri.'},
- {ad:'Hurma ve Zemzem',gorsel:'assets/g/hurma.jpg',acik:'Seçme Medine hurmaları ve dönüş ikramları için zemzem.'}
+ {ad:'Hac Umre Malzemeleri',gorsel:'assets/g/kat-malzeme.jpg',acik:'İhram kemeri, terlik, boyun çantası, kokusuz bakım ürünleri ve misvak.'},
+ {ad:'Hac Umre Kıyafetleri',gorsel:'assets/g/kat-kiyafet.jpg',acik:'İhram, umre feracesi, eşarp ve bone; rahat ve tesettüre uygun kıyafetler.'},
+ {ad:'İslami Hediyelik',gorsel:'assets/g/kat-hediyelik.jpg',acik:'Tesbih, seccade, esans ve özenle hazırlanmış hediye paketleri.'},
+ {ad:'Hurma ve Zemzem',gorsel:'assets/g/kat-hurma.jpg',acik:'Seçme Medine hurmaları ve dönüş ikramları için zemzem.'}
 ];
 /* Örnek ürünler — gerçek liste gelince değişecek. İsteğe bağlı kadraj: görselin hangi bölümü görünsün ('50% 30%') */
 const URUNLER=window.URUNLER||[
