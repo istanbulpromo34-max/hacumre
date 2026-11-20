@@ -347,3 +347,40 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 @media (hover:hover){
  .btn.cam:hover,.btn.sivi:hover,.dugme:not(.dolu):hover{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05) 48%,rgba(255,255,255,.09)),rgba(14,26,56,.78)!important}
  .btn.altin:hover,.dugme.dolu:hover{filter:brightness(1.07)}}
+
+/* ===== Menü: bilgisayarda da aynı cam dili =====
+   Telefondaki görünümün aynısı: koyu lacivert cam, arka plan hafif karartılarak
+   bulanıklaşır, üstte parlayan aşağı koyulaşan ince altın kontur, derin gölge. */
+@media(min-width:721px){
+ .nav{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 48%,rgba(255,255,255,.06)),rgba(10,19,42,.74);
+  backdrop-filter:blur(26px) saturate(170%) brightness(.78);-webkit-backdrop-filter:blur(26px) saturate(170%) brightness(.78);
+  border:1.5px solid transparent;
+  box-shadow:inset 0 1px 0 rgba(255,244,214,.5),inset 0 -1px 0 rgba(0,0,0,.35),
+   0 0 0 .5px rgba(0,0,0,.4),0 0 14px rgba(201,162,75,.18),0 14px 36px rgba(0,0,0,.55)}
+ .nav::before{content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(160deg,rgba(246,224,160,.95),rgba(201,162,75,.55) 35%,rgba(150,115,45,.35) 60%,rgba(230,199,122,.85));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+ .nav a{text-shadow:0 1px 2px rgba(0,0,0,.45)}
+ .nav a.on:not(.tur){background:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.28);color:var(--k-altin2)}
+ .nav .tur{text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35)}
+}
+/* ===== Kategori ve sekme etiketleri: menüyle aynı cam ===== */
+.filtre button,.sekmeler{position:relative;isolation:isolate;
+ background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.03) 48%,rgba(255,255,255,.05)),rgba(10,19,42,.74)!important;
+ backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+ border:1.5px solid transparent!important;
+ box-shadow:inset 0 1px 0 rgba(255,244,214,.4),inset 0 -1px 0 rgba(0,0,0,.3),0 8px 20px -12px rgba(0,0,0,.6)}
+.filtre button::before,.sekmeler::before{content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;pointer-events:none;
+ background:linear-gradient(160deg,rgba(246,224,160,.8),rgba(201,162,75,.42) 35%,rgba(150,115,45,.25) 60%,rgba(230,199,122,.7));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.filtre button{color:#f3efe6;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+@media (hover:hover){.filtre button:hover{background:linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.05) 48%,rgba(255,255,255,.08)),rgba(14,26,56,.78)!important}}
+/* seçili etiket: menüdeki altın hap gibi */
+.filtre button[aria-pressed="true"]{background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;color:#1a1205;text-shadow:none;
+ box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 8px 22px -12px rgba(201,162,75,.7)}
+.sekme-isik{background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;
+ box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35)}
+.sekmeler button{text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.sekmeler button[aria-selected="true"]{text-shadow:none}
