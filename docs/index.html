@@ -133,10 +133,22 @@
 .ziyaret-sag{display:grid;gap:18px;justify-items:start}
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
-.ziyaret .dugmeler{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ziyaret .dugmeler .btn{width:100%;min-height:54px;padding:14px 18px;font-size:15px;gap:9px}
+/* Eylem düğmeleri: eşit boy, ince çizgi ikon, cam yüzey — yalnız bu bölüme özel */
+.ziyaret .dugmeler{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .ziyaret .dugmeler .genis{grid-column:1/-1}
-.ziyaret .dugmeler .btn .sure{opacity:.6;font-weight:500}
+.ziyaret .dugmeler .btn{width:100%;min-height:54px;padding:15px 18px;gap:10px;border-radius:17px;
+ font:500 15.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:-.004em;
+ transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .3s,background .3s,border-color .3s}
+.ziyaret .dugmeler .btn svg.cz{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.ziyaret .dugmeler .btn.altin{background:linear-gradient(177deg,#e9c87f,#d8b667 58%,#bd9440);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 26px -14px rgba(201,162,75,.9)}
+.ziyaret .dugmeler .btn.wa{background:linear-gradient(177deg,#2bbd6c,#189c4f);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 10px 26px -14px rgba(31,174,91,.85)}
+.ziyaret .dugmeler .btn.wa svg{width:19px;height:19px;opacity:.95}
+.ziyaret .dugmeler .btn.cam{background:rgba(255,255,255,.052);border:1px solid rgba(255,255,255,.1);
+ backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+@media (hover:hover){.ziyaret .dugmeler .btn.cam:hover{background:rgba(255,255,255,.09);border-color:rgba(201,162,75,.4)}}
+.ziyaret .dugmeler .btn .sure{margin-left:2px;padding:3px 8px;border-radius:7px;background:rgba(255,255,255,.07);
+ font-size:12.5px;font-weight:500;letter-spacing:.01em;opacity:.7}
 @media(max-width:1100px){
 .grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
 .grup{aspect-ratio:4/3.6}}
@@ -175,7 +187,7 @@
 .grup p,.grup .ok{display:none}
 .guven{gap:10px 20px}
 .guven b{font-size:20px}
-.ziyaret .dugmeler .btn{font-size:14.5px;padding:14px 12px}}
+.ziyaret .dugmeler .btn{font-size:15px;padding:15px 14px;min-height:52px}}
 @media(max-width:380px){
 .adimlar{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
@@ -280,11 +292,11 @@
  <div class="ziyaret-sag" data-gel>
   <p class="adres">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul<br><span>Her gün 09:00–20:00 açığız.</span></p>
   <div class="dugmeler">
-   <a class="btn altin genis" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7.2 7.2 0 0 0-7.2 7.2C4.8 14.7 12 22 12 22s7.2-7.3 7.2-12.8A7.2 7.2 0 0 0 12 2zm0 9.8a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Yol tarifi alın</a>
+   <a class="btn altin genis" href="https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6" target="_blank" rel="noopener"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s6-5.2 6-9.8a6 6 0 1 0-12 0c0 4.6 6 9.8 6 9.8Z"/><circle cx="12" cy="10.4" r="2.4"/></svg>Yol tarifi alın</a>
    <a class="btn wa genis" id="ziyaret-wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
-   <a class="btn cam" href="tel:+905551044040"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3h3l1.5 3.8-2 1.4a12.5 12.5 0 0 0 5.7 5.7l1.4-2L20 13.4v3a1.6 1.6 0 0 1-1.8 1.6A15.4 15.4 0 0 1 5 5.8 1.6 1.6 0 0 1 6.6 3z"/></svg>Arayın</a>
-   <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" aria-label="Google'da yorum yapın"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3 1.1-6.4-4.7-4.6 6.5-.9z"/></svg>Yorum yapın</a>
-   <button class="btn cam genis" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
+   <a class="btn cam" href="tel:+905551044040"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.1 4.4 9.6 8 8 9.3a11.6 11.6 0 0 0 5.1 5.1l1.3-1.6 3.6 1.5v3.1a1.6 1.6 0 0 1-1.7 1.6A14.2 14.2 0 0 1 3.2 6.4a1.6 1.6 0 0 1 1.6-1.7h3.3Z"/></svg>Arayın</a>
+   <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener" aria-label="Google'da yorum yapın"><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4.4 2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z"/></svg>Yorum yapın</a>
+   <button class="btn cam genis" type="button" data-film><svg class="cz" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M10.4 9.2 15 12l-4.6 2.8z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
   </div>
  </div>
 </section>
