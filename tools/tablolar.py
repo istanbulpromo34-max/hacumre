@@ -17,9 +17,13 @@ import unicodedata
 KAYNAK = os.path.join("docs", "data", "products.json")
 OUT_JS = os.path.join("docs", "tablo-veri.js")
 
-# Tedarikçi filigranı taşıyan kareler temizlenene kadar fotoğraflar kapalı.
-# Temiz görseller geldiğinde burayı True yapmak ve betiği yeniden çalıştırmak yeter.
-FOTO = os.environ.get("TABLO_FOTO", "").lower() in {"1", "true", "evet"}
+# Fotoğraflar. Filigranlı kareler yalnızca baskı (çerçevesiz) üründe çıkıyordu;
+# o satır katalogdan tümden kalktığı için kalan eserlerin kareleri temiz.
+# Kapatmak gerekirse akışta TABLO_FOTO=0 yapmak yeter.
+FOTO = os.environ.get("TABLO_FOTO", "1").lower() in {"1", "true", "evet"}
+
+# Satmadığımız baskı (çerçevesiz) eserler: ne kendileri ne kategorileri listelenir.
+BASKI_KAT = {"cercevesiz hat eserleri"}
 
 # Katalogda geçen, müşteriye gösterilmemesi gereken marka adları
 YASAK = ("aşiyan", "asiyan", "myikas", "ikas")
@@ -29,7 +33,6 @@ YASAK = ("aşiyan", "asiyan", "myikas", "ikas")
 SIRA = [
     "Orijinal Hat Eserleri",
     "Çerçeveli Hat Eserleri",
-    "Çerçevesiz Hat Eserleri",
     "Hilye-i Şerif Tabloları",
     "Ayetel Kürsi Tabloları",
     "Besmele-i Şerif Tabloları",
@@ -74,8 +77,11 @@ def main():
             continue
         if any(y in anahtar for y in YASAK):
             continue
-        gorulen.add(anahtar)
         kat = temiz_ad(p.get("category")) or "Hat Eserleri"
+        # Baskı eserler satılmıyor: kategorisinden ya da adından anlaşılanı at
+        if sade(kat) in BASKI_KAT or "baski" in sade(ad):
+            continue
+        gorulen.add(anahtar)
         kayit = {
             # Kendi kodumuz: eser adından üretilir, katalog yenilense de değişmez
             "id": "IHE-" + hashlib.sha1(anahtar.encode("utf-8")).hexdigest()[:5].upper(),
