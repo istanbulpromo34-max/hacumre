@@ -20,6 +20,7 @@ KEY = os.environ.get("ODOO_KEY", "")
 KATEGORI = (os.environ.get("ODOO_KATEGORI") or "").strip() or "İSTANBUL HAC UMRE"
 OUT = os.path.join("docs", "data", "urunler.json")
 OUT_JS = os.path.join("docs", "urunler-veri.js")
+HARIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "haric.json")
 
 from kategori import kategori as site_kategorisi, KAT_GORSEL, sadelestir, basliklandir
 
@@ -39,6 +40,22 @@ def baglan():
 
 def oku(model, uid, metot, alan, *args, **kw):
     return model.execute_kw(DB, uid, KEY, alan, metot, *args, **kw)
+
+
+def haric_oku():
+    """Siteye çıkmayacak ürünler: tools/haric.json içindeki odooId listesi.
+
+    Odoo'da duran ama siteye girmemesi istenen ürünler burada tutulur; bir
+    ürünü geri almak için ilgili satırı dosyadan silmek yeterlidir.
+    """
+    try:
+        with open(HARIC, encoding="utf-8") as f:
+            kayit = json.load(f)
+    except FileNotFoundError:
+        return set()
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        sys.exit(f"{HARIC} okunamadı: {e}")
+    return {u["odooId"] for u in kayit.get("urunler", []) if isinstance(u, dict) and u.get("odooId")}
 
 
 def slug(s):
@@ -61,6 +78,12 @@ def main():
                   [[["categ_id", "child_of", kat_ids]]],
                   {"fields": alanlar, "order": "name asc", "limit": 5000})
     print("Ürün:", len(urunler))
+
+    haric = haric_oku()
+    if haric:
+        onceki = len(urunler)
+        urunler = [u for u in urunler if u["id"] not in haric]
+        print(f"Hariç tutulan: {onceki - len(urunler)} ürün (tools/haric.json)")
 
     fotolu = set(oku(model, uid, "search", "product.template",
                      [[["categ_id", "child_of", kat_ids], ["image_1920", "!=", False]]],

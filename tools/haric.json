@@ -1,0 +1,433 @@
+{
+ "aciklama": "Siteye cikmayacak urunler. odoo_urunler.py bu odooId listesini Odoo cikisindan duser. Bir urunu geri almak icin satirini silin.",
+ "eklenme": "2026-11-20",
+ "sebep": "Studyo fotografi bekleyen, siteden kaldirilmasi istenen urunler (Odoo tarafinda elle silinecek).",
+ "urunler": [
+  {
+   "odooId": 92,
+   "id": "500-hadis-i-serif",
+   "kod": "",
+   "ad": "500 Hadîs-i Şerîf"
+  },
+  {
+   "odooId": 98,
+   "id": "adab-ve-faziletleriyle-dualar",
+   "kod": "",
+   "ad": "Adab Ve Faziletleriyle Dualar"
+  },
+  {
+   "odooId": 143,
+   "id": "ashabi-kiram-hakkinda-muslumanlarin-nezih-itikad",
+   "kod": "",
+   "ad": "Ashabı Kiram Hakkında Müslümanların Nezih İtikadla"
+  },
+  {
+   "odooId": 86,
+   "id": "buyuk-islam-ilmihali",
+   "kod": "",
+   "ad": "Büyük İslam İlmihali"
+  },
+  {
+   "odooId": 133,
+   "id": "cenaze-ahkami-iskat-ve-devir",
+   "kod": "",
+   "ad": "Cenaze Ahkamı Iskat Ve Devir"
+  },
+  {
+   "odooId": 428,
+   "id": "dnc-labirent-set",
+   "kod": "",
+   "ad": "DNC- Labirent Set"
+  },
+  {
+   "odooId": 433,
+   "id": "dnc-buyuk-gumus-cam-dunya",
+   "kod": "",
+   "ad": "DNC-Büyük Gümüş Cam Dünya"
+  },
+  {
+   "odooId": 435,
+   "id": "dnc-kucuk-boy-gumus-cam-dunya",
+   "kod": "",
+   "ad": "DNC-Küçük Boy Gümüş Cam Dünya"
+  },
+  {
+   "odooId": 436,
+   "id": "dnc-metal-ayakli-dunya",
+   "kod": "",
+   "ad": "DNC-Metal Ayaklı Dünya"
+  },
+  {
+   "odooId": 437,
+   "id": "dnc-metal-dunya-buyuk",
+   "kod": "",
+   "ad": "DNC-Metal Dünya Büyük"
+  },
+  {
+   "odooId": 434,
+   "id": "dnc-ortaboy-gold-cam-dunya",
+   "kod": "",
+   "ad": "DNC-Ortaboy Gold Cam Dünya"
+  },
+  {
+   "odooId": 430,
+   "id": "dnc-tuylu-defter-kalem-set",
+   "kod": "",
+   "ad": "DNC-Tüylü Defter Kalem Set"
+  },
+  {
+   "odooId": 431,
+   "id": "dnc-yaprak-def-klm-set",
+   "kod": "",
+   "ad": "DNC-Yaprak Def.Klm.Set"
+  },
+  {
+   "odooId": 429,
+   "id": "dnc-cantali-defter-kalem-set",
+   "kod": "",
+   "ad": "DNC-Çantalı Defter Kalem Set"
+  },
+  {
+   "odooId": 7006,
+   "id": "16549",
+   "kod": "16549",
+   "ad": "Difuser C1700"
+  },
+  {
+   "odooId": 7008,
+   "id": "16551",
+   "kod": "16551",
+   "ad": "Difüser Araç C1825"
+  },
+  {
+   "odooId": 7010,
+   "id": "16553",
+   "kod": "16553",
+   "ad": "Difüser Araç C1827"
+  },
+  {
+   "odooId": 2,
+   "id": "down-payment-pos",
+   "kod": "",
+   "ad": "Down Payment (POS)"
+  },
+  {
+   "odooId": 103,
+   "id": "dort-buyuk-halife-devri-karton-kapak",
+   "kod": "",
+   "ad": "Dört Büyük Halife Devri Karton Kapak"
+  },
+  {
+   "odooId": 99,
+   "id": "guzel-ahlak",
+   "kod": "",
+   "ad": "Güzel Ahlak"
+  },
+  {
+   "odooId": 102,
+   "id": "hanimlara-rehber-bilgiler-ve-buyuk-islam-hanimla",
+   "kod": "",
+   "ad": "Hanımlara Rehber Bilgiler Ve Büyük İslam Hanımları"
+  },
+  {
+   "odooId": 144,
+   "id": "hazret-i-aliyyul-murteza",
+   "kod": "",
+   "ad": "Hazret-i Aliyyül Murteza"
+  },
+  {
+   "odooId": 87,
+   "id": "hazret-i-amine-validemiz",
+   "kod": "",
+   "ad": "Hazret-i Amine Validemiz"
+  },
+  {
+   "odooId": 148,
+   "id": "hazret-i-ebubekir-i-siddik-r-a-islamin-ilk-ha",
+   "kod": "",
+   "ad": "Hazret-i Ebubekir-i Sıddık (R.A.)İSLAMIN İlk Ha."
+  },
+  {
+   "odooId": 88,
+   "id": "hazret-i-hadicetul-kubra-validemiz",
+   "kod": "",
+   "ad": "Hazret-i Hadicetül Kübra Validemiz"
+  },
+  {
+   "odooId": 145,
+   "id": "hazret-i-osman-i-zinnureyn",
+   "kod": "",
+   "ad": "Hazret-i Osman-ı Zinnureyn"
+  },
+  {
+   "odooId": 147,
+   "id": "hazret-i-omerul-faruk-r-a-adalet-timsali",
+   "kod": "",
+   "ad": "Hazret-i Ömerul Faruk (R.A.)ADALET Timsali"
+  },
+  {
+   "odooId": 142,
+   "id": "hazreti-ibrahim-a-s-ve-nemrud",
+   "kod": "",
+   "ad": "Hazreti İbrahim (A.S.)VE Nemrud"
+  },
+  {
+   "odooId": 20,
+   "id": "hediyelik",
+   "kod": "",
+   "ad": "Hediyelik"
+  },
+  {
+   "odooId": 111,
+   "id": "herkes-icin-peygamber-efendimizin-hayati",
+   "kod": "",
+   "ad": "Herkes İçin Peygamber Efendimizin Hayatı"
+  },
+  {
+   "odooId": 419,
+   "id": "hudri-hurma-0-5kg",
+   "kod": "",
+   "ad": "Hudri Hurma 0,5KG"
+  },
+  {
+   "odooId": 420,
+   "id": "hudri-hurma-1-kg",
+   "kod": "",
+   "ad": "Hudri Hurma 1 KG"
+  },
+  {
+   "odooId": 511,
+   "id": "10054",
+   "kod": "10054",
+   "ad": "Hurma Fidanları"
+  },
+  {
+   "odooId": 510,
+   "id": "10053",
+   "kod": "10053",
+   "ad": "Hz.Allahı Tanıyorum"
+  },
+  {
+   "odooId": 393,
+   "id": "isikli-zikirmatik",
+   "kod": "",
+   "ad": "Işıklı Zikirmatik"
+  },
+  {
+   "odooId": 505,
+   "id": "10048",
+   "kod": "10048",
+   "ad": "Kalbimdeki Kocaman Sevgi"
+  },
+  {
+   "odooId": 445,
+   "id": "kalem-defter-cuzdan-set",
+   "kod": "",
+   "ad": "Kalem Defter Cüzdan Set"
+  },
+  {
+   "odooId": 146,
+   "id": "karabas-tecvidi",
+   "kod": "",
+   "ad": "Karabaş Tecvidi"
+  },
+  {
+   "odooId": 461,
+   "id": "10004",
+   "kod": "10004",
+   "ad": "Karton Çanta Büyük"
+  },
+  {
+   "odooId": 459,
+   "id": "10002",
+   "kod": "10002",
+   "ad": "Karton Çanta Küçük"
+  },
+  {
+   "odooId": 460,
+   "id": "10003",
+   "kod": "10003",
+   "ad": "Karton Çanta Orta"
+  },
+  {
+   "odooId": 316,
+   "id": "kilim-seccade",
+   "kod": "",
+   "ad": "Kilim Seccade"
+  },
+  {
+   "odooId": 7065,
+   "id": "16608",
+   "kod": "16608",
+   "ad": "Kuka 7MM Kapsül Tesbih 99lu"
+  },
+  {
+   "odooId": 371,
+   "id": "kuka-bileklik",
+   "kod": "",
+   "ad": "Kuka Bileklik"
+  },
+  {
+   "odooId": 421,
+   "id": "mesruk-0-5kg",
+   "kod": "",
+   "ad": "Meşruk 0,5KG"
+  },
+  {
+   "odooId": 422,
+   "id": "mesruk-hurma-1kg",
+   "kod": "",
+   "ad": "Meşruk Hurma 1KG"
+  },
+  {
+   "odooId": 360,
+   "id": "misvak-tozu",
+   "kod": "",
+   "ad": "Misvak Tozu"
+  },
+  {
+   "odooId": 130,
+   "id": "muhtasar-ilmihal-maliki",
+   "kod": "",
+   "ad": "Muhtasar İlmihal Maliki"
+  },
+  {
+   "odooId": 131,
+   "id": "muhtasar-safii-ilmihali",
+   "kod": "",
+   "ad": "Muhtasar Şafii İlmihali"
+  },
+  {
+   "odooId": 129,
+   "id": "namazda-tadil-i-erkan-ve-husu",
+   "kod": "",
+   "ad": "Namazda Tadil-i Erkan Ve Huşu"
+  },
+  {
+   "odooId": 509,
+   "id": "10052",
+   "kod": "10052",
+   "ad": "Onun Elinden 300 Fidan"
+  },
+  {
+   "odooId": 112,
+   "id": "peygamberimiz-ve-peygamberler-a-s",
+   "kod": "",
+   "ad": "Peygamberimiz Ve Peygamberler (A.S.)"
+  },
+  {
+   "odooId": 322,
+   "id": "piramit-tesbih-seccade-set",
+   "kod": "",
+   "ad": "Piramit Tesbih Seccade Set"
+  },
+  {
+   "odooId": 91,
+   "id": "salihlerin-hikayeleri",
+   "kod": "",
+   "ad": "Salihlerin Hikayeleri"
+  },
+  {
+   "odooId": 382,
+   "id": "sekreter-dosya",
+   "kod": "",
+   "ad": "Sekreter Dosya"
+  },
+  {
+   "odooId": 512,
+   "id": "10055",
+   "kod": "10055",
+   "ad": "Sevgili Peygamberi"
+  },
+  {
+   "odooId": 379,
+   "id": "showroom-promosyyon",
+   "kod": "",
+   "ad": "Showroom Promosyyon"
+  },
+  {
+   "odooId": 132,
+   "id": "taharet-rehberi",
+   "kod": "",
+   "ad": "Taharet Rehberi"
+  },
+  {
+   "odooId": 141,
+   "id": "tercume-ve-serh-i-kaside-i-burde",
+   "kod": "",
+   "ad": "Tercüme Ve Serh-i Kaside-i Bürde"
+  },
+  {
+   "odooId": 107,
+   "id": "vehhabilere-cevaplar",
+   "kod": "",
+   "ad": "Vehhabilere Cevaplar"
+  },
+  {
+   "odooId": 504,
+   "id": "10047",
+   "kod": "10047",
+   "ad": "Yol Gösteren"
+  },
+  {
+   "odooId": 134,
+   "id": "zekat-ve-verilecegi-yerler",
+   "kod": "",
+   "ad": "Zekat Ve Verileceği Yerler"
+  },
+  {
+   "odooId": 392,
+   "id": "cakmali-rahle-battal-boy",
+   "kod": "",
+   "ad": "Çakmalı Rahle Battal Boy"
+  },
+  {
+   "odooId": 391,
+   "id": "cakmali-rahle-buyuk",
+   "kod": "",
+   "ad": "Çakmalı Rahle Büyük"
+  },
+  {
+   "odooId": 390,
+   "id": "cakmali-rahle-kucuk",
+   "kod": "",
+   "ad": "Çakmalı Rahle Küçük"
+  },
+  {
+   "odooId": 128,
+   "id": "ilahi-ve-kasidelerle-mevlidi-serif",
+   "kod": "",
+   "ad": "İlahi Ve Kasidelerle Mevlidi Şerif"
+  },
+  {
+   "odooId": 110,
+   "id": "imami-azam-ebu-hanife",
+   "kod": "",
+   "ad": "İmamı Azam Ebu Hanife"
+  },
+  {
+   "odooId": 106,
+   "id": "islam-ahlaki-ve-adabi-siratul-islam-k-kapak",
+   "kod": "",
+   "ad": "İslam Ahlakı Ve Adabı - Şiratül-İslam (K.Kapak)"
+  },
+  {
+   "odooId": 104,
+   "id": "islam-tarihinden-altin-sayfalar",
+   "kod": "",
+   "ad": "İslam Tarihinden Altın Sayfalar"
+  },
+  {
+   "odooId": 444,
+   "id": "ist-hatirasi-beyaz-kapak-defter",
+   "kod": "",
+   "ad": "İst.Hatırası Beyaz Kapak Defter"
+  },
+  {
+   "odooId": 94,
+   "id": "semail-i-serif",
+   "kod": "",
+   "ad": "Şemail-i Şerif"
+  }
+ ]
+}
