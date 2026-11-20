@@ -98,10 +98,6 @@
 .adim3 b{font-size:13.5px;line-height:1.25;margin-bottom:0}
 .adim3 span{display:none}
 .not-alt{margin-top:14px;font-size:12.5px}
-/* Telefonda filtre alanı üstte asılı kalmaz, sayfayla birlikte yukarı çıkar:
-   ekranın üstünde duran bar okumayı daraltıyordu. */
-.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
-.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
 .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .daha{padding-bottom:120px}
  .daha button{min-width:0;width:100%}
@@ -123,7 +119,8 @@
 /* ---- arama ---- */
 .filtre-satir{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
 .filtre-satir .filtre{flex:1;min-width:0}
-.arama{flex:none;min-height:44px;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+.arama-yer{display:flex;flex:none;min-width:0}
+.arama{flex:1;min-height:44px;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
   border:1px solid rgba(201,162,75,.28);background:rgba(255,255,255,.05);width:min(260px,38vw)}
 .arama svg{width:16px;height:16px;flex:none;fill:none;stroke:rgba(230,199,122,.9);stroke-width:1.8}
 
@@ -170,7 +167,21 @@
 .buyut{animation:buyutAc .22s ease-out}
 .buyut-ic{animation:buyutKalk .32s cubic-bezier(.2,.8,.2,1)}}
 @keyframes buyutAc{from{opacity:0}to{opacity:1}}
-@keyframes buyutKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}</style>
+@keyframes buyutKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}/* Telefonda kategori/sekme şeridi yukarıda kalır (sayfayla birlikte yukarı çıkar);
+   yalnızca arama kutusu kullanıcıyla birlikte aşağı iner. */
+@media(max-width:720px){
+.arama-yer{order:-1;width:100%;min-height:46px}
+.arama{width:100%;margin-left:0}
+body.ara-sabit .arama{position:fixed;left:12px;right:12px;width:auto;z-index:30;
+ top:calc(10px + env(safe-area-inset-top,0px));
+ background:rgba(8,16,36,.93);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+ border-color:rgba(201,162,75,.35);box-shadow:0 14px 34px -18px rgba(0,0,0,.85);
+ animation:araIn .28s cubic-bezier(.2,.8,.2,1)}
+.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+@keyframes araIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <body>
 <noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px Hanken Grotesk,system-ui,sans-serif">Bu sayfanın içeriği için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
@@ -188,9 +199,11 @@
 <div class="filtre-dis" id="filtre-dis"><div class="kap">
  <div class="filtre-satir">
   <div class="filtre" role="group" aria-label="Ürün grupları"></div>
+  <div class="arama-yer">
   <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
    <input id="ara" type="search" placeholder="Ürün ara…" autocomplete="off" aria-label="Ürün ara">
    <button type="button" id="araSil" aria-label="Aramayı temizle" hidden>&times;</button></label>
+  </div>
  </div>
 </div></div>
 <div class="kap"><p class="sonuc" id="sonuc" aria-live="polite"></p><div class="izgara"></div>
@@ -404,6 +417,17 @@ DAHA.querySelector('button').addEventListener('click',dahaCiz);
 /* Düğmeye yaklaşınca sıradaki grup kendiliğinden yüklenir */
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&!DAHA.hidden)dahaCiz()},{rootMargin:'600px 0px'}).observe(DAHA);
 filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();
+/* Arama kutusu kendi yerinden yukarı çıkınca ekranın üstüne tutunur ve
+   kullanıcıyla birlikte aşağı iner; kategori şeridi yukarıda kalır. */
+(function(){
+  const yer=document.querySelector('.arama-yer');if(!yer)return;
+  const bak=()=>{
+    if(innerWidth>720){document.body.classList.remove('ara-sabit');return}
+    const r=yer.getBoundingClientRect();
+    document.body.classList.toggle('ara-sabit', r.top < (10 + 2));
+  };
+  addEventListener('scroll',bak,{passive:true});addEventListener('resize',bak);bak();
+})();
 if(sec!=='Tümü')requestAnimationFrame(()=>filtreyeGit());
 </script>
 </body>

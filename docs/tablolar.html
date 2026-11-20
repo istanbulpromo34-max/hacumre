@@ -68,7 +68,7 @@
 @media (hover:hover){.sekmeler button:hover{color:#eae6dc}}
 .sekmeler button[aria-selected="true"]{color:#1a1205}
 .sekmeler button small{opacity:.6;margin-left:7px;font-size:12.5px}
-.arama{margin-left:auto}
+.arama-yer{margin-left:auto}
 .sekme-not{font-size:14px;line-height:1.65;color:rgba(234,230,220,.62);max-width:70ch;padding:18px 0 2px}
 .filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:10px 12px;min-width:0}
 .filtre::-webkit-scrollbar{display:none}
@@ -77,7 +77,8 @@
 .filtre button[aria-pressed="true"]{background:var(--altin);color:#1a1205;border-color:transparent}
 .filtre button small{opacity:.65;margin-left:6px;font-size:12.5px}
 .filtre-tum{display:none}
-.arama{flex:none;min-height:44px;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+.arama-yer{display:flex;flex:none;min-width:0}
+.arama{flex:1;min-height:44px;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
   border:1px solid rgba(201,162,75,.28);background:rgba(255,255,255,.05);width:min(260px,38vw)}
 .arama svg{width:16px;height:16px;flex:none;fill:none;stroke:rgba(230,199,122,.9);stroke-width:1.8}
 
@@ -156,10 +157,13 @@
 .sekmeler .sek-ad{display:none}
 .sekmeler .sek-kisa{display:inline}
 .filtre-tum{width:100%;max-width:none;justify-content:center}
-/* Telefonda filtre alanı üstte asılı kalmaz, sayfayla birlikte yukarı çıkar:
-   ekranın üstünde duran bar okumayı daraltıyordu. */
-.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
-.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+/* Telefonda açılış ekranında eserler görünsün: uzun tanıtım yazısı ve
+   üç adımlık anlatım sayfanın altına taşınır. */
+.alt-bilgi{padding:10px 0 130px;border-top:1px solid rgba(201,162,75,.16);margin-top:28px}
+.alt-bilgi h2{font-family:'Marcellus';font-weight:400;font-size:21px;color:var(--altin2);margin:22px 0 14px}
+.alt-bilgi .giris{font-size:15px;line-height:1.7;margin:0 0 18px}
+.alt-bilgi .adim3{margin:0 0 16px}
+.alt-bilgi .not-alt{margin:0}
 .filtre-satir{flex-wrap:wrap;gap:10px}
 .arama{width:100%;order:-1;margin-left:0}
 .sekmeler{width:100%;display:grid;grid-template-columns:1fr 1fr}
@@ -177,7 +181,21 @@
 .pencere{animation:pAc .22s ease-out}
 .pencere-ic{animation:pKalk .32s cubic-bezier(.2,.8,.2,1)}}
 @keyframes pAc{from{opacity:0}to{opacity:1}}
-@keyframes pKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}</style>
+@keyframes pKalk{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}/* Telefonda kategori/sekme şeridi yukarıda kalır (sayfayla birlikte yukarı çıkar);
+   yalnızca arama kutusu kullanıcıyla birlikte aşağı iner. */
+@media(max-width:720px){
+.arama-yer{order:-1;width:100%;min-height:46px}
+.arama{width:100%;margin-left:0}
+body.ara-sabit .arama{position:fixed;left:12px;right:12px;width:auto;z-index:30;
+ top:calc(10px + env(safe-area-inset-top,0px));
+ background:rgba(8,16,36,.93);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+ border-color:rgba(201,162,75,.35);box-shadow:0 14px 34px -18px rgba(0,0,0,.85);
+ animation:araIn .28s cubic-bezier(.2,.8,.2,1)}
+.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+}
+@keyframes araIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <body>
 <noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px Hanken Grotesk,system-ui,sans-serif">Bu sayfanın içeriği için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
@@ -196,9 +214,11 @@
 <div class="filtre-dis" id="filtre-dis"><div class="kap">
  <div class="filtre-satir">
   <div class="sekmeler" id="sekmeler" role="tablist" aria-label="Eser türü"><span class="sekme-isik" id="sekmeIsik" aria-hidden="true"></span></div>
+  <div class="arama-yer">
   <label class="arama"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5" stroke-linecap="round"/></svg>
    <input id="ara" type="search" placeholder="Eser ara…" autocomplete="off" aria-label="Eser ara">
    <button type="button" id="araSil" aria-label="Aramayı temizle" hidden>&times;</button></label>
+  </div>
   <button type="button" class="filtre-tum" id="filtreTum" aria-haspopup="dialog" aria-expanded="false" aria-controls="filtreGrup" hidden>
    <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
    <span id="filtreTumAd">Gruplar</span></button>
@@ -217,6 +237,7 @@
  <p class="sonuc" id="sonuc" aria-live="polite"></p>
  <div class="izgara" id="izgara"></div>
  <div class="daha"><button type="button" id="daha" hidden>Daha fazla eser göster</button><p id="dahaNot"></p></div>
+ <section class="alt-bilgi" id="altBilgi" hidden><h2>Nasıl alabilirsiniz?</h2></section>
 </div>
 </main>
 <p class="sr" id="duyuru" aria-live="polite"></p>
@@ -508,6 +529,29 @@ addEventListener('keydown', e => { if (e.key === 'Escape') pencereyiKapat(); });
   if (!h) return;
   if (h === 'el-yazmasi' || h === YAZMA){ sekme = 'yazma'; return; }
   if (KATLAR.some(k => k.ad === h && k.ad !== YAZMA)) sec = h;
+})();
+/* Telefonda tanıtım yazısı ve üç adım sayfanın altına taşınır; masaüstünde
+   başlığın altında kalır. Böylece telefonda ilk ekranda eserler görünüyor. */
+function basYerlesim(){
+  const alt=document.getElementById('altBilgi'),bas=document.querySelector('.bas');
+  if(!alt||!bas)return;
+  const telefon=innerWidth<=720;
+  const tasinacak=[document.querySelector('.giris'),document.querySelector('.adim3'),document.getElementById('notAlt')].filter(Boolean);
+  const hedef=telefon?alt:bas;
+  tasinacak.forEach(e=>{if(e.parentElement!==hedef)hedef.append(e)});
+  alt.hidden=!telefon;
+}
+basYerlesim();addEventListener('resize',basYerlesim);
+/* Arama kutusu kendi yerinden yukarı çıkınca ekranın üstüne tutunur ve
+   kullanıcıyla birlikte aşağı iner; kategori şeridi yukarıda kalır. */
+(function(){
+  const yer=document.querySelector('.arama-yer');if(!yer)return;
+  const bak=()=>{
+    if(innerWidth>720){document.body.classList.remove('ara-sabit');return}
+    const r=yer.getBoundingClientRect();
+    document.body.classList.toggle('ara-sabit', r.top < (10 + 2));
+  };
+  addEventListener('scroll',bak,{passive:true});addEventListener('resize',bak);bak();
 })();
 sekmeKur(); sekmeCiz(); filtreCiz(); izgaraCiz();
 akisKur();
