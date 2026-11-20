@@ -213,7 +213,7 @@
 /* Üç sütun: solda puan, ortada geniş yorum alanı, sağda eylemler.
    Bölüm ortalanıp genişliği sınırlandı; geniş ekranda dağılmıyor. */
 .ziyaret{display:grid;grid-template-columns:minmax(168px,.76fr) minmax(0,1.78fr) minmax(296px,.9fr);
- max-width:1468px;margin-inline:auto;padding-inline:24px;gap:34px 46px;align-items:center;
+ max-width:1468px;margin-inline:auto;padding-inline:24px;gap:34px clamp(56px,6vw,120px);align-items:center;
  padding-block:clamp(48px,7vh,84px);border-top:1px solid rgba(255,255,255,.08)}
 @media(max-width:1180px){.ziyaret{grid-template-columns:1fr;gap:26px}
 /* Tek sütunda her şey ortada: puan, yorum kartı ve düğmeler aynı eksende */
@@ -475,10 +475,6 @@
   </div>
   <div class="yorum-kumanda">
    <a class="yorum-tum" href="https://g.page/r/CSGI4w4tcT1CEBM" target="_blank" rel="noopener">124 yorumun tamamını Google'da okuyun</a>
-   <div class="yorum-oklar">
-    <button type="button" class="yorum-ok" id="yorumGeri" aria-label="Önceki yorum">‹</button>
-    <button type="button" class="yorum-ok" id="yorumIleri" aria-label="Sonraki yorum">›</button>
-   </div>
   </div>
  </div>
  <div class="ziyaret-sag" data-gel>
@@ -639,8 +635,6 @@ akisKur();
   kartlar[i].classList.add('acik');kok.style.setProperty('--yorum-sure',sure(i)+'ms');cizgiKur()};
  const durum=()=>kok.classList.toggle('durdu',az||fare||basili||!gorunur||document.hidden);
  cizgiler.forEach(c=>c.addEventListener('animationend',()=>{if(c.classList.contains('aktif'))git(i+1)}));
- document.getElementById('yorumIleri').onclick=()=>git(i+1);
- document.getElementById('yorumGeri').onclick=()=>git(i-1);
  const kart=kok.querySelector('.yorum-kart');let uzun=false,uzunSayac=null;
  kart.addEventListener('pointerdown',e=>{if(e.target.closest('a'))return;uzun=false;basili=true;durum();
   clearTimeout(uzunSayac);uzunSayac=setTimeout(()=>{uzun=true},450)});
