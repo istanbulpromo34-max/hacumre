@@ -413,20 +413,20 @@
 /* Kepengin üstüne boyanmış "KAPALI": lamel aralıklarında boya kesilir, yüzey dokusu geçer */
 /* Geniş lameller: gerçek kepenklerdeki gibi araya giren daha geniş paneller.
    Yazılar bunların üstünde durur (lamel aralarında kesilmez, okunur).
-   Hepsi küçük lamel ızgarasına oturur: g1 2, g2 3, g3 2 lamel boyunda. */
-.kp-genis{position:absolute;left:0;right:0;display:grid;place-items:center;overflow:hidden;
+   Üç geniş lamel eşit aralıklı ve aynı boyda (4 küçük lamel); yazılar en üsttekinde. */
+.kp-genis{position:absolute;left:0;right:0;height:calc(var(--l) * 4);display:grid;place-content:center;justify-items:center;gap:calc(var(--l) * .15);overflow:hidden;
  background:
   linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 12%,rgba(255,255,255,.035) 50%,rgba(0,0,0,0) 88%,rgba(0,0,0,.34)),
   linear-gradient(180deg,#454a53 0,#373b43 calc(var(--l) * .22),#2c3036 40%,#24272d calc(100% - var(--l) * .3),#0f1114 calc(100% - var(--l) * .16),#0f1114 100%)}
 .kp-genis::after{content:"";position:absolute;inset:0;opacity:.2;mix-blend-mode:overlay;pointer-events:none;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.kp-genis.g1{top:calc(var(--l) * 5);height:calc(var(--l) * 2)}
-.kp-genis.g2{top:calc(var(--l) * 8);height:calc(var(--l) * 3)}
-.kp-genis.g3{top:calc(var(--l) * 18);height:calc(var(--l) * 2)}
+.kp-genis.g1{top:calc(var(--l) * 5)}
+.kp-genis.g2{top:calc(var(--l) * 13)}
+.kp-genis.g3{top:calc(var(--l) * 21)}
 /* Yazılar panele boyanmış gibi: hafif ışık-gölge geçişi, çok hafif aşınma */
-.kp-bas,.kp-saat{display:block;white-space:nowrap;color:transparent;-webkit-background-clip:text;background-clip:text;margin-top:calc(var(--l) * -.12);
+.kp-bas,.kp-saat{display:block;white-space:nowrap;line-height:1;color:transparent;-webkit-background-clip:text;background-clip:text;
  text-shadow:none;filter:drop-shadow(0 1px 0 rgba(0,0,0,.45))}
-.kp-bas{font:600 calc(var(--l) * 1.25) 'Barlow Condensed','Hanken Grotesk',sans-serif;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;
+.kp-bas{font:600 calc(var(--l) * 1.05) 'Barlow Condensed','Hanken Grotesk',sans-serif;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;
  background-image:linear-gradient(180deg,#f2eee6,#d8d2c6)}
 .kp-saat{font:600 calc(var(--l) * 2.5) 'Barlow Condensed','Hanken Grotesk',sans-serif;letter-spacing:.02em;font-variant-numeric:tabular-nums;
  background-image:linear-gradient(180deg,#f6f2ea,#dcd6ca)}
@@ -471,7 +471,7 @@
   </video>
   <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
   <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
-   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-genis g1"><b class="kp-bas">Çalışma saatleri</b></i><i class="kp-genis g2"><b class="kp-saat">09.00 – 20.00</b></i><i class="kp-genis g3"></i><i class="kp-alt"></i></i></div>
+   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-genis g1"><b class="kp-bas">Çalışma saatleri</b><b class="kp-saat">09.00 – 20.00</b></i><i class="kp-genis g2"></i><i class="kp-genis g3"></i><i class="kp-alt"></i></i></div>
   </div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>

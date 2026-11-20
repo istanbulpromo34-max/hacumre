@@ -322,3 +322,28 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  .nav .tur{text-shadow:none}
  body.kabuk-gizli .nav::before{opacity:.7}
 }
+
+/* ===== Oval düğmeler menüyle takım =====
+   Cam düğmeler menünün koyu lacivert camını ve üstte parlayan, aşağı koyulaşan ince
+   altın konturunu alır; altın düğmeler menüdeki "Dijital Tur" hapı gibi; WhatsApp
+   düğmesi yeşil kalır ama aynı cam yansımasını ve konturu taşır. */
+.btn.cam,.btn.sivi,.dugme:not(.dolu){position:relative;isolation:isolate;
+ background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03) 48%,rgba(255,255,255,.06)),rgba(10,19,42,.74)!important;
+ backdrop-filter:blur(22px) saturate(170%) brightness(.85);-webkit-backdrop-filter:blur(22px) saturate(170%) brightness(.85);
+ border:1.5px solid transparent!important;color:#f3efe6;
+ box-shadow:inset 0 1px 0 rgba(255,244,214,.45),inset 0 -1px 0 rgba(0,0,0,.35),0 0 12px rgba(201,162,75,.14),0 12px 30px -12px rgba(0,0,0,.65)!important}
+.btn.cam::before,.btn.sivi::before,.dugme:not(.dolu)::before,
+.btn.altin::before,.btn.wa::before,.dugme.dolu::before{content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;pointer-events:none;z-index:1;
+ background:linear-gradient(160deg,rgba(246,224,160,.95),rgba(201,162,75,.55) 35%,rgba(150,115,45,.35) 60%,rgba(230,199,122,.85));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.btn.altin,.dugme.dolu{position:relative;isolation:isolate;border:0;color:#1a1205!important;
+ background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;
+ box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 10px 26px -12px rgba(201,162,75,.75)}
+.btn.wa:not(.sivi){position:relative;isolation:isolate;
+ background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0) 50%),var(--k-wa)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(0,0,0,.25),0 10px 26px -12px rgba(31,174,91,.7)}
+.btn.sivi.wa svg{color:#4ade8c}
+@media (hover:hover){
+ .btn.cam:hover,.btn.sivi:hover,.dugme:not(.dolu):hover{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05) 48%,rgba(255,255,255,.09)),rgba(14,26,56,.78)!important}
+ .btn.altin:hover,.dugme.dolu:hover{filter:brightness(1.07)}}
