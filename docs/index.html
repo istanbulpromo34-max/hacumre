@@ -20,9 +20,9 @@
 <link rel="apple-touch-icon" href="assets/ikon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="assets/font/story-script-latin-400-normal.woff2" crossorigin>
 <link rel="preload" as="image" type="image/webp" href="assets/hero/magaza.webp" media="(min-width: 601px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="assets/hero/magaza-m.webp" media="(max-width: 600px)" fetchpriority="high">
-<link rel="preload" as="font" type="font/woff2" href="assets/font/dancing-script-latin-ext-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
 <script src="assets/js/lenis.min.js" defer></script>
 <script type="application/ld+json">
@@ -59,14 +59,14 @@
 .hero .ust-yazi .yer-ik{width:14px;height:14px;flex:none;fill:currentColor;opacity:.9}
 /* Son satır el yazısıyla; Türkçe harfler için latin-ext dosyası önce geliyor.
    Yazı tipleri kendi sunucumuzda: ilk ekrandaki başlık dış bir istek beklemiyor. */
-@font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;
- src:url(assets/font/dancing-script-latin-ext-600-normal.woff2) format('woff2');
+@font-face{font-family:'Story Script';font-style:normal;font-weight:400;font-display:swap;
+ src:url(assets/font/story-script-latin-ext-400-normal.woff2) format('woff2');
  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;
- src:url(assets/font/dancing-script-latin-600-normal.woff2) format('woff2');
+@font-face{font-family:'Story Script';font-style:normal;font-weight:400;font-display:swap;
+ src:url(assets/font/story-script-latin-400-normal.woff2) format('woff2');
  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* El yazısı satırı: harfler küçük gövdeli olduğu için punto büyütülüyor */
-.hero h1 .elyazi{font-family:'Dancing Script','Marcellus',cursive;font-weight:600;font-size:1.08em;
+.hero h1 .elyazi{font-family:'Story Script','Marcellus',cursive;font-weight:400;font-size:1.08em;
  line-height:1.12;letter-spacing:.005em;color:rgba(244,240,230,.94);margin-top:.1em}
 /* "ibadetinize" altın renkte ve üzerinden ışık geçiyor */
 .hero h1 .parilti{font-style:normal;color:transparent;-webkit-background-clip:text;background-clip:text;
