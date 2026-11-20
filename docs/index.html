@@ -69,7 +69,7 @@
   #000 calc(100% - var(--tas)),rgba(0,0,0,.3) calc(100% - var(--tas) * .55),transparent 100%);
  mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.3) calc(var(--tas) * .55),#000 var(--tas),
   #000 calc(100% - var(--tas)),rgba(0,0,0,.3) calc(100% - var(--tas) * .55),transparent 100%)}
-.hero h1 .rulo{display:block;will-change:transform;transition:transform .5s cubic-bezier(.3,1.02,.32,1)}
+.hero h1 .rulo{display:block;will-change:transform;transition:transform .42s cubic-bezier(.3,1.02,.32,1)}
 .hero h1 .rulo.ani{transition:none}
 .hero h1 .rulo>span{display:block;height:var(--sat);line-height:var(--sat);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){
@@ -316,7 +316,7 @@
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
  <div class="metin">
   <div class="ust-yazi sz"><svg class="yer-ik" viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.6a7.2 7.2 0 0 0-7.2 7.2c0 5 6.1 10.9 6.4 11.2a1.1 1.1 0 0 0 1.6 0c.3-.3 6.4-6.2 6.4-11.2A7.2 7.2 0 0 0 12 2.6Zm0 10a2.9 2.9 0 1 1 0-5.8 2.9 2.9 0 0 1 0 5.8Z"/></svg>Ümraniye, İstanbul</div>
-  <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Tesbihinizi</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hediyenizi</span><span class="metal metal-yazi">Hepsini</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünelim,</span><span class="sat">siz ibadetinizi.</span></span></h1>
+  <h1 class="sz"><span class="ana"><span class="sat">Siz ibadetinize odaklanın,</span><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Tesbihinizi</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hediyenizi</span><span class="metal metal-yazi">Hepsini</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz.</span></span></h1>
   <p class="giris sz">Bizim işimiz ürün satmak değil; hac ve umreye hazırlananların yükünü hafifletmek. Yola çıkarken de, dönerken de yanınızdayız.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html">Ürünlerimizi inceleyin</a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
   <div class="guven sz">
@@ -519,7 +519,7 @@ akisKur();
  const adet=rulo.children.length-1;           // sondaki kopya sayılmaz
  const az=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let i=0,gorunur=true,sayac=null;
- const SURE=2400;
+ const SURE=1500;
  const kaydir=()=>rulo.style.transform='translateY(-'+(i*100/rulo.children.length).toFixed(4)+'%)';
  const adim=()=>{
   i++;kaydir();
