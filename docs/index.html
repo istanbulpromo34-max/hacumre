@@ -22,7 +22,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" type="image/webp" href="assets/hero/magaza.webp" media="(min-width: 601px)" fetchpriority="high">
 <link rel="preload" as="image" type="image/webp" href="assets/hero/magaza-m.webp" media="(max-width: 600px)" fetchpriority="high">
-<link rel="preload" as="font" type="font/woff2" href="assets/font/dancing-script-latin-ext-600-normal.woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
 <script src="assets/js/lenis.min.js" defer></script>
 <script type="application/ld+json">
@@ -55,35 +54,21 @@
 .hero-efekt{display:none}}
 .hero .metin{position:relative;z-index:1;width:min(600px,calc(40vw - max(20px,5vw)));padding:clamp(110px,14vh,150px) 0 clamp(48px,8vh,80px)}
 .hero h1{font-size:clamp(34px,3.4vw,60px);line-height:1.07;margin:16px 0 20px;text-shadow:0 2px 34px rgba(6,13,31,.55)}
-/* El yazısı kendi sunucumuzda: ilk ekrandaki başlık dış bir isteği beklemesin.
-   latin-ext dosyası Türkçe harfleri (ü, ğ, ş, ı) taşıdığı için önce o geliyor. */
-@font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;
- src:url(assets/font/dancing-script-latin-ext-600-normal.woff2) format('woff2');
- unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
-@font-face{font-family:'Dancing Script';font-style:normal;font-weight:600;font-display:swap;
- src:url(assets/font/dancing-script-latin-600-normal.woff2) format('woff2');
- unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-/* Başlıkta "Mübarek" el yazısıyla ve sayfa açılırken bir kereliğine kendini yazar;
-   altın kelime ise dönerek değişir, altına hat kalemi darbesi gibi bir çizgi çekilir. */
 .hero .ust-yazi{display:inline-flex;align-items:center;gap:7px}
 .hero .ust-yazi .yer-ik{width:14px;height:14px;flex:none;fill:currentColor;opacity:.9}
-.hero h1 .elyaz{font-family:'Dancing Script','Marcellus',cursive;font-weight:600;font-size:.56em;
- line-height:1.15;display:block;color:var(--altin2);padding:0 .1em .12em 0;opacity:.95}
 .hero h1 .ana{display:block}
-.hero h1 .elyaz.yaz{clip-path:inset(0 100% -.3em 0);animation:elYaz 1.15s cubic-bezier(.45,0,.18,1) .3s forwards}
-@keyframes elYaz{to{clip-path:inset(0 -.14em -.3em 0)}}
-.hero h1 .donen{position:relative;display:inline-block;padding-bottom:.1em}
-.hero h1 .donen::after{content:'';position:absolute;left:.02em;right:.06em;bottom:0;height:.055em;border-radius:999px;
- background:linear-gradient(90deg,transparent,rgba(230,199,122,.95) 14%,var(--altin) 58%,rgba(230,199,122,.25));
- transform:scaleX(1);transform-origin:0 50%}
-.hero h1 .donen.gir{animation:kelimeGir .48s cubic-bezier(.2,.8,.2,1) both}
-.hero h1 .donen.gir::after{animation:kalem .62s cubic-bezier(.3,.9,.25,1) .1s both,nefes 3.6s 1.1s ease-in-out infinite}
-@keyframes kelimeGir{from{opacity:0;transform:translateY(.16em)}to{opacity:1;transform:none}}
-@keyframes kalem{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes nefes{0%,100%{opacity:1}50%{opacity:.55}}
+/* Dönen kelime yukarı akan bir rulo gibi çalışır. Kutunun görünen yüksekliği
+   iç boşlukla büyütülüp eksi boşlukla geri alınır: böylece alttan gelecek
+   kelimenin ucu görünür ama başlığın yüksekliği hiç değişmez. */
+.hero h1 .donen{--sat:1.12em;display:inline-block;vertical-align:top;height:var(--sat);line-height:var(--sat);
+ overflow:hidden;padding-block:.42em;margin-block:-.42em;
+ -webkit-mask-image:linear-gradient(180deg,transparent 2%,#000 30%,#000 70%,transparent 98%);
+ mask-image:linear-gradient(180deg,transparent 2%,#000 30%,#000 70%,transparent 98%)}
+.hero h1 .rulo{display:block;will-change:transform;transition:transform .5s cubic-bezier(.3,1.02,.32,1)}
+.hero h1 .rulo.ani{transition:none}
+.hero h1 .rulo span{display:block;height:var(--sat);line-height:var(--sat);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){
-.hero h1 .elyaz.yaz{animation:none;clip-path:none}
-.hero h1 .donen.gir,.hero h1 .donen.gir::after{animation:none}}
+.hero h1 .rulo{transition:none}}
 .hero .giris{font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:rgba(234,230,220,.86);max-width:44ch;text-shadow:0 1px 18px rgba(6,13,31,.6)}
 .hero .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
 .guven{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:14px;color:rgba(234,230,220,.8)}
@@ -190,22 +175,34 @@
 .puan .yildiz .yld{width:21px;height:21px;fill:var(--altin2);filter:drop-shadow(0 1px 4px rgba(201,162,75,.38))}
 .puan p{color:rgba(234,230,220,.72);font-size:14px;margin:0;line-height:1.45}
 .puan p b{font-family:inherit;font-size:inherit;color:#f0ece2;font-weight:600;line-height:inherit}
-/* Google yorumları. Kart yüksekliği sabit, böylece uzun ve kısa yorumlar
-   arasında geçerken sayfa zıplamıyor. */
+/* Google yorumları. Bütün yorumlar aynı ızgara gözünde üst üste durur:
+   kutu en uzun yoruma göre yüksekliğini alır, böylece yorum değişirken
+   sayfa hiç kaymaz. Yalnızca görünen yorumun opaklığı değişir. */
 .yorumlar{display:flex;flex-direction:column;gap:16px;min-width:0}
-.yorum-kart{position:relative;min-height:236px;display:flex;flex-direction:column;justify-content:center;gap:18px;
- padding:32px 36px 28px;border-radius:24px;border:1px solid rgba(201,162,75,.26);
+.yorum-kart{position:relative;display:flex;flex-direction:column;justify-content:center;
+ padding:32px 36px 30px;border-radius:24px;border:1px solid rgba(201,162,75,.26);
  background:linear-gradient(158deg,rgba(255,255,255,.075),rgba(255,255,255,.02) 58%,rgba(201,162,75,.05));
  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 24px 50px -34px rgba(0,0,0,.9)}
 .yorum-kart .tirnak{position:absolute;top:20px;right:26px;width:40px;height:40px;fill:var(--altin);opacity:.16}
-.yorum-kart blockquote{margin:0;font-size:17px;line-height:1.7;color:rgba(240,236,226,.94);max-width:64ch;
- transition:opacity .4s cubic-bezier(.2,.8,.2,1),transform .4s cubic-bezier(.2,.8,.2,1)}
-.yorumlar.gecis .yorum-kart blockquote,.yorumlar.gecis .yorum-alt{opacity:0;transform:translateY(9px)}
-.yorum-alt{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;font-size:13.5px;color:rgba(234,230,220,.58);
- transition:opacity .4s cubic-bezier(.2,.8,.2,1),transform .4s cubic-bezier(.2,.8,.2,1)}
-.yorum-alt b{font-family:'Marcellus',serif;font-weight:400;font-size:16.5px;color:#f0ece2}
-.yorum-yildiz{display:inline-flex;gap:3px}
-.yorum-yildiz .yld{width:16px;height:16px;fill:var(--altin2)}
+.yorum-yigin{display:grid}
+.yorum-yigin>figure{grid-area:1/1;margin:0;display:flex;flex-direction:column;gap:18px;
+ opacity:0;transform:translateY(9px);pointer-events:none;
+ transition:opacity .42s cubic-bezier(.2,.8,.2,1),transform .42s cubic-bezier(.2,.8,.2,1)}
+.yorum-yigin>figure.acik{opacity:1;transform:none;pointer-events:auto}
+/* Alıntı olduğu belli olsun: ince, italik ve tırnak içinde */
+.yorum-yigin blockquote{margin:0;font-size:17px;line-height:1.72;font-style:italic;font-weight:400;
+ color:rgba(238,234,224,.86);max-width:64ch;quotes:'\201C' '\201D'}
+.yorum-yigin blockquote::before{content:open-quote;color:var(--altin2);opacity:.85;margin-right:1px}
+.yorum-yigin blockquote::after{content:close-quote;color:var(--altin2);opacity:.85;margin-left:1px}
+/* Yazan kişi: fotoğraf, kalın ad, yıldızlar */
+.yorum-kisi{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.yorum-kisi img{width:46px;height:46px;flex:none;border-radius:50%;object-fit:cover;
+ border:1px solid rgba(201,162,75,.4);background:rgba(255,255,255,.06)}
+.yorum-kim{display:flex;flex-direction:column;gap:3px;min-width:0}
+.yorum-kim b{font-family:'Hanken Grotesk',system-ui,sans-serif;font-weight:600;font-size:15.5px;color:#f5f1e8;letter-spacing:.005em}
+.yorum-kim .alt{display:flex;align-items:center;gap:9px;font-size:12.5px;color:rgba(234,230,220,.52)}
+.yorum-yildiz{display:inline-flex;gap:2.5px}
+.yorum-yildiz .yld{width:14px;height:14px;fill:var(--altin2)}
 .yorum-yildiz .yld.bos{fill:rgba(255,255,255,.17)}
 .yorum-kumanda{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .yorum-oklar{display:flex;gap:8px;flex:none}
@@ -218,11 +215,13 @@
  text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
 @media (hover:hover){.yorum-tum:hover{color:#fff}}
 @media(max-width:720px){
-.yorum-kart{min-height:262px;padding:24px 22px 22px;border-radius:19px;gap:15px}
-.yorum-kart blockquote{font-size:15.5px;line-height:1.68}
+.yorum-kart{padding:24px 22px 22px;border-radius:19px}
+.yorum-yigin>figure{gap:15px}
+.yorum-yigin blockquote{font-size:15.5px;line-height:1.7}
+.yorum-kisi img{width:42px;height:42px}
 .yorum-kart .tirnak{width:30px;height:30px;top:14px;right:16px}}
 @media(prefers-reduced-motion:reduce){
-.yorum-kart blockquote,.yorum-alt{transition:none}}
+.yorum-yigin>figure{transition:none}}
 .ziyaret-sag{display:grid;gap:16px;justify-items:start;justify-self:end;width:100%;max-width:352px}
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
@@ -303,7 +302,7 @@
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
  <div class="metin">
   <div class="ust-yazi sz"><svg class="yer-ik" viewBox="0 0 24 24" aria-hidden="true" fill-rule="evenodd"><path d="M12 2.6a7.2 7.2 0 0 0-7.2 7.2c0 5 6.1 10.9 6.4 11.2a1.1 1.1 0 0 0 1.6 0c.3-.3 6.4-6.2 6.4-11.2A7.2 7.2 0 0 0 12 2.6Zm0 10a2.9 2.9 0 1 1 0-5.8 2.9 2.9 0 0 1 0 5.8Z"/></svg>Ümraniye, İstanbul</div>
-  <h1 class="sz"><span class="elyaz" id="elyaz">Mübarek yolculuğunuz için</span><span class="ana"><span class="metal metal-yazi donen" data-isik id="donen">İhramınızı</span><br>biz düşünelim,<br>siz ibadetinizi.</span></h1>
+  <h1 class="sz"><span class="ana"><span class="donen metal metal-yazi" data-isik><span class="rulo" id="rulo"><span>İhramınızı</span><span>Seccadenizi</span><span>Tesbihinizi</span><span>Zemzeminizi</span><span>Hurmanızı</span><span>Hediyenizi</span><span>Hepsini</span><span>İhramınızı</span></span></span><br>biz düşünelim,<br>siz ibadetinizi.</span></h1>
   <p class="giris sz">Bizim işimiz ürün satmak değil; hac ve umreye hazırlananların yükünü hafifletmek. Yola çıkarken de, dönerken de yanınızdayız.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html">Ürünlerimizi inceleyin</a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
   <div class="guven sz">
@@ -384,12 +383,7 @@
  <div class="yorumlar" data-gel aria-roledescription="carousel" aria-label="Google yorumları">
   <div class="yorum-kart">
    <svg class="tirnak" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 5.4c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Zm9.3 0c-3.3 1.3-5.4 4.3-5.4 7.9 0 3.1 1.9 5.3 4.5 5.3 2.3 0 4-1.7 4-3.9 0-2.1-1.5-3.7-3.5-3.7-.4 0-.8.1-1 .2.4-1.7 1.8-3.2 3.6-4.1Z"/></svg>
-   <blockquote id="yorumMetin"></blockquote>
-   <div class="yorum-alt">
-    <b id="yorumAd"></b>
-    <span class="yorum-yildiz" id="yorumYildiz" aria-hidden="true"></span>
-    <span id="yorumZaman"></span>
-   </div>
+   <div class="yorum-yigin" id="yorumYigin"></div>
   </div>
   <div class="yorum-kumanda">
    <a class="yorum-tum" href="https://g.page/r/CSGI4w4tcT1CEBM" target="_blank" rel="noopener">124 yorumun tamamını Google'da okuyun</a>
@@ -502,51 +496,58 @@ akisKur();
 })();
 </script>
 <script>
-/* Başlık: "Mübarek" bir kereliğine kendini yazar, sonra altın kelime döner.
-   İkisi aynı anda hareket etmesin diye dönüş, yazma bittikten sonra başlar. */
+/* Başlıktaki kelime yukarı akan bir rulo gibi değişir; alttan gelecek kelimenin
+   ucu hep görünür. Son kelimeden sonra, listenin sonundaki kopyaya geçildiği an
+   geçişsiz olarak başa dönülür, böylece akış kesintisiz görünür. */
 (function(){
- const yaz=document.getElementById('elyaz'),don=document.getElementById('donen');
- if(!don)return;
+ const rulo=document.getElementById('rulo');
+ if(!rulo)return;
+ const adet=rulo.children.length-1;           // sondaki kopya sayılmaz
  const az=matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(yaz)yaz.classList.add('yaz');
- if(az)return;
- const kelimeler=['ihramı','seccadesi','tesbihi','zemzemi','hurması','hediyesi','her ihtiyacı'];
- let i=kelimeler.length-1,gorunur=true;
- new IntersectionObserver(e=>{gorunur=e[0].isIntersecting},{rootMargin:'0px'}).observe(don);
- const goster=k=>{don.classList.remove('gir');void don.offsetWidth;don.textContent=k;don.classList.add('gir')};
- goster(kelimeler[i]);
- setTimeout(function sira(){
-  if(!document.hidden&&gorunur){i=(i+1)%kelimeler.length;goster(kelimeler[i])}
-  setTimeout(sira,3200);
- },2600);
+ let i=0,gorunur=true,sayac=null;
+ const SURE=2400;
+ const kaydir=()=>rulo.style.transform='translateY(-'+(i*100/rulo.children.length).toFixed(4)+'%)';
+ const adim=()=>{
+  i++;kaydir();
+  if(i===adet)setTimeout(()=>{rulo.classList.add('ani');i=0;kaydir();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>rulo.classList.remove('ani')))},520);
+ };
+ const dur=()=>{clearInterval(sayac);sayac=null};
+ const basla=()=>{if(sayac||az||!gorunur||document.hidden)return;sayac=setInterval(adim,SURE)};
+ document.addEventListener('visibilitychange',()=>document.hidden?dur():basla());
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;gorunur?basla():dur()},{rootMargin:'0px'}).observe(rulo);
+ setTimeout(basla,900);
 })();
 </script>
 <script>
-/* Google yorumları dört saniyede bir değişir. Kart yüksekliği sabit olduğu için
-   geçişte sayfa kaymaz. Fare üzerindeyken, sekme arkadayken ve bölüm ekran
-   dışındayken durur; oklarla elle de gezilebilir. */
+/* Google yorumları dört saniyede bir değişir. Bütün yorumlar baştan basılıp
+   aynı ızgara gözünde üst üste durur; kutu en uzun yoruma göre yüksekliğini
+   aldığı için geçişte sayfa kaymaz. Fare üzerindeyken, sekme arkadayken ve
+   bölüm ekran dışındayken durur; oklarla elle de gezilebilir. */
 (function(){
- const kok=document.querySelector('.yorumlar');
- if(!kok||typeof YORUMLAR==='undefined'||!YORUMLAR.length)return;
- const M=document.getElementById('yorumMetin'),A=document.getElementById('yorumAd'),
-       Y=document.getElementById('yorumYildiz'),Z=document.getElementById('yorumZaman');
+ const kok=document.querySelector('.yorumlar'),yigin=document.getElementById('yorumYigin');
+ if(!kok||!yigin||typeof YORUMLAR==='undefined'||!YORUMLAR.length)return;
  const SURE=4000, YOL='m12 2.6 2.9 5.9 6.5 1-4.7 4.6 1.1 6.5-5.8-3.1-5.8 3.1 1.1-6.5L2.6 9.5l6.5-1z';
+ const kac=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const yildizlar=n=>{let h='';for(let k=1;k<=5;k++)
+   h+='<svg class="yld'+(k<=n?'':' bos')+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+YOL+'"/></svg>';
+   return h};
+ yigin.innerHTML=YORUMLAR.map((y,n)=>
+  '<figure'+(n===0?' class="acik"':'')+'>'+
+   '<blockquote>'+kac(y.metin)+'</blockquote>'+
+   '<figcaption class="yorum-kisi">'+
+    (y.foto?'<img src="assets/yorum/'+y.foto+'.jpg" alt="" width="46" height="46" loading="lazy" decoding="async">':'')+
+    '<span class="yorum-kim"><b>'+kac(y.ad)+'</b>'+
+     '<span class="alt"><span class="yorum-yildiz">'+yildizlar(y.puan||5)+'</span>'+
+     '<span class="sr">5 üzerinden '+(y.puan||5)+' puan. </span>'+kac(y.zaman)+'</span></span>'+
+   '</figcaption></figure>').join('');
+ const kartlar=[...yigin.children];
  let i=0,sayac=null,duruyor=false,gorunur=true;
  const az=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const yildizla=n=>{let h='';for(let k=1;k<=5;k++)
-   h+='<svg class="yld'+(k<=n?'':' bos')+'" viewBox="0 0 24 24" aria-hidden="true"><path d="'+YOL+'"/></svg>';
-   Y.innerHTML=h};
- const yaz=n=>{const y=YORUMLAR[n];M.textContent=y.metin;A.textContent=y.ad;Z.textContent=y.zaman;yildizla(y.puan||5)};
- const git=n=>{
-  i=(n+YORUMLAR.length)%YORUMLAR.length;
-  if(az){yaz(i);return}
-  kok.classList.add('gecis');
-  setTimeout(()=>{yaz(i);kok.classList.remove('gecis')},280);
- };
+ const git=n=>{kartlar[i].classList.remove('acik');i=(n+kartlar.length)%kartlar.length;kartlar[i].classList.add('acik')};
  const dur=()=>{clearInterval(sayac);sayac=null};
  const basla=()=>{if(sayac||az||duruyor||!gorunur||document.hidden)return;sayac=setInterval(()=>git(i+1),SURE)};
  const yenile=()=>{dur();basla()};
- yaz(0);
  document.getElementById('yorumIleri').onclick=()=>{git(i+1);yenile()};
  document.getElementById('yorumGeri').onclick=()=>{git(i-1);yenile()};
  kok.addEventListener('pointerenter',()=>{duruyor=true;dur()});
