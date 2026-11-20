@@ -35,7 +35,7 @@
 .adim3 span{font-size:14px;line-height:1.55;color:rgba(234,230,220,.75)}
 .not-alt{font-size:13.5px;color:rgba(234,230,220,.6);margin-top:18px}
 /* süzgeç şeridi */
-.filtre-dis{position:sticky;top:0;z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
+.filtre-dis{position:sticky;top:calc(-1 * var(--kay,0px));z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
 .filtre-dis.yapisti{background:rgba(6,13,31,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
 .filtre{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-block:12px 14px}
 .filtre::-webkit-scrollbar{display:none}
@@ -372,6 +372,11 @@ function durum(){
 document.addEventListener('sepet',durum);
 /* süzgeç şeridi yapışınca arka plan; altbilgiye gelince çubuk iner */
 const yapis=()=>FD.classList.toggle('yapisti',FD.getBoundingClientRect().top<=0&&scrollY>40);addEventListener('scroll',yapis,{passive:true});
+/* Telefonda arama kutusu kaydırmayla yukarı çıkar, kategori şeridi üstte kalır:
+   yapışkan kutu, arama satırının yüksekliği kadar yukarıdan tutturulur. */
+const yapisAyar=()=>FD.style.setProperty('--kay',innerWidth<=720?Math.max(0,Math.round(F.offsetTop))+'px':'0px');
+addEventListener('resize',yapisAyar);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(yapisAyar);
 new IntersectionObserver(e=>{C.classList.toggle('altta',e[0].isIntersecting);durum()},{rootMargin:'0px 0px -40px 0px'}).observe(document.querySelector('footer.sf'));
 addEventListener('hashchange',()=>{const s=hashKat();if(s!==sec){sec=s;filtreCiz();izgaraCiz();filtreyeGit()}});
 /* Arama motorları için ürün listesi (yapılandırılmış veri).
@@ -395,7 +400,7 @@ addEventListener('hashchange',()=>{const s=hashKat();if(s!==sec){sec=s;filtreCiz
 DAHA.querySelector('button').addEventListener('click',dahaCiz);
 /* Düğmeye yaklaşınca sıradaki grup kendiliğinden yüklenir */
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&!DAHA.hidden)dahaCiz()},{rootMargin:'600px 0px'}).observe(DAHA);
-filtreCiz();izgaraCiz();akisKur();yapis();
+filtreCiz();izgaraCiz();akisKur();yapis();yapisAyar();
 if(sec!=='Tümü')requestAnimationFrame(()=>filtreyeGit());
 </script>
 </body>

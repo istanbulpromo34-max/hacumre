@@ -99,7 +99,7 @@ const Sepet={
  gonder(){window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(Sepet.waMetin()),'_blank','noopener')},
  ciz(){
   const n=Sepet.sayi(),btn=document.querySelector('.sepetbtn');
-  if(btn){const b=btn.querySelector('b');b.textContent=n;b.classList.toggle('var',n>0);btn.setAttribute('aria-label',n?`Çantam, ${Sepet.ozet()}`:'Çantam, boş')}
+  if(btn){const b=btn.querySelector('b');b.textContent=n;b.classList.toggle('var',n>0);btn.classList.toggle('dolu',n>0);btn.setAttribute('aria-label',n?`Çantam, ${Sepet.ozet()}`:'Çantam, boş')}
   const L=document.querySelector('.cekmece .liste');if(!L)return;const k=Sepet.kalemler();
   document.querySelector('.cekmece .alt').hidden=!k.length;
   if(!k.length){
@@ -141,12 +141,11 @@ function kabuk(aktif){
  const nav=document.createElement('nav');nav.className='nav';nav.setAttribute('aria-label','Ana menü');
  const on=k=>aktif===k?' class="on" aria-current="page"':'';
  nav.innerHTML=`<a class="logo" href="index.html" aria-label="${MAGAZA.ad}, ana sayfa"><img src="assets/logo-nav.png" alt="" width="128" height="31"></a>
- <a href="index.html"${on('ana')}><span class="uzun">Ana Sayfa</span><span class="kisa">Ana</span></a>
+ <a href="index.html" class="ev${aktif==='ana'?' on':''}"${aktif==='ana'?' aria-current="page"':''} aria-label="Ana sayfa" title="Ana sayfa"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.6 10.4 12 4l8.4 6.4"/><path d="M5.7 9.4V19a.9.9 0 0 0 .9.9h3.3v-4.6h4.2v4.6h3.3a.9.9 0 0 0 .9-.9V9.4"/></svg><span class="uzun">Ana Sayfa</span></a>
  <a href="urunler.html"${on('urun')}><span class="uzun">Ürünlerimiz</span><span class="kisa">Ürünler</span></a>
  <a href="tablolar.html"${on('tablo')}><span class="uzun">Tablo Eserleri</span><span class="kisa">Tablolar</span></a>
  <a href="iletisim.html"${on('ilet')}>İletişim</a>
- <a href="tur.html" class="tur${aktif==='tur'?' on':''}"${aktif==='tur'?' aria-current="page"':''}><span class="uzun">Dijital Tur</span><span class="kisa">Tur</span></a>
- <button class="sepetbtn" type="button" aria-label="Çantam, boş"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 7h14l-1.5 11h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b aria-hidden="true">0</b></button>`;
+ <a href="tur.html" class="tur${aktif==='tur'?' on':''}"${aktif==='tur'?' aria-current="page"':''}>Dijital Tur</a>`;
  document.body.prepend(nav);
  const ml=document.createElement('a');ml.className='mlogo';ml.href='index.html';ml.setAttribute('aria-label',MAGAZA.ad+', ana sayfa');ml.innerHTML='<img src="assets/logo-nav.png" alt="" width="128" height="31">';
  document.body.prepend(ml);
@@ -176,8 +175,7 @@ function kabuk(aktif){
  <button class="btn wa" type="button" onclick="Sepet.gonder()">${WA_SVG}Çantamı WhatsApp'tan gönder</button>
  <button class="bosalt" type="button">Çantayı boşalt</button></div></aside>`;
  document.body.append(c);
- nav.querySelector('.sepetbtn').onclick=cekmeceAc;
- c.querySelector('.perde').onclick=cekmeceKapat;c.querySelector('.kapat').onclick=cekmeceKapat;
+  c.querySelector('.perde').onclick=cekmeceKapat;c.querySelector('.kapat').onclick=cekmeceKapat;
  const bos=c.querySelector('.bosalt');
  bos.onclick=()=>{if(bos.classList.contains('emin')){bos.classList.remove('emin');bos.textContent='Çantayı boşalt';Sepet.bosalt();c.querySelector('.kapat').focus();return}
   bos.classList.add('emin');bos.textContent='Emin misiniz? Evet, boşalt';clearTimeout(bos._z);bos._z=setTimeout(()=>{bos.classList.remove('emin');bos.textContent='Çantayı boşalt'},4000)};
@@ -197,6 +195,11 @@ function kabuk(aktif){
    if(e.shiftKey&&(i<=0)){e.preventDefault();f[f.length-1].focus()}
    else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus()}}
  });
+ /* çanta düğmesi: menü yerine sağ altta, doluyken görünür */
+ const sb=document.createElement('button');sb.type='button';sb.className='sepetbtn sepet-sabit';
+ sb.setAttribute('aria-label','Çantam, boş');
+ sb.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 7h14l-1.5 11h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b aria-hidden="true">0</b>';
+ sb.onclick=cekmeceAc;document.body.append(sb);
  /* sabit WhatsApp */
  const wa=document.createElement('a');wa.className='wa-sabit';wa.href='https://wa.me/'+WA+'?text='+encodeURIComponent('Merhaba, sitenizden yazıyorum.');wa.target='_blank';wa.rel='noopener';wa.setAttribute('aria-label',"WhatsApp'tan yazın");
  wa.innerHTML=WA_SVG;document.body.append(wa);

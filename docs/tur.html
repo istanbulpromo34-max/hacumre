@@ -988,7 +988,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
         <a class="dugme" href="index.html">Ana sayfaya dön</a>
       </div>
     </div>
-    <div class="harita"><iframe title="İstanbul Hac Umre Hediyelik harita konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d29.0910215!3d41.0242974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac952952a7ffb%3A0x423d712d0ee38821!2s%C4%B0stanbul%20Hac-Umre%20Malzemeleri%20ve%20Hediyelik!5e0!3m2!1str!2str!4v1763450000000!5m2!1str!2str"></iframe></div>
+    <div class="harita"><iframe title="İstanbul Hac Umre Hediyelik harita konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1500!2d29.0910215!3d41.0242974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m5!3m4!1s0x14cac952952a7ffb%3A0x423d712d0ee38821!8m2!3d41.0242974!4d29.0910215!5e0!3m2!1str!2str!4v1763450000000!5m2!1str!2str"></iframe></div>
   </div>
 </section>
 
@@ -1036,7 +1036,7 @@ const gorunurIlerleme=el=>{const r=el.getBoundingClientRect();return sinir((VH-r
 /* [madde, ürün kimliği (yoksa null), adet] */
 const LISTE={
   erkek:[['İki takım ihram','ihram-havlu',2],['İhram kemeri','ihram-kemer'],['İhram terliği','terlik'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']],
-  kadin:[['Umre feracesi ya da bol, tesettürlü kıyafet','ferace'],['Pamuklu eşarp ve bone','esarp'],['Rahat, kapalı ayakkabı ya da terlik',null],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']]
+  kadin:[['Umre feracesi ya da bol, tesettürlü kıyafet','ferace'],['Pamuklu eşarp ve bone','esarp'],['Rahat, kapalı ayakkabı ya da terlik',null],['Tavaf patiği','tavaf-patigi'],['Tavaf çorabı','tavaf-corabi'],['Pratik abdest çorabı','abdest-corabi'],['Kokusuz sabun, şampuan ve ıslak mendil','kokusuz-sabun'],['Boyun çantası','bel-cantasi'],['Seyahat seccadesi','seccade'],['Tesbih ya da zikirmatik','zikirmatik'],['Misvak','misvak']]
 };
 const NOT={erkek:'İhramın yedeğini valizde değil el çantanızda taşıyın. Kafileniz doğrudan Cidde\'ye uçuyorsa ihrama Türkiye\'deki havalimanında girersiniz.',kadin:'Hanımlar için özel bir ihram kıyafeti yoktur; tesettüre uygun, bol ve rahat kıyafetlerle ihrama girilir.'};
 let secili='erkek';try{if(localStorage.getItem('hu-liste-sekme')==='kadin')secili='kadin'}catch(e){}
@@ -1045,7 +1045,9 @@ const kaydet=v=>{try{localStorage.setItem('hu-ihtiyac',JSON.stringify(v))}catch(
 function listeCiz(){
   const k=kayit(),ul=document.getElementById('kontrol');ul.innerHTML='';
   LISTE[secili].forEach((m,i)=>{
-    const id=secili+'-'+i,li=document.createElement('li');
+    /* Kimlik sıra numarasından değil maddenin kendisinden türetilir:
+       listeye yeni madde eklendiğinde önceki işaretler kaymasın. */
+    const id=secili+'-'+(m[1]||m[0].toLowerCase().replace(/[^\p{L}\p{N}]+/gu,'-').slice(0,36)),li=document.createElement('li');
     li.innerHTML='<label><input type="checkbox" id="'+id+'"'+(k[id]?' checked':'')+'><span>'+m[0]+'</span></label>';
     ul.appendChild(li);
   });

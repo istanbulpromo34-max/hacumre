@@ -177,6 +177,9 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 .nav a,.btn,.toast,.cekmece .pan,.cekmece .perde,.wa-sabit,.film-sabit,.film-kat video{transition:none}
 .film-sabit::after{animation:none}
 .sepetbtn.zipla{animation:none}}
+.nav a.ev{gap:7px}
+.nav a.ev svg{flex:none}
+
 /* ===== Mobil kabuk: kaydırırken çekilir, yukarı kaydırınca döner =====
    Telefonda menü, WhatsApp düğmesi ve üst logo okunan metnin üstünü kapatmasın diye
    aşağı kaydırırken gizlenir; yukarı kaydırınca, sayfa başında ve sonunda görünür. */
@@ -216,3 +219,21 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 .film-ac .sure{opacity:.65;font-weight:500}
 @media (hover:hover){.film-ac:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}}
 .film-ac:active{transform:scale(.97)}
+
+/* ===== Çanta düğmesi: menü yerine sağ altta =====
+   Menüde yer açıldığı için "Tur" yazan sekme artık "Dijital Tur" yazıyor.
+   Düğme yalnızca çantada ürün varken beliriyor. */
+.sepet-sabit{position:fixed;right:var(--wa-sag);bottom:calc(var(--wa-alt) + 2 * (var(--wa-cap) + 12px));z-index:46;
+ width:var(--wa-cap);height:var(--wa-cap);border-radius:50%;display:grid;place-items:center;
+ background:rgba(11,22,48,.94);border:1px solid rgba(201,162,75,.5);color:var(--k-altin2);
+ box-shadow:0 12px 30px rgba(0,0,0,.35);opacity:0;transform:scale(.5);pointer-events:none;
+ transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1),bottom .45s cubic-bezier(.2,.8,.2,1)}
+.sepet-sabit.dolu{opacity:1;transform:none;pointer-events:auto}
+.sepet-sabit svg{width:24px;height:24px}
+.sepet-sabit b{top:-2px;right:-2px;box-shadow:0 0 0 2px rgba(9,18,40,.95)}
+@media(max-width:720px){
+ /* telefonda tanıtım filmi düğmesi yüzmediği için çanta onun yerini alır */
+ .sepet-sabit{bottom:calc(var(--wa-alt) + var(--wa-cap) + 12px);width:52px;height:52px}
+ body.kabuk-gizli .sepet-sabit{opacity:0;transform:translateY(calc(100% + 32px));pointer-events:none}
+ body.cubuk-acik .sepet-sabit{opacity:0;transform:scale(.5);pointer-events:none}
+}
