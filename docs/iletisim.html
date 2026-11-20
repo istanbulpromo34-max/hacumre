@@ -42,19 +42,27 @@
 .bilgi div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;line-height:1.55}
 .bilgi dt{color:var(--altin2);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
 .bilgi a{text-decoration:underline;text-decoration-color:rgba(230,199,122,.4);text-underline-offset:4px}
-.bilgi a:hover{color:var(--altin2)}
+@media (hover:hover){.bilgi a:hover{color:var(--altin2)}}
 .dug{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
 .dug .btn{padding:13px 14px;font-size:14px}
 .puan-satir{display:flex;align-items:center;gap:14px;margin:4px 0 20px}
 .puan-satir b{font-family:'Marcellus';font-weight:400;font-size:44px;line-height:1}
-.puan-satir span{font-size:14px;color:rgba(234,230,220,.78)}.puan-satir i{display:block;font-style:normal;color:var(--altin2);letter-spacing:3px}
+.puan-satir span{font-size:14px;color:rgba(234,230,220,.78)}
+.puan-satir i{display:block;font-style:normal;color:var(--altin2);letter-spacing:3px}
 .harita{position:relative;border-radius:24px;overflow:hidden;min-height:560px;border:1px solid rgba(201,162,75,.3);background:#e9e5dc}
 .harita iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-@media(max-width:900px){.izg{grid-template-columns:1fr}.harita{min-height:420px}}
-@media(max-width:420px){.dug{grid-template-columns:1fr}.bilgi div{grid-template-columns:1fr;gap:4px}}
+@media(max-width:900px){
+.izg{grid-template-columns:1fr}
+.harita{min-height:420px}}
+@media(max-width:420px){
+.dug{grid-template-columns:1fr}
+.bilgi div{grid-template-columns:1fr;gap:4px}}
+/* Dokunma hedefleri: bilgi listesindeki bağlantılar */
+.bilgi dd a{display:inline-flex;align-items:center;min-height:44px}
 </style>
 </head>
 <body>
+<noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px Hanken Grotesk,system-ui,sans-serif">Bu sayfanın içeriği için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
 <main id="icerik">
 <section class="bas kap">
  <div class="ust-yazi">İletişim</div>
@@ -64,7 +72,7 @@
 <section class="izg kap" aria-label="Mağaza bilgileri ve harita">
  <div class="kutu">
   <h2>İstanbul Hac Umre Hediyelik</h2>
-  <div class="puan-satir"><b class="metal metal-yazi" data-isik>5,0</b><span><i aria-hidden="true">★★★★★</i><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 120'den fazla yorum</span></div>
+  <div class="puan-satir"><b class="metal metal-yazi" data-isik>5,0</b><span><i aria-hidden="true">★★★★★</i><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 120+ yorum</span></div>
   <dl class="bilgi">
    <div><dt>Adres</dt><dd>Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul</dd></div>
    <div><dt>Saatler</dt><dd>Her gün 09:00–20:00</dd></div>
@@ -76,6 +84,7 @@
    <a class="btn wa" id="ilet-wa" href="https://wa.me/905551044040?text=Merhaba%2C%20sitenizden%20yaz%C4%B1yorum." target="_blank" rel="noopener">WhatsApp'tan yazın</a>
    <a class="btn cam" href="tel:+905551044040">Arayın</a>
    <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener">Google'da yorum yapın</a>
+   <button class="film-ac" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
   </div>
  </div>
  <div class="harita"><iframe title="İstanbul Hac Umre Hediyelik'in haritadaki konumu" referrerpolicy="no-referrer-when-downgrade" allowfullscreen

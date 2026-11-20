@@ -38,7 +38,8 @@
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:var(--gece);isolation:isolate}
 .hero-medya{position:absolute;inset:0 0 auto 0;height:100%;min-height:100svh;z-index:-2;transform:translate3d(0,calc(var(--sy,0)*.22px),0)}
 .hero-medya video,.hero-medya img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 50%;display:block}
-@media (min-width:821px) and (max-aspect-ratio:3/2){.hero-medya video,.hero-medya img{object-position:50% 50%}}
+@media (min-width:821px) and (max-aspect-ratio:3/2){
+.hero-medya video,.hero-medya img{object-position:50% 50%}}
 .hero-medya video[hidden]{display:none}
 #hero-giris{transition:opacity .45s ease}
 .hero-bugu{position:absolute;inset:0 0 auto 0;height:100%;min-height:100svh;z-index:-1;pointer-events:none;background:
@@ -47,8 +48,10 @@
  linear-gradient(180deg,rgba(6,13,31,.5),transparent 16%)}
 .hero-efekt{position:absolute;inset:0 0 auto 0;height:100%;min-height:100svh;z-index:0;pointer-events:none;
  width:100%;display:block}
-@media (max-width:820px){.hero-efekt{top:72px;min-height:0;height:clamp(320px,56svh,640px)}}
-@media (prefers-reduced-motion:reduce){.hero-efekt{display:none}}
+@media (max-width:820px){
+.hero-efekt{top:72px;min-height:0;height:clamp(320px,56svh,640px)}}
+@media (prefers-reduced-motion:reduce){
+.hero-efekt{display:none}}
 .hero .metin{position:relative;z-index:1;width:min(520px,calc(34vw - max(20px,5vw)));padding:clamp(110px,14vh,150px) 0 clamp(48px,8vh,80px)}
 .hero h1{font-size:clamp(38px,3.9vw,76px);line-height:1.03;margin:22px 0 22px;text-shadow:0 2px 34px rgba(6,13,31,.55)}
 .hero .giris{font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:rgba(234,230,220,.86);max-width:44ch;text-shadow:0 1px 18px rgba(6,13,31,.6)}
@@ -57,16 +60,20 @@
 .guven b{font-family:'Marcellus';font-weight:400;font-size:22px;color:var(--altin2);margin-right:7px}
 .guven span{display:flex;align-items:baseline}
 .hero-adres{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:18px;font-size:14px;color:rgba(234,230,220,.78)}
-.hero-adres a{color:var(--altin2);text-decoration:underline;text-decoration-color:rgba(230,199,122,.45);text-underline-offset:4px}
-.hero-adres a:hover{color:#fff}
+.hero-adres a{display:inline-flex;align-items:center;min-height:44px;color:var(--altin2);text-decoration:underline;text-decoration-color:rgba(230,199,122,.45);text-underline-offset:4px}
+@media (hover:hover){.hero-adres a:hover{color:#fff}}
 /* giriş animasyonu (içeriği bekletmez, sadece kısa bir süzülme) */
 .sz{opacity:0;transform:translateY(22px);animation:sz .9s cubic-bezier(.2,.7,.2,1) forwards}
-.sz:nth-child(2){animation-delay:.08s}.sz:nth-child(3){animation-delay:.16s}.sz:nth-child(4){animation-delay:.24s}.sz:nth-child(5){animation-delay:.32s}
+.sz:nth-child(2){animation-delay:.08s}
+.sz:nth-child(3){animation-delay:.16s}
+.sz:nth-child(4){animation-delay:.24s}
+.sz:nth-child(5){animation-delay:.32s}
 @keyframes sz{to{opacity:1;transform:none}}
 /* ===== Hakkımızda ===== */
 .hak{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:center;padding-block:clamp(90px,14vh,160px)}
 .hak .foto{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:4/5;max-height:82vh}
-.hak .foto picture{display:contents}.hak .foto img{width:100%;height:115%;object-fit:cover;transform:translateY(calc(4% + max(-16%, var(--sy,0)*-.05px)))}
+.hak .foto picture{display:contents}
+.hak .foto img{width:100%;height:115%;object-fit:cover;transform:translateY(calc(4% + max(-16%, var(--sy,0)*-.05px)))}
 .hak h2{font-size:clamp(36px,4.4vw,68px);line-height:1.05;margin:18px 0 22px}
 .hak .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.8);max-width:52ch}
 .ayaklar{display:grid;gap:0;margin-top:36px;border-top:1px solid rgba(255,255,255,.1)}
@@ -100,20 +107,22 @@
 .grup h3{font-size:clamp(22px,1.8vw,28px);line-height:1.15;margin:8px 0 8px;min-height:2.3em;display:flex;align-items:flex-end}
 .grup p{font-size:14px;line-height:1.55;opacity:.82}
 .grup .ok{display:inline-flex;margin-top:14px;font-size:14px;color:var(--altin2);gap:8px;transition:gap .3s}
-.grup:hover{transform:translateY(-8px)}.grup:hover img{transform:scale(1.07)}.grup:hover .ok{gap:14px}
+@media (hover:hover){.grup:hover{transform:translateY(-8px)}}
+@media (hover:hover){.grup:hover img{transform:scale(1.07)}}
+@media (hover:hover){.grup:hover .ok{gap:14px}}
 /* ===== Dijital tur ===== */
 .tur-bolum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,90px);align-items:center;padding-block:clamp(90px,14vh,160px)}
 .tur-bolum h2{font-size:clamp(36px,4.4vw,66px);line-height:1.05;margin:18px 0 22px}
 .tur-bolum .metin>p{font-size:17px;line-height:1.75;color:rgba(234,230,220,.8);max-width:50ch}
 .tur-bolum .dugmeler{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
 .telbiye{border-radius:28px;padding:clamp(24px,3.4vw,44px);background:radial-gradient(120% 90% at 50% 0%,#1b2f5e,var(--lac) 60%,#081127);border:1px solid rgba(201,162,75,.28)}
-.telbiye .ar{display:block;direction:rtl;text-align:center;font-family:'Amiri',serif;font-weight:700;font-size:clamp(38px,4.4vw,64px);line-height:1.7;color:var(--altin2);letter-spacing:0}
+.telbiye .ar{display:block;direction:rtl;text-align:center;font-family:'Amiri',serif;font-weight:400;font-size:clamp(38px,4.4vw,64px);line-height:1.7;color:var(--altin2);letter-spacing:0}
 .telbiye .anlam{text-align:center;font-size:15px;line-height:1.6;color:rgba(234,230,220,.78);margin:2px auto 0;max-width:40ch}
 .telbiye .anlam em{font-style:normal;color:var(--yazi)}
 .adimlar{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:26px;counter-reset:a}
 .adimlar a{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:14.5px;transition:background .3s,border-color .3s}
 .adimlar a::before{counter-increment:a;content:counter(a,decimal-leading-zero);font:600 12px 'Hanken Grotesk';letter-spacing:.06em;color:var(--altin2);flex:none;width:20px}
-.adimlar a:hover{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.4)}
+@media (hover:hover){.adimlar a:hover{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.4)}}
 /* ===== Ziyaret ===== */
 .ziyaret{display:flex;flex-wrap:wrap;gap:30px 60px;align-items:center;justify-content:space-between;padding-block:clamp(70px,10vh,110px);border-top:1px solid rgba(255,255,255,.08)}
 .puan{display:flex;align-items:center;gap:22px}
@@ -124,35 +133,55 @@
 .ziyaret .adres{font-size:15px;line-height:1.6;color:rgba(234,230,220,.82)}
 .ziyaret .adres span{color:var(--altin2)}
 .ziyaret .dugmeler{display:flex;gap:10px;flex-wrap:wrap}
-@media(max-width:1100px){.grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}.grup{aspect-ratio:4/3.6}}
+@media(max-width:1100px){
+.grup-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grup{aspect-ratio:4/3.6}}
 @media (max-width:820px),(max-aspect-ratio:1/1){
- .hero{display:block;min-height:auto}
- .hero-medya{position:relative;inset:auto;min-height:0;height:clamp(320px,56svh,640px);transform:none;margin-inline:calc(max(20px,5vw)*-1);margin-top:72px}
- .hero-medya video,.hero-medya img{object-position:85% 50%}
- .hero-bugu{top:72px;bottom:auto;min-height:0;height:clamp(320px,56svh,640px);background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 8%,transparent 52%,rgba(6,13,31,.82) 82%,var(--gece) 100%)}
- .hero .metin{width:auto;max-width:640px;padding:0 0 44px;margin-top:calc(clamp(320px,56svh,640px)*-.2)}
- .hero h1{margin-top:12px;font-size:clamp(38px,9vw,64px)}
-}
+.hero{display:block;min-height:auto}
+.hero-medya{position:relative;inset:auto;min-height:0;height:clamp(320px,56svh,640px);transform:none;margin-inline:calc(max(20px,5vw)*-1);margin-top:72px}
+.hero-medya video,.hero-medya img{object-position:85% 50%}
+.hero-bugu{top:72px;bottom:auto;min-height:0;height:clamp(320px,56svh,640px);background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 8%,transparent 52%,rgba(6,13,31,.82) 82%,var(--gece) 100%)}
+.hero .metin{width:auto;max-width:640px;padding:0 0 44px;margin-top:calc(clamp(320px,56svh,640px)*-.2)}
+.hero h1{margin-top:12px;font-size:clamp(38px,9vw,64px)}}
 @media (max-width:600px){
- .hero-medya{min-height:0;height:auto;aspect-ratio:1080/1064;margin-top:40px}
- .hero-medya video,.hero-medya img{object-position:50% 50%}
- .hero-bugu{top:40px;min-height:0;height:auto;aspect-ratio:1080/1064;background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 6%,transparent 50%,rgba(6,13,31,.82) 80%,var(--gece) 100%)}
- .hero .metin{margin-top:-21vw}
-}
+.hero-medya{min-height:0;height:auto;aspect-ratio:1080/1064;margin-top:40px}
+.hero-medya video,.hero-medya img{object-position:50% 50%}
+.hero-bugu{top:40px;min-height:0;height:auto;aspect-ratio:1080/1064;background:linear-gradient(180deg,var(--gece) 0%,rgba(6,13,31,0) 6%,transparent 50%,rgba(6,13,31,.82) 80%,var(--gece) 100%)}
+.hero .metin{margin-top:-21vw}}
 @media(max-width:820px){
- .hak,.tur-bolum{grid-template-columns:1fr}
- .hak .foto{aspect-ratio:4/4.4}
- .ayak{grid-template-columns:1fr;gap:6px}
- .gecis{height:140vh}
- .serit{height:44px}.serit .akis span{font-size:13px}
-}
-@media(max-width:560px){.grup-izgara{grid-template-columns:1fr 1fr;gap:10px}.grup{aspect-ratio:3/4.2}.grup .ic{padding:14px}.grup h3{font-size:19px}.grup p,.grup .ok{display:none}
- .guven{gap:10px 20px}.guven b{font-size:20px}.ziyaret .dugmeler .btn{flex:1 1 auto}}
-@media(max-width:380px){.adimlar{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.hero-medya{transform:none}.sz{animation:none;opacity:1;transform:none}.gecis{display:none}.gruplar-bas{padding-top:clamp(60px,10vh,110px)}}
-</style>
+.hak,.tur-bolum{grid-template-columns:1fr}
+.hak .foto{aspect-ratio:4/4.4}
+.ayak{grid-template-columns:1fr;gap:6px}
+.gecis{height:140vh}
+.serit{height:44px}
+.serit .akis span{font-size:13px}}
+@media(max-width:720px){
+/* Telefonda geçiş bölümü kısalır ve şeride daha çok ürün adı sığar;
+   önceki hâlinde şeridin önü ve arkası iki ekran boyu boş kalıyordu. */
+.gecis{height:128vh}
+.serit{height:40px}
+.serit .akis{gap:16px;padding-left:16px}
+.serit .akis span{font-size:12px;letter-spacing:.14em}
+.serit .akis img{width:11px}}
+@media(max-width:560px){
+.grup-izgara{grid-template-columns:1fr 1fr;gap:10px}
+.grup{aspect-ratio:3/4.2}
+.grup .ic{padding:14px}
+.grup h3{font-size:19px}
+.grup p,.grup .ok{display:none}
+.guven{gap:10px 20px}
+.guven b{font-size:20px}
+.ziyaret .dugmeler .btn{flex:1 1 auto}}
+@media(max-width:380px){
+.adimlar{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+.hero-medya{transform:none}
+.sz{animation:none;opacity:1;transform:none}
+.gecis{display:none}
+.gruplar-bas{padding-top:clamp(60px,10vh,110px)}}</style>
 </head>
 <body>
+<noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px 'Hanken Grotesk',system-ui,sans-serif">Ürün kataloğu ve dijital tur için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
 <main id="icerik">
 <!-- AÇILIŞ -->
 <section class="hero kap" aria-label="İstanbul Hac Umre Hediyelik">
@@ -243,7 +272,7 @@
 
 <!-- ZİYARET -->
 <section class="ziyaret kap" aria-label="Mağazamıza ulaşın">
- <div class="puan" data-gel><b class="metal metal-yazi" data-isik>5,0</b><div><div class="yildiz" aria-hidden="true">★★★★★</div><p><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 120'den fazla yorum</p></div></div>
+ <div class="puan" data-gel><b class="metal metal-yazi" data-isik>5,0</b><div><div class="yildiz" aria-hidden="true">★★★★★</div><p><span class="sr">5 üzerinden 5,0 puan. </span>Google'da 120+ yorum</p></div></div>
  <div class="ziyaret-sag" data-gel>
   <p class="adres">Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul<br><span>Her gün 09:00–20:00 açığız.</span></p>
   <div class="dugmeler">
@@ -251,6 +280,7 @@
    <a class="btn cam" href="https://g.page/r/CSGI4w4tcT1CEBM/review" target="_blank" rel="noopener">Google'da yorum yapın</a>
    <a class="btn cam" href="tel:+905551044040">Arayın</a>
    <a class="btn wa" id="ziyaret-wa" href="https://wa.me/905551044040" target="_blank" rel="noopener">WhatsApp'tan yazın</a>
+   <button class="film-ac" type="button" data-film><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>Tanıtım filmini izleyin <span class="sure">1:38</span></button>
   </div>
  </div>
 </section>
@@ -274,13 +304,22 @@ kabuk('ana');
  /* Giriş videosu (önünden geçen amca) oturumda bir kez oynar, sonra döngüye geçilir.
     İki videonun da ilk/son karesi aynı fotoğraf olduğu için geçiş görünmez. */
  let gordu=false;try{gordu=sessionStorage.getItem('hu-giris')==='1'}catch(e){}
- if(g&&!gordu){
+ /* Yavaş bağlantıda giriş videosu atlanır; yalnızca döngü videosu iner. */
+ const bag=navigator.connection&&navigator.connection.effectiveType||'';
+ const yavas=/2g|slow/.test(bag);
+ if(g&&!gordu&&!yavas){
   aktif=g;g.hidden=false;g.preload='auto';v.preload='none';
   const donguyeGec=()=>{if(aktif===v)return;try{sessionStorage.setItem('hu-giris','1')}catch(e){}
    aktif=v;v.currentTime=0;oynat();
    const gizle=()=>{g.style.opacity='0';setTimeout(()=>{g.hidden=true;g.pause()},500)};
    if(v.requestVideoFrameCallback)v.requestVideoFrameCallback(gizle);else v.addEventListener('playing',()=>setTimeout(gizle,60),{once:true})};
-  g.addEventListener('playing',()=>setTimeout(()=>{if(v.preload!=='auto'){v.preload='auto';v.load()}},2500),{once:true});
+  /* Döngü videosu giriş videosunun sonuna yaklaşınca inmeye başlar.
+     Önceden ikisi aynı anda iniyordu; telefonda bu, açılışta iki video birden demekti. */
+  const yukle=()=>{if(v.preload!=='auto'){v.preload='auto';v.load()}};
+  g.addEventListener('timeupdate',function kontrol(){
+   if(!isFinite(g.duration)||g.duration-g.currentTime>1.6)return;
+   g.removeEventListener('timeupdate',kontrol);yukle()});
+  g.addEventListener('playing',()=>setTimeout(yukle,8000),{once:true});
   g.addEventListener('ended',donguyeGec,{once:true});
   const ks=g.querySelectorAll('source');ks[ks.length-1].addEventListener('error',donguyeGec,{once:true});
  }
@@ -290,7 +329,7 @@ kabuk('ana');
 })();
 document.getElementById('ziyaret-wa').insertAdjacentHTML('afterbegin',WA_SVG);
 /* Ürün grupları */
-document.getElementById('grup-izgara').innerHTML=KATEGORILER.map((k,i)=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><img src="${resim(k.gorsel)}" alt="" loading="lazy" ${RESIM_YEDEK}><div class="ic"><span class="no">0${i+1}</span><h3>${k.ad}</h3><p>${k.acik}</p><span class="ok">İncele <span aria-hidden="true">→</span></span></div></a>`).join('');
+document.getElementById('grup-izgara').innerHTML=KATEGORILER.map((k,i)=>`<a class="grup" data-gel href="urunler.html#${encodeURIComponent(k.ad)}"><img src="${kucuk(resim(k.gorsel))}" alt="" loading="lazy" decoding="async" data-yedekler="${resim(k.gorsel)}" onerror="gorselYedek(this)"><div class="ic"><span class="no">0${i+1}</span><h3>${k.ad}</h3><p>${k.acik}</p><span class="ok">İncele <span aria-hidden="true">→</span></span></div></a>`).join('');
 document.querySelectorAll('#grup-izgara [data-gel]').forEach((e,i)=>e.style.transitionDelay=(i*.08)+'s');
 akisKur();
 /* Altın şerit: kaydırdıkça döner, büyür ve sayfa altın zemine dönüşür */
@@ -298,27 +337,32 @@ akisKur();
  const G=document.getElementById('gecis');
  if(!G||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const urunler=['İhram','İhram kemeri','Seccade','Tesbih','Zikirmatik','Umre feracesi','Eşarp','Takke','Boyun çantası','Medine hurması','Acve hurması','Zemzem','Esans','Kur\'an-ı Kerim','Hediye paketi'];
- const akis=document.getElementById('akis'),parca=urunler.map(u=>`<span>${u}</span><img src="assets/lale.png" alt="">`).join('');
+ const akis=document.getElementById('akis'),parca=urunler.map(u=>`<span>${u}</span><img src="assets/lale-s.webp" alt="" width="32" height="44" decoding="async">`).join('');
  akis.innerHTML=parca+parca+parca;
  const Z=document.getElementById('altin-zemin'),S=document.getElementById('serit');
  const k=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),yum=t=>t*t*(3-2*t);
- let p0=0,gorunur=true;
- new IntersectionObserver(e=>{gorunur=e[0].isIntersecting},{rootMargin:'300px 0px'}).observe(G);
+ let p0=0,gorunur=true,calisiyor=false;
+ const uyan=()=>{if(calisiyor||!gorunur||document.hidden)return;calisiyor=true;requestAnimationFrame(ciz)};
+ new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;uyan()},{rootMargin:'300px 0px'}).observe(G);
+ addEventListener('scroll',uyan,{passive:true});addEventListener('resize',uyan);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)uyan()});
  function ciz(){
-  if(gorunur){
+  if(document.hidden||!gorunur){calisiyor=false;return}
+  {
    /* şerit ekranın ortasına girdiği anda büyümeye başlar, yapışık bölüm biterken altın zemin tamamlanır */
    const r=G.getBoundingClientRect(),H=innerHeight,yol=r.height-H/2;
    const hedef=k((H/2-r.top)/yol);p0+=(hedef-p0)*.16;const p=p0;
-   const t=Math.pow(k(p),1.3);
-   const h0=innerWidth<820?44:56;
+   /* ilk bölümde şerit ince kalıp ürün adları akar, sonra büyümeye başlar */
+  const t=Math.pow(k(Math.max(0,(p-.16)/.84)),1.25);
+   const h0=innerWidth<=720?40:innerWidth<820?44:56;
    S.style.height=(h0+(H*1.3-h0)*t)+'px';
    S.style.transform=`translate(-50%,-50%) rotate(${-7*(1-t)}deg)`;
    const w=akis.scrollWidth/3||1;akis.style.transform=`translateX(${-((((r.top*.35)%w)+w)%w)}px)`;
-   akis.style.opacity=1-k((t-.2)/.3);
+   akis.style.opacity=1-k((t-.34)/.3);
    Z.style.opacity=k((t-.74)/.24);
   }
   requestAnimationFrame(ciz)}
- ciz();
+ uyan();
 })();
 </script>
 </body>

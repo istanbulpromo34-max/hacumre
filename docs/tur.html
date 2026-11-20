@@ -46,7 +46,6 @@ h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;letter-spac
 p{margin:0 0 1em}
 .icerik{width:min(1180px,calc(100% - 48px));margin:0 auto}
 .dar{max-width:62ch}
-
 /* Ana site menüsüyle uyum */
 
 .nav,.toast,.cekmece .pan{color:var(--k-yazi)}
@@ -54,8 +53,9 @@ p{margin:0 0 1em}
 .cekmece .pan p,footer.sf p{margin:0}
 .cekmece .pan .pan-not{margin:10px 0 18px;line-height:1.6}
 footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
-@media (max-width:480px){.rota-gosterge{font-size:13px;padding:7px 12px 7px 8px}.rota-gosterge svg{width:26px;height:26px}}
-
+@media (max-width:480px){
+.rota-gosterge{font-size:13px;padding:7px 12px 7px 8px}
+.rota-gosterge svg{width:26px;height:26px}}
 /* Rota göstergesi */
 .rota-gosterge{white-space:nowrap;position:fixed;left:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:12px;
   padding:10px 16px 10px 12px;border-radius:999px;background:var(--cam);backdrop-filter:blur(16px) saturate(1.5);-webkit-backdrop-filter:blur(16px) saturate(1.5);
@@ -65,13 +65,13 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .rota-gosterge svg{width:34px;height:34px;transform:rotate(-90deg)}
 .rota-gosterge .halka{stroke:var(--altin);transition:stroke-dashoffset .5s}
 .rota-gosterge b{font-weight:600}
-
 /* WhatsApp ve ses */
 .sabit-sag{position:fixed;right:calc(var(--wa-sag,20px) + (var(--wa-cap,58px) - 44px)/2);bottom:calc(var(--wa-alt,20px) + (var(--wa-cap,58px) + 12px)*2);z-index:47;display:flex;flex-direction:column;align-items:center;gap:10px}
 .ses{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:var(--cam);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:grid;place-items:center;cursor:pointer;color:var(--murekkep);padding:0;box-shadow:0 8px 24px -10px rgba(14,23,41,.45)}
 .ses svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ses .dalga{display:none}.ses.caliyor .dalga{display:inline}.ses.caliyor .sessiz{display:none}
-
+.ses .dalga{display:none}
+.ses.caliyor .dalga{display:inline}
+.ses.caliyor .sessiz{display:none}
 /* ===== Açılış ===== */
 .tur-etiket{display:inline-block;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--altin);margin-bottom:18px}
 .acilis-son .ar{display:block;font-size:clamp(30px,4vw,54px);line-height:1.9;color:var(--altin-acik);text-shadow:0 2px 30px rgba(14,23,41,.6)}
@@ -82,13 +82,13 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .eksik{margin-top:16px;padding-top:14px;border-top:1px solid var(--cizgi)}
 .eksik p{font-size:13.5px;line-height:1.55;color:var(--soluk);margin:0 0 12px}
 .eksik button{border:1px solid var(--altin);background:transparent;color:var(--murekkep);border-radius:999px;padding:11px 18px;font:600 14px var(--govde);cursor:pointer;transition:background .3s,color .3s}
-.eksik button:hover{background:var(--lacivert);color:var(--fildisi);border-color:var(--lacivert)}
-
+@media (hover:hover){.eksik button:hover{background:var(--lacivert);color:var(--fildisi);border-color:var(--lacivert)}}
 .acilis{height:240vh;position:relative;background:var(--fildisi)}
 .yapis{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .acilis-metin{position:absolute;left:max(24px,5vw);top:50%;transform:translateY(-46%);max-width:min(560px,37vw);z-index:2;will-change:opacity,transform}
 .besmele{font-size:clamp(22px,2.4vw,30px);color:var(--altin);margin-bottom:18px;display:none;text-align:left}
-@media (prefers-reduced-motion:reduce){.besmele{display:block}}
+@media (prefers-reduced-motion:reduce){
+.besmele{display:block}}
 .acilis h1{font-size:clamp(44px,5.2vw,88px)}
 .acilis h1 .satir{display:block}
 .acilis-alt{margin-top:26px;font-size:18px;color:var(--soluk);max-width:42ch}
@@ -103,18 +103,16 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .acilis-son{position:absolute;inset:auto 0 12vh;text-align:center;z-index:3;color:var(--fildisi);opacity:0;pointer-events:none}
 .acilis-son p{font-family:var(--display);font-size:clamp(26px,3.4vw,44px);margin:0;text-shadow:0 2px 30px rgba(14,23,41,.5)}
 @media (max-width:760px){
-  .acilis-metin{max-width:none;right:24px;top:calc(72px + env(safe-area-inset-top,0px));bottom:auto;transform:none}
-  .acilis h1{font-size:clamp(32px,9.4vw,42px)}
-  .acilis-alt{margin-top:14px;font-size:15.5px}
-  .ipucu{margin-top:14px}
-  .acilis-son{padding:0 72px 0 20px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}
-}
+.acilis-metin{max-width:none;right:24px;top:calc(72px + env(safe-area-inset-top,0px));bottom:auto;transform:none}
+.acilis h1{font-size:clamp(32px,9.4vw,42px)}
+.acilis-alt{margin-top:14px;font-size:15.5px}
+.ipucu{margin-top:14px}
+.acilis-son{padding:0 72px 0 20px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}}
 @media (min-width:761px) and (max-width:1024px) and (orientation:portrait){
-  .acilis-metin{max-width:none;left:6vw;right:6vw;top:120px;transform:none}
-  .yolculuk-on{right:6vw;max-width:none}
-}
-@media (max-width:760px) and (max-height:700px){.ipucu{display:none}}
-
+.acilis-metin{max-width:none;left:6vw;right:6vw;top:120px;transform:none}
+.yolculuk-on{right:6vw;max-width:none}}
+@media (max-width:760px) and (max-height:700px){
+.ipucu{display:none}}
 /* ===== Rota ===== */
 .rota{padding:18vh 0 14vh;background:var(--fildisi)}
 .rota h2{font-size:clamp(34px,4.6vw,62px);max-width:16ch}
@@ -128,14 +126,13 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .duraklar li::before{counter-increment:d;content:counter(d);position:absolute;top:0;left:0;width:31px;height:31px;border-radius:50%;background:var(--fildisi);border:1px solid var(--altin);display:grid;place-items:center;font-size:13px;color:var(--altin);z-index:1}
 .duraklar strong{display:block;font-family:var(--display);font-weight:400;font-size:19px;line-height:1.2}
 .duraklar span{font-size:13px;color:var(--soluk)}
-@media (max-width:900px){.rota-giris{grid-template-columns:1fr}}
+@media (max-width:900px){
+.rota-giris{grid-template-columns:1fr}}
 @media (max-width:1180px){
-  .duraklar{grid-template-columns:1fr;gap:0}
-  .duraklar::before,.duraklar::after{left:15px;right:auto;top:0;bottom:0;width:1px;height:auto}
-  .duraklar::after{height:var(--dolu,0%);bottom:auto}
-  .duraklar li{padding:0 0 22px 52px}
-}
-
+.duraklar{grid-template-columns:1fr;gap:0}
+.duraklar::before,.duraklar::after{left:15px;right:auto;top:0;bottom:0;width:1px;height:auto}
+.duraklar::after{height:var(--dolu,0%);bottom:auto}
+.duraklar li{padding:0 0 22px 52px}}
 /* ===== Ortak durak başlığı ===== */
 .durak{position:relative}
 .durak-bas{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:baseline;margin-bottom:6vh}
@@ -145,7 +142,6 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .koyu-bolum{background:var(--lacivert);color:var(--fildisi)}
 .koyu-bolum .soluk,.koyu-bolum .durak-no{color:var(--altin-acik)}
 .soluk{color:var(--soluk)}
-
 /* ===== Hazırlık ===== */
 .hazirlik{padding:16vh 0}
 .hazirlik-izgara{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:start}
@@ -168,8 +164,9 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .ilerleme{height:3px;flex:1;margin-right:16px;background:var(--cizgi);border-radius:3px;overflow:hidden}
 .ilerleme i{display:block;height:100%;width:0;background:var(--altin);transition:width .5s}
 .liste-not{font-size:13.5px;line-height:1.55;color:var(--soluk);margin:12px 0 0}
-@media (max-width:900px){.hazirlik-izgara{grid-template-columns:1fr}.liste-kart{position:relative;top:0}}
-
+@media (max-width:900px){
+.hazirlik-izgara{grid-template-columns:1fr}
+.liste-kart{position:relative;top:0}}
 /* ===== Yola çıkış (pencere) ===== */
 .yolculuk{height:220vh;position:relative;background:var(--tas)}
 .pencere{position:absolute;left:50%;top:50%;overflow:hidden;will-change:width,height,border-radius;box-shadow:0 0 0 14px rgba(255,255,255,.6),0 40px 80px -30px rgba(30,27,22,.5);background:var(--lacivert)}
@@ -179,9 +176,10 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .yolculuk-metin h3{font-size:clamp(34px,5vw,70px);color:var(--fildisi);text-shadow:0 2px 40px rgba(14,23,41,.45)}
 .yolculuk-metin p{color:var(--fildisi);max-width:52ch;margin:16px auto 0;text-shadow:0 1px 20px rgba(14,23,41,.6)}
 .yolculuk-on{position:absolute;left:max(24px,6vw);top:18vh;max-width:30ch;z-index:2;will-change:opacity}
-@media (max-width:760px){.yolculuk-on{right:24px;max-width:none;top:calc(64px + env(safe-area-inset-top,0px))}.yolculuk-metin{padding:0 72px 0 24px}}
+@media (max-width:760px){
+.yolculuk-on{right:24px;max-width:none;top:calc(64px + env(safe-area-inset-top,0px))}
+.yolculuk-metin{padding:0 72px 0 24px}}
 .yolculuk-on h2{font-size:clamp(30px,3.6vw,50px)}
-
 /* ===== Medine ===== */
 .medine{padding:18vh 0 0}
 .semsiye-bant{height:70vh;min-height:420px;overflow:hidden;position:relative;margin:4vh 0 12vh}
@@ -210,7 +208,6 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .hurma p{font-size:15px;color:rgba(239,231,216,.75);margin:0}
 .oklar{display:flex;gap:8px}
 .oklar button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(239,231,216,.3);background:transparent;color:var(--fildisi);cursor:pointer;font-size:18px}
-
 /* ===== Mîkat ===== */
 .mikat{padding:18vh 0 0;background:var(--fildisi)}
 .mikat-bant{position:relative;height:78vh;min-height:460px;margin:0 0 12vh;overflow:hidden;clip-path:inset(0 var(--kirp,8%) round 0)}
@@ -234,9 +231,10 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .arka{transform:rotateY(180deg);background:var(--lacivert);color:var(--fildisi);padding:30px;display:flex;flex-direction:column;justify-content:space-between}
 .arka h4{font-family:var(--display);font-weight:400;font-size:30px;margin:0 0 12px;color:var(--altin-acik)}
 .arka p{font-size:16px;color:rgba(239,231,216,.85)}
-@media (max-width:900px){.kumas-izgara{grid-template-columns:1fr}.kumas{height:380px}}
+@media (max-width:900px){
+.kumas-izgara{grid-template-columns:1fr}
+.kumas{height:380px}}
 .yasaklar{display:grid;grid-template-columns:1fr 1.4fr;gap:6vw;padding:12vh 0;border-top:1px solid var(--cizgi)}
-
 /* ===== Tavaf ===== */
 .tavaf{height:380vh;position:relative;background:var(--gece)}
 .tavaf .yapis{background:var(--gece)}
@@ -262,15 +260,17 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .tavaf-baslik{position:absolute;z-index:3;left:max(24px,6vw);top:16vh;color:var(--fildisi);will-change:opacity}
 .tavaf-baslik h2{font-size:clamp(40px,6vw,88px)}
 .tavaf-baslik .durak-no{color:var(--altin-acik)}
-@media (max-width:760px){.savtlar{bottom:auto;top:16vh}.tavaf-baslik{top:auto;bottom:40vh}}
-
+@media (max-width:760px){
+.savtlar{bottom:auto;top:16vh}
+.tavaf-baslik{top:auto;bottom:40vh}}
 /* ===== Zemzem ===== */
 .zemzem{padding:18vh 0;background:var(--fildisi)}
 .ikili{display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:center}
 .cerceve{border-radius:220px 220px 28px 28px;overflow:hidden;aspect-ratio:4/5;position:relative}
-.cerceve picture{display:contents}.cerceve img{width:100%;height:100%;object-fit:cover;transform:scale(var(--olcek,1.08))}
-@media (max-width:900px){.ikili{grid-template-columns:1fr}}
-
+.cerceve picture{display:contents}
+.cerceve img{width:100%;height:100%;object-fit:cover;transform:scale(var(--olcek,1.08))}
+@media (max-width:900px){
+.ikili{grid-template-columns:1fr}}
 /* ===== Sa'y ===== */
 .say{height:340vh;position:relative;background:var(--tas)}
 .say .yapis{display:flex;align-items:center}
@@ -288,7 +288,6 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .savt p{font-size:15px;color:var(--soluk);margin:0}
 .say-son{flex:none;width:min(440px,80vw);margin-right:6vw;padding:30px;border-radius:30px;align-self:center;background:rgba(239,231,216,.78);border:1px solid rgba(255,255,255,.7);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3)}
 .say-son h3{font-size:clamp(28px,3vw,42px);margin-bottom:12px}
-
 /* ===== Tıraş ===== */
 .tiras{position:relative;padding:22vh 0;overflow:hidden;background:var(--fildisi)}
 .tiras-arka{position:absolute;inset:0;opacity:.9}
@@ -296,7 +295,6 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .tiras-arka img{object-position:right center}
 .tiras-arka::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--fildisi) 52%,rgba(239,231,216,.78) 70%,rgba(239,231,216,.12))}
 .tiras .icerik{position:relative}
-
 /* ===== Mekke günleri ===== */
 .mekke-gun{padding:18vh 0;background:var(--tas)}
 .ziyaret{display:grid;grid-template-columns:.9fr 1.1fr;gap:6vw;align-items:start}
@@ -306,13 +304,13 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .yerler h3{font-size:30px}
 .yerler .ar{font-size:24px;color:var(--altin)}
 .yerler p{grid-column:1/-1;margin:0;color:var(--soluk);font-size:16px}
-@media (max-width:900px){.ziyaret{grid-template-columns:1fr}.ziyaret .cerceve{position:relative;top:0;order:2}}
-
+@media (max-width:900px){
+.ziyaret{grid-template-columns:1fr}
+.ziyaret .cerceve{position:relative;top:0;order:2}}
 /* ===== Dönüş ===== */
 .donus{padding:18vh 0 0;background:var(--fildisi)}
 .donus-gorsel{margin:6vh 0 0;height:84vh;min-height:480px;position:relative;overflow:hidden}
 .donus-gorsel img{width:100%;height:100%;object-fit:cover;transform:scale(var(--olcek,1.15))}
-
 /* ===== Mağaza ===== */
 .magaza{padding:16vh 0 12vh;background:var(--lacivert);color:var(--fildisi);margin-top:16vh}
 .magaza-izgara{display:grid;grid-template-columns:1fr 1.15fr;gap:6vw;align-items:start}
@@ -325,21 +323,20 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .bilgi dd{margin:0}
 .dugmeler{display:flex;flex-wrap:wrap;gap:12px}
 .dugme{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:500;font-size:15px;border:1px solid rgba(239,231,216,.3);transition:background .3s,color .3s}
-.dugme:hover{background:rgba(239,231,216,.1)}
+@media (hover:hover){.dugme:hover{background:rgba(239,231,216,.1)}}
 .dugme.dolu{background:var(--altin);border-color:var(--altin);color:var(--gece)}
-.dugme.dolu:hover{background:var(--altin-acik)}
+@media (hover:hover){.dugme.dolu:hover{background:var(--altin-acik)}}
 .harita{border-radius:28px;overflow:hidden;aspect-ratio:4/3.4;border:1px solid rgba(255,255,255,.1);background:var(--gece)}
 .harita iframe{width:100%;height:100%;border:0;filter:grayscale(.35) contrast(1.05)}
-@media (max-width:900px){.magaza-izgara{grid-template-columns:1fr}}
-
-
-
+@media (max-width:900px){
+.magaza-izgara{grid-template-columns:1fr}}
 /* ===== Öğretici bileşenler ===== */
 .giris{font-size:clamp(18px,1.45vw,21px);line-height:1.7}
 .ders{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(32px,5vw,84px);align-items:start}
 .ders h3,.hazirlik-metin h3,.ara-baslik{font-size:clamp(26px,2.4vw,34px);margin:0 0 18px}
 .ara-baslik,.ders h3.ara-baslik{margin-top:7vh}
-.hazirlik-metin h3{margin-top:7vh}.hazirlik-metin .giris+h3{margin-top:4vh}
+.hazirlik-metin h3{margin-top:7vh}
+.hazirlik-metin .giris+h3{margin-top:4vh}
 .adim-liste{list-style:none;margin:0;padding:0;counter-reset:s}
 .adim-liste li{counter-increment:s;display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:16px;padding:18px 0;border-top:1px solid var(--cizgi)}
 .adim-liste li:last-child{border-bottom:1px solid var(--cizgi)}
@@ -420,13 +417,11 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .son-tavsiye .okunus{font-size:22px;margin-top:10px}
 .magaza-alt{font-size:18px;color:rgba(239,231,216,.8);max-width:46ch;margin:-8px 0 30px}
 @media (max-width:900px){
-  .ders{grid-template-columns:1fr}
-  .ders-yan{position:relative;top:0}
-  .esaslar{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .yasaklar{grid-template-columns:1fr}
-  .tiras-izgara{grid-template-columns:1fr}
-}
-
+.ders{grid-template-columns:1fr}
+.ders-yan{position:relative;top:0}
+.esaslar{grid-template-columns:repeat(2,minmax(0,1fr))}
+.yasaklar{grid-template-columns:1fr}
+.tiras-izgara{grid-template-columns:1fr}}
 /* ===== Telefon ===== */
 @media (max-width:760px){
   .acilis{height:210vh}
@@ -453,11 +448,9 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   .hurma{min-height:220px}
 }
 @media (orientation:portrait) and (max-width:760px){
-  .lebbeyk span{font-size:min(50vw,30vh)}
-}
+.lebbeyk span{font-size:min(50vw,30vh)}}
 @media (pointer:coarse){
-  .ust,.rota-gosterge,.ses{backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3)}
-}
+.ust,.rota-gosterge,.ses{backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3)}}
 /* Hareket azaltma */
 @media (prefers-reduced-motion:reduce){
   .acilis,.yolculuk,.odak{height:100vh;height:100svh}
@@ -471,29 +464,86 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
   .ipucu i{animation:none}
   .kumas-ic{transition:none}
 }
-@media (min-width:721px) and (max-width:1100px){.icerik{width:calc(100% - 160px)}}
-@media (max-width:480px){.rota-gosterge{font-size:12px;background:rgba(239,231,216,.94)}.rota-gosterge.koyu{background:rgba(14,23,41,.9)}}
+@media (min-width:721px) and (max-width:1100px){
+.icerik{width:calc(100% - 160px)}}
+@media (max-width:480px){
+.rota-gosterge{font-size:12px;background:rgba(239,231,216,.94)}
+.rota-gosterge.koyu{background:rgba(14,23,41,.9)}}
 @media(max-width:720px){
-  .rota-gosterge{left:50%;bottom:auto;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,-12px);padding:6px 14px 6px 8px;font-size:13px;gap:8px}
-  .rota-gosterge.gorunur{transform:translate(-50%,0)}
-  .rota-gosterge svg{width:24px;height:24px}
-  .sabit-sag{bottom:auto;top:calc(10px + env(safe-area-inset-top,0px));right:12px}
-  .ses{width:40px;height:40px}
-}
+.rota-gosterge{left:50%;bottom:auto;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,-12px);padding:6px 12px 6px 8px;font-size:13px;gap:8px}
+.rota-gosterge.gorunur{transform:translate(-50%,0)}
+.rota-gosterge svg{width:24px;height:24px}
+.sabit-sag{bottom:auto;top:calc(10px + env(safe-area-inset-top,0px));right:12px}
+.ses{width:44px;height:44px}
+/* Kaydırırken üstteki gösterge ve ses düğmesi çekilir; metnin üstünü kapatmasınlar */
+body.kabuk-gizli .rota-gosterge{opacity:0;transform:translate(-50%,-16px);pointer-events:none}
+body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events:none}
+/* Yola çıkış sahnesinde metin parlak fotoğrafın üstünde kalıyordu */
+.yolculuk-metin{padding:30px 24px 20px;background:linear-gradient(0deg,rgba(14,23,41,.74),rgba(14,23,41,.42) 58%,transparent)}
+.yolculuk-on{right:24px}}
+
+/* Turun tamamında nerede olunduğunu gösteren ince çizgi */
+.rota-cizgi{position:fixed;left:0;right:0;top:0;height:3px;z-index:41;background:rgba(14,23,41,.14);pointer-events:none}
+.rota-cizgi i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--altin),var(--altin-acik));transition:width .12s linear}
+@media(min-width:721px){.rota-cizgi{display:none}}
+
+/* Gösterge artık bir düğme: duraklar arasında geçiş açar */
+.rota-gosterge{cursor:pointer;font-family:inherit;color:inherit;text-align:left}
+.rota-gosterge.gorunur{pointer-events:auto}
+.rota-gosterge:active{transform:translate(-50%,0) scale(.96)}
+.gosterge-ok{width:14px!important;height:14px!important;transform:none!important;opacity:.6;flex:none}
+
+/* Durak seçici */
+.durak-sec{position:fixed;inset:0;z-index:70;display:grid;align-items:end}
+.durak-sec[hidden]{display:none}
+.durak-perde{position:absolute;inset:0;background:rgba(14,23,41,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:durakPerde .25s ease-out}
+.durak-pan{position:relative;margin:0 auto;width:min(460px,100%);max-height:78vh;overflow:auto;overscroll-behavior:contain;
+  background:var(--fildisi);color:var(--murekkep);border-radius:24px 24px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -20px 60px -20px rgba(14,23,41,.5);animation:durakKalk .3s cubic-bezier(.2,.8,.2,1)}
+@media(min-width:721px){.durak-sec{align-items:center}.durak-pan{border-radius:24px;animation:none}}
+.durak-bas{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.durak-bas strong{font-family:'Marcellus';font-weight:400;font-size:20px}
+.durak-kapat{width:44px;height:44px;border-radius:50%;border:1px solid rgba(14,23,41,.18);background:none;color:inherit;font-size:24px;line-height:1;cursor:pointer}
+.durak-kapat:active{transform:scale(.93)}
+.durak-liste{list-style:none;margin:0;padding:0;display:grid;gap:4px;counter-reset:d}
+.durak-liste button{width:100%;min-height:52px;display:flex;align-items:center;gap:14px;padding:10px 14px;border:0;border-radius:14px;
+  background:rgba(14,23,41,.04);color:inherit;font:400 16px 'Marcellus',serif;text-align:left;cursor:pointer}
+.durak-liste button b{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(201,162,75,.22);color:#6b511c;font:600 12.5px 'Hanken Grotesk',sans-serif}
+.durak-liste button[aria-current="true"]{background:rgba(201,162,75,.24)}
+.durak-liste button:active{transform:scale(.99)}
+@keyframes durakPerde{from{opacity:0}to{opacity:1}}
+@keyframes durakKalk{from{transform:translateY(24px)}to{transform:none}}
+/* ===== Dokunma hedefleri: her şey en az 44px ===== */
+.rota-gosterge{min-height:44px}
+.sekmeler button{min-height:44px}
+.kontrol label{min-height:44px;align-items:center}
+.kontrol input[type=checkbox]{width:24px;height:24px}
+.durak-liste button{min-height:52px}
 </style>
 </head>
 <body>
 
 
-<div class="rota-gosterge" id="gosterge" aria-live="polite">
+<button class="rota-gosterge" id="gosterge" type="button" aria-live="polite" aria-haspopup="dialog" aria-expanded="false" title="Duraklar arasında geçiş yapın">
   <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-opacity=".15" stroke-width="2"/><circle class="halka" cx="18" cy="18" r="15" fill="none" stroke-width="2" stroke-dasharray="94.25" stroke-dashoffset="94.25" stroke-linecap="round"/></svg>
   <span><b id="gosterge-no">1/10</b> <span id="gosterge-ad">Hazırlık</span></span>
+  <svg class="gosterge-ok" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+</button>
+<div class="rota-cizgi" aria-hidden="true"><i id="rotaCizgi"></i></div>
+<div class="durak-sec" id="durakSec" hidden>
+  <div class="durak-perde" data-kapat></div>
+  <div class="durak-pan" role="dialog" aria-modal="true" aria-label="Turun durakları">
+    <div class="durak-bas"><strong>Turun durakları</strong><button type="button" class="durak-kapat" data-kapat aria-label="Kapat">×</button></div>
+    <ol class="durak-liste" id="durakListe"></ol>
+  </div>
 </div>
 
 <div class="sabit-sag">
   <button class="ses" id="ses" type="button" aria-pressed="false" aria-label="Arka plan neşidi" title="Neşidi aç ya da kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="dalga" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="sessiz" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
 </div>
 
+<noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px Hanken Grotesk,system-ui,sans-serif">Bu sayfanın içeriği için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
 <main id="icerik">
 
 <!-- AÇILIŞ -->
@@ -700,7 +750,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
         <li><strong>Temizlik</strong><p>Medine'den Mekke'ye hareket günü otelde tırnaklar kesilir, saç ve sakal düzeltilir, koltuk altı ve etek temizliği yapılır. Ardından gusül alınır; mümkün değilse abdest alınır. İhrama girmeden önce bedene, iz bırakmayan bir koku sürmek müstehaptır; ihram örtüsüne ise koku sürülmez.</p></li>
         <li><strong>İhramı giyme</strong><p>İhram da otelde giyilir. Erkekler iç çamaşırı dahil bütün dikişli giysilerini çıkarır, beline izârı sarar ve iki omzunu örtecek şekilde ridâyı alır. Ayağa, topuğu ve ayak üstündeki kemiği açıkta bırakan terlik giyilir. Hanımlar tesettüre uygun normal kıyafetleriyle kalır; yüzleri açık olur. Ardından otobüsle mîkata gidilir.</p></li>
         <li><strong>İhram namazı</strong><p>Mîkata, Zülhuleyfe'deki mescide varınca, kerahet vakti değilse iki rekât ihram namazı kılınır.</p></li>
-        <li><strong>Niyet</strong><p>Namazın selamından sonra umreye niyet edilir. Niyetin Arapçası, okunuşu ve anlamı yandaki kartta yer alır.</p></li>
+        <li><strong>Niyet</strong><p>Namazın selamından sonra umreye niyet edilir. Niyetin Arapçası, okunuşu ve anlamı dua kartında yer alır.</p></li>
         <li><strong>Telbiye</strong><p>Niyetin hemen ardından telbiye üç kez söylenir; ihram, bu niyet ve telbiyeyle başlar. Ardından tekbir ve salavat getirilip dua edilir. Erkekler telbiyeyi yüksek sesle, hanımlar sessizce söyler.</p></li>
       </ol>
     </div>
@@ -924,7 +974,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
     <div>
       <h2>Umre hazırlığınızda yanınızdayız.</h2>
       <p class="magaza-alt">Rehberle ilgili sorularınızı bize sorabilir, hazırlık listenizi Ümraniye'deki mağazamızda birlikte tamamlayabilirsiniz.</p>
-      <div class="puan"><b>5,0</b><div><div class="yildiz" aria-label="5 üzerinden 5 yıldız">★★★★★</div><span style="font-size:14px;opacity:.75">Google'da 120'den fazla yorum</span></div></div>
+      <div class="puan"><b>5,0</b><div><div class="yildiz" aria-label="5 üzerinden 5 yıldız">★★★★★</div><span style="font-size:14px;opacity:.75">Google'da 120+ yorum</span></div></div>
       <dl class="bilgi">
         <dt>Adres</dt><dd>Sütçü İmam Cad., Cevherağa Camii Sk. No:10-A, Ümraniye / İstanbul</dd>
         <dt>Saatler</dt><dd>Her gün 09:00–20:00</dd>
@@ -1083,8 +1133,8 @@ function yolculukSahne(){
   const w=ara(w0,W,t),h=ara(h0,H,t),r=ara(w0*.46,0,t);
   Object.assign(pencere.style,{width:w+'px',height:h+'px',marginLeft:(-w/2)+'px',marginTop:(-h/2+kay)+'px',borderRadius:r+'px',boxShadow:'0 0 0 '+ara(14,0,t)+'px rgba(255,255,255,.6),0 40px 80px -30px rgba(30,27,22,'+ara(.5,0,t)+')'});
   pencereImg.style.transform='scale('+ara(1.35,1.02,t)+') translateY('+ara(-4,2,p)+'%)';
-  $('yolculuk-on').style.opacity=1-aralik(p,.05,.3);
-  const yo=aralik(p,.7,.85);$('yolculuk-metin').style.opacity=yo;pencere.style.setProperty('--yazi-op',yo);
+  $('yolculuk-on').style.opacity=1-aralik(p,.05,.18);
+  const yo=aralik(p,.55,.68);$('yolculuk-metin').style.opacity=yo;pencere.style.setProperty('--yazi-op',yo);
 }
 function odakSahne(id){
   const el=$(id);if(!el)return;if(azHareket){el.querySelectorAll('.odak-kat img')[1].style.opacity=0;return}const p=yapisIlerleme(el);
@@ -1135,6 +1185,33 @@ function parallaxlar(){
 /* Rota çizgisi ve gösterge */
 const duraklarListe=$('duraklar'),gosterge=$('gosterge'),halka=gosterge.querySelector('.halka');
 const durakBolumler=[...document.querySelectorAll('[data-durak]')],tonBolumler=[...document.querySelectorAll('[data-ton]')];
+/* Durak seçici: göstergeye dokununca duraklar arasında geçiş yapılır.
+   Tur 47.000 piksel uzunluğunda; aralarda gezinmenin başka bir yolu yoktu. */
+(function(){
+  const kat=$('durakSec'),liste=$('durakListe');
+  if(!kat||!liste)return;
+  const benzersiz=[];
+  durakBolumler.forEach(b=>{const n=+b.dataset.durak;
+    if(!benzersiz.some(x=>x.no===n))benzersiz.push({no:n,ad:b.dataset.ad,id:b.id})});
+  benzersiz.sort((a,b)=>a.no-b.no);
+  liste.innerHTML=benzersiz.map(d=>'<li><button type="button" data-git="'+d.id+'"><b>'+d.no+'</b>'+d.ad+'</button></li>').join('');
+  let odak=null;
+  const ac=()=>{odak=document.activeElement;kat.hidden=false;gosterge.setAttribute('aria-expanded','true');
+    const simdi=$('gosterge-no').textContent.split('/')[0];
+    liste.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-current',String(benzersiz[i].no===+simdi)));
+    document.documentElement.classList.add('kilit');
+    (liste.querySelector('[aria-current="true"]')||liste.querySelector('button')).focus()};
+  const kapa=()=>{if(kat.hidden)return;kat.hidden=true;gosterge.setAttribute('aria-expanded','false');
+    document.documentElement.classList.remove('kilit');if(odak&&odak.focus)odak.focus()};
+  gosterge.addEventListener('click',()=>kat.hidden?ac():kapa());
+  kat.addEventListener('click',e=>{
+    if(e.target.closest('[data-kapat]')||e.target===kat)return kapa();
+    const b=e.target.closest('[data-git]');if(!b)return;
+    const h=document.getElementById(b.dataset.git);kapa();
+    if(h)setTimeout(()=>h.scrollIntoView({behavior:azHareket?'auto':'smooth',block:'start'}),60)});
+  addEventListener('keydown',e=>{if(e.key==='Escape')kapa()});
+})();
+const rotaCizgi=$('rotaCizgi');
 function gostergeGuncelle(){
   const orta=innerHeight*.45;let aktif=null;
   durakBolumler.forEach(b=>{const r=b.getBoundingClientRect();if(r.top<orta&&r.bottom>orta)aktif=b});
@@ -1144,6 +1221,8 @@ function gostergeGuncelle(){
   let ton2='acik';tonBolumler.forEach(b=>{const r=b.getBoundingClientRect();const y=innerHeight-40;if(r.top<y&&r.bottom>y)ton2=b.dataset.ton});
   gosterge.classList.toggle('koyu',ton2==='koyu');
   duraklarListe.style.setProperty('--dolu',Math.min(100,gorunurIlerleme(duraklarListe)*160)+'%');
+  if(rotaCizgi){const yol=document.documentElement.scrollHeight-innerHeight;
+    rotaCizgi.style.width=(yol>0?Math.min(100,Math.max(0,scrollY/yol*100)):0)+'%'}
 }
 
 let bekliyor=false;

@@ -51,6 +51,10 @@ jobs:
         if: steps.kuyruk.outputs.adet != '0'
         run: python tools/foto_durum.py
 
+      - name: Telefon boyutu gorselleri uret
+        if: steps.kuyruk.outputs.adet != '0'
+        run: python tools/kucuk_gorsel.py docs
+
       - name: Depoya yaz
         if: steps.kuyruk.outputs.adet != '0'
         run: |

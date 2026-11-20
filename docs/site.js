@@ -7,7 +7,7 @@ const MAGAZA={
  kisaAdres:'Cevherağa Camii Sk. No:10-A, Ümraniye',
  saat:'Her gün 09:00–20:00',
  tel:'0555 104 40 40',telLink:'tel:+905551044040',
- puan:'5,0',yorum:'120\'den fazla yorum',
+ puan:'5,0',yorum:'120+ yorum',
  harita:'https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6',
  yorumYap:'https://g.page/r/CSGI4w4tcT1CEBM/review',
  instagram:'https://www.instagram.com/istanbulhacumrehediyelik/'
@@ -38,10 +38,21 @@ const TL=n=>n.toLocaleString('tr-TR')+' ₺';
 /* Görseller WebP olarak sunulur; açılamazsa aynı adlı JPG'ye düşülür */
 const resim=y=>/^assets\/(u|g)\/[^/]+\.jpg$/.test(y||'')?y.replace(/\.jpg$/,'.webp'):y;
 const RESIM_YEDEK=`onerror="this.onerror=null;this.src=this.src.replace(/\\.webp$/,'.jpg')"`;
+/* Kartlarda ve ızgaralarda telefon boyutundaki kopya (en uzun kenar 700px) kullanılır;
+   büyütme penceresinde tam boy görsel açılır. Kopyalar tools/kucuk_gorsel.py ile üretilir. */
+const kucuk=y=>/^assets\/(u|g)\/[^/]+\.(webp|jpg|jpeg|png)$/i.test(y||'')
+ ? y.replace(/^assets\/(u|g)\//,'assets/$1/k/').replace(/\.(jpg|jpeg|png)$/i,'.webp') : y;
+/* Görsel açılamazsa sırayla yedeklere düşer: tam boy → yedeğin küçüğü → yedeğin tam boyu */
+function gorselYedek(img){
+ const kalan=(img.dataset.yedekler||'').split('|').filter(Boolean);
+ if(!kalan.length){img.onerror=null;return}
+ img.dataset.yedekler=kalan.slice(1).join('|');
+ img.src=kalan[0];
+}
 const depo={al(k,v){try{return JSON.parse(localStorage.getItem(k)||v)}catch(e){return JSON.parse(v)}},yaz(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const WA_SVG='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.6.7.6-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5l-.2-.3z"/></svg>';
 const OYNAT_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 5.2v13.6a1 1 0 0 0 1.53.85l10.7-6.8a1 1 0 0 0 0-1.7L9.93 4.35A1 1 0 0 0 8.4 5.2z"/></svg>';
-const FILM = {video:'assets/tanitim/film.mp4', kapak:'assets/tanitim/kapak.webp'};
+const FILM = {video:'assets/tanitim/film.mp4', videoM:'assets/tanitim/film-m.mp4', kapak:'assets/tanitim/kapak.webp', sure:'1:38'};
 let _filmKat=null,_filmVid=null,_filmOdak=null;
 function filmKur(){
  if(_filmKat)return;
@@ -49,7 +60,7 @@ function filmKur(){
  _filmKat.setAttribute('role','dialog');_filmKat.setAttribute('aria-modal','true');
  _filmKat.setAttribute('aria-label','İstanbul Hac Umre tanıtım filmi');
  _filmKat.innerHTML='<button class="film-kapat" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'+
-  '<video playsinline controls preload="none" poster="'+FILM.kapak+'"><source src="'+FILM.video+'" type="video/mp4">Tarayıcınız videoyu oynatamıyor.</video>';
+  '<video playsinline controls preload="none" poster="'+FILM.kapak+'"><source src="'+(innerWidth<=720?FILM.videoM:FILM.video)+'" type="video/mp4">Tarayıcınız videoyu oynatamıyor.</video>';
  _filmVid=_filmKat.querySelector('video');
  _filmKat.addEventListener('click',e=>{if(e.target===_filmKat)filmKapat()});
  _filmKat.querySelector('.film-kapat').addEventListener('click',filmKapat);
@@ -140,7 +151,22 @@ function kabuk(aktif){
  const ml=document.createElement('a');ml.className='mlogo';ml.href='index.html';ml.setAttribute('aria-label',MAGAZA.ad+', ana sayfa');ml.innerHTML='<img src="assets/logo-nav.png" alt="" width="128" height="31">';
  document.body.prepend(ml);
  const gec=document.createElement('a');gec.className='icerige-gec';gec.href='#icerik';gec.textContent='İçeriğe geç';document.body.prepend(gec);
- const ust=()=>ml.classList.toggle('gizli',scrollY>160);addEventListener('scroll',ust,{passive:true});ust();
+ const ust=()=>ml.classList.toggle('gizli',scrollY>160);
+ /* Telefonda kabuk: aşağı kaydırırken çekilir, yukarı kaydırınca / başta / sonda döner.
+    Böylece menü ve WhatsApp düğmesi okunan metnin üstünü kapatmıyor. */
+ let sonY=scrollY,birikim=0,bekle=false;
+ const kabukDurum=()=>{
+  const y=Math.max(0,scrollY),fark=y-sonY;sonY=y;
+  if(innerWidth>720||document.documentElement.classList.contains('kilit')){
+   document.body.classList.remove('kabuk-gizli');birikim=0;return}
+  const dip=y+innerHeight>=document.documentElement.scrollHeight-80;
+  if(y<140||dip){document.body.classList.remove('kabuk-gizli');birikim=0;return}
+  birikim=(fark>0)===(birikim>0)?birikim+fark:fark;
+  if(birikim>60)document.body.classList.add('kabuk-gizli');
+  else if(birikim<-40)document.body.classList.remove('kabuk-gizli')};
+ addEventListener('scroll',()=>{ust();if(bekle)return;bekle=true;
+  requestAnimationFrame(()=>{kabukDurum();bekle=false})},{passive:true});
+ ust();
  /* çekmece */
  const c=document.createElement('div');c.className='cekmece';
  c.innerHTML=`<div class="perde"></div><aside class="pan" role="dialog" aria-modal="true" aria-labelledby="cekmece-baslik" aria-hidden="true" data-lenis-prevent><div class="pan-bas"><h3 id="cekmece-baslik">Çantam</h3><button type="button" class="kapat" aria-label="Çantayı kapat">×</button></div>
@@ -179,6 +205,8 @@ function kabuk(aktif){
  fb.setAttribute('aria-label','Tanıtım filmini izleyin');
  fb.innerHTML='<span class="ipucu">Tanıtım filmi</span>'+OYNAT_SVG;
  fb.addEventListener('click',filmAc);document.body.append(fb);
+ /* Bölüm içindeki "tanıtım filmi" düğmeleri (telefonda yüzen düğme yerine bunlar kullanılır) */
+ document.querySelectorAll('[data-film]').forEach(b=>b.addEventListener('click',filmAc));
  /* altbilgi */
  const f=document.querySelector('footer.sf');
  if(f){const notlar=[...f.querySelectorAll('.f-not')];
@@ -196,10 +224,24 @@ function akisKur(){
   lenis=new Lenis({lerp:.085,wheelMultiplier:.9,smoothWheel:true});
   const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)};requestAnimationFrame(raf)};
  lenisKur();if(!lenis)addEventListener('load',lenisKur);
- const dongu=()=>{yumusakY+=(scrollY-yumusakY)*.14;document.documentElement.style.setProperty('--sy',yumusakY.toFixed(1));
-  document.querySelectorAll('.metal[data-isik]').forEach(e=>{const r=e.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const p=1-(r.top+r.height)/(innerHeight+r.height);
-   e.style.setProperty('--isik',(Math.max(0,Math.min(1,p))*100).toFixed(1)+'%')});
-  requestAnimationFrame(dongu)};dongu();
+ /* Kaydırmaya bağlı ışık ve derinlik döngüsü: kaydırma durunca ve sekme arka plana geçince durur,
+    böylece telefonun işlemcisi ve pili boşuna çalışmaz. */
+ const metaller=[...document.querySelectorAll('.metal[data-isik]')];
+ let calisiyor=false;
+ const dongu=()=>{
+  if(document.hidden){calisiyor=false;return}
+  const hedef=scrollY,fark=hedef-yumusakY,son=Math.abs(fark)<.3;
+  yumusakY=son?hedef:yumusakY+fark*.14;
+  document.documentElement.style.setProperty('--sy',yumusakY.toFixed(1));
+  for(const e of metaller){const r=e.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)continue;
+   const p=1-(r.top+r.height)/(innerHeight+r.height);
+   e.style.setProperty('--isik',(Math.max(0,Math.min(1,p))*100).toFixed(1)+'%')}
+  if(son){calisiyor=false;return}
+  requestAnimationFrame(dongu)};
+ const uyandir=()=>{if(calisiyor||document.hidden)return;calisiyor=true;requestAnimationFrame(dongu)};
+ addEventListener('scroll',uyandir,{passive:true});addEventListener('resize',uyandir);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)uyandir()});
+ uyandir();
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('gel');io.unobserve(e.target)}}),{threshold:.08,rootMargin:'0px 0px -6% 0px'});
  document.querySelectorAll('[data-gel]').forEach(e=>io.observe(e));
 }
