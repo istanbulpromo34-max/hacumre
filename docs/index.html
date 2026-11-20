@@ -760,9 +760,7 @@ akisKur();
   if(uzun){uzun=false;return}                    // basılı tutulduysa geçiş yok
   const r=kart.getBoundingClientRect();
   git(e.clientX-r.left<r.width*.34?i-1:i+1)});
- if(matchMedia('(hover:hover)').matches){
-  kok.addEventListener('pointerenter',()=>{fare=true;durum()});
-  kok.addEventListener('pointerleave',()=>{fare=false;durum()})}
+ /* Fare üzerine gelince durmaz; yalnız basılı tutunca durur */
  document.addEventListener('visibilitychange',durum);
  new IntersectionObserver(e=>{gorunur=e[0].isIntersecting;durum()},{rootMargin:'0px'}).observe(kok);
  kok.style.setProperty('--yorum-sure',sure(0)+'ms');durum();cizgiKur();
