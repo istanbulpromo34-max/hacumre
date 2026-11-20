@@ -98,7 +98,10 @@
 .adim3 b{font-size:13.5px;line-height:1.25;margin-bottom:0}
 .adim3 span{display:none}
 .not-alt{margin-top:14px;font-size:12.5px}
-.filtre-dis{margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+/* Telefonda filtre alanı üstte asılı kalmaz, sayfayla birlikte yukarı çıkar:
+   ekranın üstünde duran bar okumayı daraltıyordu. */
+.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
 .izgara{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .daha{padding-bottom:120px}
  .daha button{min-width:0;width:100%}

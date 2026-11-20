@@ -156,7 +156,10 @@
 .sekmeler .sek-ad{display:none}
 .sekmeler .sek-kisa{display:inline}
 .filtre-tum{width:100%;max-width:none;justify-content:center}
-.filtre-dis{margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+/* Telefonda filtre alanı üstte asılı kalmaz, sayfayla birlikte yukarı çıkar:
+   ekranın üstünde duran bar okumayı daraltıyordu. */
+.filtre-dis{position:static;top:auto;margin-top:0;padding-top:env(safe-area-inset-top,0px)}
+.filtre-dis.yapisti{background:none;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
 .filtre-satir{flex-wrap:wrap;gap:10px}
 .arama{width:100%;order:-1;margin-left:0}
 .sekmeler{width:100%;display:grid;grid-template-columns:1fr 1fr}
