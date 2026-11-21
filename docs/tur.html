@@ -185,7 +185,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .yolculuk-on{right:24px;max-width:none;top:calc(64px + env(safe-area-inset-top,0px))}
 .yolculuk-metin{padding:0 72px 0 24px}}
 .yolculuk-on h2{font-size:clamp(30px,3.6vw,50px)}
-/* ===== Medine ===== */
+/* ===== Medine-i Münevvere ===== */
 .medine{padding:18vh 0 0}
 .semsiye-bant{height:70vh;min-height:420px;overflow:hidden;position:relative;margin:4vh 0 12vh}
 .semsiye-bant img{position:absolute;inset:-12% 0;width:100%;height:124%;object-fit:cover;will-change:transform}
@@ -309,7 +309,7 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 .tiras-arka img{object-position:right center}
 .tiras-arka::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--fildisi) 52%,rgba(239,231,216,.78) 70%,rgba(239,231,216,.12))}
 .tiras .icerik{position:relative}
-/* ===== Mekke günleri ===== */
+/* ===== Mekke-i Mükerreme günleri ===== */
 .mekke-gun{padding:18vh 0;background:var(--tas)}
 .ziyaret{display:grid;grid-template-columns:.9fr 1.1fr;gap:6vw;align-items:start}
 .ziyaret .cerceve{border-radius:28px;aspect-ratio:3/4;position:sticky;top:110px}
@@ -427,6 +427,8 @@ footer.sf{font-family:'Hanken Grotesk',system-ui,sans-serif}
 /* mekke */
 .mekke-gun .dikkat{margin:4vh 0 0;background:rgba(255,255,255,.45)}
 .mekke-gun .ara-baslik{margin-top:6vh}
+/* Telefonda uzun başlık (Mekke-i Mükerreme'deki günler) durak etiketinin altına iner, taşmaz */
+@media(max-width:760px){.mekke-gun .durak-bas{display:grid}}
 /* dönüş ve mağaza */
 .son-tavsiye .okunus{font-size:22px;margin-top:10px}
 .magaza-alt{font-size:18px;color:rgba(239,231,216,.8);max-width:46ch;margin:-8px 0 30px}
@@ -592,7 +594,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       <h2>On durakta umre</h2>
       <div>
         <p>Umre; ihrama girip Kâbe'yi tavaf etmekten, Safa ile Merve arasında sa'y yapmaktan ve tıraş olup ihramdan çıkmaktan oluşan bir ibadettir. Hanefî mezhebine göre ömürde bir kez umre yapmak sünnet-i müekkededir.</p>
-        <p>Bu rehberde, Türkiye'den yola çıkan bir kafilenin izlediği sırayı takip ediyoruz. Kafilelerin çoğu önce Medine'ye gider; ihrama, Medine'den Mekke'ye giderken mîkatta girilir. Her durakta o adımın nasıl yapıldığını, ne okunduğunu ve nelere dikkat edildiğini bulacaksınız.</p>
+        <p>Bu rehberde, Türkiye'den yola çıkan bir kafilenin izlediği sırayı takip ediyoruz. Kafilelerin çoğu önce Medine-i Münevvere'ye gider; ihrama, Medine-i Münevvere'den Mekke-i Mükerreme'ye giderken mîkatta girilir. Her durakta o adımın nasıl yapıldığını, ne okunduğunu ve nelere dikkat edildiğini bulacaksınız.</p>
       </div>
     </div>
     <div class="esaslar">
@@ -604,13 +606,13 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
     <ol class="duraklar" id="duraklar">
       <li><a href="#hazirlik"><strong>Hazırlık</strong><span>Maddi ve manevi</span></a></li>
       <li><a href="#yolculuk"><strong>Yola çıkış</strong><span>Havalimanı ve uçak</span></a></li>
-      <li><a href="#medine"><strong>Medine</strong><span>İlk selam ve ziyaretler</span></a></li>
+      <li><a href="#medine"><strong>Medine-i Münevvere</strong><span>İlk selam ve ziyaretler</span></a></li>
       <li><a href="#mikat"><strong>Mîkat</strong><span>İhram, niyet, telbiye</span></a></li>
       <li><a href="#tavaf"><strong>Tavaf</strong><span>Kâbe etrafında yedi şavt</span></a></li>
       <li><a href="#zemzem"><strong>Namaz ve zemzem</strong><span>Makam-ı İbrahim</span></a></li>
       <li><a href="#say"><strong>Sa'y</strong><span>Safa ile Merve arası</span></a></li>
       <li><a href="#tiras"><strong>Tıraş</strong><span>İhramdan çıkış</span></a></li>
-      <li><a href="#mekke"><strong>Mekke'deki günler</strong><span>İbadet ve ziyaret</span></a></li>
+      <li><a href="#mekke"><strong>Mekke-i Mükerreme'deki günler</strong><span>İbadet ve ziyaret</span></a></li>
       <li><a href="#donus"><strong>Dönüş</strong><span>Veda ve eve dönüş</span></a></li>
     </ol>
     <p class="kaynak">Rehberimiz Hanefî mezhebine göre, kafile görevlilerinin kullandığı <em>Hac ve Umre Vazifeli Rehberi</em> esas alınarak hazırlanmıştır. Kendi durumunuza dair sorularınız için kafile hocanıza danışın.</p>
@@ -665,7 +667,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
     <div class="yolculuk-on" id="yolculuk-on">
       <span class="durak-no">Durak 2</span>
       <h2 style="margin-top:14px">Yola çıkış</h2>
-      <p class="soluk" style="margin-top:14px">Havalimanında kafilenizle buluşursunuz. Uçak, kafilenin programına göre Medine'ye ya da Cidde'ye iner.</p>
+      <p class="soluk" style="margin-top:14px">Havalimanında kafilenizle buluşursunuz. Uçak, kafilenin programına göre Medine-i Münevvere'ye ya da Cidde'ye iner.</p>
     </div>
     <div class="pencere" id="pencere"><img data-g="ucak" data-w="1800" alt="Şafak vakti uçak penceresinden görünen bulutlar ve uzakta çöl" loading="lazy"></div>
     <div class="yolculuk-metin" id="yolculuk-metin">
@@ -681,32 +683,32 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       <ol class="adim-liste">
         <li><strong>Dinlenin</strong><p>Yola çıkmadan önceki gece iyi dinlenin; mübarek beldelere uykusuz değil, dinç bir hâlde varın.</p></li>
         <li><strong>Sefer namazı ve dua</strong><p>Evden çıkarken iki rekât sefer namazı kılın. Araca bindiğinizde Fâtiha, üç İhlâs ve sefer duasını okuyun. Rehberimize göre evden çıktığınız andan eve dönüp üç gün geçinceye kadar yaptığınız meşru dualar kabul olunur; bu fırsatı iyi değerlendirin.</p></li>
-        <li><strong>Erken hazır olun</strong><p>Medine'ye uçacaksanız kalkıştan üç saat, Cidde'ye uçacaksanız dört saat önce havalimanında olun.</p></li>
+        <li><strong>Erken hazır olun</strong><p>Medine-i Münevvere'ye uçacaksanız kalkıştan üç saat, Cidde'ye uçacaksanız dört saat önce havalimanında olun.</p></li>
         <li><strong>Kimlik kartı</strong><p>Kafile görevlinizin dağıttığı kimlik kartını boynunuza takın ve Türkiye'ye dönünceye kadar çıkarmayın.</p></li>
         <li><strong>Bagaj ve pasaport</strong><p>Bagajınızı teslim edip biniş kartınızı alın; pasaport kontrolünden geçerek kafilenizle birlikte uçağın kapısına gidin.</p></li>
         <li><strong>İniş</strong><p>Uçaktan besmele ve salavatla, sağ ayakla inin. İnerken pasaportunuzu ve eşyalarınızı unutmadığınızı kontrol edin.</p></li>
       </ol>
     </div>
     <aside class="ders-yan">
-      <div class="dikkat"><h4>Önce Medine'ye gidenler</h4><p>Medine'ye inen kafileler henüz ihrama girmez. Medine'den Mekke'ye hareket günü ihram otelde giyilir; ihram namazı, niyet ve telbiye ise yolda, Zülhuleyfe mîkatında (Âbâr-ı Ali) yapılır.</p></div>
+      <div class="dikkat"><h4>Önce Medine-i Münevvere'ye gidenler</h4><p>Medine-i Münevvere'ye inen kafileler henüz ihrama girmez. Medine-i Münevvere'den Mekke-i Mükerreme'ye hareket günü ihram otelde giyilir; ihram namazı, niyet ve telbiye ise yolda, Zülhuleyfe mîkatında (Âbâr-ı Ali) yapılır.</p></div>
       <div class="dikkat"><h4>Doğrudan Cidde'ye uçanlar</h4><p>Uçak mîkat sınırını havada geçeceği için ihrama Türkiye'deki havalimanında girilir: İhram giyilir, kerahet vakti değilse iki rekât ihram namazı kılınır, umreye niyet edilip telbiye getirilir. Uçakta mîkat hizasına gelmeden önce niyet kafileyle birlikte tekrarlanır. Bu andan itibaren ihram yasakları geçerlidir; kolonyalı ıslak mendil de kullanılmaz.</p></div>
     </aside>
   </div>
 </section>
 
 <!-- 3 MEDİNE -->
-<section class="durak medine koyu-bolum" id="medine" data-durak="3" data-ad="Medine" data-ton="koyu">
+<section class="durak medine koyu-bolum" id="medine" data-durak="3" data-ad="Medine-i Münevvere" data-ton="koyu">
   <div class="icerik">
     <div class="durak-bas"><span class="durak-no">Durak 3</span><div><h2>Medine-i Münevvere</h2><span class="ar" lang="ar">المدينة المنورة</span></div></div>
-    <p class="dar giris">Medine, Peygamber Efendimiz'in hicret ettiği, mescidinin ve kabr-i şerifinin bulunduğu şehirdir. Rehberimiz Medine'ye salavat okuyarak girmeyi ve otele yerleşir yerleşmez vakit kaybetmeden Peygamber Efendimiz'i selamlamaya gitmeyi tavsiye eder.</p>
+    <p class="dar giris">Medine-i Münevvere, Peygamber Efendimiz'in hicret ettiği, mescidinin ve kabr-i şerifinin bulunduğu şehirdir. Rehberimiz Medine-i Münevvere'ye salavat okuyarak girmeyi ve otele yerleşir yerleşmez vakit kaybetmeden Peygamber Efendimiz'i selamlamaya gitmeyi tavsiye eder.</p>
   </div>
-  <div class="semsiye-bant" id="semsiye"><img data-g="medine" data-w="2000" alt="Mescid-i Nebevî avlusunun beyaz şemsiyeleri ve Yeşil Kubbe, akşam ışığında" loading="lazy"></div>
+  <div class="semsiye-bant" id="semsiye"><img data-g="medine" data-w="2000" alt="Mescid-i Nebevî avlusunun beyaz şemsiyeleri ve Kubbe-i Hadra (yeşil kubbe), akşam ışığında" loading="lazy"></div>
   <div class="icerik ders">
     <div class="ders-ana">
       <h3>İlk selam</h3>
       <ol class="adim-liste">
         <li><strong>Hazırlanın</strong><p>Abdestli olarak, temiz kıyafetlerle ve salavat okuyarak Mescid-i Nebevî'ye gidin.</p></li>
-        <li><strong>Yeşil Kubbe'nin karşısında durun</strong><p>Yeşil Kubbe'nin karşısına geldiğinizde ellerinizi açmadan, edeple durun ve Peygamber Efendimiz'e selam verin.</p></li>
+        <li><strong>Kubbe-i Hadra'nın (yeşil kubbe) karşısında durun</strong><p>Kubbe-i Hadra'nın (yeşil kubbe) karşısına geldiğinizde ellerinizi açmadan, edeple durun ve Peygamber Efendimiz'e selam verin.</p></li>
         <li><strong>Emanetleri iletin</strong><p>Size emanet edilen selamları iletin; Efendimiz'in şefaatini dileyerek dua edin.</p></li>
         <li><strong>İki halifeyi selamlayın</strong><p>Ardından Hz. Ebû Bekir'e ve Hz. Ömer'e selam verip dua edin.</p></li>
       </ol>
@@ -724,7 +726,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
     </aside>
   </div>
   <div class="icerik">
-    <h3 class="yer-baslik">Medine'de ziyaret edilen yerler</h3>
+    <h3 class="yer-baslik">Medine-i Münevvere'de ziyaret edilen yerler</h3>
     <div class="yer-izgara">
       <div class="yer"><span class="ar" lang="ar">قباء</span><h4>Kuba Mescidi</h4><p>Peygamber Efendimiz'in hicret sırasında inşa ettirdiği ilk mescittir. Efendimiz her cumartesi Kuba'ya gelip iki rekât namaz kılardı; burada kılınan namazın bir umre sevabı kazandırdığını da bildirmiştir.</p></div>
       <div class="yer"><span class="ar" lang="ar">البقيع</span><h4>Cennetü'l-Bakî</h4><p>Peygamber Efendimiz'in ailesinden ve ashabından pek çok kişinin medfun olduğu kabristandır. Genellikle sabah namazından sonra ziyaret edilir; erkekler içeriden, hanımlar dışarıdan ziyaret eder.</p></div>
@@ -738,8 +740,8 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       <div class="odak-kat"><img data-g="hurma" data-w="2000" alt="Altın saatte hurma bahçesi, önde olgun hurma salkımları" loading="lazy"></div>
       <div class="odak-kat"><img data-g="hurmaB" data-w="2000" alt="Hurma bahçesinin derinliği, önde salkımlar bulanık" loading="lazy"></div>
       <div class="odak-yazi">
-        <div class="birinci"><h3>Hurmalar şehri</h3><p>Medine, eskiden beri hurma bahçeleriyle bilinen bir vaha şehridir. Peygamber Efendimiz orucun hurmayla açılmasını tavsiye etmiştir.</p></div>
-        <div class="ikinci"><h3>Hurmanın çeşitleri</h3><p>Hurmalar renk, doku ve tatlılık bakımından birbirinden ayrılır. Aşağıda Medine'de en çok bulunan altı çeşidi tanıyabilirsiniz.</p></div>
+        <div class="birinci"><h3>Hurmalar şehri</h3><p>Medine-i Münevvere, eskiden beri hurma bahçeleriyle bilinen bir vaha şehridir. Peygamber Efendimiz orucun hurmayla açılmasını tavsiye etmiştir.</p></div>
+        <div class="ikinci"><h3>Hurmanın çeşitleri</h3><p>Hurmalar renk, doku ve tatlılık bakımından birbirinden ayrılır. Aşağıda Medine-i Münevvere'de en çok bulunan altı çeşidi tanıyabilirsiniz.</p></div>
       </div>
     </div>
   </div>
@@ -749,7 +751,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
       <div class="oklar"><button type="button" id="hurma-geri" aria-label="Önceki çeşit">‹</button><button type="button" id="hurma-ileri" aria-label="Sonraki çeşit">›</button></div>
     </div>
     <div class="serit" id="serit">
-      <div class="hurma"><span class="ar" lang="ar">عجوة</span><div><h4>Acve</h4><p>Medine'nin en bilinen hurmasıdır. Koyu renkli, yumuşak ve hafif tatlıdır.</p></div></div>
+      <div class="hurma"><span class="ar" lang="ar">عجوة</span><div><h4>Acve</h4><p>Medine-i Münevvere'nin en bilinen hurmasıdır. Koyu renkli, yumuşak ve hafif tatlıdır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">صفاوي</span><div><h4>Safavi</h4><p>İri, koyu renkli ve etli bir çeşittir; günlük tüketimde çok sevilir.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">صقعي</span><div><h4>Sugay</h4><p>Ucu açık renkli, gövdesi koyudur; iki tonlu kabuğuyla tanınır. Dokusu daha kuru ve kıtırdır, tatlılığı azdır.</p></div></div>
       <div class="hurma"><span class="ar" lang="ar">مبروم</span><div><h4>Mebrum</h4><p>Uzun ve ince yapılıdır; sıkı dokulu ve orta tatlılıktadır.</p></div></div>
@@ -763,14 +765,14 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 <section class="durak mikat" id="mikat" data-durak="4" data-ad="Mîkat" data-ton="acik">
   <div class="icerik">
     <div class="durak-bas"><span class="durak-no">Durak 4</span><div><h2>Mîkat</h2><span class="ar" lang="ar">الميقات</span></div></div>
-    <p class="dar giris">Mîkat, Mekke'ye hac ya da umre niyetiyle gelenlerin ihramsız geçmemesi gereken sınırdır. Medine'den gelen kafileler ihrama, Medine çıkışındaki Zülhuleyfe'de, bugünkü adıyla Âbâr-ı Ali'de girer. Hanefî mezhebine göre ihrama girmek için niyetle birlikte telbiye getirmek şarttır; yalnızca niyet etmekle ihrama girilmiş olmaz.</p>
+    <p class="dar giris">Mîkat, Mekke-i Mükerreme'ye hac ya da umre niyetiyle gelenlerin ihramsız geçmemesi gereken sınırdır. Medine-i Münevvere'den gelen kafileler ihrama, Medine-i Münevvere çıkışındaki Zülhuleyfe'de, bugünkü adıyla Âbâr-ı Ali'de girer. Hanefî mezhebine göre ihrama girmek için niyetle birlikte telbiye getirmek şarttır; yalnızca niyet etmekle ihrama girilmiş olmaz.</p>
   </div>
   <div class="mikat-bant" id="mikat-bant"><img data-g="mikat" data-w="2000" alt="Şafak vakti mîkat mescidine doğru yürüyen ihramlı hacı adayları, arkada dağlar" loading="lazy"></div>
   <div class="icerik ders">
     <div class="ders-ana">
       <h3>İhrama giriş, adım adım</h3>
       <ol class="adim-liste">
-        <li><strong>Temizlik</strong><p>Medine'den Mekke'ye hareket günü otelde tırnaklar kesilir, saç ve sakal düzeltilir, koltuk altı ve etek temizliği yapılır. Ardından gusül alınır; mümkün değilse abdest alınır. İhrama girmeden önce bedene, iz bırakmayan bir koku sürmek müstehaptır; ihram örtüsüne ise koku sürülmez.</p></li>
+        <li><strong>Temizlik</strong><p>Medine-i Münevvere'den Mekke-i Mükerreme'ye hareket günü otelde tırnaklar kesilir, saç ve sakal düzeltilir, koltuk altı ve etek temizliği yapılır. Ardından gusül alınır; mümkün değilse abdest alınır. İhrama girmeden önce bedene, iz bırakmayan bir koku sürmek müstehaptır; ihram örtüsüne ise koku sürülmez.</p></li>
         <li><strong>İhramı giyme</strong><p>İhram da otelde giyilir. Erkekler iç çamaşırı dahil bütün dikişli giysilerini çıkarır, beline izârı sarar ve iki omzunu örtecek şekilde ridâyı alır. Ayağa, topuğu ve ayak üstündeki kemiği açıkta bırakan terlik giyilir. Hanımlar tesettüre uygun normal kıyafetleriyle kalır; yüzleri açık olur. Ardından otobüsle mîkata gidilir.</p></li>
         <li><strong>İhram namazı</strong><p>Mîkata, Zülhuleyfe'deki mescide varınca, kerahet vakti değilse iki rekât ihram namazı kılınır.</p></li>
         <li><strong>Niyet</strong><p>Namazın selamından sonra umreye niyet edilir. Niyetin Arapçası, okunuşu ve anlamı dua kartında yer alır.</p></li>
@@ -794,10 +796,10 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
   <div class="odak" id="odak-ihram">
     <div class="yapis">
       <div class="odak-kat"><img data-g="giyim" data-w="2000" alt="İhramı doğru giymiş bir erkek: belde izâr, iki omzu örten ridâ, ayakta ayak üstünü açık bırakan terlik" loading="lazy"></div>
-      <div class="odak-kat"><img data-g="giyimB" data-w="2000" alt="Aynı sahnede netlik ileriye, Mekke'ye uzanan yola geçmiş; öndeki ihramlı yolcu bulanık" loading="lazy"></div>
+      <div class="odak-kat"><img data-g="giyimB" data-w="2000" alt="Aynı sahnede netlik ileriye, Mekke-i Mükerreme'ye uzanan yola geçmiş; öndeki ihramlı yolcu bulanık" loading="lazy"></div>
       <div class="odak-yazi">
         <div class="birinci"><h3>İhram: izâr ve ridâ</h3><p>Erkeklerin ihramı dikişsiz iki parça beyaz örtüden oluşur: Belden aşağıya sarılan izâr ve iki omzu örten ridâ. Zengini ve fakiri aynı kılan bu sade kıyafet, kefeni hatırlatır.</p></div>
-        <div class="ikinci"><h3>Telbiyeyle Mekke yolunda</h3><p>İhrama giren kişi yol boyunca telbiye, tekbir ve salavat getirir. Rehberimiz Mekke'ye uyumadan ve abdestli girmeyi tavsiye eder.</p></div>
+        <div class="ikinci"><h3>Telbiyeyle Mekke-i Mükerreme yolunda</h3><p>İhrama giren kişi yol boyunca telbiye, tekbir ve salavat getirir. Rehberimiz Mekke-i Mükerreme'ye uyumadan ve abdestli girmeyi tavsiye eder.</p></div>
       </div>
     </div>
   </div>
@@ -946,20 +948,20 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 </section>
 
 <!-- 9 MEKKE'DEKİ GÜNLER -->
-<section class="durak mekke-gun" id="mekke" data-durak="9" data-ad="Mekke'deki günler" data-ton="acik">
+<section class="durak mekke-gun" id="mekke" data-durak="9" data-ad="Mekke-i Mükerreme'deki günler" data-ton="acik">
   <div class="icerik ziyaret">
     <div class="cerceve"><picture><source type="image/webp" srcset="assets/g/kabeSaat.webp"><img src="assets/g/kabeSaat.jpg" alt="Kâbe ve arkasında saat kulesi, alttan bakış" loading="lazy"></picture></div>
     <div>
-      <div class="durak-bas" style="grid-template-columns:1fr;gap:16px;margin-bottom:24px"><span class="durak-no">Durak 9</span><h2>Mekke'deki günler</h2></div>
-      <p class="giris">Umreyi tamamladıktan sonra Mekke'de kaldığınız günleri ibadetle değerlendirin. Rehberimiz farz namazları Mescid-i Haram'da cemaatle kılmayı, bol bol nafile tavaf yapmayı ve Kur'an okumayı tavsiye eder.</p>
-      <div class="dikkat"><h4>Yeniden umre yapmak isteyenler</h4><p>Mekke'deyken yeniden umre yapmak isteyenler Harem sınırının dışına çıkarak ihrama girer. Hanefî mezhebine göre bunun için en faziletli yer Ten'îm'deki Hz. Âişe Mescidi'dir; Ci'râne ve Hudeybiye de tercih edilir. Mescitte iki rekât namaz kılınır, niyet edilip telbiye getirilir ve ilk umredeki gibi tavaf, sa'y ve tıraş yapılır.</p></div>
+      <div class="durak-bas" style="grid-template-columns:1fr;gap:16px;margin-bottom:24px"><span class="durak-no">Durak 9</span><h2>Mekke-i Mükerreme'deki günler</h2></div>
+      <p class="giris">Umreyi tamamladıktan sonra Mekke-i Mükerreme'de kaldığınız günleri ibadetle değerlendirin. Rehberimiz farz namazları Mescid-i Haram'da cemaatle kılmayı, bol bol nafile tavaf yapmayı ve Kur'an okumayı tavsiye eder.</p>
+      <div class="dikkat"><h4>Yeniden umre yapmak isteyenler</h4><p>Mekke-i Mükerreme'deyken yeniden umre yapmak isteyenler Harem sınırının dışına çıkarak ihrama girer. Hanefî mezhebine göre bunun için en faziletli yer Ten'îm'deki Hz. Âişe Mescidi'dir; Ci'râne ve Hudeybiye de tercih edilir. Mescitte iki rekât namaz kılınır, niyet edilip telbiye getirilir ve ilk umredeki gibi tavaf, sa'y ve tıraş yapılır.</p></div>
       <h3 class="ara-baslik">Ziyaret edilen yerler</h3>
       <ul class="yerler">
         <li><h3>Peygamber Efendimiz'in doğduğu ev</h3><p>Safa tepesinin yakınında, Peygamber Efendimiz'in 571 yılında dünyaya geldiği yerdir. Kafilelerin yürüyerek yaptığı ziyaret programı genellikle sabah namazından sonra burada başlar.</p></li>
         <li><h3>Cebel-i Nur</h3><span class="ar" lang="ar">جبل النور</span><p>İlk vahyin geldiği Hira Mağarası'nın bulunduğu dağdır.</p></li>
         <li><h3>Cebel-i Sevr</h3><span class="ar" lang="ar">جبل ثور</span><p>Mescid-i Haram'ın 5 kilometre güneyindedir. Hicret sırasında Peygamber Efendimiz ile Hz. Ebû Bekir bu dağdaki mağarada üç gün saklanmıştır.</p></li>
         <li><h3>Arafat ve Cebel-i Rahme</h3><span class="ar" lang="ar">عرفات</span><p>Haccın en önemli rüknü olan vakfenin yapıldığı yerdir.</p></li>
-        <li><h3>Cennetü'l-Muallâ</h3><span class="ar" lang="ar">جنة المعلاة</span><p>Hz. Hatice validemizin ve Peygamber Efendimiz'in oğulları Kasım ile Abdullah'ın medfun olduğu Mekke kabristanıdır.</p></li>
+        <li><h3>Cennetü'l-Muallâ</h3><span class="ar" lang="ar">جنة المعلاة</span><p>Hz. Hatice validemizin ve Peygamber Efendimiz'in oğulları Kasım ile Abdullah'ın medfun olduğu Mekke-i Mükerreme kabristanıdır.</p></li>
         <li><h3>Mescid-i Cin</h3><span class="ar" lang="ar">مسجد الجن</span><p>Cinlerden bir topluluğun Peygamber Efendimiz'i dinleyip iman ettiği yerde yapılmış mescittir.</p></li>
       </ul>
     </div>
@@ -970,7 +972,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 <section class="durak donus" id="donus" data-durak="10" data-ad="Dönüş" data-ton="acik">
   <div class="icerik">
     <div class="durak-bas"><span class="durak-no">Durak 10</span><div><h2>Dönüş</h2></div></div>
-    <p class="dar giris">Hanefî mezhebine göre umre yapanların veda tavafı yapması gerekmez; Şâfiî mezhebinde ise umre yapanlar için de vaciptir. Mekke'den ayrılmadan önce bir tavafla Kâbe'ye veda etmek her hâlükârda güzeldir. Hac yapanlar için veda tavafı vaciptir.</p>
+    <p class="dar giris">Hanefî mezhebine göre umre yapanların veda tavafı yapması gerekmez; Şâfiî mezhebinde ise umre yapanlar için de vaciptir. Mekke-i Mükerreme'den ayrılmadan önce bir tavafla Kâbe'ye veda etmek her hâlükârda güzeldir. Hac yapanlar için veda tavafı vaciptir.</p>
   </div>
   <div class="donus-gorsel" id="donus-gorsel"><img data-g="havalimani" data-w="2000" alt="Havalimanında bagaj arabalarında valizler ve mühürlü zemzem kutularıyla dönüş yolundaki umreciler" loading="lazy"></div>
   <div class="icerik ders donus-ders">
