@@ -118,7 +118,7 @@
  transform:translate(-50%,180%);transition:transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s}
 .canta-cubuk.on{visibility:visible;transform:translate(-50%,0);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .canta-cubuk.on.altta{transform:translate(-50%,calc(100% + 140px));visibility:hidden;transition:transform .6s cubic-bezier(.2,.8,.2,1),visibility 0s .6s}
-.canta-cubuk .ozet{display:flex;align-items:baseline;gap:10px;white-space:nowrap;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:none;color:#fff;font:500 14px 'Hanken Grotesk';cursor:pointer;text-align:left}
+.canta-cubuk .ozet{display:flex;align-items:baseline;gap:10px;white-space:nowrap;min-height:44px;min-width:0;overflow:hidden;padding:0 14px;border:0;border-radius:999px;background:none;color:#fff;font:500 14px 'Hanken Grotesk';cursor:pointer;text-align:left}
 @media (hover:hover){.canta-cubuk .ozet:hover{background:rgba(255,255,255,.06)}}
 .canta-cubuk .ozet b{font-family:'Marcellus';font-weight:400;font-size:19px;color:var(--altin2)}
 .canta-cubuk .c-ozet{display:flex;align-items:baseline;gap:9px;min-width:0}
@@ -535,7 +535,20 @@ ARASIL.addEventListener('click',function(){ARA.value='';ARASIL.hidden=true;ara='
 const C=document.getElementById('cubuk'),OZ=C.querySelector('.ozet'),DUY=document.getElementById('duyuru');
 let mesajZ=0;
 const CUBUK_CANTA=`<span class="c-ik" data-sepet-hedef><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><b class="c-say"></b></span>`;
-function cubukMesaj(m){OZ.innerHTML=CUBUK_CANTA+`<span class="mesaj">✓ ${m}</span>`;OZ.querySelector('.c-say').textContent=Sepet.sayi();DUY.textContent=m;clearTimeout(mesajZ);mesajZ=setTimeout(()=>{mesajZ=0;durum()},2200)}
+/* Çubuğun içeriği değişince genişliği yumuşakça uzar/kısalır, yazı süzülerek gelir (birden "pıt" diye değişmez) */
+function ozetYaz(html){
+ if(OZ._h===html)return;OZ._h=html;
+ const gor=C.classList.contains('on')&&!C.classList.contains('altta')&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const w0=C.getBoundingClientRect().width;      // çalışan animasyon varsa o anki genişlik
+ if(C._an){C._an.cancel();C._an=null}
+ OZ.innerHTML=html;
+ if(!gor||!w0)return;
+ const w1=C.getBoundingClientRect().width;
+ if(Math.abs(w1-w0)>1)C._an=C.animate([{width:w0+'px'},{width:w1+'px'}],{duration:460,easing:'cubic-bezier(.25,.9,.3,1)'});
+ const y=OZ.querySelector('.mesaj,.c-ozet');
+ if(y)y.animate([{opacity:0,transform:'translateY(5px)',filter:'blur(3px)'},{opacity:1,transform:'none',filter:'blur(0)'}],{duration:380,delay:90,easing:'cubic-bezier(.2,.8,.2,1)',fill:'backwards'});
+}
+function cubukMesaj(m){ozetYaz(CUBUK_CANTA+`<span class="mesaj">✓ ${m}</span>`);OZ.querySelector('.c-say').textContent=Sepet.sayi();DUY.textContent=m;clearTimeout(mesajZ);mesajZ=setTimeout(()=>{mesajZ=0;durum()},2200)}
 OZ.addEventListener('click',cekmeceAc);document.getElementById('cubuk-gor').addEventListener('click',cekmeceAc);
 I.addEventListener('click',e=>{
  const k=e.target.closest('.kart');if(!k)return;const id=k.dataset.id,u=URUNLER.find(x=>x.id===id);
@@ -609,7 +622,7 @@ function durum(){
  I.querySelectorAll('.kart').forEach(k=>{const n=Sepet.adet(k.dataset.id),o=k.querySelector('output');k.classList.toggle('sepette',n>0);
   if(n>0&&o.textContent!=n){o.textContent=n;o.classList.remove('vur');void o.offsetWidth;o.classList.add('vur')}});
  const n=Sepet.sayi();C.classList.toggle('on',n>0);document.body.classList.toggle('cubuk-acik',n>0&&!C.classList.contains('altta'));
- if(!mesajZ)OZ.innerHTML=n?CUBUK_CANTA+`<span class="c-ozet"><span>${Sepet.ozet()}</span><b>${TL(Sepet.toplam())}</b></span>`:'';
+ if(!mesajZ)ozetYaz(n?CUBUK_CANTA+`<span class="c-ozet"><span>${Sepet.ozet()}</span><b>${TL(Sepet.toplam())}</b></span>`:'');
  const cs=OZ.querySelector('.c-say');if(cs)cs.textContent=n;
 }
 document.addEventListener('sepet',durum);

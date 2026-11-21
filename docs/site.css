@@ -48,7 +48,7 @@ border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255
  100%{opacity:0;box-shadow:0 0 0 12px rgba(230,199,122,0),0 0 22px 4px rgba(230,199,122,0)}}
 .sepetbtn b.yeni{animation:sayiGel .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes sayiGel{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
-.ucan{position:fixed;z-index:95;border-radius:14px;object-fit:cover;pointer-events:none;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.ucan{position:fixed;z-index:95;border-radius:14px;will-change:transform,clip-path;object-fit:cover;pointer-events:none;box-shadow:0 12px 40px rgba(0,0,0,.45)}
 @media(max-width:720px){
 .nav{top:auto;bottom:max(12px,env(safe-area-inset-bottom));gap:0;padding:5px;max-width:calc(100vw - 12px)}
 .nav .logo{display:none}

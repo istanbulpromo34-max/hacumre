@@ -130,8 +130,9 @@ function toast(m,eylem){let t=document.querySelector('.toast');if(!t){t=document
  t.classList.add('on');clearTimeout(t._z);t._z=setTimeout(()=>t.classList.remove('on'),2600)}
 /* Çantanın çevresinde altın ışık halkası (zıplama yerine) */
 function parlat(e){if(!e)return;e.classList.add('isil');e.classList.remove('parla');void e.offsetWidth;e.classList.add('parla')}
-/* Ürün görseli çantaya uçar, çanta hafifçe parlar. Görünür bir çanta hedefi
-   (örneğin Ürünlerimiz'deki alt çubuk) varsa oraya, yoksa köşedeki düğmeye. */
+/* Ürün görseli kavis çizerek sepete uçar, sepetin ağzına gelince içine düşer
+   (alt kenarı sepetin ağzında kaybolur), sepet hafifçe parlar. Görünür bir sepet
+   hedefi (örneğin Ürünlerimiz'deki alt çubuk) varsa oraya, yoksa köşedeki düğmeye. */
 function sepeteUcur(kaynak){
  const adaylar=[...document.querySelectorAll('[data-sepet-hedef],.sepetbtn')]
   .filter(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&s.visibility!=='hidden'&&+s.opacity>.3&&r.bottom>0&&r.top<innerHeight});
@@ -140,12 +141,38 @@ function sepeteUcur(kaynak){
  const a=kaynak.getBoundingClientRect(),b=hedef.getBoundingClientRect();
  const k=document.createElement('img');k.src=kaynak.currentSrc||kaynak.src;k.className='ucan';k.alt='';
  if(kaynak.style.objectPosition)k.style.objectPosition=kaynak.style.objectPosition;
- const s=Math.min(a.width,a.height,160);
+ const s=Math.min(a.width,a.height,150);
  Object.assign(k.style,{left:(a.left+a.width/2-s/2)+'px',top:(a.top+a.height/2-s/2)+'px',width:s+'px',height:s+'px'});
  document.body.append(k);
- const dx=b.left+b.width/2-(a.left+a.width/2),dy=b.top+b.height/2-(a.top+a.height/2);
- const an=k.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*.5}px,${dy*.5-80}px) scale(.55)`,opacity:1,offset:.55},{transform:`translate(${dx}px,${dy}px) scale(.12)`,opacity:.4}],{duration:750,easing:'cubic-bezier(.5,0,.3,1)'});
- an.onfinish=()=>{k.remove();parlat(hedef)};
+ /* Sepetin yeri uçuş sırasında değişebilir (çubuk genişliği yumuşakça değişirken),
+    bu yüzden hedef her karede yeniden okunur: görsel her zaman tam sepetin ağzına düşer. */
+ const ax=a.left+a.width/2, ay=a.top+a.height/2, SURE=860, T1=.78;
+ const ez=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, ici=t=>t*t*t;
+ const t0=performance.now();
+ const bitti=()=>{k.remove();
+  const h=hedef.isConnected?hedef:(document.querySelector('[data-sepet-hedef]')||hedef);
+  parlat(h);
+  /* sepet ürünü "yakalar": ikon bir an hafifçe aşağı iner ve geri gelir */
+  const ik=h.querySelector('svg')||h;
+  ik.animate([{transform:'none'},{transform:'translateY(2px) scale(.94)'},{transform:'none'}],{duration:320,easing:'cubic-bezier(.3,.7,.3,1)'});
+  const say=h.querySelector('.c-say,b');
+  if(say)say.animate([{transform:'scale(1)'},{transform:'scale(1.25)'},{transform:'scale(1)'}],{duration:360,delay:60,easing:'cubic-bezier(.3,.7,.3,1)'});
+ };
+ const kare=an=>{
+  const t=Math.min(1,(an-t0)/SURE);
+  const hb=(hedef.isConnected?hedef:(document.querySelector('[data-sepet-hedef]')||hedef)).getBoundingClientRect();
+  const e=Math.max(.06,hb.width*.38/s), mx=hb.left+hb.width/2, agiz=hb.top+hb.height*.44;
+  const ustY=agiz-s*e/2;                       // görselin alt kenarı sepetin ağzında
+  let x,y,sc,kes=0;
+  if(t<T1){const u=ez(t/T1),kavis=Math.min(160,Math.max(70,Math.abs(mx-ax)*.25+60));
+   const px=(ax+mx)/2, py=Math.min(ay,ustY)-kavis;                    // kavisin tepe noktası
+   x=(1-u)*(1-u)*ax+2*(1-u)*u*px+u*u*mx; y=(1-u)*(1-u)*ay+2*(1-u)*u*py+u*u*ustY;
+   sc=1+(e-1)*Math.min(1,u*1.15)}
+  else{const u=ici((t-T1)/(1-T1));x=mx;sc=e;y=ustY+u*s*e;kes=u*100}  // aşağı inerken alt kısmı ağızda kaybolur
+  k.style.transform=`translate(${x-ax}px,${y-ay}px) scale(${sc})`;
+  k.style.clipPath=`inset(0 0 ${kes}% 0 round ${14+16*Math.min(1,t/T1)}%)`;
+  if(t<1)requestAnimationFrame(kare);else bitti()};
+ requestAnimationFrame(kare);
 }
 let _oncekiOdak=null;
 function cekmeceAc(){const c=document.querySelector('.cekmece');if(!c)return;_oncekiOdak=document.activeElement;c.classList.add('acik');c.querySelector('.pan').setAttribute('aria-hidden','false');
