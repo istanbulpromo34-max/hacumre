@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sıkça Sorulanlar · İstanbul Hac Umre Hediyelik</title>
+<!-- GİZLİ ÖNİZLEME: sitede hiçbir yerden bağlantı verilmez, site haritasında yoktur, arama motorlarına kapalıdır. -->
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="theme-color" content="#0b1630">
+<link rel="icon" href="assets/ikon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="assets/ikon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="assets/js/lenis.min.js" defer></script>
+<style>
+.kap{padding-inline:max(20px,5vw)}
+.ust-yazi{font-size:12px;letter-spacing:.32em;color:var(--altin2);text-transform:uppercase}
+.bas{padding-top:clamp(120px,18vh,170px);padding-bottom:28px;background:radial-gradient(60% 80% at 90% 0%,rgba(201,162,75,.12),transparent 60%),var(--gece)}
+.bas h1{font-size:clamp(34px,4.6vw,70px);line-height:1.06;margin:16px 0 14px;max-width:17ch}
+.bas h1 em{font-style:normal;color:var(--altin2)}
+.bas p{max-width:58ch;color:rgba(234,230,220,.72);line-height:1.6;margin:0}
+@media(max-width:720px){.bas{padding-top:76px}}
+
+/* arama + konu çipleri */
+.arac{position:sticky;top:12px;z-index:20;display:flex;flex-direction:column;gap:12px;padding:14px 0 6px}
+@media(max-width:720px){.arac{position:static}}
+.sss-ara{position:relative;display:block;max-width:520px}
+.sss-ara input{width:100%;height:48px;border-radius:999px;border:0;padding:0 18px 0 46px;font:400 15.5px 'Hanken Grotesk',sans-serif;color:var(--yazi);
+ background:rgba(10,19,42,.74);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 10px 30px -18px rgba(0,0,0,.8)}
+.sss-ara::before{z-index:2;content:"";position:absolute;inset:0;border-radius:999px;padding:1px;pointer-events:none;
+ background:linear-gradient(160deg,rgba(246,224,160,.8),rgba(201,162,75,.2) 45%,rgba(230,199,122,.55));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.sss-ara svg{z-index:2;position:absolute;left:17px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--altin2)}
+.sss-ara input::placeholder{color:rgba(234,230,220,.45)}
+.sss-ara input:focus{outline:none}
+.konular{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;margin-inline:-2px}
+.konular::-webkit-scrollbar{display:none}
+.konular button{flex:none;height:36px;padding:0 15px;border-radius:999px;border:0;cursor:pointer;position:relative;
+ font:500 14px 'Hanken Grotesk',sans-serif;color:var(--yazi);background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14);transition:background .25s,color .25s}
+.konular button::before{content:"";position:absolute;inset:0;border-radius:999px;padding:1px;pointer-events:none;
+ background:linear-gradient(160deg,rgba(246,224,160,.6),rgba(201,162,75,.15) 45%,rgba(230,199,122,.4));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.konular button[aria-pressed="true"]{background:var(--altin-firca);color:#0b1630;box-shadow:inset 0 1px 0 rgba(255,250,232,.5)}
+.konular button[aria-pressed="true"]::before{opacity:0}
+
+/* sorular */
+.liste{padding-top:10px;padding-bottom:110px;max-width:880px}
+.grup{margin-top:38px}
+.grup>h2{font-size:clamp(22px,2.4vw,30px);margin:0 0 14px;color:var(--altin2);font-weight:400}
+.s{position:relative;border-radius:20px;margin-bottom:10px;background:rgba(255,255,255,.035);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:background .3s}
+.s::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;opacity:.55;transition:opacity .3s;
+ background:linear-gradient(160deg,rgba(246,224,160,.55),rgba(201,162,75,.08) 40%,rgba(230,199,122,.3));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.s[open]{background:rgba(255,255,255,.06)}
+.s[open]::before{opacity:1}
+.s summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px;font:500 16.5px/1.4 'Hanken Grotesk',sans-serif;color:var(--yazi)}
+.s summary::-webkit-details-marker{display:none}
+.s summary i{margin-left:auto;flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.07);transition:transform .35s cubic-bezier(.2,.8,.2,1),background .3s}
+.s summary i::before,.s summary i::after{content:"";position:absolute;width:11px;height:1.6px;border-radius:2px;background:var(--altin2)}
+.s summary i::after{transform:rotate(90deg);transition:transform .35s}
+.s summary i{position:relative}
+.s[open] summary i{background:rgba(201,162,75,.18)}
+.s[open] summary i::after{transform:rotate(0)}
+.cev{padding:0 20px 20px;color:rgba(234,230,220,.8);line-height:1.68;font-size:15.5px}
+.cev p{margin:0 0 10px}
+.cev strong{color:var(--yazi);font-weight:600}
+.etiket{display:inline-flex;align-items:center;gap:6px;margin:4px 6px 0 0;height:30px;padding:0 12px;border-radius:999px;font-size:13px;color:var(--altin2);text-decoration:none;background:rgba(201,162,75,.12);box-shadow:inset 0 0 0 1px rgba(230,199,122,.3);transition:background .25s}
+.etiket:hover{background:rgba(201,162,75,.22)}
+.etiket svg{width:14px;height:14px}
+.dikkat{margin-top:8px;padding:10px 14px;border-radius:14px;background:rgba(201,162,75,.08);border-left:2px solid var(--altin);font-size:14.5px}
+.donem{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:6px 0 12px}
+.donem div{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.05);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.donem b{display:block;font:400 17px 'Marcellus',serif;color:var(--altin2);margin-bottom:4px}
+.donem span{display:block;font-size:13.5px;line-height:1.5}
+.donem em{font-style:normal;display:inline-block;margin-top:6px;font-size:12px;padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.07)}
+.bos{display:none;padding:40px 0;color:rgba(234,230,220,.6)}
+.son{margin-top:44px;padding:22px;border-radius:22px;background:rgba(255,255,255,.04);display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.son p{margin:0;max-width:46ch;line-height:1.55}
+.gizli{display:none!important}
+mark{background:rgba(230,199,122,.28);color:inherit;border-radius:3px;padding:0 1px}
+</style>
+</head>
+<body>
+<main id="icerik">
+<section class="bas kap">
+ <div class="ust-yazi" data-gel>Yola çıkmadan önce</div>
+ <h1 data-gel>Merak ettikleriniz, <em>mağazada en çok sorulanlar.</em></h1>
+ <p data-gel>İhramdan zemzeme, terlikten dönüş hediyelerine kadar pratik cevaplar. Fıkhi konularda Diyanet'in görüşleri esas alınmıştır; size özel durumlarda grup hocanıza danışın.</p>
+</section>
+
+<section class="kap">
+ <div class="arac">
+  <label class="sss-ara"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+   <input id="ara" type="search" placeholder="Soru arayın: terlik, zemzem, pasaport…" autocomplete="off" enterkeyhint="search"></label>
+  <div class="konular" id="konular" role="group" aria-label="Konular"></div>
+ </div>
+
+ <div class="liste" id="liste">
+
+  <div class="grup" data-konu="İhram"><h2>İhram</h2>
+   <details class="s"><summary>Kaç takım ihram almalıyım?<i></i></summary><div class="cev">
+    <p>Kısa bir umre için bir takım yeterli olabilir; ama <strong>15 gün ve daha uzun kalacaklara iki takım öneriyoruz.</strong> Üç sebebi var:</p>
+    <p><strong>Yıkama:</strong> Biri yıkanıp kururken diğerini giyersiniz.<br><strong>Yeniden umre:</strong> Orada kaldığınız sürede yeni bir umreye niyet ettiğinizde yeniden ihrama girersiniz.<br><strong>Tavaf alanı:</strong> Kâbe'nin hemen yanındaki zemin kat tavaf alanına erkeklerde yalnızca ihramlılar alınıyor.</p>
+    <a class="etiket" href="urunler.html">İhramlarımız</a></div></details>
+   <details class="s"><summary>İhramı ne zaman giymeliyim?<i></i></summary><div class="cev">
+    <p>Doğrudan Cidde'ye uçan gruplar, mîkat sınırını uçakta geçtikleri için ihramı <strong>Türkiye'deki havalimanında</strong> giyer. Önce Medine-i Münevvere'ye giden gruplar ise Mekke-i Mükerreme'ye hareket etmeden önce <strong>otelde</strong> giyer.</p></div></details>
+   <details class="s"><summary>Uçakta ihrama nasıl girilir?<i></i></summary><div class="cev">
+    <p>Mîkat sınırı ihramsız geçilmez. Uçakta bu sınıra çok çabuk varıldığı için ihram kıyafeti önceden giyilir; niyet ve telbiye mîkat geçilmeden yapılır.</p>
+    <p class="dikkat">Niyet: “Allah'ım, umre yapmak istiyorum; onu bana kolaylaştır ve kabul eyle.”</p></div></details>
+   <details class="s"><summary>Kadınlar için özel ihram var mı?<i></i></summary><div class="cev">
+    <p>Özel bir ihram kıyafeti şart değildir. Yüz ve eller dışında bedeni örten, vücut hatlarını belli etmeyen günlük kıyafetlerle ihrama girilir. Başörtüsü takılır; yüzü kapatan peçe ve eldiven takılmaz. Çorap ve kapalı ayakkabı serbesttir.</p>
+    <a class="etiket" href="urunler.html">Umre ferace ve eşarpları</a></div></details>
+   <details class="s"><summary>Çocuklar ihram giyer mi?<i></i></summary><div class="cev">
+    <p>Çocuğa ihram giydirmek şart değil, güzel bir davranıştır. Kendisi niyet edemeyecek yaştaki çocuk için veli niyet eder, yapabildiklerini çocuğa yaptırır, yapamadıklarını onun yerine yapar. Yürüyemeyen çocukla kucakta tavaf edilir.</p>
+    <a class="etiket" href="urunler.html">Çocuk ihramları</a></div></details>
+  </div>
+
+  <div class="grup" data-konu="İhramlıyken"><h2>İhramlıyken neler serbest?</h2>
+   <details class="s"><summary>İhram kemeri takılabilir mi, nasıl takılır?<i></i></summary><div class="cev">
+    <p><strong>Evet.</strong> Gözlük, saat, kemer, toka gibi aksesuarlar ihram yasağına girmez. Kemer, ihramın alt parçasının (izar) üstünden bele bağlanır; hem izarı sabitler hem de para, telefon ve pasaport gibi eşyaları güvenle taşımanızı sağlar.</p>
+    <a class="etiket" href="urunler.html">İhram kemerleri</a></div></details>
+   <details class="s"><summary>İhramlıyken terlik nasıl olmalı?<i></i></summary><div class="cev">
+    <p>Erkeklerde <strong>topuk ve ayağın üstündeki çıkıntılı kemik (aşık kemiği) açık kalmalı</strong>, ayağın üstü tamamen örtülmemeli. Bu yüzden ayağın üstünü kapatmayan, arkası açık terlik giyilir; arkası kayışlı sandalet tipi de olur. Uzun tavaf ve sa'y için kaymaz tabanlı, hafif modeller rahat ettirir.</p>
+    <a class="etiket" href="urunler.html">Umre terlikleri</a></div></details>
+   <details class="s"><summary>İhramın altına tayt, şort ya da iç çamaşırı giyilir mi?<i></i></summary><div class="cev">
+    <p><strong>Erkekler için hayır.</strong> Ölçü dikişin olup olmaması değil, giysinin vücut şeklini almasıdır; bu yüzden dikişsiz tayt da uygun sayılmaz. Bir gündüz ya da bir gece boyunca giyilirse ceza (dem) gerekir.</p>
+    <p>Sürtünme için ihram kemeri ve kokusuz bakım kremleri işinizi görür.</p></div></details>
+   <details class="s"><summary>Kemer, çanta, şemsiye kullanılabilir mi?<i></i></summary><div class="cev">
+    <p>Evet. Bele kemer bağlamak, sırta ya da boyna çanta almak ve elde şemsiye taşımak sakıncasızdır.</p>
+    <a class="etiket" href="urunler.html">Boyun çantaları</a><a class="etiket" href="urunler.html">Şemsiyeler</a></div></details>
+   <details class="s"><summary>Başa şapka ya da başa takılan şemsiye olur mu?<i></i></summary><div class="cev">
+    <p>Erkeklerin başını örtmesi yasaktır; takke, şapka gibi başı örten şeyler bu kapsamdadır. Elde taşınan, başa değmeyen şemsiye serbesttir.</p></div></details>
+   <details class="s"><summary>İhramlıyken tıbbi maske takılır mı?<i></i></summary><div class="cev">
+    <p>Evet. Tıbbi maske alışılmış bir giysi olmadığı için kadın ve erkek için ihram yasağı sayılmaz.</p></div></details>
+   <details class="s"><summary>Uyurken battaniye örtülebilir mi?<i></i></summary><div class="cev">
+    <p>Evet, bedeni örtebilirsiniz. Erkekler başını ve yüzünü, kadınlar yüzünü örtmemeye dikkat etmeli.</p></div></details>
+  </div>
+
+  <div class="grup" data-konu="Temizlik"><h2>Temizlik ve bakım</h2>
+   <details class="s"><summary>Neden kokusuz ürün kullanmalıyım?<i></i></summary><div class="cev">
+    <p>İhramlıyken vücuda, ihrama veya yatağa koku sürmek; parfüm, kokulu sprey ve jöle kullanmak yasaktır. Bu yüzden sabun, şampuan ve kremin kokusuz olması en rahat yoldur.</p>
+    <a class="etiket" href="urunler.html">Kokusuz ihram sabunu</a></div></details>
+   <details class="s"><summary>İhramlıyken duş alınır mı, deterjan kullanılır mı?<i></i></summary><div class="cev">
+    <p>Evet, yıkanabilirsiniz. Kokusuz ürünler tavsiye edilir; yalnızca temizlik amacıyla kullanılan kokulu sabun veya deterjan ceza gerektirmez. İhramınızı da kokusuz deterjanla yıkayın.</p></div></details>
+   <details class="s"><summary>Islak mendil kullanılabilir mi?<i></i></summary><div class="cev">
+    <p>Kokusuz olanı tercih edin. Esanslı mendil yalnızca temizlik için kullanılırsa ceza gerektirmez.</p></div></details>
+   <details class="s"><summary>Güneş kremi ya da nemlendirici sürebilir miyim?<i></i></summary><div class="cev">
+    <p>Süslenmek için krem, yağ, jöle sürmek ceza gerektirir. Tedavi için sürülen ilaç, merhem veya kokusuz krem için bir şey gerekmez. Güneşten korunmak için parfümsüz ürün en ihtiyatlı yoldur.</p></div></details>
+   <details class="s"><summary>Yanlışlıkla parfüm sürersem ya da bir yasağı unutursam?<i></i></summary><div class="cev">
+    <p>Fark ettiğinizde bırakın ve temizleyin. Hükmü duruma göre değişir; “umrem bozuldu” demeden grup hocanıza ya da Diyanet'in <strong>190</strong> fetva hattına danışın.</p></div></details>
+  </div>
+
+  <div class="grup" data-konu="Mescid-i Haram"><h2>Mescid-i Haram, tavaf ve sa'y</h2>
+   <details class="s"><summary>Kâbe'nin hemen yanındaki tavaf alanına ihramsız girilir mi?<i></i></summary><div class="cev">
+    <p>Kalabalığı azaltmak için, Kâbe'ye en yakın <strong>zemin kat tavaf alanına (metaf) erkeklerde yalnızca ihramlılar alınıyor.</strong> İhramsız olanlar üst katlarda tavaf edebilir. Mescid-i Haram'a girmek ve namaz kılmak ise herkese açıktır.</p>
+    <p class="dikkat">Uygulamalar dönem dönem değişebilir; yola çıkmadan grup hocanızdan güncel durumu öğrenin.</p></div></details>
+   <details class="s"><summary>Orada kalırken tekrar umre yapabilir miyim?<i></i></summary><div class="cev">
+    <p>Evet. Harem sınırının dışına, çoğunlukla Ten'im'deki Hz. Âişe Mescidi'ne gidip yeniden ihrama girersiniz; ardından tavaf ve sa'y yapılır. Pek çok kişi vefat etmiş büyükleri adına da umre yapar. Her yeni umre yeni bir ihram demektir.</p></div></details>
+   <details class="s"><summary>Tavafta kaçıncı turda olduğumu unutursam?<i></i></summary><div class="cev">
+    <p>Emin olamıyorsanız az olan sayıyı esas alıp tamamlayın. Tavaf bittikten sonra doğan şüpheye itibar edilmez.</p>
+    <a class="etiket" href="urunler.html">Zikirmatikler</a></div></details>
+   <details class="s"><summary>Tavafta abdestim bozulursa?<i></i></summary><div class="cev">
+    <p>Umreniz bozulmaz. Abdest alıp kaldığınız yerden devam edebilir ya da tavafı baştan yapabilirsiniz.</p></div></details>
+   <details class="s"><summary>Sa'yde yorulursam oturabilir miyim?<i></i></summary><div class="cev">
+    <p>Evet, kısa bir ara verip kaldığınız yerden devam edebilirsiniz. Sa'y için abdest şart değildir.</p></div></details>
+   <details class="s"><summary>Yaşlı ya da yürüyemeyen biri nasıl umre yapar?<i></i></summary><div class="cev">
+    <p>Tavaf ve sa'y tekerlekli sandalyeyle yapılabilir; tur sayıları değişmez. O gün belirlenen sandalye güzergâhları takip edilir.</p></div></details>
+   <details class="s"><summary>Kaybolursam ne yapmalıyım?<i></i></summary><div class="cev">
+    <p>Rastgele dolaşmak yerine önceden belirlediğiniz buluşma noktasına gidin. Otel kartı, grup hocanızın telefonu ve şarjı dolu bir telefon yanınızda olsun. Çocukların üzerinde ad, veli telefonu ve otel adı yazan bir kart bulunsun.</p></div></details>
+  </div>
+
+  <div class="grup" data-konu="Medine"><h2>Medine-i Münevvere</h2>
+   <details class="s"><summary>Ravza'ya (Ravza-i Mutahhara) nasıl girilir?<i></i></summary><div class="cev">
+    <p>Ravza ziyareti, Suudi Arabistan'ın resmi <strong>Nusuk</strong> uygulamasından alınan ücretsiz randevuyla yapılır; randevusuz girilemez. Randevular hızla dolduğu için Medine-i Münevvere'ye varmadan takip edin. Para isteyen aracılara itibar etmeyin.</p></div></details>
+  </div>
+
+  <div class="grup" data-konu="Hazırlık"><h2>Hazırlık ve mevsim</h2>
+   <details class="s"><summary>Hangi dönemde hava ve kalabalık nasıl?<i></i></summary><div class="cev">
+    <div class="donem">
+     <div><b>Kasım – Şubat</b><span>24–30 °C, geceler serin</span><em>Kalabalık az</em></div>
+     <div><b>Mart – Nisan</b><span>Ilık, nisan sonuna kadar makul</span><em>Orta</em></div>
+     <div><b>Ramazan</b><span>Sevabı en fazla, fiyatlar en yüksek</span><em>En yoğun</em></div>
+     <div><b>Mayıs – Eylül</b><span>40 °C'yi aşar, yer yer 48 °C</span><em>Yaz tatilinde artar</em></div>
+     <div><b>Ekim</b><span>33–35 °C, akşamlar rahat</span><em>Orta</em></div>
+    </div>
+    <p>En rahat dönem kasım–şubat; Medine-i Münevvere'nin kış geceleri serin olabildiği için ince bir hırka alın. Yazın bol su, şemsiye ve gölge şart. Kasım ara tatili ve sömestrde aileli gruplar artar. Hac günlerinde umre yapılmaz.</p>
+    <a class="etiket" href="urunler.html">Şemsiye</a><a class="etiket" href="urunler.html">Hırka ve şal</a></div></details>
+   <details class="s"><summary>Yanıma hangi kıyafetleri almalıyım?<i></i></summary><div class="cev">
+    <p>Pamuklu, keten, sade ve bol kıyafetler. Kadınlar için iki-üç takım kolay yıkanıp çabuk kuruyan tesettür kıyafeti idealdir. Yeni ayakkabı yerine alışık olduğunuz rahat ayakkabıyı tercih edin; su toplamayı önler.</p></div></details>
+   <details class="s"><summary>Pasaportum ne kadar geçerli olmalı?<i></i></summary><div class="cev">
+    <p><strong>En güvenlisi en az 1 yıl.</strong> Suudi Arabistan'ın vize şartı dönüş tarihinden itibaren 6 ay olsa da müftülükler ve acenteler çoğunlukla 1 yıl geçerli pasaport istiyor. Pasaportta en az 2 boş sayfa bulunmalı.</p></div></details>
+   <details class="s"><summary>Sağlık raporu ve aşı gerekli mi?<i></i></summary><div class="cev">
+    <p>Evet. Hac ve umre için sağlık raporu zorunludur; Suudi Arabistan'ın istediği aşılar da yaptırılmalıdır.</p></div></details>
+  </div>
+
+  <div class="grup" data-konu="Dönüş"><h2>Dönüş, bagaj ve hediyeler</h2>
+   <details class="s"><summary>Ne kadar zemzem getirebilirim?<i></i></summary><div class="cev">
+    <p>Hac veya umre vizesiyle dönenler <strong>5 litreye kadar</strong> zemzem getirebilir. Zemzem valizin içine konmaz; ayrı bir parça olarak, sızdırmaz ambalajda teslim edilir.</p>
+    <a class="etiket" href="urunler.html">Zemzem</a></div></details>
+   <details class="s"><summary>Hurmayı nasıl getirebilirim?<i></i></summary><div class="cev">
+    <p>Valiz kilonuzu aşmayacak kadar getirebilirsiniz; ticari miktarlar gümrükte sorun çıkarabilir. Fazlası PTT ile anlaşmalı Diyanet kargosuyla gönderilebilir.</p>
+    <a class="etiket" href="urunler.html">Hurmalarımız</a></div></details>
+   <details class="s"><summary>Bagaj hakkım ne kadar?<i></i></summary><div class="cev">
+    <p>Havayoluna ve bilete göre değişir; kesin bilgi biletinizde yazar.</p></div></details>
+   <details class="s"><summary>Hediyeleri orada mı almalıyım, burada mı?<i></i></summary><div class="cev">
+    <p>Orada vaktinizi ibadete ayırın. Tespih, seccade, misvak, hurma, zemzem, esans gibi dönüş hediyelerinizi valiz ve gümrük derdi yaşamadan Ümraniye'de de tamamlayabilirsiniz.</p>
+    <a class="etiket" href="urunler.html">Hediyelikler</a></div></details>
+  </div>
+
+  <p class="bos" id="bos">Bu aramaya uygun soru bulamadık. Sorunuzu bize WhatsApp'tan yazın.</p>
+
+  <div class="son" data-gel>
+   <p>Cevabını bulamadığınız bir soru mu var? Mağazamızda ya da WhatsApp'tan memnuniyetle yardımcı oluruz.</p>
+   <a class="btn altin" id="sor" href="#">WhatsApp'tan sorun</a>
+  </div>
+ </div>
+</section>
+</main>
+
+<script src="urunler-veri.js"></script>
+<script src="site.js"></script>
+<script>
+kabuk('');akisKur();
+document.getElementById('sor').href='https://wa.me/'+WA+'?text='+encodeURIComponent('Merhaba, umre hazırlığıyla ilgili bir sorum var:');
+(function(){
+ const L=document.getElementById('liste'),G=[...L.querySelectorAll('.grup')],K=document.getElementById('konular'),A=document.getElementById('ara'),B=document.getElementById('bos');
+ let konu='Tümü';
+ K.innerHTML=['Tümü',...G.map(g=>g.dataset.konu)].map(k=>`<button type="button" aria-pressed="${k===konu}" data-k="${k}">${k}</button>`).join('');
+ G.forEach(g=>g.querySelectorAll('.s').forEach(s=>{const sm=s.querySelector('summary');s._q=sm.childNodes[0].textContent;sm.childNodes[0].replaceWith(Object.assign(document.createElement('span'),{textContent:s._q}));s._t=s.textContent.toLocaleLowerCase('tr')}));
+ const isaretle=(s,q)=>{const sm=s.querySelector('summary'),t=s._q;
+  const i=q?t.toLocaleLowerCase('tr').indexOf(q):-1;
+  sm.firstChild.innerHTML=i<0?t:t.slice(0,i)+'<mark>'+t.slice(i,i+q.length)+'</mark>'+t.slice(i+q.length)};
+ function suz(){const q=A.value.trim().toLocaleLowerCase('tr');let n=0;
+  G.forEach(g=>{let gn=0;const uy=konu==='Tümü'||g.dataset.konu===konu;
+   g.querySelectorAll('.s').forEach(s=>{const v=uy&&(!q||s._t.includes(q));s.classList.toggle('gizli',!v);if(v)gn++;isaretle(s,q)});
+   g.classList.toggle('gizli',!gn);n+=gn});
+  B.style.display=n?'none':'block'}
+ K.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;konu=b.dataset.k;
+  K.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));suz()});
+ A.addEventListener('input',suz);
+ A.addEventListener('keydown',e=>{if(e.key==='Enter')A.blur()});
+ /* açılan cevap yumuşakça açılır */
+ L.querySelectorAll('.s').forEach(d=>d.addEventListener('toggle',()=>{if(!d.open)return;const c=d.querySelector('.cev');
+  c.animate([{opacity:0,transform:'translateY(-6px)'},{opacity:1,transform:'none'}],{duration:320,easing:'cubic-bezier(.2,.8,.2,1)'})}));
+})();
+</script>
+</body>
+</html>
