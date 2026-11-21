@@ -45,7 +45,7 @@
 .filtre::-webkit-scrollbar{display:none}
 .filtre button{flex:none;min-height:44px;padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(11,22,48,.7);color:#fff;cursor:pointer;font:500 14px 'Hanken Grotesk';transition:background .3s,border-color .3s,color .3s}
 @media (hover:hover){.filtre button:hover{border-color:rgba(201,162,75,.55)}}
-.filtre button[aria-pressed="true"]{background:var(--altin);color:#1a1205;border-color:transparent}
+.filtre button[aria-pressed="true"]{background:var(--altin);color:#0b1630;border-color:transparent}
 .filtre button small{opacity:.65;margin-left:6px;font-size:12.5px}
 .sonuc{font-size:14px;color:rgba(234,230,220,.65);padding:6px 0 18px}
 .daha{display:flex;justify-content:center;padding:4px 0 140px}
@@ -71,7 +71,7 @@
    düğmeler gibi). Fiyat yazısı boyunda; her kartta göz düğmeyi değil ürünü görsün. */
 .kart .ekle{flex:none;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px 0 9px;border-radius:999px;cursor:pointer;
  border:0;color:#0b1630;font:600 13px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.01em;
- background:linear-gradient(160deg,#ecd28f,#cfab58);box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
+ background:var(--altin-firca);box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
  transition:transform .2s,filter .2s,padding .3s cubic-bezier(.2,.8,.2,1)}
 .kart .ekle svg{width:15px;height:15px;flex:none}
 @media (hover:hover){.kart .ekle:hover{filter:brightness(1.07)}}
@@ -86,7 +86,7 @@
 .kart h3{min-height:2.4em}
 .kart .fsat{margin-top:auto}
 .kart .ekle{height:36px;padding:0 15px 0 12px;gap:6px;font:600 14px 'Hanken Grotesk',system-ui,sans-serif;
- background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f);
+ background:var(--altin-firca);
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 6px 16px -10px rgba(201,162,75,.7)}
 .kart .ekle svg{width:16px;height:16px}}
 .kart.eklendi .ekle{display:inline-flex!important}
@@ -210,7 +210,7 @@
  background:none;color:inherit;font:500 14.5px 'Hanken Grotesk',system-ui,sans-serif;text-align:left;cursor:pointer}
 .km-liste button small{opacity:.55;font-size:12.5px;font-variant-numeric:tabular-nums}
 @media (hover:hover){.km-liste button:hover{background:rgba(255,255,255,.07)}}
-.km-liste button[aria-selected="true"]{background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f);color:#1a1205}
+.km-liste button[aria-selected="true"]{background:var(--altin-firca);color:#0b1630}
 .km-liste button[aria-selected="true"] small{opacity:.7}
 @media(max-width:720px){
  .km-perde{background:rgba(3,8,20,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}

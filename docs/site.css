@@ -2,7 +2,9 @@
 /* Ortak tasarım: menü, çanta, düğmeler, altbilgi.
    --k-* değişkenleri "kabuk" renkleridir; sayfalar kendi renklerini değiştirse de menü ve çanta aynı kalır. */
 :root{--lac:#0b1630;--lac2:#122347;--gece:#060d1f;--altin:#c9a24b;--altin2:#e6c77a;--bordo:#7a1f2b;--fil:#f4efe4;--yazi:#eae6dc;--r:22px;
---k-lac:#0b1630;--k-lac2:#122347;--k-gece:#060d1f;--k-altin:#c9a24b;--k-altin2:#e6c77a;--k-bordo:#8a2433;--k-yazi:#eae6dc;--k-wa:#1fae5b}
+--k-lac:#0b1630;--k-lac2:#122347;--k-gece:#060d1f;--k-altin:#c9a24b;--k-altin2:#e6c77a;--k-bordo:#8a2433;--k-yazi:#eae6dc;--k-wa:#1fae5b;
+/* Ana sayfadaki 'siz ibadetinize odaklanın' bandının fırçalanmış mat altını: tüm altın dolgulu düğmeler bunu kullanır */
+--altin-firca:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.05) 1px 2px,transparent 2px 4px),linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%,rgba(0,0,0,.1)),linear-gradient(100deg,#a8853d 0%,#c3a056 22%,#d4b674 40%,#bf9b52 58%,#cfb06c 78%,#a98640 100%)}
 *{box-sizing:border-box;margin:0;padding:0}
 html.lenis{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto}
@@ -30,9 +32,9 @@ border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255
 @media (hover:hover){.nav .logo:hover{background:none}}
 .nav .logo img{height:36px;width:auto;max-width:none}
 .mlogo{display:none}
-.nav .tur{background:linear-gradient(135deg,var(--k-altin),#a8822f);color:#1a1205;font-weight:600}
-.nav .tur.on{filter:brightness(1.08);background:linear-gradient(135deg,var(--k-altin2),var(--k-altin));color:#1a1205}
-@media (hover:hover){.nav .tur:hover{filter:brightness(1.08);background:linear-gradient(135deg,var(--k-altin2),var(--k-altin));color:#1a1205}}
+.nav .tur{background:var(--altin-firca);color:#0b1630;font-weight:600}
+.nav .tur.on{filter:brightness(1.08);background:var(--altin-firca);color:#0b1630}
+@media (hover:hover){.nav .tur:hover{filter:brightness(1.08);background:var(--altin-firca);color:#0b1630}}
 .sepetbtn{position:relative;display:grid;place-items:center;width:42px;height:42px;flex:none;border-radius:50%;cursor:pointer;border:0;background:rgba(255,255,255,.1);color:#fff}
 @media (hover:hover){.sepetbtn:hover{background:rgba(255,255,255,.16)}}
 .sepetbtn b{position:absolute;top:-3px;right:-3px;min-width:19px;height:19px;border-radius:10px;background:var(--k-bordo);font-size:11px;display:grid;place-items:center;padding:0 5px;transform:scale(0);transition:transform .4s cubic-bezier(.3,1.6,.5,1);box-shadow:0 0 0 2px rgba(10,20,44,.9)}
@@ -98,7 +100,7 @@ transform:translateX(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1);di
 @media (hover:hover){.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}}
 .btn svg{width:20px;height:20px;flex:none;fill:currentColor}
 .btn.wa{background:var(--k-wa);color:#fff}
-.btn.altin{background:var(--k-altin);color:#1a1205}
+.btn.altin{background:var(--altin-firca);color:#0b1630}
 .btn.cam{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}
 @media (hover:hover){.btn.cam:hover{background:rgba(255,255,255,.14)}}
 
@@ -127,7 +129,7 @@ transform:translateX(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1);di
 [data-gel].gel{opacity:1;transform:none}
 /* Bildirim */
 .toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,30px);opacity:0;pointer-events:none;z-index:90;display:flex;align-items:center;gap:14px;padding:10px 10px 10px 20px;border-radius:999px;background:rgba(10,20,44,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(201,162,75,.5);box-shadow:0 14px 40px rgba(0,0,0,.4);transition:all .45s cubic-bezier(.2,.8,.2,1);white-space:nowrap;font-size:14px;color:var(--k-yazi)}
-.toast button{border:0;border-radius:999px;min-height:40px;padding:9px 16px;background:var(--k-altin);color:#1a1205;font:600 13px 'Hanken Grotesk';cursor:pointer}
+.toast button{border:0;border-radius:999px;min-height:40px;padding:9px 16px;background:var(--altin-firca);color:#0b1630;font:600 13px 'Hanken Grotesk';cursor:pointer}
 .toast:not(:has(button)){padding-right:20px}
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 @media(max-width:720px){
@@ -337,8 +339,8 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  background:linear-gradient(160deg,rgba(246,224,160,.95),rgba(201,162,75,.55) 35%,rgba(150,115,45,.35) 60%,rgba(230,199,122,.85));
  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
-.btn.altin,.dugme.dolu{position:relative;isolation:isolate;border:0;color:#1a1205!important;
- background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;
+.btn.altin,.dugme.dolu{position:relative;isolation:isolate;border:0;color:#0b1630!important;
+ background:var(--altin-firca)!important;
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 10px 26px -12px rgba(201,162,75,.75)}
 .btn.wa:not(.sivi){position:relative;isolation:isolate;
  background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0) 50%),var(--k-wa)!important;
@@ -378,9 +380,9 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
 .filtre button{color:#f3efe6;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 @media (hover:hover){.filtre button:hover{background:linear-gradient(180deg,rgba(255,255,255,.17),rgba(255,255,255,.05) 48%,rgba(255,255,255,.08)),rgba(14,26,56,.78)!important}}
 /* seçili etiket: menüdeki altın hap gibi */
-.filtre button[aria-pressed="true"]{background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;color:#1a1205;text-shadow:none;
+.filtre button[aria-pressed="true"]{background:var(--altin-firca)!important;color:#0b1630;text-shadow:none;
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 8px 22px -12px rgba(201,162,75,.7)}
-.sekme-isik{background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f)!important;
+.sekme-isik{background:var(--altin-firca)!important;
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35)}
 .sekmeler button{text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .sekmeler button[aria-selected="true"]{text-shadow:none}
