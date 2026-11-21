@@ -48,7 +48,8 @@
 @media (hover:hover){.bilgi a:hover{color:var(--altin2)}}
 .dug{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}
 .dug .genis{grid-column:1/-1}
-.dug .btn{min-height:52px;padding:14px 16px;border-radius:999px;font:500 15px 'Hanken Grotesk',system-ui,sans-serif}
+.dug .btn{min-height:50px;padding:13px 16px;border-radius:999px;font:500 15px 'Hanken Grotesk',system-ui,sans-serif}
+.dug{gap:12px}
 .puan-satir{display:flex;align-items:center;gap:14px;margin:4px 0 20px}
 .puan-satir b{font-family:'Marcellus';font-weight:400;font-size:44px;line-height:1}
 .puan-satir span{font-size:14px;color:rgba(234,230,220,.78)}
@@ -80,6 +81,9 @@
  background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f);
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 10px 26px -12px rgba(201,162,75,.75)}
 .hk-yol:active{transform:scale(.97)}
+@media(min-width:901px){
+.harita-kart{left:auto;right:14px;bottom:14px;width:min(560px,calc(100% - 28px));grid-template-columns:56px 1fr auto}
+.hk-yol{grid-column:auto;padding:0 22px;white-space:nowrap}}
 @media (hover:hover){.hk-yol:hover{filter:brightness(1.06)}}
 @media(max-width:340px){.hk-adr{display:none}}
 @media(max-width:900px){

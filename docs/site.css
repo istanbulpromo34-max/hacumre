@@ -106,7 +106,7 @@ transform:translateX(100%);transition:transform .55s cubic-bezier(.2,.8,.2,1);di
    Beş düğme alt alta gelince dolu renkler ağır duruyordu; hepsi buzlu cama
    dönüştü, altın ve yeşil yalnızca kenarda ve ikonda ince bir ton olarak kaldı.
    İkonlar da dolgun ve altın tonlu tek bir aileye getirildi. */
-.btn.sivi{position:relative;overflow:hidden;
+.btn.sivi{position:relative;overflow:visible;
  background:linear-gradient(161deg,rgba(255,255,255,.15),rgba(255,255,255,.045) 54%,rgba(255,255,255,.1));
  border:1px solid rgba(255,255,255,.2);color:#f3efe6;font-weight:600;
  backdrop-filter:blur(18px) saturate(165%);-webkit-backdrop-filter:blur(18px) saturate(165%);

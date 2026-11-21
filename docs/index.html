@@ -417,16 +417,20 @@
 /* Kepengin üstüne boyanmış "KAPALI": lamel aralıklarında boya kesilir, yüzey dokusu geçer */
 /* Yazı alanı: küçük lamellerin üstünde, lamel ızgarasına hizalı. Başlık, saatlerle
    aynı genişliğe yayılır (betik harf aralığını ölçerek ayarlar). */
-.kp-yazi{position:absolute;left:0;right:0;top:calc(var(--l) * 5);display:grid;justify-items:center;gap:calc(var(--l) * .2)}
+.kp-yazi{position:absolute;left:0;right:0;top:calc(var(--l) * 3);display:grid;justify-items:center;gap:0;
+ /* boya lamel aralığına girmez: her lamelin dibindeki oluğa denk gelen ince şerit kesilir */
+ -webkit-mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.12) calc(var(--l) * .86),rgba(0,0,0,.12) calc(var(--l) * .92),#000 var(--l));
+ mask-image:repeating-linear-gradient(180deg,#000 0,#000 calc(var(--l) * .8),rgba(0,0,0,.12) calc(var(--l) * .86),rgba(0,0,0,.12) calc(var(--l) * .92),#000 var(--l))}
 /* Klişe + sprey boya: açık gri, klişe köprülü dar harfler; kenarlarda hafif sprey
    taşması (yumuşak hale), yüzeyde tozlu, yer yer boyanın tutmadığı noktalar */
-.kp-bas,.kp-saat{display:block;white-space:nowrap;line-height:1;color:transparent;-webkit-background-clip:text;background-clip:text;
+.kp-bas,.kp-saat{display:block;white-space:nowrap;color:transparent;background-size:100% var(--l),100% 100%;background-repeat:repeat,no-repeat;-webkit-background-clip:text;background-clip:text;
  text-shadow:none;filter:drop-shadow(0 0 .6px rgba(190,187,180,.55)) drop-shadow(0 0 2.2px rgba(170,167,160,.22));
  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.9 1.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' seed='9'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -.9 1.45'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");-webkit-mask-size:90px 90px;mask-size:90px 90px}
-.kp-bas{font:700 calc(var(--l) * 1.15) 'Klise','Barlow Condensed',sans-serif;letter-spacing:.16em;padding-left:.16em;text-transform:uppercase;
- background-image:linear-gradient(180deg,#c9c6bf,#b2afa8)}
-.kp-saat{font:700 calc(var(--l) * 2.5) 'Klise','Barlow Condensed',sans-serif;letter-spacing:.04em;font-variant-numeric:tabular-nums;
- background-image:linear-gradient(180deg,#d0cdc6,#b7b4ad)}
+.kp-bas{font:700 calc(var(--l) * 2.6) 'Klise','Barlow Condensed',sans-serif;line-height:calc(var(--l) * 3);height:calc(var(--l) * 3);text-transform:uppercase;
+ background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.2) 0,rgba(255,255,255,.05) calc(var(--l) * .16),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.22) calc(var(--l) * .78),rgba(0,0,0,.6) calc(var(--l) * .86),rgba(0,0,0,.6) var(--l)),linear-gradient(180deg,#5d626b,#4c5058);
+ filter:none!important}
+.kp-saat{font:700 calc(var(--l) * 2.5) 'Klise','Barlow Condensed',sans-serif;line-height:calc(var(--l) * 3);height:calc(var(--l) * 3);letter-spacing:.04em;font-variant-numeric:tabular-nums;
+ margin-top:var(--l);background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.2) 0,rgba(255,255,255,.05) calc(var(--l) * .16),rgba(0,0,0,0) calc(var(--l) * .45),rgba(0,0,0,.22) calc(var(--l) * .78),rgba(0,0,0,.6) calc(var(--l) * .86),rgba(0,0,0,.6) var(--l)),linear-gradient(180deg,#d0cdc6,#b7b4ad)}
 /* telefonda kepenk dar: saatler kapı genişliğinin ~%90'ı */
 @media(max-width:600px){.kp-saat{font-size:min(calc(var(--l) * 2.9),calc(var(--kw,70px) * .165))}
 .kp-bas,.kp-saat{-webkit-mask-size:60px 60px;mask-size:60px 60px;filter:drop-shadow(0 0 .4px rgba(190,187,180,.5))}}
@@ -469,7 +473,7 @@
   </video>
   <!-- Kapanış saatinde (20:00–09:00, İstanbul saati) vitrin hafif loşlaşır, kapıya kepenk iner -->
   <div class="gece" id="gece" aria-hidden="true"><i class="gece-ic"></i>
-   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-yazi"><b class="kp-bas">Çalışma saatleri</b><b class="kp-saat">09.00 – 20.00</b></i><i class="kp-alt"></i></i></div>
+   <div class="kepenk"><i class="kp-kutu"></i><i class="kp-ray sol"></i><i class="kp-ray sag"></i><i class="kp-perde"><i class="kp-yazi"><b class="kp-bas">Çalışma</b><b class="kp-bas">Saatleri</b><b class="kp-saat">09.00 – 20.00</b></i><i class="kp-alt"></i></i></div>
   </div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
@@ -694,11 +698,16 @@ akisKur();
   st.setProperty('--kw',(D[8]-D[6])*k+'px');st.setProperty('--kh',(D[9]-D[7])*k+'px');
   requestAnimationFrame(basGenislik)};
  /* "ÇALIŞMA SAATLERİ" saatlerle aynı genişlikte olsun: harf aralığı ölçülerek ayarlanır */
- const basGenislik=()=>{const b=G.querySelector('.kp-bas'),z=G.querySelector('.kp-saat');if(!b||!z)return;
-  b.style.letterSpacing='0px';b.style.paddingLeft='0px';
-  const hedef=z.getBoundingClientRect().width,su=b.getBoundingClientRect().width,n=b.textContent.length;
-  if(!hedef||!su||n<2)return;const ls=Math.max(0,(hedef-su)/(n-1));
-  b.style.letterSpacing=ls+'px';b.style.marginRight=(-ls)+'px'};
+ const basGenislik=()=>{const z=G.querySelector('.kp-saat');if(!z)return;
+  const hedef=z.getBoundingClientRect().width;if(!hedef)return;
+  G.querySelectorAll('.kp-bas').forEach(b=>{
+   b.style.letterSpacing='0px';b.style.marginRight='0px';b.style.fontSize='';
+   const L=parseFloat(getComputedStyle(b).lineHeight)/3||8;
+   let w=b.getBoundingClientRect().width;if(!w)return;
+   /* yazı boyu en fazla ~1,9 lamel (satıra sığsın); kalan genişlik harf aralığıyla */
+   const fs=Math.min(L*2.85,parseFloat(getComputedStyle(b).fontSize)*hedef/w);b.style.fontSize=fs+'px';
+   w=b.getBoundingClientRect().width;const n=b.textContent.length;
+   const ls=Math.max(0,(hedef-w)/(n-1));b.style.letterSpacing=ls+'px';b.style.marginRight=(-ls)+'px'})};
  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(G.classList.contains('on'))basGenislik()});
  const durum=()=>{
   const dk=saat(),kapali=dk>=20*60||dk<9*60;
