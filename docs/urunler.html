@@ -353,12 +353,18 @@ function oncelik(u){
  else if(ONCE_YOLCULUK.some(k=>hepsi.indexOf(k)>-1))p=1;
  return (oncelikBellek[u.id]=p);
 }
+/* "Tümü" seçiliyken en başta gösterilecek ürünler (mağazanın seçimi, bu sırayla) */
+const BASTA=["bambu-ihram", "muslin-ihram", "16533", "16522", "yazma-tesbih-kutulu", "zikirmatik", "cocuk-ihrami", "ihram-kemeri-deri-cuzdanli", "ihram-kemeri-lastikli", "ihram-sabunu", "10121", "biyeli-esarp", "duble-mebrum-hurma-1-kg", "duz-seccade", "10141", "10154", "keten-erkek-gomlek-lux", "10145", "16603", "medine-hali", "misvak-duz", "osmanli-sonil", "16505", "sarik", "16614", "16506", "tavaf-patigi", "simli-seccade", "umre-terligi", "16510", "10155", "salvar-lux", "hatim-seti-karton-bordo-orta-boy", "hatim-seti-karton-yesil-orta-boy", "hediyelik-biblo-1", "hediyelik-biblo-2", "hediyelik-biblo-3", "kabe-maket-hediyelik-kod-57", "kuran-i-kerim-orta-boy-fazilet-hatti-lacivert", "kucuk-cerceve", "mekke-i-mukerreme-ve-medine-i-munevvere", "16518", "siyer-i-nebi-karton-kapak-yeni", "16509", "16570", "cerceve-7500", "istanbulda-bulunan-ashab-i-kiram-kabir-ve-makaml"];
+const bastaSira={};BASTA.forEach((id,i)=>bastaSira[id]=i);
 function suzulmus(){
  return URUNLER.filter(u=>{
   if(sec!=='Tümü'&&u.kat!==sec)return false;
   if(ara&&sade(u.ad+' '+(u.kod||'')+' '+u.kat).indexOf(ara)===-1)return false;
   return true;
- }).sort((a,b)=>oncelik(a)-oncelik(b));
+ }).sort((a,b)=>{
+  if(sec==='Tümü'&&!ara){const x=bastaSira[a.id],y=bastaSira[b.id];
+   if(x!==undefined||y!==undefined)return (x===undefined?1e4:x)-(y===undefined?1e4:y)}
+  return oncelik(a)-oncelik(b)});
 }
 /* Katalog parça parça basılır: ilk açılışta sadece ilk grup, gerisi
    "daha fazla" düğmesiyle ve aşağı yaklaşınca kendiliğinden yüklenir.
