@@ -393,3 +393,5 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(234,230,220,.22) 30%,rgba(234,230,220,.22) 70%,rgba(255,255,255,0));transition:opacity .3s}
 .nav .logo+a::before,.nav a.on::before,.nav a.on+a::before,.nav a.tur::before{opacity:0}
 @media(max-width:720px){.nav a:not(.logo)+a::before{left:0;height:42%}}
+/* Masaüstünde dilim çizgisi yok */
+@media(min-width:721px){.nav a:not(.logo)+a::before{display:none}}
