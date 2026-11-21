@@ -107,17 +107,17 @@ const Sepet={
  kalemler(){const s=Sepet.al();return Object.keys(s).map(id=>({u:URUNLER.find(u=>u.id===id),n:s[id]})).filter(k=>k.u)},
  toplam(){return Sepet.kalemler().reduce((a,{u,n})=>a+u.fiyat*n,0)},
  ozet(){const c=Sepet.cesit(),n=Sepet.sayi();return c===n?`${n} ürün`:`${c} çeşit · ${n} adet`},
- waMetin(){const k=Sepet.kalemler();let t='Merhaba, sitenizden çantamı hazırladım. Aşağıdaki ürünler için stok ve fiyat bilgisi almak istiyorum:\n\n';
+ waMetin(){const k=Sepet.kalemler();let t='Merhaba, sitenizden sepetimi hazırladım. Aşağıdaki ürünler için stok ve fiyat bilgisi almak istiyorum:\n\n';
   k.forEach(({u,n})=>{t+=`• ${u.ad} × ${n} — ${TL(u.fiyat*n)}\n`});return t+`\nAra toplam: ${TL(Sepet.toplam())}`},
  gonder(){window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(Sepet.waMetin()),'_blank','noopener')},
  ciz(){
   const n=Sepet.sayi(),btn=document.querySelector('.sepetbtn');
-  if(btn){const b=btn.querySelector('b');if(b.textContent!=String(n)&&n>0){b.classList.remove('yeni');void b.offsetWidth;b.classList.add('yeni')}b.textContent=n;b.classList.toggle('var',n>0);btn.classList.toggle('dolu',n>0);btn.setAttribute('aria-label',n?`Çantam, ${Sepet.ozet()}`:'Çantam, boş')}
+  if(btn){const b=btn.querySelector('b');if(b.textContent!=String(n)&&n>0){b.classList.remove('yeni');void b.offsetWidth;b.classList.add('yeni')}b.textContent=n;b.classList.toggle('var',n>0);btn.classList.toggle('dolu',n>0);btn.setAttribute('aria-label',n?`Sepetim, ${Sepet.ozet()}`:'Sepetim, boş')}
   const L=document.querySelector('.cekmece .liste');if(!L)return;const k=Sepet.kalemler();
   document.querySelector('.cekmece .alt').hidden=!k.length;
   if(!k.length){
    const urunSayfasi=/urunler\.html/.test(location.pathname);
-   L.innerHTML=`<div class="bos"><p>Çantanız henüz boş.</p><a class="btn cam" href="urunler.html" ${urunSayfasi?'data-kapat':''}>Ürünlere göz atın</a></div>`;return}
+   L.innerHTML=`<div class="bos"><p>Sepetiniz henüz boş.</p><a class="btn cam" href="urunler.html" ${urunSayfasi?'data-kapat':''}>Ürünlere göz atın</a></div>`;return}
   L.innerHTML=k.map(({u,n})=>`<div class="satir"><img src="${resim(u.gorsel)}" alt="" style="object-position:${u.kadraj||'50% 50%'}" ${u.yedek?`onerror="this.onerror=null;this.src='${u.yedek}'"`:RESIM_YEDEK}><div class="s-bilgi"><div class="ad">${u.ad}</div><small>${TL(u.fiyat)}</small>
   <button type="button" class="kaldir" data-kaldir="${u.id}">Kaldır</button></div>
   <div class="adet"><button type="button" aria-label="${u.ad} adedini azalt" data-adet="${u.id}" data-d="-1">−</button><b aria-live="polite">${n}</b><button type="button" aria-label="${u.ad} adedini artır" data-adet="${u.id}" data-d="1">+</button></div></div>`).join('');
@@ -207,17 +207,17 @@ function kabuk(aktif){
  ust();
  /* çekmece */
  const c=document.createElement('div');c.className='cekmece';
- c.innerHTML=`<div class="perde"></div><aside class="pan" role="dialog" aria-modal="true" aria-labelledby="cekmece-baslik" aria-hidden="true" data-lenis-prevent><div class="pan-bas"><h3 id="cekmece-baslik">Çantam</h3><button type="button" class="kapat" aria-label="Çantayı kapat">×</button></div>
+ c.innerHTML=`<div class="perde"></div><aside class="pan" role="dialog" aria-modal="true" aria-labelledby="cekmece-baslik" aria-hidden="true" data-lenis-prevent><div class="pan-bas"><h3 id="cekmece-baslik">Sepetim</h3><button type="button" class="kapat" aria-label="Sepeti kapat">×</button></div>
  <p class="pan-not">Seçtiğiniz ürünleri tek mesajla WhatsApp'tan gönderin; stok ve fiyatı teyit edip çantanızı mağazada hazırlayalım.</p>
  <div class="liste"></div>
  <div class="alt"><div class="toplam"><span>Ara toplam <small class="ozet-sayi"></small></span><b></b></div>
- <button class="btn wa" type="button" onclick="Sepet.gonder()">${WA_SVG}Çantamı WhatsApp'tan gönder</button>
- <button class="bosalt" type="button">Çantayı boşalt</button></div></aside>`;
+ <button class="btn wa" type="button" onclick="Sepet.gonder()">${WA_SVG}Sepetimi WhatsApp'tan gönder</button>
+ <button class="bosalt" type="button">Sepeti boşalt</button></div></aside>`;
  document.body.append(c);
   c.querySelector('.perde').onclick=cekmeceKapat;c.querySelector('.kapat').onclick=cekmeceKapat;
  const bos=c.querySelector('.bosalt');
- bos.onclick=()=>{if(bos.classList.contains('emin')){bos.classList.remove('emin');bos.textContent='Çantayı boşalt';Sepet.bosalt();c.querySelector('.kapat').focus();return}
-  bos.classList.add('emin');bos.textContent='Emin misiniz? Evet, boşalt';clearTimeout(bos._z);bos._z=setTimeout(()=>{bos.classList.remove('emin');bos.textContent='Çantayı boşalt'},4000)};
+ bos.onclick=()=>{if(bos.classList.contains('emin')){bos.classList.remove('emin');bos.textContent='Sepeti boşalt';Sepet.bosalt();c.querySelector('.kapat').focus();return}
+  bos.classList.add('emin');bos.textContent='Emin misiniz? Evet, boşalt';clearTimeout(bos._z);bos._z=setTimeout(()=>{bos.classList.remove('emin');bos.textContent='Sepeti boşalt'},4000)};
  c.addEventListener('click',e=>{
   const a=e.target.closest('[data-adet]');
   if(a){const id=a.dataset.adet,d=a.dataset.d;Sepet.ekle(id,+d);
@@ -236,7 +236,7 @@ function kabuk(aktif){
  });
  /* çanta düğmesi: menü yerine sağ altta, doluyken görünür */
  const sb=document.createElement('button');sb.type='button';sb.className='sepetbtn sepet-sabit';
- sb.setAttribute('aria-label','Çantam, boş');
+ sb.setAttribute('aria-label','Sepetim, boş');
  sb.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 7h14l-1.5 11h-11z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b aria-hidden="true">0</b>';
  sb.onclick=cekmeceAc;document.body.append(sb);
  /* sabit WhatsApp */
