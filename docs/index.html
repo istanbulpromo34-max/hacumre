@@ -434,6 +434,19 @@
 /* telefonda kepenk dar: saatler kapı genişliğinin ~%90'ı */
 @media(max-width:600px){.kp-saat{font-size:min(calc(var(--l) * 2.9),calc(var(--kw,70px) * .165))}
 .kp-bas,.kp-saat{-webkit-mask-size:60px 60px;mask-size:60px 60px;filter:drop-shadow(0 0 .4px rgba(190,187,180,.5))}}
+/* Vitrin altındaki lacivert duvar: mağazanın o anki durumu, duvara monte edilmiş ince
+   metal harfler gibi. Sakin: küçük, aralıklı, soluk altın; durum değişince yumuşakça geçer.
+   Fotoğrafla aynı paralaksla kayar (telefonda paralaks yok). */
+.duvar{position:absolute;inset:0;z-index:0;pointer-events:none;transform:translate3d(0,calc(var(--sy,0)*.22px),0)}
+@media (max-width:820px),(max-aspect-ratio:1/1),(prefers-reduced-motion:reduce){.duvar{transform:none}}
+.duvar-yazi{position:absolute;left:var(--dx,-999px);top:var(--dy,0);transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:.7em;white-space:nowrap;
+ font:500 var(--dfs,13px) 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;
+ color:rgba(220,196,140,.78);text-shadow:0 1px 0 rgba(0,0,0,.6),0 0 8px rgba(201,162,75,.12);transition:opacity .6s}
+.duvar-nokta{width:.5em;height:.5em;border-radius:50%;background:currentColor;opacity:.9;box-shadow:0 0 6px currentColor}
+.duvar-yazi.acik .duvar-nokta{color:#7fcf9a}
+.duvar-yazi.acik{color:rgba(226,214,186,.8)}
+@media(prefers-reduced-motion:no-preference){.duvar-yazi.acik .duvar-nokta{animation:nokta 3.2s ease-in-out infinite}}
+@keyframes nokta{50%{opacity:.35}}
 @media(prefers-reduced-motion:reduce){.kp-perde{transition:none}.gece{transition:none}}
 
 /* Telefonda vitrin karartması yok (küçük fotoğrafta sönük leke gibi duruyordu); yalnız kepenk iner */
@@ -477,6 +490,7 @@
   </div>
  </div>
  <div class="hero-bugu" aria-hidden="true"></div>
+ <div class="duvar" id="duvar"><span class="duvar-yazi" id="duvarYazi" role="status"><i class="duvar-nokta" aria-hidden="true"></i><span id="duvarMetin"></span></span></div>
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
  <div class="metin">
   <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">İhram kemerinizi</span><span class="metal metal-yazi">Takkenizi</span><span class="metal metal-yazi">Feracenizi</span><span class="metal metal-yazi">Eşarbınızı</span><span class="metal metal-yazi">Terliğinizi</span><span class="metal metal-yazi">Mestinizi</span><span class="metal metal-yazi">Tavaf çorabınızı</span><span class="metal metal-yazi">Kokusuz sabununuzu</span><span class="metal metal-yazi">Boyun çantanızı</span><span class="metal metal-yazi">Umre çantanızı</span><span class="metal metal-yazi">Misvakınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Namaz örtünüzü</span><span class="metal metal-yazi">Tespihinizi</span><span class="metal metal-yazi">Zikirmatiğinizi</span><span class="metal metal-yazi">Kur’an-ı Kerim’inizi</span><span class="metal metal-yazi">Tüm ihtiyaçlarınızı</span><span class="metal metal-yazi">Rahlenizi</span><span class="metal metal-yazi">Esansınızı</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hac hazırlığınızı</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hat tablonuzu</span><span class="metal metal-yazi">Hediyeliklerinizi</span><span class="metal metal-yazi">Eksiklerinizi</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz,</span><span class="sat elyazi">siz <em class="parilti">ibadetinize</em> odaklanın.</span></span></h1>
@@ -678,8 +692,8 @@ akisKur();
 (function(){
  const G=document.getElementById('gece'),M=document.querySelector('.hero-medya');if(!G||!M)return;
  /* Görsel pikselleri: [genişlik, yükseklik, vitrin x1,y1,x2,y2, kapı x1,y1,x2,y2] */
- const BUYUK=[1920,1080, 880,488,1622,890, 1178,606,1337,881];
- const KUCUK=[1080,1064, 105,456,981,930, 457,595,645,919];
+ const BUYUK=[1920,1080, 880,488,1622,890, 1178,606,1337,881, 912,964];
+ const KUCUK=[1080,1064, 105,456,981,930, 457,595,645,919, 953,1018];
  const saat=()=>{const p=new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
   return +p.find(x=>x.type==='hour').value*60+ +p.find(x=>x.type==='minute').value};
  const yerlestir=()=>{
@@ -695,6 +709,10 @@ akisKur();
   st.setProperty('--gw',(D[4]-D[2])*k+'px');st.setProperty('--gh',(D[5]-D[3])*k+'px');
   st.setProperty('--kx',X(D[6])+'px');st.setProperty('--ky',Y(D[7])+'px');
   st.setProperty('--kw',(D[8]-D[6])*k+'px');st.setProperty('--kh',(D[9]-D[7])*k+'px');
+  /* duvar yazısı: vitrinin ortasında, lacivert bandın ortası (dönüşüm hariç konum) */
+  const U=document.getElementById('duvar');
+  if(U){U.style.setProperty('--dx',(M.offsetLeft+ox+((D[2]+D[4])/2)*k)+'px');U.style.setProperty('--dy',(M.offsetTop+oy+((D[10]+D[11])/2)*k)+'px');
+   U.style.setProperty('--dfs',Math.max(8.5,Math.min(14,(D[11]-D[10])*k*.26))+'px')}
   requestAnimationFrame(basGenislik)};
  /* "ÇALIŞMA SAATLERİ" saatlerle aynı genişlikte olsun: harf aralığı ölçülerek ayarlanır */
  const basGenislik=()=>{const z=G.querySelector('.kp-saat');if(!z)return;
@@ -708,13 +726,22 @@ akisKur();
    w=b.getBoundingClientRect().width;const n=b.textContent.length;
    const ls=Math.max(0,(hedef-w)/(n-1));b.style.letterSpacing=ls+'px';b.style.marginRight=(-ls)+'px'})};
  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(G.classList.contains('on'))basGenislik()});
+ /* Duvardaki durum yazısı: açık / birazdan kapanıyor / kapalı / birazdan açılıyor */
+ const duvarYaz=dk=>{const y=document.getElementById('duvarYazi'),t=document.getElementById('duvarMetin');if(!y)return;
+  let m,acik=false;
+  if(dk>=9*60&&dk<19*60+30){m='Şu an açığız · 20:00\'ye kadar';acik=true}
+  else if(dk>=19*60+30&&dk<20*60){m='Birazdan kapanıyoruz · 20:00';acik=true}
+  else if(dk>=8*60+20&&dk<9*60){m='Birazdan açılıyoruz · 09:00'}
+  else m='Şu an kapalıyız · Sabah 09:00\'da açılıyoruz';
+  if(t.textContent!==m){y.style.opacity='0';setTimeout(()=>{t.textContent=m;y.classList.toggle('acik',acik);y.style.opacity=''},t.textContent?300:0)}};
  const durum=()=>{
   const dk=saat(),kapali=dk>=20*60||dk<9*60;
-  if(kapali){yerlestir();requestAnimationFrame(()=>G.classList.add('on'))}else G.classList.remove('on')};
+  yerlestir();duvarYaz(dk);
+  if(kapali)requestAnimationFrame(()=>G.classList.add('on'));else G.classList.remove('on')};
  /* İsteğe bağlı deneme: adrese ?gece=1 eklenirse saat ne olursa olsun kapalı görünüm */
- if(/[?&]gece=1/.test(location.search)){yerlestir();requestAnimationFrame(()=>G.classList.add('on'))}else durum();
- addEventListener('resize',()=>{if(G.classList.contains('on'))yerlestir()});
- M.querySelectorAll('video').forEach(v=>v.addEventListener('loadedmetadata',()=>{if(G.classList.contains('on'))yerlestir()}));
+ if(/[?&]gece=1/.test(location.search)){yerlestir();duvarYaz(22*60);requestAnimationFrame(()=>G.classList.add('on'))}else durum();
+ addEventListener('resize',yerlestir);
+ M.querySelectorAll('video').forEach(v=>v.addEventListener('loadedmetadata',yerlestir));
  setInterval(()=>{if(!/[?&]gece=1/.test(location.search))durum()},60000);
 })();
 </script>
