@@ -386,3 +386,10 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35)}
 .sekmeler button{text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .sekmeler button[aria-selected="true"]{text-shadow:none}
+/* Menüdeki sekmeler arasında soluk, ince dilim çizgileri: her dokunma alanının sınırı belli olsun.
+   Seçili sekme ya da altın Dijital Tur hapının yanında çizgi gizlenir (hapın kendi sınırı zaten var). */
+.nav a:not(.logo){position:relative}
+.nav a:not(.logo)+a::before{content:"";position:absolute;left:-3px;top:50%;width:1px;height:46%;transform:translate(-50%,-50%);pointer-events:none;
+ background:linear-gradient(180deg,rgba(255,255,255,0),rgba(234,230,220,.22) 30%,rgba(234,230,220,.22) 70%,rgba(255,255,255,0));transition:opacity .3s}
+.nav .logo+a::before,.nav a.on::before,.nav a.on+a::before,.nav a.tur::before{opacity:0}
+@media(max-width:720px){.nav a:not(.logo)+a::before{left:0;height:42%}}
