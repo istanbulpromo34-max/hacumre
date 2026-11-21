@@ -459,7 +459,11 @@ F.addEventListener('click', e => {
 SK.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || b.dataset.s === sekme) return;
   sekme = b.dataset.s; sec = ''; ara = ''; araKutu.value = ''; araSil.hidden = true;
-  gosterilen = SAYFA; adresiYaz(); sekmeCiz(); filtreCiz(); izgaraCiz(); filtreyeGit();
+  gosterilen = SAYFA; adresiYaz(); sekmeCiz(); filtreCiz(); izgaraCiz();
+  /* Sekme değişince sayfa zıplamasın: sekmeler zaten ekrandaysa olduğu yerde kalır;
+     aşağıdaysa yalnız sekmeler görünecek kadar yumuşakça yukarı çıkılır. */
+  const ust = SK.getBoundingClientRect().top;
+  if (ust < 0) filtreyeGit();
 });
 addEventListener('resize', isigiTasi);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(isigiTasi);
