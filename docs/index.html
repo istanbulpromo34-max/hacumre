@@ -107,9 +107,10 @@
    yarım görünüyordu. */
 .hero h1 .donen{--sat:1.15em;--tas:.04em;box-sizing:content-box;height:var(--sat);line-height:var(--sat);overflow:hidden;
  padding-block:var(--tas);margin-block:calc(-1 * var(--tas))}
-.hero h1 .rulo{display:block;will-change:transform;transition:transform .42s cubic-bezier(.3,1.02,.32,1)}
+/* Kelimeler arasında görünmez boşluk (--ara): komşu kelimenin kuyruğu (ğ, ç, ş) pencereye hiç taşmaz */
+.hero h1 .rulo{--ara:.3em;display:block;margin-top:calc(-1 * var(--ara));will-change:transform;transition:transform .42s cubic-bezier(.3,1.02,.32,1)}
 .hero h1 .rulo.ani{transition:none}
-.hero h1 .rulo>span{display:block;height:var(--sat);line-height:var(--sat);white-space:nowrap}
+.hero h1 .rulo>span{display:block;box-sizing:content-box;height:var(--sat);padding-block:var(--ara);line-height:var(--sat);white-space:nowrap}
 @media(prefers-reduced-motion:reduce){
 .hero h1 .rulo{transition:none}}
 .hero .giris{font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:rgba(234,230,220,.86);max-width:44ch;text-shadow:0 1px 18px rgba(6,13,31,.6)}
