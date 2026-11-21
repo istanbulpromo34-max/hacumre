@@ -462,9 +462,18 @@ const sade=t=>(t||'').toLocaleLowerCase('tr').replace(/[ıİ]/g,'i').replace(/te
    açtığında önce yolculuk için gerekenleri görsün. */
 const ONCE_CEKIRDEK=['ihram','tespih','zikirmatik','kokusuz','koku','sabun','şampuan','terlik','takke'];
 const ONCE_YOLCULUK=['seccade','misvak','mest','bone','ferace','eşarp','başörtü','abdest','peştamal','sürme','boyun çanta','bel çanta','ihram kemeri','hac','umre','zemzem','hurma','namaz','cüzdan','pasaport'];
+/* Mağazanın öne çıkardığı ürünler: sayfa açılınca bu sırayla en başta gelir */
+const ONE_CIKAN=['bambu-ihram','muslin-ihram','16533','16521','yazma-tesbih-kutulu','zikirmatik','cocuk-ihrami',
+ 'ihram-kemeri-deri-cuzdanli','ihram-kemeri-lastikli','ihram-sabunu','10121','biyeli-esarp','duble-mebrum-hurma-1-kg',
+ 'duz-seccade','10141','10154','keten-erkek-gomlek-lux','10145','16603','medine-hali','misvak-duz','osmanli-sonil',
+ '16505','sarik','16614','16506','tavaf-patigi','simli-seccade','umre-terligi','16510','10155','salvar-lux',
+ 'hatim-seti-karton-bordo-orta-boy','hediyelik-biblo-1','hediyelik-biblo-2','hediyelik-biblo-3','kabe-maket-hediyelik-kod-57',
+ 'kuran-i-kerim-orta-boy-fazilet-hatti-lacivert','kucuk-cerceve','mekke-i-mukerreme-ve-medine-i-munevvere','16518',
+ 'siyer-i-nebi-karton-kapak-yeni','16509','16570','cerceve-7500','istanbulda-bulunan-ashab-i-kiram-kabir-ve-makaml'];
 const oncelikBellek={};
 function oncelik(u){
  if(oncelikBellek[u.id]!==undefined)return oncelikBellek[u.id];
+ const oc=ONE_CIKAN.indexOf(u.id);if(oc>-1)return (oncelikBellek[u.id]=oc-1000);
  const ad=sade(u.ad),hepsi=ad+' '+sade(u.kat||'');
  let p=2;
  if(ONCE_CEKIRDEK.some(k=>ad.indexOf(k)>-1))p=0;
