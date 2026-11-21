@@ -332,6 +332,35 @@
 .filtre-dis .filtre{padding-block:10px 12px}
 }
 @keyframes araIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+/* ===== İnceleme penceresinde çantaya ekleme: görsel çantaya uçar, düğme onaylar,
+   altında "çantanızda" satırı belirir; üst köşedeki çanta sayısını gösterir ===== */
+#buyutCanta{position:absolute;top:10px;right:60px;z-index:3;width:42px;height:42px;border-radius:50%;padding:0;display:grid;place-items:center;cursor:pointer;
+  border:1px solid rgba(230,199,122,.5);background:rgba(6,13,31,.72);color:var(--altin2,#e6c77a);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);opacity:0;transform:scale(.4);pointer-events:none;transition:transform .5s cubic-bezier(.2,.9,.3,1.25),opacity .3s}
+#buyutCanta.on{opacity:1;transform:none;pointer-events:auto}
+#buyutCanta svg{width:20px;height:20px}
+#buyutCanta b{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(180deg,#f0d896,#c9a24b);color:#1a1205;font:700 11px/1 'Hanken Grotesk';box-shadow:0 2px 8px rgba(0,0,0,.35)}
+#buyutEkle{position:relative;overflow:hidden;transition:background .35s,color .35s}
+#buyutEkle .be-yazi{display:inline-flex;align-items:center;gap:8px}
+#buyutEkle .be-yazi svg{width:18px;height:18px}
+#buyutEkle.tamam{background:linear-gradient(180deg,#f3e2b0,#d9b866)}
+#buyutEkle.tamam .be-yazi{animation:ekGel .3s cubic-bezier(.2,.8,.2,1)}
+#buyutEkle.tamam::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-100%);animation:beIsik .8s ease-out}
+@keyframes beIsik{to{transform:translateX(100%)}}
+.buyut-durum{display:flex;align-items:center;gap:10px;width:100%;margin-top:2px;padding:11px 14px;border-radius:14px;cursor:pointer;text-align:left;
+  border:1px solid rgba(230,199,122,.35);background:rgba(230,199,122,.08);color:#eae6dc;font:500 14px 'Hanken Grotesk',sans-serif;transition:background .25s,border-color .25s}
+.buyut-durum:hover{background:rgba(230,199,122,.14);border-color:rgba(230,199,122,.6)}
+.buyut-durum:not([hidden]){animation:ekGel .35s cubic-bezier(.2,.8,.2,1)}
+.bd-tik{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#f0d896,#c9a24b);color:#1a1205}
+.bd-tik svg{width:14px;height:14px}
+.bd-yazi{flex:1;min-width:0}
+.buyut-durum em{flex:none;font-style:normal;font-weight:600;color:var(--altin2,#e6c77a);display:inline-flex;align-items:center;gap:2px;white-space:nowrap}
+.buyut-durum em svg{width:16px;height:16px;transition:transform .25s}
+.buyut-durum:hover em svg{transform:translateX(3px)}
+@media(max-width:720px){#buyutCanta{right:58px}.buyut-durum{font-size:13.5px;padding:10px 12px}}
+@media(prefers-reduced-motion:reduce){#buyutCanta,#buyutEkle .be-yazi,.buyut-durum{transition:none;animation:none}#buyutEkle.tamam::after{display:none}}
 </style>
 </head>
 <body>
@@ -370,6 +399,7 @@
 <div class="buyut" id="buyut" hidden role="dialog" aria-modal="true" aria-labelledby="buyutAd">
  <div class="buyut-ic">
   <button class="buyut-x" type="button" id="buyutKapat" aria-label="Kapat">&times;</button>
+  <button class="buyut-canta" type="button" id="buyutCanta" aria-label="Çantamı gör" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><b id="buyutSay">0</b></button>
   <button class="buyut-ok geri" type="button" id="buyutGeri" aria-label="Önceki ürün">‹</button>
   <button class="buyut-ok ileri" type="button" id="buyutIleri" aria-label="Sonraki ürün">›</button>
   <div class="buyut-gor"><img id="buyutGorsel" alt=""></div>
@@ -380,9 +410,10 @@
    <p class="acik" id="buyutAcik"></p>
    <div class="fi metal metal-yazi" data-isik id="buyutFiyat"></div>
    <div class="dug">
-    <button class="btn altin" type="button" id="buyutEkle">Sepete ekle</button>
+    <button class="btn altin" type="button" id="buyutEkle"><span class="be-yazi">Çantaya ekle</span></button>
     <button class="btn wa" type="button" id="buyutSor" aria-label="Bu ürünü WhatsApp'tan sorun">WhatsApp'tan sorun</button>
    </div>
+   <button class="buyut-durum" type="button" id="buyutDurum" hidden><span class="bd-tik"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="bd-yazi" id="buyutDurumYazi"></span><em>Çantamı gör<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></em></button>
   </div>
  </div>
 </div>
@@ -601,6 +632,7 @@ function byCiz(){
  const tamOnYukle=innerWidth>720&&!ag.saveData&&!/2g/.test(ag.effectiveType||'');
  [1,-1].forEach(function(n){ const k=byListe[(bySira+n+byListe.length)%byListe.length];
   if(k){ const ön=new Image(); ön.src=tamOnYukle?resim(k.gorsel):kucuk(resim(k.gorsel)); } });
+ clearTimeout(beZ); BE.classList.remove('tamam'); byDurum();
 }
 function byAc(id){
  byListe=suzulmus();
@@ -620,8 +652,33 @@ let dokunX=0;
 BY.addEventListener('touchstart',e=>{dokunX=e.changedTouches[0].clientX},{passive:true});
 BY.addEventListener('touchend',e=>{const f=e.changedTouches[0].clientX-dokunX;
  if(Math.abs(f)>60)byGit(f<0?1:-1)},{passive:true});
-document.getElementById('buyutEkle').addEventListener('click',()=>{
- const u=byListe[bySira]; if(!u)return; Sepet.ekle(u.id,1); cubukMesaj('Eklendi: '+u.ad); durum(); });
+/* İnceleme penceresinde çantaya ekleme: ürün görseli üst köşedeki çantaya uçar,
+   düğme bir an "Çantaya eklendi" der, altında bu üründen kaç adet olduğu yazar. */
+const BE=document.getElementById('buyutEkle'),BC=document.getElementById('buyutCanta'),BD=document.getElementById('buyutDurum');
+const TIK='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+let beZ=null;
+function byDurum(){
+ const u=byListe[bySira]; if(!u)return;
+ const n=Sepet.adet(u.id),top=Sepet.sayi();
+ BC.classList.toggle('on',top>0); BC.tabIndex=top>0?0:-1; document.getElementById('buyutSay').textContent=top;
+ BD.hidden=n===0;
+ if(n>0)document.getElementById('buyutDurumYazi').textContent=`Çantanızda ${n} adet var`;
+ if(!BE.classList.contains('tamam'))BE.querySelector('.be-yazi').textContent=n>0?'Bir tane daha ekle':'Çantaya ekle';
+}
+BE.addEventListener('click',()=>{
+ const u=byListe[bySira]; if(!u)return;
+ BC.classList.add('on');
+ Sepet.ekle(u.id,1); durum();
+ sepeteUcur(document.getElementById('buyutGorsel'),BC);
+ BE.classList.remove('tamam'); void BE.offsetWidth; BE.classList.add('tamam');
+ BE.querySelector('.be-yazi').innerHTML=TIK+'Çantaya eklendi';
+ clearTimeout(beZ); beZ=setTimeout(()=>{BE.classList.remove('tamam');byDurum()},1500);
+ byDurum();
+ const d=document.getElementById('duyuru'); if(d)d.textContent=u.ad+' çantaya eklendi';
+});
+const cantaGit=()=>{byKapat(); cekmeceAc();};
+BC.addEventListener('click',cantaGit); BD.addEventListener('click',cantaGit);
+document.addEventListener('sepet',()=>{ if(!BY.hidden)byDurum(); });
 document.getElementById('buyutSor').addEventListener('click',()=>{
  const u=byListe[bySira]; if(!u)return;
  const m='Merhaba, bu ürün hakkında bilgi almak istiyorum:\n'+u.ad+(u.kod?(' ('+u.kod+')'):'')+'\n'+TL(u.fiyat);

@@ -133,10 +133,10 @@ function parlat(e){if(!e)return;e.classList.add('isil');e.classList.remove('parl
 /* Ürün görseli kavis çizerek sepete uçar, sepetin ağzına gelince içine düşer
    (alt kenarı sepetin ağzında kaybolur), sepet hafifçe parlar. Görünür bir sepet
    hedefi (örneğin Ürünlerimiz'deki alt çubuk) varsa oraya, yoksa köşedeki düğmeye. */
-function sepeteUcur(kaynak){
+function sepeteUcur(kaynak,zorHedef){
  const adaylar=[...document.querySelectorAll('[data-sepet-hedef],.sepetbtn')]
   .filter(e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&s.visibility!=='hidden'&&+s.opacity>.3&&r.bottom>0&&r.top<innerHeight});
- const hedef=adaylar[0];if(!hedef||!kaynak)return;
+ const hedef=zorHedef||adaylar[0];if(!hedef||!kaynak)return;
  if(matchMedia('(prefers-reduced-motion: reduce)').matches){parlat(hedef);return}
  const a=kaynak.getBoundingClientRect(),b=hedef.getBoundingClientRect();
  const k=document.createElement('img');k.src=kaynak.currentSrc||kaynak.src;k.className='ucan';k.alt='';
