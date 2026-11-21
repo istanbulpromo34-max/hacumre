@@ -233,8 +233,6 @@
   <div class="bas-sol" id="basSol">
    <div class="ust-yazi">Tablo Eserleri</div>
    <h1>Duvarınıza bir <span class="metal metal-yazi" data-isik>hat</span> eseri.</h1>
-   <p class="giris" data-ev="basSol">Hilye-i şerif, ayetel kürsi, besmele, tuğra ve esmaül hüsna tabloları; çerçeveli, lazer kesim ve masaüstü seçenekleriyle. Hattat elinden çıkmış el yazması orijinal eserler ayrı sekmede.</p>
-   <p class="not-alt" id="notAlt" data-ev="basSol"></p>
   </div>
   <div class="bas-sag" id="basSag">
    <ol class="adim3" data-ev="basSag">
@@ -293,9 +291,6 @@ const kacis = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&
 const TL = n => n == null ? null : new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 0 }).format(n) + ' ₺';
 const azHareket = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.getElementById('notAlt').textContent = ESERLER.length
-  ? ESERLER.length.toLocaleString('tr-TR') + ' eser listeleniyor. Ölçüye göre fiyat değiştiği için tabloları WhatsApp üzerinden satıyoruz; stok ve fiyatı siparişiniz sırasında teyit ediyoruz.'
-  : 'Katalog yükleniyor.';
 
 /* Fotoğraflar hazır olana kadar her esere, adından türeyen bir çerçeve deseni
    düşüyor; böylece liste tek düze görünmüyor. */
