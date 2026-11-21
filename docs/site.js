@@ -118,7 +118,7 @@ const Sepet={
   if(!k.length){
    const urunSayfasi=/urunler\.html/.test(location.pathname);
    L.innerHTML=`<div class="bos"><p>Sepetiniz henüz boş.</p><a class="btn cam" href="urunler.html" ${urunSayfasi?'data-kapat':''}>Ürünlere göz atın</a></div>`;return}
-  L.innerHTML=k.map(({u,n})=>`<div class="satir"><img src="${resim(u.gorsel)}" alt="" style="object-position:${u.kadraj||'50% 50%'}" ${u.yedek?`onerror="this.onerror=null;this.src='${u.yedek}'"`:RESIM_YEDEK}><div class="s-bilgi"><div class="ad">${u.ad}</div><small>${TL(u.fiyat)}</small>
+  L.innerHTML=k.map(({u,n})=>`<div class="satir"><img src="${mini(resim(u.gorsel))}" data-tam="${resim(u.gorsel)}" alt="" decoding="async" style="object-position:${u.kadraj||'50% 50%'}" onerror="if(this.dataset.tam){this.src=this.dataset.tam;this.dataset.tam=''}else{this.onerror=null;${u.yedek?`this.src='${u.yedek}'`:`this.src=this.src.replace(/\\.webp$/,'.jpg')`}}"><div class="s-bilgi"><div class="ad">${u.ad}</div><small>${TL(u.fiyat)}</small>
   <button type="button" class="kaldir" data-kaldir="${u.id}">Kaldır</button></div>
   <div class="adet"><button type="button" aria-label="${u.ad} adedini azalt" data-adet="${u.id}" data-d="-1">−</button><b aria-live="polite">${n}</b><button type="button" aria-label="${u.ad} adedini artır" data-adet="${u.id}" data-d="1">+</button></div></div>`).join('');
   document.querySelector('.cekmece .toplam b').textContent=TL(Sepet.toplam());

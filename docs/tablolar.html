@@ -16,10 +16,14 @@
 <meta property="og:image" content="https://istanbulhacumre.com/assets/og.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:image:alt" content="İstanbul Hac Umre Hediyelik mağazası, Ümraniye">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ana Sayfa","item":"https://istanbulhacumre.com/"},{"@type":"ListItem","position":2,"name":"Tablo Eserleri","item":"https://istanbulhacumre.com/tablolar.html"}]},{"@type":"CollectionPage","name":"Tablo Eserleri","url":"https://istanbulhacumre.com/tablolar.html","inLanguage":"tr","isPartOf":{"@type":"WebSite","name":"İstanbul Hac Umre Hediyelik","url":"https://istanbulhacumre.com/"}}]}</script>
 <link rel="icon" href="assets/ikon-48.png" sizes="48x48" type="image/png">
 <link rel="apple-touch-icon" href="assets/ikon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.myikas.com">
 <link rel="stylesheet" href="site.css">
 <script src="assets/js/lenis.min.js" defer></script>
 <style>
@@ -591,6 +595,20 @@ basYerlesim();addEventListener('resize',basYerlesim);
 
 sekmeKur(); sekmeCiz(); filtreCiz(); izgaraCiz();
 akisKur(); damlaArama();
+/* Arama motorları için eser listesi (yapılandırılmış veri); ekranda hiçbir şey değiştirmez. */
+try{
+  const kok=location.origin+location.pathname.replace(/[^/]*$/,'');
+  const veri={'@context':'https://schema.org','@type':'ItemList','name':'Hat sanatı tablo eserleri',
+    numberOfItems:TABLOLAR.length,
+    itemListElement:TABLOLAR.slice(0,120).map((e,i)=>({'@type':'ListItem',position:i+1,item:{
+      '@type':'Product',name:e.ad,category:e.kat,...(e.gorsel?{image:e.gorsel}:{}),
+      ...(e.olcu&&e.olcu.length?{size:e.olcu[0].replace('x','×')+' cm'}:{}),
+      brand:{'@type':'Brand',name:'İstanbul Hac Umre Hediyelik'},
+      ...(e.fiyat?{offers:{'@type':'Offer',price:e.fiyat,priceCurrency:'TRY',
+        availability:'https://schema.org/InStoreOnly',url:kok+'tablolar.html'}}:{})}}))};
+  const et=document.createElement('script');et.type='application/ld+json';
+  et.textContent=JSON.stringify(veri);document.head.append(et);
+}catch(e){}
 })();
 </script>
 </body>
