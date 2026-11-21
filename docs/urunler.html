@@ -80,19 +80,12 @@
 .kart.sepette .ekle{display:none}
 /* Dokununca bir anlığına "Çantada ✓" yazar, sonra adet seçici gelir */
 .kart .ekle .ek-yazi{display:none;white-space:nowrap}
-.kart .ekle .ek-ad{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1}
-.kart .ekle .ek-ad small{font:600 7.5px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;opacity:.72;margin-bottom:1px}
-/* Bilgisayarda düğme biraz daha büyük */
+/* Bilgisayarda hap bir tık büyük, yine sade: sepet ikonu + "Ekle" */
 @media(min-width:721px){
-.kart .ekle{height:42px;padding:0 18px 0 14px;gap:8px;font:600 15px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.005em;
+.kart .ekle{height:36px;padding:0 15px 0 12px;gap:6px;font:600 14px 'Hanken Grotesk',system-ui,sans-serif;
  background:linear-gradient(135deg,var(--k-altin2),var(--k-altin) 45%,#a8822f);
- box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 8px 22px -12px rgba(201,162,75,.7)}
-.kart .ekle svg{width:18px;height:18px}
-/* bilgisayarda tek satır: "Çantama ekle" */
-.kart .ekle .ek-ad{display:none!important}
-.kart .ekle .ek-tek{display:inline!important}}
-.kart .ekle .ek-tek{display:none}
-.kart.eklendi .ekle .ek-tek{display:none!important}
+ box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 6px 16px -10px rgba(201,162,75,.7)}
+.kart .ekle svg{width:16px;height:16px}}
 .kart.eklendi .ekle{display:inline-flex!important}
 .kart.eklendi .ekle .ek-ad{display:none!important}
 .kart.eklendi .ekle .ek-yazi{display:inline;animation:ekGel .3s cubic-bezier(.2,.8,.2,1)}
@@ -379,7 +372,7 @@ function kartHtml(u){
  return `<article class="kart" data-id="${u.id}">
   <div class="g"><picture><source media="(max-width:720px)" srcset="${mini(tam)}"><img src="${kk}" alt="${u.ad}" loading="lazy" decoding="async" width="700" height="700"${u.kadraj?` style="object-position:${u.kadraj}"`:''} data-yedekler="${zincir.join('|')}" onerror="gorselYedek(this)"></picture><span class="rozet" aria-hidden="true">✓ Sepette</span></div>
   <div class="b"><span class="kat">${u.kat}</span><h3>${u.ad}</h3><div class="fsat"><div class="f metal metal-yazi" data-isik>${TL(u.fiyat)}</div>
-  <button class="ekle" type="button" aria-label="${u.ad}, sepete ekle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 8.5h11.6l1.3 11a1 1 0 0 1-1 1.1H5.9a1 1 0 0 1-1-1.1z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></svg><span class="ek-ad"><small>Sepete</small>Ekle</span><span class="ek-tek">Sepete ekle</span><span class="ek-yazi" aria-hidden="true">Sepette ✓</span></button><div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
+  <button class="ekle" type="button" aria-label="${u.ad}, sepete ekle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 9.5h17l-1.6 9.2a1.6 1.6 0 0 1-1.6 1.3H6.7a1.6 1.6 0 0 1-1.6-1.3z"/><path d="M8 9.5 11 4M16 9.5 13 4"/><path d="M9.5 13v3.5M14.5 13v3.5"/></svg><span class="ek-ad">Ekle</span><span class="ek-yazi" aria-hidden="true">Sepette ✓</span></button><div class="stepper"><button type="button" data-d="-1" aria-label="${u.ad} adedini azalt">−</button><output aria-label="${u.ad} adedi">1</output><button type="button" data-d="1" aria-label="${u.ad} adedini artır">+</button></div></div></div></article>`;
 }
 function dahaCiz(){
  const parca=sonListe.slice(gosterilen,gosterilen+GRUP);
