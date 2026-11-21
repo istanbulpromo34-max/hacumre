@@ -72,12 +72,19 @@
 .kart .f{font:400 24px 'Marcellus';margin:0}
 /* Çantaya ekleme: fiyatın sağında küçük, sakin bir altın hap (sitedeki diğer
    düğmeler gibi). Fiyat yazısı boyunda; her kartta göz düğmeyi değil ürünü görsün. */
-.kart .ekle{flex:none;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px 0 9px;border-radius:999px;cursor:pointer;
- border:0;color:#0b1630;font:600 13px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.01em;
- background:var(--altin-firca);box-shadow:inset 0 1px 0 rgba(255,255,255,.45);
- transition:transform .2s,filter .2s,padding .3s cubic-bezier(.2,.8,.2,1)}
-.kart .ekle svg{width:15px;height:15px;flex:none}
-@media (hover:hover){.kart .ekle:hover{filter:brightness(1.07)}}
+.kart .ekle{flex:none;position:relative;display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px 0 9px;border-radius:999px;cursor:pointer;
+ border:0;color:#eae6dc;font:500 13px 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.01em;
+ background:rgba(255,255,255,.06);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.16);
+ transition:transform .2s,background .25s,box-shadow .25s,padding .3s cubic-bezier(.2,.8,.2,1)}
+/* Cam hapın ince altın kontürü (menü çubuğu ile aynı dil) */
+.kart .ekle::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+ background:linear-gradient(160deg,rgba(246,224,160,.85),rgba(201,162,75,.25) 45%,rgba(230,199,122,.6));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.kart .ekle svg{width:15px;height:15px;flex:none;color:var(--altin2)}
+@media (hover:hover){.kart .ekle:hover{background:rgba(201,162,75,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 16px -4px rgba(201,162,75,.45)}}
+.kart.eklendi .ekle{background:rgba(201,162,75,.16)}
 .kart .ekle:active{transform:scale(.94)}
 /* Çantadayken düğmenin yerini adet seçici alır */
 .kart.sepette .ekle{display:none}
@@ -88,9 +95,7 @@
 /* İsim her kartta iki satırlık yer kaplar: fiyat ve Ekle satırdaki tüm kartlarda aynı hizada */
 .kart h3{min-height:2.4em}
 .kart .fsat{margin-top:auto}
-.kart .ekle{height:36px;padding:0 15px 0 12px;gap:6px;font:600 14px 'Hanken Grotesk',system-ui,sans-serif;
- background:var(--altin-firca);
- box-shadow:inset 0 1px 0 rgba(255,250,232,.55),inset 0 -1px 0 rgba(90,60,10,.35),0 6px 16px -10px rgba(201,162,75,.7)}
+.kart .ekle{height:36px;padding:0 15px 0 12px;gap:6px;font:500 14px 'Hanken Grotesk',system-ui,sans-serif}
 .kart .ekle svg{width:16px;height:16px}}
 .kart.eklendi .ekle{display:inline-flex!important}
 .kart.eklendi .ekle .ek-ad{display:none!important}
@@ -161,7 +166,9 @@
 .kart .b{padding:11px 11px 10px;gap:3px}
 /* Telefonda kategori adı kalkar (üstte zaten seçili); yazı alanı fotoğrafın yarısından az */
 .kart .kat{display:none}
-.kart h3{font-size:14.5px;line-height:1.25}
+.kart h3{font-size:14.5px;line-height:1.25;min-height:2.5em}
+/* Tek satırlık isimli kartlarda da fiyat ve Ekle, satırdaki diğer kartlarla aynı hizada */
+.kart .fsat{margin-top:auto}
 .kart p{display:none}
 .kart .f{font-size:16.5px}
 .kart .fsat{padding-top:4px;min-height:30px}
@@ -215,13 +222,40 @@
 @media (hover:hover){.km-liste button:hover{background:rgba(255,255,255,.07)}}
 .km-liste button[aria-selected="true"]{background:var(--altin-firca);color:#0b1630}
 .km-liste button[aria-selected="true"] small{opacity:.7}
+.km-tut{display:none}
+.km-liste .km-tumu{display:none}
+.km-tik{display:none}
 @media(max-width:720px){
- .km-perde{background:rgba(3,8,20,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
- .km-pan{left:8px;right:8px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px));width:auto;max-height:72vh;border-radius:24px;padding:10px;
-  animation:kmKalk .28s cubic-bezier(.2,.8,.2,1)}
- .km-bas{display:flex}
- .km-liste button{min-height:48px;font-size:15px}}
-@keyframes kmKalk{from{opacity:.6;transform:translateY(30px)}to{opacity:1;transform:none}}
+ .km-perde{background:rgba(3,8,20,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:kmPerde .28s ease}
+ .km-pan{left:0;right:0;top:auto;bottom:0;width:auto;max-height:78vh;border:0;border-radius:26px 26px 0 0;
+  padding:8px 8px calc(10px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,0) 90px),rgba(9,17,38,.94);
+  box-shadow:inset 0 1px 0 rgba(255,244,214,.28),0 -18px 50px -20px rgba(0,0,0,.8);
+  animation:kmKalk .34s cubic-bezier(.2,.85,.25,1);touch-action:pan-y;transition:transform .26s cubic-bezier(.3,.8,.3,1)}
+ /* Tüm kenarı saran kalın kontür yerine yalnız üst kenarda ince bir altın parıltı */
+ .km-pan::before{inset:0 14% auto;height:1px;padding:0;border-radius:0;-webkit-mask:none;mask:none;
+  background:linear-gradient(90deg,transparent,rgba(240,214,150,.85),transparent)}
+ .kat-menu.kapaniyor .km-pan{transform:translateY(105%)}
+ .kat-menu.kapaniyor .km-perde{opacity:0;transition:opacity .26s}
+ .km-tut{display:block;width:38px;height:4px;border-radius:4px;margin:2px auto 6px;background:rgba(255,255,255,.22)}
+ .km-bas{display:flex;padding:2px 10px 8px 16px}
+ .km-bas strong{font-size:17px;letter-spacing:.01em}
+ .km-x{width:30px;height:30px;font-size:17px;line-height:1;border:0;background:rgba(255,255,255,.08);color:rgba(255,255,255,.75)}
+ .km-liste{gap:0;padding:0 4px}
+ .km-liste .km-tumu{display:flex}
+ .km-liste button{position:relative;min-height:50px;padding:0 12px;border-radius:14px;font:400 15.5px 'Hanken Grotesk',system-ui,sans-serif;color:rgba(243,239,230,.92)}
+ .km-liste button+button::before{content:"";position:absolute;left:12px;right:12px;top:0;height:1px;background:rgba(255,255,255,.07)}
+ .km-liste button>span{flex:1;min-width:0}
+ .km-liste button small{opacity:1;font-size:12px;color:rgba(234,230,220,.5);padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.06)}
+ .km-liste button:active{background:rgba(255,255,255,.06)}
+ .km-liste button:focus{outline:none}
+ /* Seçili kategori: dolu hap yerine altın yazı ve ✓ */
+ .km-liste button[aria-selected="true"]{background:none;color:var(--altin2);font-weight:500}
+ .km-liste button[aria-selected="true"] small{color:var(--altin2);background:rgba(201,162,75,.14)}
+ .km-liste button[aria-selected="true"] .km-tik{display:block}
+ .km-tik{width:16px;height:16px;flex:none;color:var(--altin2)}}
+@keyframes kmKalk{from{transform:translateY(100%)}to{transform:none}}
+@keyframes kmPerde{from{opacity:0}to{opacity:1}}
 /* ---- arama ---- */
 .filtre-satir{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
 .filtre-satir .filtre{flex:1;min-width:0}
@@ -374,25 +408,42 @@ const azHareketU=matchMedia('(prefers-reduced-motion: reduce)').matches;
    küçük bir cam menü, telefonda alttan açılan bir panel olarak açılır. */
 const OK_SVG='<svg class="ok" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
 const KM=document.createElement('div');KM.className='kat-menu';KM.hidden=true;KM.setAttribute('role','dialog');KM.setAttribute('aria-label','Kategoriler');
-KM.innerHTML='<div class="km-perde" data-km-kapat></div><div class="km-pan"><div class="km-bas"><strong>Kategoriler</strong><button type="button" class="km-x" data-km-kapat aria-label="Kapat">&times;</button></div><div class="km-liste" role="listbox"></div></div>';
+KM.innerHTML='<div class="km-perde" data-km-kapat></div><div class="km-pan"><i class="km-tut" aria-hidden="true"></i><div class="km-bas"><strong>Kategoriler</strong><button type="button" class="km-x" data-km-kapat aria-label="Kapat">&times;</button></div><div class="km-liste" role="listbox"></div></div>';
 document.body.append(KM);
 const KML=KM.querySelector('.km-liste');
 function filtreCiz(){
  const katSec=sec!=='Tümü';
  F.innerHTML=`<button type="button" aria-pressed="${!katSec}" data-k="Tümü">Tümü<small>${say('Tümü')}</small></button>`+
   `<button type="button" class="kat-ac" aria-pressed="${katSec}" aria-haspopup="dialog" aria-expanded="${!KM.hidden}"><span>${katSec?sec:'Kategoriler'}</span>${katSec?`<small>${say(sec)}</small>`:''}${OK_SVG}</button>`;
- KML.innerHTML=kats.filter(k=>k!=='Tümü').map(k=>`<button type="button" role="option" aria-selected="${k===sec}" data-k="${k}"><span>${k}</span><small>${say(k)}</small></button>`).join('');
+ const TIK='<svg class="km-tik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+ KML.innerHTML=`<button type="button" role="option" class="km-tumu" aria-selected="${!katSec}" data-k="Tümü"><span>Tüm ürünler</span>${TIK}<small>${say('Tümü')}</small></button>`+
+  kats.filter(k=>k!=='Tümü').map(k=>`<button type="button" role="option" aria-selected="${k===sec}" data-k="${k}"><span>${k}</span>${TIK}<small>${say(k)}</small></button>`).join('');
 }
 function katSec(k){
  kmKapat();if(!k||k===sec)return;sec=k;
  history.replaceState(null,'',sec==='Tümü'?location.pathname:'#'+encodeURIComponent(sec));filtreCiz();izgaraCiz();
  if(FD.classList.contains('yapisti')||F.getBoundingClientRect().top<0)filtreyeGit()}
 function kmAc(){
- const b=F.querySelector('.kat-ac');KM.hidden=false;
+ const b=F.querySelector('.kat-ac');clearTimeout(kmZaman);KM.classList.remove('kapaniyor');KMP.style.transform='';KM.hidden=false;
  if(innerWidth>720){const r=b.getBoundingClientRect();KM.style.setProperty('--km-x',Math.round(r.left)+'px');KM.style.setProperty('--km-y',Math.round(r.bottom+8)+'px')}
  b.setAttribute('aria-expanded','true');
  (KML.querySelector('[aria-selected="true"]')||KML.querySelector('button')).focus({preventScroll:true})}
-function kmKapat(){if(KM.hidden)return;KM.hidden=true;const b=F.querySelector('.kat-ac');if(b){b.setAttribute('aria-expanded','false')}}
+let kmZaman=0;
+function kmKapat(){if(KM.hidden||KM.classList.contains('kapaniyor'))return;
+ const b=F.querySelector('.kat-ac');if(b){b.setAttribute('aria-expanded','false')}
+ const bitir=()=>{KM.hidden=true;KM.classList.remove('kapaniyor');KMP.style.transform=''};
+ if(innerWidth>720||matchMedia('(prefers-reduced-motion: reduce)').matches){bitir();return}
+ KM.classList.add('kapaniyor');KMP.style.transform='';clearTimeout(kmZaman);kmZaman=setTimeout(bitir,260)}
+/* Telefonda panel aşağı çekilerek kapanır (liste en üstteyken) */
+const KMP=KM.querySelector('.km-pan');
+(function(){let y0=null,dy=0;
+ KMP.addEventListener('touchstart',e=>{if(innerWidth>720)return;if(KML.scrollTop>0&&KML.contains(e.target)){y0=null;return}
+  y0=e.touches[0].clientY;dy=0;KMP.style.transition='none'},{passive:true});
+ KMP.addEventListener('touchmove',e=>{if(y0==null)return;dy=Math.max(0,e.touches[0].clientY-y0);
+  if(dy>0)KMP.style.transform='translateY('+dy+'px)'},{passive:true});
+ KMP.addEventListener('touchend',()=>{if(y0==null)return;y0=null;KMP.style.transition='';
+  if(dy>90)kmKapat();else KMP.style.transform='';dy=0},{passive:true});
+})();
 F.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
  if(b.classList.contains('kat-ac')){KM.hidden?kmAc():kmKapat();return}
  katSec(b.dataset.k)});
