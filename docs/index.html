@@ -468,7 +468,15 @@
 .hero .metin{margin-top:6px}
 /* "Yol tarifi alın" ile aşağıdaki fotoğraf arasında boşluk fazlaydı */
 .hero .metin{padding-bottom:20px}
-.hak{padding-top:28px}}
+.hak{padding-top:28px}
+/* Telefonda ilk ekrandaki iki düğme kalkar (ikisi de alttaki menüde zaten var);
+   başlık, puanlar ve adres tamamen ortalanır */
+.hero .dugmeler{display:none}
+.hero .metin{text-align:center;margin-inline:auto}
+.hero h1{margin-bottom:10px}
+.hero h1 .elyazi{margin-inline:auto}
+.hero .guven{justify-content:center;margin-top:26px}
+.hero-adres{display:flex;justify-content:center;text-align:center}}
 </style>
 </head>
 <body>
@@ -494,7 +502,7 @@
  <div class="duvar" id="duvar"><span class="duvar-yazi" id="duvarYazi" role="status"><i class="duvar-nokta" aria-hidden="true"></i><span id="duvarMetin"></span></span></div>
  <canvas class="hero-efekt" id="heroEfekt" aria-hidden="true"></canvas>
  <div class="metin">
-  <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">İhram kemerinizi</span><span class="metal metal-yazi">Takkenizi</span><span class="metal metal-yazi">Feracenizi</span><span class="metal metal-yazi">Eşarbınızı</span><span class="metal metal-yazi">Terliğinizi</span><span class="metal metal-yazi">Mestinizi</span><span class="metal metal-yazi">Tavaf çorabınızı</span><span class="metal metal-yazi">Kokusuz sabununuzu</span><span class="metal metal-yazi">Boyun çantanızı</span><span class="metal metal-yazi">Umre çantanızı</span><span class="metal metal-yazi">Misvakınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Namaz örtünüzü</span><span class="metal metal-yazi">Tespihinizi</span><span class="metal metal-yazi">Zikirmatiğinizi</span><span class="metal metal-yazi">Kur’an-ı Kerim’inizi</span><span class="metal metal-yazi">Tüm ihtiyaçlarınızı</span><span class="metal metal-yazi">Rahlenizi</span><span class="metal metal-yazi">Esansınızı</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hac hazırlığınızı</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hat tablonuzu</span><span class="metal metal-yazi">Hediyeliklerinizi</span><span class="metal metal-yazi">Eksiklerinizi</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz,</span><span class="sat elyazi">siz <em class="parilti">ibadetinize</em> odaklanın.</span></span></h1>
+  <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">İhram kemerinizi</span><span class="metal metal-yazi">Takkenizi</span><span class="metal metal-yazi">Feracenizi</span><span class="metal metal-yazi">Eşarbınızı</span><span class="metal metal-yazi">Terliğinizi</span><span class="metal metal-yazi">Mestinizi</span><span class="metal metal-yazi">Tavaf çorabınızı</span><span class="metal metal-yazi">Kokusuz sabununuzu</span><span class="metal metal-yazi">Boyun çantanızı</span><span class="metal metal-yazi">Umre çantanızı</span><span class="metal metal-yazi">Misvağınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Namaz örtünüzü</span><span class="metal metal-yazi">Tespihinizi</span><span class="metal metal-yazi">Zikirmatiğinizi</span><span class="metal metal-yazi">Kur’an-ı Kerim’inizi</span><span class="metal metal-yazi">Tüm ihtiyaçlarınızı</span><span class="metal metal-yazi">Rahlenizi</span><span class="metal metal-yazi">Esansınızı</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hac hazırlığınızı</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hat tablonuzu</span><span class="metal metal-yazi">Hediyeliklerinizi</span><span class="metal metal-yazi">Eksiklerinizi</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz,</span><span class="sat elyazi">siz <em class="parilti">ibadetinize</em> odaklanın.</span></span></h1>
   <p class="giris sz">Yıllardır hacı ve umrecilerimizi yola hazırlıyor, dönüşte de sevinçlerine ortak oluyoruz.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html"><span class="uzun">Ürünlerimizi inceleyin</span><span class="kisa">Ürünleri inceleyin</span></a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
   <div class="guven sz">
