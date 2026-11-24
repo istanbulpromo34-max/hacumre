@@ -7,7 +7,7 @@ const MAGAZA={
  kisaAdres:'Cevherağa Camii Sk. No:10-A, Ümraniye',
  saat:'Her gün 09:00–20:00',
  tel:'0555 104 40 40',telLink:'tel:+905551044040',
- puan:'5,0',yorum:'133 yorum',
+ puan:'5,0',yorum:'129 yorum',
  harita:'https://maps.app.goo.gl/6nQusZ3VK2vwh3cd6',
  yorumYap:'https://g.page/r/CSGI4w4tcT1CEBM/review',
  instagram:'https://www.instagram.com/istanbulhacumrehediyelik/'
