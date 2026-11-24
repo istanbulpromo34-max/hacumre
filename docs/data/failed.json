@@ -1,6 +1,10 @@
 [
   {
-    "slug": "ya-hafiz-tablo-1",
-    "reason": "ayrıştırılamadı"
+    "slug": "feeyne-tezhebun-baski",
+    "reason": "HTTP 521"
+  },
+  {
+    "slug": "ferman-ayetel-kursi-cerceveli-tablo-1",
+    "reason": "HTTP 521"
   }
 ]
