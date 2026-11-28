@@ -42,6 +42,9 @@
 .not-alt{font-size:13.5px;color:rgba(234,230,220,.6);margin-top:16px}
 /* süzgeç şeridi */
 .filtre-dis{position:sticky;top:calc(-1 * var(--kay,0px));z-index:20;margin-top:-82px;padding-top:82px;transition:background .3s,box-shadow .3s}
+/* Şeridin yukarı uzanan 82px'lik dolgusu yalnız yapışınca arka plan olur; o zamana dek
+   üstündeki arama kutusunun tıklamalarını yutmasın */
+.filtre-dis:not(.yapisti){pointer-events:none}.filtre-dis:not(.yapisti)>.kap{pointer-events:auto}
 .filtre-dis.yapisti{background:rgba(6,13,31,.88);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);box-shadow:0 1px 0 rgba(255,255,255,.07),0 12px 30px -18px rgba(0,0,0,.6)}
 /* Masaüstünde bütün gruplar görünsün diye şerit alta sarar; telefonda yan kaydırır */
 .filtre{display:flex;flex-wrap:wrap;gap:8px;padding-block:12px 14px}
