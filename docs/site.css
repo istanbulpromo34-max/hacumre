@@ -211,29 +211,21 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .25s,transform .25s}
 @media (hover:hover){.film-kapat:hover{background:rgba(255,255,255,.18);transform:scale(1.06)}}
-/* Canlı yayın: "CANLI YAYIN" logosu ve altında Mekke-i Mükerreme / Medine-i Münevvere düğmeleri */
-.canli-blok{display:inline-grid;justify-items:start;gap:12px;max-width:100%}
-.canli-logo{display:block;width:150px;height:auto;overflow:visible}
-.canli-logo text{font-family:'Hanken Grotesk',system-ui,sans-serif;font-weight:600}
-.canli-logo .dalga{fill:none;stroke:#e8384f;stroke-width:3.4;stroke-linecap:round;animation:canliDalga 1.8s ease-in-out infinite}
-.canli-logo .d2{animation-delay:.2s}.canli-logo .d3{animation-delay:.4s}
-@keyframes canliDalga{0%,100%{opacity:.3}35%{opacity:1}}
-.canli-yerler{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%}
-.canli-yerler button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:0 16px 0 12px;border-radius:999px;cursor:pointer;
- font:500 14.5px 'Hanken Grotesk',system-ui,sans-serif;color:var(--k-yazi);white-space:nowrap;
- background:rgba(10,22,48,.55);border:1px solid rgba(201,162,75,.45);
- backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);
- box-shadow:0 10px 26px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.07);
- transition:background .25s,border-color .25s,transform .25s}
-.canli-yerler button svg{flex:none;width:20px;height:20px;color:var(--k-altin2)}
-@media (hover:hover){.canli-yerler button:hover{background:rgba(16,32,66,.75);border-color:rgba(230,199,122,.8);transform:translateY(-2px)}}
-.canli-yerler button:active{transform:scale(.98)}
-/* sütun dar kalırsa (telefon, dar masaüstü) düğmeler sıkışır, oynat simgesi kalkar */
-@container (max-width:400px){
-.canli-yerler{gap:6px}
-.canli-yerler button{padding:0 10px;font-size:13.5px}
-.canli-yerler button svg{display:none}}
-@container (max-width:310px){.canli-yerler button{padding:0 7px;font-size:12.5px}}
+/* Canlı yayın düğmesi: açılışta küçük, sakin bir incelik (asıl iş ürünler). Altın ince çerçeve,
+   altın yayın simgesi; Mekke-i Mükerreme / Medine-i Münevvere seçimi açılan pencerede. */
+.canli-dugme{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px 0 12px;margin:0;border-radius:999px;cursor:pointer;
+ font:500 11.5px/1 'Hanken Grotesk',system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--k-altin2);
+ background:transparent;border:1px solid rgba(201,162,75,.42);
+ -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+ transition:background .3s,border-color .3s,color .3s,transform .3s}
+/* görünen yükseklik 40px, parmak için dokunma alanı 46px */
+.canli-dugme::after{content:"";position:absolute;inset:-3px -2px}
+.canli-ikon{flex:none;width:18px;height:18px;overflow:visible;fill:currentColor;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.canli-ikon .dalga{fill:none;animation:canliDalga 2.4s ease-in-out infinite}
+.canli-ikon .d2{animation-delay:.3s}
+@keyframes canliDalga{0%,100%{opacity:.25}40%{opacity:1}}
+@media (hover:hover){.canli-dugme:hover{background:rgba(230,199,122,.1);border-color:rgba(230,199,122,.8);color:#f3dfa6;transform:translateY(-1px)}}
+.canli-dugme:active{transform:scale(.97);background:rgba(230,199,122,.14)}
 .canli-nokta{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:currentColor;animation:canliNabiz 1.6s ease-in-out infinite}
 @keyframes canliNabiz{50%{opacity:.3}}
 .canli-cerceve{width:min(94vw,calc((100svh - 210px) * 1.7778),1280px);transform:scale(.96);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
@@ -255,13 +247,13 @@ body.cubuk-acik{--wa-alt:calc(170px + env(safe-area-inset-bottom,0px))}
  font-size:15px;line-height:1.6;color:rgba(234,230,220,.86)}
 .canli-alt{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 18px;margin:12px 4px 0;font-size:13.5px;color:rgba(234,230,220,.78)}
 .canli-alt span{display:inline-flex;align-items:center;gap:8px}
-.canli-alt .canli-nokta{color:#e8384f}
+.canli-alt .canli-nokta{color:var(--k-altin2)}
 .canli-alt a{display:inline-flex;align-items:center;min-height:44px;color:var(--k-altin2);text-decoration:underline;text-decoration-color:rgba(230,199,122,.45);text-underline-offset:4px}
 @media (hover:hover){.canli-alt a:hover{color:#fff}}
 @media (prefers-reduced-motion: reduce){
-.canli-nokta,.canli-logo .dalga{animation:none}
-.canli-logo .dalga{opacity:1}
-.canli-cerceve,.canli-yerler button,.canli-sec button{transition:none}}
+.canli-nokta,.canli-ikon .dalga{animation:none}
+.canli-ikon .dalga{opacity:1}
+.canli-cerceve,.canli-dugme,.canli-sec button{transition:none}}
 @media (prefers-reduced-motion: reduce){
 [data-gel]{opacity:1;transform:none;transition:none}
 .nav a,.btn,.toast,.cekmece .pan,.cekmece .perde,.wa-sabit,.film-sabit,.film-kat video{transition:none}

@@ -128,10 +128,10 @@
 .sz:nth-child(4){animation-delay:.24s}
 .sz:nth-child(5){animation-delay:.32s}
 .sz:nth-child(6){animation-delay:.4s}
-/* Canlı yayın logosu ve Mekke-i Mükerreme / Medine-i Münevvere düğmeleri: açılış düğmelerinin
+/* Canlı yayın düğmesi (Mekke/Medine seçimi açılan pencerede): açılış düğmelerinin
    altında; telefonda o düğmeler gizlendiği için başlığın hemen altında kalır, ilk ekranda görünür */
-.canli-satir{margin-top:22px;container-type:inline-size}
-@media(max-width:720px){.canli-satir{margin-top:16px}.canli-blok{justify-items:center}}
+.canli-satir{margin-top:16px}
+@media(max-width:720px){.canli-satir{margin-top:12px}}
 @keyframes sz{to{opacity:1;transform:none}}
 /* ===== Hakkımızda ===== */
 .hak{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,96px);align-items:center;padding-block:clamp(90px,14vh,160px)}
@@ -510,10 +510,7 @@
   <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">İhram kemerinizi</span><span class="metal metal-yazi">Takkenizi</span><span class="metal metal-yazi">Feracenizi</span><span class="metal metal-yazi">Eşarbınızı</span><span class="metal metal-yazi">Terliğinizi</span><span class="metal metal-yazi">Mestinizi</span><span class="metal metal-yazi">Tavaf çorabınızı</span><span class="metal metal-yazi">Kokusuz sabununuzu</span><span class="metal metal-yazi">Boyun çantanızı</span><span class="metal metal-yazi">Umre çantanızı</span><span class="metal metal-yazi">Misvağınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Namaz örtünüzü</span><span class="metal metal-yazi">Tespihinizi</span><span class="metal metal-yazi">Zikirmatiğinizi</span><span class="metal metal-yazi">Kur’an-ı Kerim’inizi</span><span class="metal metal-yazi">Tüm ihtiyaçlarınızı</span><span class="metal metal-yazi">Rahlenizi</span><span class="metal metal-yazi">Esansınızı</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hac hazırlığınızı</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hat tablonuzu</span><span class="metal metal-yazi">Hediyeliklerinizi</span><span class="metal metal-yazi">Eksiklerinizi</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz,</span><span class="sat elyazi">siz <em class="parilti">ibadetinize</em> odaklanın.</span></span></h1>
   <p class="giris sz">Yıllardır hacı ve umrecilerimizi yola hazırlıyor, dönüşte de sevinçlerine ortak oluyoruz.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html"><span class="uzun">Ürünlerimizi inceleyin</span><span class="kisa">Ürünleri inceleyin</span></a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
-  <div class="canli-satir sz"><div class="canli-blok" role="group" aria-label="Canlı yayın">
-   <svg class="canli-logo" viewBox="0 0 200 64" aria-hidden="true"><circle cx="30" cy="32" r="7.5" fill="#e8384f"/><path class="dalga d1" d="M40.4 22.6A14 14 0 0 1 40.4 41.4M19.6 22.6A14 14 0 0 0 19.6 41.4"/><path class="dalga d2" d="M44.9 18.6A20 20 0 0 1 44.9 45.4M15.1 18.6A20 20 0 0 0 15.1 45.4"/><path class="dalga d3" d="M49.3 14.6A26 26 0 0 1 49.3 49.4M10.7 14.6A26 26 0 0 0 10.7 49.4"/><rect x="66" y="4" width="132" height="29" fill="#c8102e"/><text x="132" y="27.6" text-anchor="middle" font-size="24" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round" textLength="114" lengthAdjust="spacingAndGlyphs">CANLI</text><text x="132" y="61" text-anchor="middle" font-size="26" fill="#e8384f" stroke="#e8384f" stroke-width="1.3" stroke-linejoin="round" textLength="132" lengthAdjust="spacingAndGlyphs">YAYIN</text></svg>
-   <div class="canli-yerler"><button type="button" data-canli="mekke" aria-haspopup="dialog" aria-label="Mekke-i Mükerreme canlı yayınını izleyin"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8.2 6.6v6.8l5.4-3.4z" fill="currentColor"/></svg>Mekke-i Mükerreme</button><button type="button" data-canli="medine" aria-haspopup="dialog" aria-label="Medine-i Münevvere canlı yayınını izleyin"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8.2 6.6v6.8l5.4-3.4z" fill="currentColor"/></svg>Medine-i Münevvere</button></div>
-  </div></div>
+  <div class="canli-satir sz"><button class="canli-dugme" type="button" data-canli="mekke" aria-haspopup="dialog" aria-label="Canlı yayın: Mekke-i Mükerreme ve Medine-i Münevvere"><svg class="canli-ikon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2.4" stroke="none"/><path class="dalga" d="M8.46 8.46A5 5 0 0 0 8.46 15.54M15.54 8.46A5 5 0 0 1 15.54 15.54"/><path class="dalga d2" d="M5.64 5.64A9 9 0 0 0 5.64 18.36M18.36 5.64A9 9 0 0 1 18.36 18.36"/></svg>Canlı yayın</button></div>
   <div class="guven sz">
    <span><b>5,0</b>Google puanı</span>
    <span><b>136</b>Google yorumu</span>

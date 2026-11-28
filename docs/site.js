@@ -110,18 +110,18 @@ const CANLI={
  hlsjsSri:'sha384-0bYHYkbmOP6iiZzFtBJL9Ox92c1iYZ+IaqCJDK+gitswr+vB5aTlwLZC16yyAzdh',
  bekle:12000,
  yerler:{
-  mekke:{ad:'Kâbe-i Muazzama',etiket:'Mekke-i Mükerreme',
+  mekke:{ad:'Kâbe-i Muazzama',etiket:'Mekke-i Mükerreme',kapak:'assets/g/k/kabe3.webp',
    m3u8:'https://win.holol.com/live/quran/playlist.m3u8',
    ytVideo:'IsJTAdC3-Jw',
    yt:'https://www.youtube.com/@SaudiQuranTv/live',
    alt:'Mescid-i Haram, Mekke-i Mükerreme · Suudi Kur\'an-ı Kerim kanalı'},
-  medine:{ad:'Mescid-i Nebevî',etiket:'Medine-i Münevvere',
+  medine:{ad:'Mescid-i Nebevî',etiket:'Medine-i Münevvere',kapak:'assets/g/k/medine.webp',
    m3u8:'https://win.holol.com/live/sunnah/playlist.m3u8',
    ytVideo:'10aUPlTW8wQ',
    yt:'https://www.youtube.com/@SaudiSunnahTv/live',
    alt:'Mescid-i Nebevî, Medine-i Münevvere · Suudi Sünnet kanalı'}}};
 /* _canliSira: her açılış, geçiş ve kapanışta artar; eski açılıştan geç gelen geri çağrılar yok sayılır */
-let _canliKat=null,_canliOdak=null,_canliSira=0,_canliHls=null,_hlsYuk=null,_ytYuk=null,_canliYer='mekke';
+let _canliKat=null,_canliOdak=null,_canliSira=0,_canliHls=null,_hlsYuk=null,_ytYuk=null,_canliYer='mekke',_canliGecmis=false;
 function betikYukle(src,sri){return new Promise((ok,hata)=>{
  const s=document.createElement('script');s.src=src;if(sri){s.integrity=sri;s.crossOrigin='anonymous'}
  s.onload=ok;s.onerror=()=>{s.remove();hata()};document.head.append(s)})}
@@ -189,6 +189,10 @@ function canliBaslat(yer){
  _canliKat.querySelector('.canli-alt a').href=y.yt;
  const kutu=_canliKat.querySelector('.canli-oynatici');
  _canliSira++;canliTemizle(kutu);canliHls(kutu,_canliSira,y);
+ /* telefonun kilit ekranında ve bildirimde yayının adı ve fotoğrafı görünür */
+ if('mediaSession' in navigator&&window.MediaMetadata){try{navigator.mediaSession.metadata=new MediaMetadata({
+  title:y.ad+' · Canlı yayın',artist:y.alt.split(' · ')[0],album:'İstanbul Hac Umre Hediyelik',
+  artwork:[{src:new URL(y.kapak,location.href).href,sizes:'700x394',type:'image/webp'}]})}catch(e){}}
 }
 function canliAc(e){
  if(!_canliKat){
@@ -207,6 +211,8 @@ function canliAc(e){
  _canliOdak=document.activeElement;
  /* tıklamanın içinde başlatılır: iPhone sesli oynatmaya yalnız böyle izin verir */
  canliBaslat(e&&e.currentTarget&&e.currentTarget.dataset?e.currentTarget.dataset.canli:'mekke');
+ /* telefondaki geri tuşu (ve geri hareketi) sayfadan çıkmak yerine yayını kapatsın */
+ if(!_canliGecmis){try{history.pushState({canli:1},'');_canliGecmis=true}catch(e){}}
  document.documentElement.classList.add('kilit');try{lenis&&lenis.stop()}catch(e){}
  requestAnimationFrame(()=>{_canliKat.classList.add('acik');_canliKat.querySelector('.film-kapat').focus()});
 }
@@ -215,9 +221,13 @@ function canliKapat(){
  _canliKat.classList.remove('acik');
  /* oynatıcıyı hemen kaldır ki yayın arka planda akıp veri harcamasın */
  _canliSira++;canliTemizle(_canliKat.querySelector('.canli-oynatici'));
+ if('mediaSession' in navigator){try{navigator.mediaSession.metadata=null}catch(e){}}
  document.documentElement.classList.remove('kilit');try{lenis&&lenis.start()}catch(e){}
  if(_canliOdak&&_canliOdak.focus)_canliOdak.focus();
+ /* X, Esc ya da boşluğa dokunarak kapandıysa açılışta eklenen geçmiş adımı geri alınır */
+ if(_canliGecmis){_canliGecmis=false;try{history.back()}catch(e){}}
 }
+addEventListener('popstate',()=>{if(_canliGecmis){_canliGecmis=false;canliKapat()}});
 addEventListener('keydown',e=>{if(e.key==='Escape'){filmKapat();canliKapat()}});
 /* Sepet */
 const Sepet={
