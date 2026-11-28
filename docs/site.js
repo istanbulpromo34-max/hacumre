@@ -110,12 +110,12 @@ const CANLI={
  hlsjsSri:'sha384-0bYHYkbmOP6iiZzFtBJL9Ox92c1iYZ+IaqCJDK+gitswr+vB5aTlwLZC16yyAzdh',
  bekle:12000,
  yerler:{
-  mekke:{ad:'Kâbe-i Muazzama',
+  mekke:{ad:'Kâbe-i Muazzama',etiket:'Mekke-i Mükerreme',
    m3u8:'https://win.holol.com/live/quran/playlist.m3u8',
    ytVideo:'IsJTAdC3-Jw',
    yt:'https://www.youtube.com/@SaudiQuranTv/live',
    alt:'Mescid-i Haram, Mekke-i Mükerreme · Suudi Kur\'an-ı Kerim kanalı'},
-  medine:{ad:'Mescid-i Nebevî',
+  medine:{ad:'Mescid-i Nebevî',etiket:'Medine-i Münevvere',
    m3u8:'https://win.holol.com/live/sunnah/playlist.m3u8',
    ytVideo:'10aUPlTW8wQ',
    yt:'https://www.youtube.com/@SaudiSunnahTv/live',
@@ -180,7 +180,7 @@ function canliYedek(kutu,y){
  kutu.innerHTML='<div class="canli-yedek"><p>Canlı yayın şu an sitemizde açılamadı.<br>Aynı yayını YouTube\'da izleyebilirsiniz.</p>'+
   '<a class="btn altin" href="'+y.yt+'" target="_blank" rel="noopener">YouTube\'da canlı izleyin</a></div>';
 }
-/* Seçili yayını başlatır; açılışta ve katmandaki Kâbe/Mescid-i Nebevî geçişinde tıklamanın içinde çağrılır */
+/* Seçili yayını başlatır; açılışta ve katmandaki Mekke/Medine geçişinde tıklamanın içinde çağrılır */
 function canliBaslat(yer){
  const y=CANLI.yerler[yer]||CANLI.yerler.mekke;_canliYer=CANLI.yerler[yer]?yer:'mekke';
  _canliKat.setAttribute('aria-label',y.ad+' canlı yayını');
@@ -194,7 +194,7 @@ function canliAc(e){
  if(!_canliKat){
   _canliKat=document.createElement('div');_canliKat.className='film-kat canli-kat';
   _canliKat.setAttribute('role','dialog');_canliKat.setAttribute('aria-modal','true');
-  const sec=Object.keys(CANLI.yerler).map(k=>'<button type="button" data-yer="'+k+'" aria-pressed="false">'+CANLI.yerler[k].ad+'</button>').join('');
+  const sec=Object.keys(CANLI.yerler).map(k=>'<button type="button" data-yer="'+k+'" aria-pressed="false">'+CANLI.yerler[k].etiket+'</button>').join('');
   _canliKat.innerHTML='<button class="film-kapat" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'+
    '<div class="canli-cerceve"><div class="canli-sec" role="group" aria-label="Canlı yayın seçin">'+sec+'</div><div class="canli-oynatici"></div>'+
    '<p class="canli-alt"><span><i class="canli-nokta" aria-hidden="true"></i><span class="canli-yazi"></span></span>'+
