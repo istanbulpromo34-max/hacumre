@@ -648,7 +648,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 </div>
 
 <div class="sabit-sag">
-  <button class="ses" id="ses" type="button" aria-pressed="false" aria-label="Arka plan neşidi" title="Neşidi aç ya da kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="dalga" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="sessiz" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
+  <button class="ses" id="ses" type="button" aria-pressed="false" aria-label="Arka plan salavatı" title="Salavatı aç ya da kapat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="dalga" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path class="sessiz" d="M16 9.5l5 5M21 9.5l-5 5"/></svg></button>
 </div>
 
 <noscript><p style="margin:0;padding:96px 24px 24px;text-align:center;color:#e6c77a;font:500 15px Hanken Grotesk,system-ui,sans-serif">Bu sayfanın içeriği için tarayıcınızda JavaScript açık olmalı. Dilerseniz 0555 104 40 40 numarasından bize ulaşabilirsiniz.</p></noscript>
@@ -1109,7 +1109,7 @@ body.kabuk-gizli .sabit-sag{opacity:0;transform:translateY(-16px);pointer-events
 
 <footer class="sf"><div class="f-not"><span>Rehber metinleri genel bilgilendirme amaçlıdır; size özel durumlar ve fıkhi ayrıntılar için grup hocanıza danışın.</span></div></footer>
 
-<audio id="nesid" src="assets/nesid.mp3" loop preload="none"></audio>
+<audio id="nesid" src="assets/salavat.mp3" loop preload="none"></audio>
 
 <script src="urunler-veri.js"></script>
 <script src="site.js"></script>
@@ -1365,10 +1365,10 @@ const kemerHazir=()=>document.querySelectorAll('.kemer,.kemer-cizgi').forEach(e=
 requestAnimationFrame(()=>requestAnimationFrame(kemerHazir));
 setTimeout(kemerHazir,1200);
 
-/* ===== Neşid: tercih edilmişse ilk dokunuşta yavaşça açılır ===== */
+/* ===== Salavat (arka plan sesi): tercih edilmişse ilk dokunuşta yavaşça açılır ===== */
 const nesid=$('nesid'),sesBtn=$('ses');let solma=null;
 let sesAcik=true;try{sesAcik=localStorage.getItem('hu-ses')!=='0'}catch(e){}
-function sesDurum(c){sesBtn.classList.toggle('caliyor',c);sesBtn.setAttribute('aria-pressed',c);sesBtn.title=c?'Neşidi kapat':'Neşidi aç'}
+function sesDurum(c){sesBtn.classList.toggle('caliyor',c);sesBtn.setAttribute('aria-pressed',c);sesBtn.title=c?'Salavatı kapat':'Salavatı aç'}
 function sesYukselt(hedef){clearInterval(solma);solma=setInterval(()=>{const v=nesid.volume+(hedef>nesid.volume?.01:-.02);
   if((hedef>nesid.volume&&v>=hedef)||(hedef<=nesid.volume&&v<=hedef)){nesid.volume=Math.max(0,hedef);clearInterval(solma);if(hedef===0)nesid.pause()}else nesid.volume=Math.max(0,Math.min(1,v))},60)}
 function cal(){nesid.volume=0;return nesid.play().then(()=>{basladi=true;sesDurum(true);sesYukselt(.32)})}
@@ -1407,7 +1407,7 @@ akisKur();
 /* ===== Turun sonundaki 1880 Mekke videosu =====
    Dosya sitenin kendisinde durur, reklam yoktur. Sayfa açılırken hiçbir şey
    indirilmez: video ancak pencere açılıp oynat'a basıldığında yüklenir.
-   Oynarken neşid kısılır, pencere kapanınca geri gelir. */
+   Oynarken salavat kısılır, pencere kapanınca geri gelir. */
 (()=>{
  const D=document.getElementById('sinema-pencere'),ac=document.getElementById('vt-ac');if(!D||!ac)return;
  const F=D.querySelector('.sinema'),v=D.querySelector('video'),perde=D.querySelector('.sinema-perde'),ekran=D.querySelector('.sinema-ekran'),
