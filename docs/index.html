@@ -128,9 +128,9 @@
 .sz:nth-child(4){animation-delay:.24s}
 .sz:nth-child(5){animation-delay:.32s}
 .sz:nth-child(6){animation-delay:.4s}
-/* Kâbe canlı yayın düğmesi: açılış düğmelerinin altında; telefonda o düğmeler gizlendiği
-   için başlığın hemen altında kalır, ilk ekranda görünür */
-.canli-satir{margin-top:20px}
+/* Kâbe ve Mescid-i Nebevî canlı yayın düğmesi: açılış düğmelerinin altında; telefonda o
+   düğmeler gizlendiği için başlığın hemen altında kalır, ilk ekranda görünür */
+.canli-satir{margin-top:20px;container-type:inline-size}
 @media(max-width:720px){.canli-satir{margin-top:16px}}
 @keyframes sz{to{opacity:1;transform:none}}
 /* ===== Hakkımızda ===== */
@@ -510,7 +510,7 @@
   <h1 class="sz"><span class="ana"><span class="sat donen"><span class="rulo" id="rulo"><span class="metal metal-yazi">İhramınızı</span><span class="metal metal-yazi">İhram kemerinizi</span><span class="metal metal-yazi">Takkenizi</span><span class="metal metal-yazi">Feracenizi</span><span class="metal metal-yazi">Eşarbınızı</span><span class="metal metal-yazi">Terliğinizi</span><span class="metal metal-yazi">Mestinizi</span><span class="metal metal-yazi">Tavaf çorabınızı</span><span class="metal metal-yazi">Kokusuz sabununuzu</span><span class="metal metal-yazi">Boyun çantanızı</span><span class="metal metal-yazi">Umre çantanızı</span><span class="metal metal-yazi">Misvağınızı</span><span class="metal metal-yazi">Seccadenizi</span><span class="metal metal-yazi">Namaz örtünüzü</span><span class="metal metal-yazi">Tespihinizi</span><span class="metal metal-yazi">Zikirmatiğinizi</span><span class="metal metal-yazi">Kur’an-ı Kerim’inizi</span><span class="metal metal-yazi">Tüm ihtiyaçlarınızı</span><span class="metal metal-yazi">Rahlenizi</span><span class="metal metal-yazi">Esansınızı</span><span class="metal metal-yazi">Zemzeminizi</span><span class="metal metal-yazi">Hac hazırlığınızı</span><span class="metal metal-yazi">Hurmanızı</span><span class="metal metal-yazi">Hat tablonuzu</span><span class="metal metal-yazi">Hediyeliklerinizi</span><span class="metal metal-yazi">Eksiklerinizi</span><span class="metal metal-yazi">İhramınızı</span></span></span><span class="sat">biz düşünürüz,</span><span class="sat elyazi">siz <em class="parilti">ibadetinize</em> odaklanın.</span></span></h1>
   <p class="giris sz">Yıllardır hacı ve umrecilerimizi yola hazırlıyor, dönüşte de sevinçlerine ortak oluyoruz.</p>
   <div class="dugmeler sz"><a class="btn altin" href="urunler.html"><span class="uzun">Ürünlerimizi inceleyin</span><span class="kisa">Ürünleri inceleyin</span></a><a class="btn cam" href="tur.html">Dijital Umre Turu</a></div>
-  <div class="canli-satir sz"><button class="canli-kabe" type="button" data-canli aria-haspopup="dialog"><span class="canli-etiket"><i class="canli-nokta" aria-hidden="true"></i>Canlı</span><span class="uzun">Kâbe-i Muazzama'yı canlı izleyin</span><span class="kisa">Kâbe'yi canlı izleyin</span></button></div>
+  <div class="canli-satir sz"><div class="canli-grup" role="group" aria-label="Canlı yayınlar"><span class="canli-etiket" aria-hidden="true"><i class="canli-nokta"></i>Canlı</span><button type="button" data-canli="mekke" aria-haspopup="dialog" aria-label="Kâbe-i Muazzama canlı yayınını izleyin"><span class="uzun">Kâbe-i Muazzama</span><span class="kisa">Kâbe</span></button><i class="canli-ayrac" aria-hidden="true"></i><button type="button" data-canli="medine" aria-haspopup="dialog" aria-label="Mescid-i Nebevî canlı yayınını izleyin"><span class="uzun">Mescid-i Nebevî</span><span class="kisa">Medine</span></button></div></div>
   <div class="guven sz">
    <span><b>5,0</b>Google puanı</span>
    <span><b>136</b>Google yorumu</span>
