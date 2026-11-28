@@ -93,7 +93,112 @@ function filmKapat(){
  document.documentElement.classList.remove('kilit');try{lenis&&lenis.start()}catch(e){}
  if(_filmOdak&&_filmOdak.focus)_filmOdak.focus();
 }
-addEventListener('keydown',e=>{if(e.key==='Escape')filmKapat()});
+/* Kâbe-i Muazzama canlı yayını: Mescid-i Haram'dan Suudi Kur'an-ı Kerim kanalının 24 saatlik yayını.
+   1) Önce kendi oynatıcımızda m3u8 (HLS) akışı açılır. Adres win.holol.com: yayını yıllardır
+      aktaran özel bir Suudi sunucu; resmî ya da izinli bir kaynak değil, her an kapanabilir.
+      Safari ve iPhone akışı kendisi oynatır; diğer tarayıcılarda düğmeye basılınca hls.js yüklenir.
+   2) Akış hata verirse ya da 12 sn içinde görüntü gelmezse resmî YouTube kanalına geçilir
+      (@SaudiQuranTv). YouTube kanal adresiyle gömmeyi kaldırdığı için yayın video kimliğiyle
+      gömülür; kanal yayını yeniden başlatırsa kimlik değişir. Güncel kimlik:
+      youtube.com/@SaudiQuranTv/live açılınca adres çubuğundaki ?v= değeri.
+   3) O da açılmazsa "YouTube'da canlı izleyin" düğmesi çıkar.
+   Oynatıcı yalnız düğmeye basılınca yüklenir, kapanınca kaldırılır: sayfa açılışı yavaşlamaz,
+   arka planda yayın akıp veri harcamaz. */
+const CANLI={
+ m3u8:'https://win.holol.com/live/quran/playlist.m3u8',
+ hlsjs:'https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.light.min.js',
+ hlsjsSri:'sha384-0bYHYkbmOP6iiZzFtBJL9Ox92c1iYZ+IaqCJDK+gitswr+vB5aTlwLZC16yyAzdh',
+ ytVideo:'IsJTAdC3-Jw',
+ yt:'https://www.youtube.com/@SaudiQuranTv/live',
+ bekle:12000};
+/* _canliSira: her açılış ve kapanışta artar; eski açılıştan geç gelen geri çağrılar yok sayılır */
+let _canliKat=null,_canliOdak=null,_canliSira=0,_canliHls=null,_hlsYuk=null,_ytYuk=null;
+function betikYukle(src,sri){return new Promise((ok,hata)=>{
+ const s=document.createElement('script');s.src=src;if(sri){s.integrity=sri;s.crossOrigin='anonymous'}
+ s.onload=ok;s.onerror=()=>{s.remove();hata()};document.head.append(s)})}
+function hlsYukle(){
+ if(window.Hls)return Promise.resolve();
+ if(!_hlsYuk)_hlsYuk=betikYukle(CANLI.hlsjs,CANLI.hlsjsSri).catch(e=>{_hlsYuk=null;throw e});
+ return _hlsYuk;
+}
+function ytYukle(){
+ if(window.YT&&YT.Player)return Promise.resolve();
+ if(!_ytYuk)_ytYuk=new Promise((ok,hata)=>{
+  const once=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{if(once)once();ok()};
+  betikYukle('https://www.youtube.com/iframe_api').catch(()=>{_ytYuk=null;hata()})});
+ return _ytYuk;
+}
+function canliTemizle(kutu){
+ if(_canliHls){try{_canliHls.destroy()}catch(e){}_canliHls=null}
+ const v=kutu.querySelector('video');
+ if(v){try{v.pause()}catch(e){}v.removeAttribute('src');try{v.load()}catch(e){}}
+ kutu.innerHTML='';
+}
+/* 1. adım: m3u8 akışı */
+function canliHls(kutu,sira){
+ let zaman=0,gecti=false;
+ const gec=()=>{if(gecti||sira!==_canliSira)return;gecti=true;clearTimeout(zaman);canliTemizle(kutu);canliYt(kutu,sira)};
+ kutu.innerHTML='<video playsinline controls autoplay preload="auto" aria-label="Kâbe-i Muazzama canlı yayını"></video>';
+ const v=kutu.firstChild;
+ zaman=setTimeout(gec,CANLI.bekle);
+ v.addEventListener('loadeddata',()=>clearTimeout(zaman),{once:true});
+ /* tarayıcı sesli başlatmaya izin vermezse sessiz başlar; ses oynatıcıdan açılır */
+ const oynat=()=>{const o=v.play();if(o&&o.catch)o.catch(()=>{v.muted=true;v.play().catch(()=>{})})};
+ if(v.canPlayType('application/vnd.apple.mpegurl')){
+  v.addEventListener('error',gec);v.src=CANLI.m3u8;oynat();return}
+ hlsYukle().then(()=>{
+  if(gecti||sira!==_canliSira)return;
+  if(!Hls.isSupported()){gec();return}
+  const h=_canliHls=new Hls({maxBufferLength:20});
+  /* yayın sırasında akış koparsa da (kurtarılamayan hata) YouTube'a geçilir */
+  h.on(Hls.Events.ERROR,(e,d)=>{if(d.fatal)gec()});
+  h.on(Hls.Events.MANIFEST_PARSED,oynat);
+  h.loadSource(CANLI.m3u8);h.attachMedia(v);
+ },gec);
+}
+/* 2. adım: resmî YouTube yayını */
+function canliYt(kutu,sira){
+ kutu.innerHTML='<div></div>';
+ ytYukle().then(()=>{
+  if(sira!==_canliSira)return;
+  new YT.Player(kutu.firstChild,{host:'https://www.youtube-nocookie.com',videoId:CANLI.ytVideo,
+   playerVars:{autoplay:1,playsinline:1,rel:0,hl:'tr'},
+   events:{onError:()=>{if(sira===_canliSira)canliYedek(kutu)}}});
+ },()=>{if(sira===_canliSira)canliYedek(kutu)});
+}
+/* 3. adım: YouTube'a yönlendiren kart */
+function canliYedek(kutu){
+ kutu.innerHTML='<div class="canli-yedek"><p>Canlı yayın şu an sitemizde açılamadı.<br>Aynı yayını YouTube\'da izleyebilirsiniz.</p>'+
+  '<a class="btn altin" href="'+CANLI.yt+'" target="_blank" rel="noopener">YouTube\'da canlı izleyin</a></div>';
+}
+function canliAc(){
+ if(!_canliKat){
+  _canliKat=document.createElement('div');_canliKat.className='film-kat canli-kat';
+  _canliKat.setAttribute('role','dialog');_canliKat.setAttribute('aria-modal','true');
+  _canliKat.setAttribute('aria-label','Kâbe-i Muazzama canlı yayını');
+  _canliKat.innerHTML='<button class="film-kapat" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>'+
+   '<div class="canli-cerceve"><div class="canli-oynatici"></div>'+
+   '<p class="canli-alt"><span><i class="canli-nokta" aria-hidden="true"></i>Mescid-i Haram, Mekke-i Mükerreme · Suudi Kur\'an-ı Kerim kanalı</span>'+
+   '<a href="'+CANLI.yt+'" target="_blank" rel="noopener">Açılmazsa YouTube\'da izleyin</a></p></div>';
+  _canliKat.addEventListener('click',e=>{if(e.target===_canliKat)canliKapat()});
+  _canliKat.querySelector('.film-kapat').addEventListener('click',canliKapat);
+  document.body.append(_canliKat);
+ }
+ _canliOdak=document.activeElement;
+ /* tıklamanın içinde başlatılır: iPhone sesli oynatmaya yalnız böyle izin verir */
+ canliHls(_canliKat.querySelector('.canli-oynatici'),++_canliSira);
+ document.documentElement.classList.add('kilit');try{lenis&&lenis.stop()}catch(e){}
+ requestAnimationFrame(()=>{_canliKat.classList.add('acik');_canliKat.querySelector('.film-kapat').focus()});
+}
+function canliKapat(){
+ if(!_canliKat||!_canliKat.classList.contains('acik'))return;
+ _canliKat.classList.remove('acik');
+ /* oynatıcıyı hemen kaldır ki yayın arka planda akıp veri harcamasın */
+ _canliSira++;canliTemizle(_canliKat.querySelector('.canli-oynatici'));
+ document.documentElement.classList.remove('kilit');try{lenis&&lenis.start()}catch(e){}
+ if(_canliOdak&&_canliOdak.focus)_canliOdak.focus();
+}
+addEventListener('keydown',e=>{if(e.key==='Escape'){filmKapat();canliKapat()}});
 /* Sepet */
 const Sepet={
  al(){return depo.al('hu_sepet','{}')},
@@ -276,6 +381,8 @@ function kabuk(aktif){
  fb.addEventListener('click',filmAc);document.body.append(fb);
  /* Bölüm içindeki "tanıtım filmi" düğmeleri (telefonda yüzen düğme yerine bunlar kullanılır) */
  document.querySelectorAll('[data-film]').forEach(b=>b.addEventListener('click',filmAc));
+ /* "Kâbe'yi canlı izleyin" düğmeleri */
+ document.querySelectorAll('[data-canli]').forEach(b=>b.addEventListener('click',canliAc));
  /* altbilgi */
  const f=document.querySelector('footer.sf');
  if(f){const notlar=[...f.querySelectorAll('.f-not')];
